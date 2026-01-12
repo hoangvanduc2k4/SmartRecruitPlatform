@@ -1,8 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
+using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Infrastructure.Data;
 using SmartRecruit.Infrastructure.Data.Interceptors;
 using SmartRecruit.Infrastructure.Data.Seeders;
+using SmartRecruit.Infrastructure.Repositories;
 
 namespace SmartRecruit.API
 {
@@ -15,6 +17,7 @@ namespace SmartRecruit.API
             // Add services to the container.
             builder.Services.AddSingleton<UpdateAuditInterceptor>();
             builder.Services.AddSingleton<SoftDeleteInterceptor>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 var audit = sp.GetRequiredService<UpdateAuditInterceptor>();
