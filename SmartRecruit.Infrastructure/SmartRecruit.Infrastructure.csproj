@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartRecruit.Application\SmartRecruit.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Configurations\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Interceptors\" />
+    <Folder Include="Data\Repositories\" />
+    <Folder Include="Data\Seeders\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
