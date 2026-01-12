@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Infrastructure.Data;
 using SmartRecruit.Infrastructure.Data.Interceptors;
+using SmartRecruit.Infrastructure.Data.Seeders;
 
 namespace SmartRecruit.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,25 @@ namespace SmartRecruit.API
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<ApplicationDbContext>();
 
+                    await context.Database.MigrateAsync();
+
+                    await DbInitializer.SeedData(context);
+
+                    Console.WriteLine("Seed data successfully!");
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Error on seed data.");
+                }
+            }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
