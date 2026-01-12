@@ -18,7 +18,7 @@ namespace SmartRecruit.Domain.Entities
         public virtual CandidateProfile? CandidateProfile { get; set; }
         public virtual Wallet? Wallet { get; set; }
         public virtual ICollection<Job> JobsPosted { get; set; } = new List<Job>();
-        public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
+        public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
         public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }

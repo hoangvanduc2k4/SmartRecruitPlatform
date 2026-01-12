@@ -3,7 +3,7 @@ using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Domain.Entities
 {
-    public class Application : BaseEntity
+    public class Applications : BaseEntity
     {
         public long JobId { get; set; }
         public long CandidateId { get; set; }

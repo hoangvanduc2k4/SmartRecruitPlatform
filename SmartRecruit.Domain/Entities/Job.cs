@@ -20,6 +20,6 @@ namespace SmartRecruit.Domain.Entities
         public string Category { get; set; } = string.Empty;
 
         public virtual User Recruiter { get; set; } = null!;
-        public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
+        public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
     }
 }

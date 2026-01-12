@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using SmartRecruit.Infrastructure.Data;
+using SmartRecruit.Infrastructure.Data.Interceptors;
+
 namespace SmartRecruit.API
 {
     public class Program
@@ -8,7 +12,16 @@ namespace SmartRecruit.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton<UpdateAuditInterceptor>();
+            builder.Services.AddSingleton<SoftDeleteInterceptor>();
+            builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
+            {
+                var audit = sp.GetRequiredService<UpdateAuditInterceptor>();
+                var softDelete = sp.GetRequiredService<SoftDeleteInterceptor>();
 
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MyCnn"))
+                       .AddInterceptors(audit, softDelete);
+            });
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
