@@ -40,8 +40,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("ExperienceMatch")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -57,8 +56,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SkillMatch")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -85,6 +83,9 @@ namespace SmartRecruit.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CVText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CVUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -125,6 +126,9 @@ namespace SmartRecruit.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime?>("BoostExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -136,6 +140,9 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAppealed")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -144,6 +151,9 @@ namespace SmartRecruit.Infrastructure.Migrations
 
                     b.Property<string>("Location")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModerationNote")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RecruiterId")
@@ -266,6 +276,45 @@ namespace SmartRecruit.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("SmartRecruit.Domain.Entities.Report", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsProcessed")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ReporterId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("ReporterId");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("SmartRecruit.Domain.Entities.Transaction", b =>
                 {
                     b.Property<long>("Id")
@@ -289,6 +338,9 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<long?>("OrderCode")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ReferenceId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Status")
@@ -332,21 +384,20 @@ namespace SmartRecruit.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsVip")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastLoginAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("LockReason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -359,9 +410,6 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -437,7 +485,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                     b.HasOne("SmartRecruit.Domain.Entities.User", "Recruiter")
                         .WithMany("JobsPosted")
                         .HasForeignKey("RecruiterId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Recruiter");
@@ -463,6 +511,25 @@ namespace SmartRecruit.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SmartRecruit.Domain.Entities.Report", b =>
+                {
+                    b.HasOne("SmartRecruit.Domain.Entities.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartRecruit.Domain.Entities.User", "Reporter")
+                        .WithMany()
+                        .HasForeignKey("ReporterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Reporter");
                 });
 
             modelBuilder.Entity("SmartRecruit.Domain.Entities.Transaction", b =>

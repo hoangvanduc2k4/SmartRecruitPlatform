@@ -1,6 +1,5 @@
 ﻿using SmartRecruit.Domain.Commons;
 using SmartRecruit.Domain.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SmartRecruit.Domain.Entities
 {
@@ -14,11 +13,13 @@ namespace SmartRecruit.Domain.Entities
         public decimal SalaryMin { get; set; }
         public decimal SalaryMax { get; set; }
         public JobType JobType { get; set; }
-        public JobStatus Status { get; set; } = JobStatus.PENDING;
+        public JobStatus Status { get; set; } = JobStatus.CHECKING;
         public int ViewCount { get; set; } = 0;
         public string Location { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
-
+        public DateTime? BoostExpiryTime { get; set; }
+        public string? ModerationNote { get; set; }
+        public bool IsAppealed { get; set; } = false;
         public virtual User Recruiter { get; set; } = null!;
         public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
     }

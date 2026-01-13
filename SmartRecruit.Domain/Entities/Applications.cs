@@ -12,7 +12,7 @@ namespace SmartRecruit.Domain.Entities
         public decimal ExperienceMatch { get; set; } = 0;
         public string? AI_Summary { get; set; }
 
-        public ApplicationStatus Status { get; set; } = ApplicationStatus.APPLIED;
+        public ApplicationStatus Status { get; set; } = ApplicationStatus.REVIEWING;
         public string? Notes { get; set; }
 
         public virtual Job Job { get; set; } = null!;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SmartRecruit.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate_Final : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,13 +17,13 @@ namespace SmartRecruit.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
-                    IsVip = table.Column<bool>(type: "bit", nullable: false),
-                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    LockReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -42,6 +42,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     Skills = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExperienceYears = table.Column<int>(type: "int", nullable: false),
+                    CVUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CVText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpectedSalary = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -77,6 +78,9 @@ namespace SmartRecruit.Infrastructure.Migrations
                     ViewCount = table.Column<int>(type: "int", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BoostExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModerationNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsAppealed = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -89,7 +93,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                         column: x => x.RecruiterId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,8 +181,8 @@ namespace SmartRecruit.Infrastructure.Migrations
                     JobId = table.Column<long>(type: "bigint", nullable: false),
                     CandidateId = table.Column<long>(type: "bigint", nullable: false),
                     MatchScore = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    SkillMatch = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
-                    ExperienceMatch = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
+                    SkillMatch = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ExperienceMatch = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     AI_Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -204,6 +208,37 @@ namespace SmartRecruit.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobId = table.Column<long>(type: "bigint", nullable: false),
+                    ReporterId = table.Column<long>(type: "bigint", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsProcessed = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Users_ReporterId",
+                        column: x => x.ReporterId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -216,6 +251,7 @@ namespace SmartRecruit.Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     OrderCode = table.Column<long>(type: "bigint", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReferenceId = table.Column<long>(type: "bigint", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -270,6 +306,16 @@ namespace SmartRecruit.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reports_JobId",
+                table: "Reports",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_ReporterId",
+                table: "Reports",
+                column: "ReporterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_UserId",
                 table: "Transactions",
                 column: "UserId");
@@ -278,12 +324,6 @@ namespace SmartRecruit.Infrastructure.Migrations
                 name: "IX_Transactions_WalletId",
                 table: "Transactions",
                 column: "WalletId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wallets_UserId",
@@ -306,6 +346,9 @@ namespace SmartRecruit.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Transactions");

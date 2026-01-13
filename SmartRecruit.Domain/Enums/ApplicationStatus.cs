@@ -2,10 +2,9 @@
 {
     public enum ApplicationStatus
     {
-        APPLIED = 0,
-        SCREENING = 1,
-        INTERVIEW = 2,
-        OFFERED = 3,
-        REJECTED = 4
+        REVIEWING = 0,
+        INTERVIEWING = 1,
+        OFFERED = 2,
+        REJECTED = 3
     }
 }

@@ -10,8 +10,8 @@ namespace SmartRecruit.Domain.Entities
         public string FullName { get; set; } = string.Empty;
         public string AvatarUrl { get; set; } = "https://i.pravatar.cc/150";
         public UserRole Role { get; set; } = UserRole.CANDIDATE;
-        public bool IsVip { get; set; } = false;
-        public DateTime? LastLoginAt { get; set; }
+        public bool IsActive { get; set; } = true;
+        public string? LockReason { get; set; }
 
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 

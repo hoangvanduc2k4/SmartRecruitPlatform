@@ -4,7 +4,8 @@
     {
         TOPUP = 0,
         JOB_POST = 1,
-        VIP = 2,
-        OTHER = 3
+        BOOST = 2,
+        VIP = 3,
+        OTHER = 4
     }
 }

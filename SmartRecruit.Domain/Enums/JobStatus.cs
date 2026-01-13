@@ -2,8 +2,9 @@
 {
     public enum JobStatus
     {
-        PENDING = 0,
-        PUBLISHED = 1,
-        CLOSED = 2
+        CHECKING = 0,
+        APPROVED = 1,
+        BLOCKED = 2,
+        HIDDEN = 3
     }
 }

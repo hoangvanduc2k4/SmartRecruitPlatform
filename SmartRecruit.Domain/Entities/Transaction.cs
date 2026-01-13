@@ -12,7 +12,7 @@ namespace SmartRecruit.Domain.Entities
         public TransactionStatus Status { get; set; } = TransactionStatus.PENDING;
         public long? OrderCode { get; set; }
         public string Description { get; set; } = string.Empty;
-
+        public long? ReferenceId { get; set; }
         public virtual User User { get; set; } = null!;
         public virtual Wallet Wallet { get; set; } = null!;
     }
