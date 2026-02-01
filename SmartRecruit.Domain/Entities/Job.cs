@@ -16,8 +16,8 @@ namespace SmartRecruit.Domain.Entities
         public JobStatus Status { get; set; } = JobStatus.CHECKING;
         public int ViewCount { get; set; } = 0;
         public string Location { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public DateTime? BoostExpiryTime { get; set; }
+        public long CategoryId { get; set; }
+        public virtual Category Category { get; set; } = null!; public DateTime? BoostExpiryTime { get; set; }
         public string? ModerationNote { get; set; }
         public bool IsAppealed { get; set; } = false;
         public virtual User Recruiter { get; set; } = null!;

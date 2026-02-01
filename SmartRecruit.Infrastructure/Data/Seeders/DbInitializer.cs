@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
@@ -7,109 +8,181 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
 {
     public static class DbInitializer
     {
-        public static async Task SeedData(ApplicationDbContext context)
+        // Helper tránh lỗi MaxLength trong Database
+        private static string Limit(this string text, int max) =>
+            string.IsNullOrEmpty(text) ? text : (text.Length <= max ? text : text.Substring(0, max));
+
+        public static void SeedSmartRecruitData(this ModelBuilder modelBuilder)
         {
-            if (await context.Users.AnyAsync()) return;
+            // 1. Cấu hình Seed cố định
+            var seedValue = 999;
+            Randomizer.Seed = new Random(seedValue);
+            var rnd = new Random(seedValue);
+            var createdAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-            var random = new Random();
-            string hashedPass = PasswordUtil.HashPassword("password123");
+            // 2. Hash mật khẩu MỘT LẦN DUY NHẤT để tối ưu tốc độ sinh Migration
+            // Tất cả user seed sẽ có pass là "password123"
+            var commonHash = PasswordUtil.HashPassword("password123");
 
-            // --- Users Seeding ---
-            var users = new List<User>();
-            users.Add(new User { Email = "admin@smartrecruit.com", PasswordHash = hashedPass, FullName = "Admin User", Role = UserRole.ADMIN, IsActive = true });
-
-            for (int i = 1; i <= 5; i++)
-                users.Add(new User { Email = $"hr{i}@gmail.com", PasswordHash = hashedPass, FullName = $"HR Manager {i}", Role = UserRole.RECRUITER, IsActive = true });
-
-            for (int i = 1; i <= 15; i++)
-                users.Add(new User { Email = $"candidate{i}@gmail.com", PasswordHash = hashedPass, FullName = $"Candidate {i}", Role = UserRole.CANDIDATE, IsActive = true });
-
-            await context.Users.AddRangeAsync(users);
-            await context.SaveChangesAsync();
-
-            // --- Wallets & Candidate Profiles ---
-            foreach (var user in users)
+            // --- 3. CATEGORIES (10) ---
+            var categoryNames = new[] { "IT", "Marketing", "Finance", "HR", "Design", "Sales", "Legal", "Education", "Healthcare", "Engineering" };
+            var categories = categoryNames.Select((name, i) => new Category
             {
-                var wallet = new Wallet { UserId = user.Id, Balance = user.Role == UserRole.RECRUITER ? 1000000 : 0 };
-                context.Wallets.Add(wallet);
+                Id = i + 1,
+                Name = name,
+                CreatedAt = createdAt
+            }).ToList();
+            modelBuilder.Entity<Category>().HasData(categories);
 
-                if (user.Role == UserRole.CANDIDATE)
+            // --- 4. USERS (251) ---
+            var users = new List<User>();
+            // Admin (ID 1)
+            users.Add(new User
+            {
+                Id = 1,
+                Email = "admin@smartrecruit.com",
+                FullName = "Admin System",
+                Role = UserRole.ADMIN,
+                PasswordHash = commonHash,
+                CreatedAt = createdAt
+            });
+
+            int userIdCounter = 2;
+            // Recruiters (50: ID 2 - 51)
+            for (int i = 0; i < 50; i++)
+                users.Add(new Faker<User>().CustomInstantiator(f => new User
                 {
-                    context.CandidateProfiles.Add(new CandidateProfile
+                    Id = userIdCounter++,
+                    Email = f.Internet.Email().ToLower().Limit(100),
+                    FullName = f.Name.FullName().Limit(100),
+                    Role = UserRole.RECRUITER,
+                    PasswordHash = commonHash,
+                    CreatedAt = createdAt
+                }));
+
+            // Candidates (200: ID 52 - 251)
+            var candidateIds = new List<long>();
+            for (int i = 0; i < 200; i++)
+            {
+                var cId = userIdCounter++;
+                candidateIds.Add(cId);
+                users.Add(new Faker<User>().CustomInstantiator(f => new User
+                {
+                    Id = cId,
+                    Email = f.Internet.Email().ToLower().Limit(100),
+                    FullName = f.Name.FullName().Limit(100),
+                    Role = UserRole.CANDIDATE,
+                    PasswordHash = commonHash,
+                    CreatedAt = createdAt
+                }));
+            }
+            modelBuilder.Entity<User>().HasData(users);
+
+            // --- 5. WALLETS (251 - 1:1 với User) ---
+            var wallets = users.Select(u => new Wallet
+            {
+                Id = u.Id,
+                UserId = u.Id,
+                Balance = u.Role == UserRole.RECRUITER ? 10000000 : 0,
+                CreatedAt = createdAt
+            }).ToList();
+            modelBuilder.Entity<Wallet>().HasData(wallets);
+
+            // --- 6. CANDIDATE PROFILES (200 - 1:1 với Candidates) ---
+            int profileId = 1;
+            var profiles = candidateIds.Select(cid => new CandidateProfile
+            {
+                Id = profileId++,
+                UserId = cid,
+                ExperienceYears = rnd.Next(1, 15),
+                Skills = ".NET, SQL, React, Docker, Azure".Limit(200),
+                CVText = "Experienced software engineer with expertise in building scalable cloud-native applications.",
+                CreatedAt = createdAt
+            }).ToList();
+            modelBuilder.Entity<CandidateProfile>().HasData(profiles);
+
+            // --- 7. JOBS (200) ---
+            int jobIdCounter = 1;
+            var recruiterIds = users.Where(u => u.Role == UserRole.RECRUITER).Select(u => u.Id).ToList();
+            var jobs = new Faker<Job>().CustomInstantiator(f => new Job
+            {
+                Id = jobIdCounter++,
+                RecruiterId = f.PickRandom(recruiterIds),
+                CategoryId = f.PickRandom(categories).Id,
+                Title = f.Name.JobTitle().Limit(100),
+                Description = f.Lorem.Sentence(12).Limit(500),
+                Requirement = f.Lorem.Sentence(8).Limit(500),
+                SkillsRequired = ".NET Core, C#, EF Core",
+                Status = JobStatus.APPROVED,
+                CreatedAt = createdAt
+            }).Generate(200);
+            modelBuilder.Entity<Job>().HasData(jobs);
+
+            // --- 8. APPLICATIONS (300 - Unique JobId-CandidateId Pair) ---
+            var applications = new List<Applications>();
+            var usedPairs = new HashSet<(long, long)>();
+            var appFaker = new Faker();
+            int appId = 1;
+            while (applications.Count < 300)
+            {
+                var jId = appFaker.PickRandom(jobs).Id;
+                var cId = appFaker.PickRandom(candidateIds);
+                if (usedPairs.Add((jId, cId)))
+                {
+                    applications.Add(new Applications
                     {
-                        UserId = user.Id,
-                        Skills = ".NET, React, SQL",
-                        ExperienceYears = random.Next(1, 5),
-                        CVText = "Experienced software developer...",
-                        ExpectedSalary = random.Next(1000, 3000) * 1000
+                        Id = appId++,
+                        JobId = jId,
+                        CandidateId = cId,
+                        MatchScore = (decimal)(rnd.NextDouble() * 100),
+                        Status = ApplicationStatus.REVIEWING,
+                        CreatedAt = createdAt
                     });
                 }
             }
-            await context.SaveChangesAsync();
+            modelBuilder.Entity<Applications>().HasData(applications);
 
-            // --- Jobs (with Boost & AI Status) ---
-            var recruiters = users.Where(u => u.Role == UserRole.RECRUITER).ToList();
-            var jobs = new List<Job>();
-            for (int i = 1; i <= 10; i++)
+            // --- 9. TRANSACTIONS (200) ---
+            modelBuilder.Entity<Transaction>().HasData(Enumerable.Range(1, 200).Select(i => new Transaction
             {
-                var status = (JobStatus)(i % 3); // Cycle through CHECKING, APPROVED, BLOCKED
-                var job = new Job
-                {
-                    RecruiterId = recruiters[random.Next(recruiters.Count)].Id,
-                    Title = $"Software Engineer {i}",
-                    Description = "Full job description in English...",
-                    Requirement = "Technical requirements...",
-                    SalaryMin = 1000,
-                    SalaryMax = 2500,
-                    Location = "Hanoi",
-                    Category = "IT",
-                    Status = status,
-                    BoostExpiryTime = i == 1 ? DateTime.UtcNow.AddMinutes(20) : null, // Boost the first job
-                    ModerationNote = status == JobStatus.BLOCKED ? "Contains restricted content." : null
-                };
-                jobs.Add(job);
-            }
-            await context.Jobs.AddRangeAsync(jobs);
-            await context.SaveChangesAsync();
+                Id = i,
+                UserId = recruiterIds[i % recruiterIds.Count],
+                WalletId = recruiterIds[i % recruiterIds.Count],
+                Amount = 20000,
+                Type = TransactionType.BOOST,
+                Status = TransactionStatus.SUCCESS,
+                CreatedAt = createdAt
+            }));
 
-            // --- Applications (Kanban Columns) ---
-            var candidates = users.Where(u => u.Role == UserRole.CANDIDATE).ToList();
-            foreach (var job in jobs.Where(j => j.Status == JobStatus.APPROVED))
+            // --- 10. NOTIFICATIONS (200) ---
+            modelBuilder.Entity<Notification>().HasData(Enumerable.Range(1, 200).Select(i => new Notification
             {
-                context.Applications.Add(new Applications
-                {
-                    JobId = job.Id,
-                    CandidateId = candidates[random.Next(candidates.Count)].Id,
-                    MatchScore = random.Next(70, 95),
-                    Status = (ApplicationStatus)random.Next(0, 4) // Reviewing, Interviewing, Offered, Rejected
-                });
-            }
+                Id = i,
+                UserId = users[i % users.Count].Id,
+                Title = "Hệ thống".Limit(50),
+                Message = "Tài khoản của bạn vừa có cập nhật mới.".Limit(255),
+                CreatedAt = createdAt
+            }));
 
-            // --- Reports & Transactions ---
-            var targetJob = jobs.First();
-            context.Reports.Add(new Report
+            // --- 11. REPORTS (50) ---
+            modelBuilder.Entity<Report>().HasData(Enumerable.Range(1, 50).Select(i => new Report
             {
-                JobId = targetJob.Id,
-                ReporterId = candidates.First().Id,
-                Reason = "Suspicious content reported by user.",
-                IsProcessed = false
-            });
+                Id = i,
+                JobId = jobs[i % jobs.Count].Id,
+                ReporterId = candidateIds[i % candidateIds.Count],
+                Reason = "Nội dung vi phạm chính sách cộng đồng.".Limit(200),
+                CreatedAt = createdAt
+            }));
 
-            foreach (var hr in recruiters)
+            // --- 12. REFRESH TOKENS (50) ---
+            modelBuilder.Entity<RefreshToken>().HasData(Enumerable.Range(1, 50).Select(i => new RefreshToken
             {
-                var hrWallet = context.Wallets.Local.First(w => w.UserId == hr.Id);
-                context.Transactions.Add(new Transaction
-                {
-                    UserId = hr.Id,
-                    WalletId = hrWallet.Id,
-                    Amount = 20000,
-                    Type = TransactionType.BOOST,
-                    Status = TransactionStatus.SUCCESS,
-                    Description = "Boost JD fee"
-                });
-            }
-
-            await context.SaveChangesAsync();
+                Id = i,
+                UserId = users[i % users.Count].Id,
+                Token = $"seed-token-{i}",
+                ExpiryDate = createdAt.AddDays(7),
+                CreatedAt = createdAt
+            }));
         }
     }
 }
