@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Infrastructure.Data.Seeders;
 
 namespace SmartRecruit.Infrastructure.Data
 {
@@ -17,6 +18,7 @@ namespace SmartRecruit.Infrastructure.Data
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,7 +31,11 @@ namespace SmartRecruit.Infrastructure.Data
             modelBuilder.Entity<Report>().HasQueryFilter(r => !r.IsDeleted);
 
             // --- 2. Relationships & Cascade Fixes ---
-
+            modelBuilder.Entity<Job>()
+         .HasOne(j => j.Category)
+         .WithMany(c => c.Jobs)
+         .HasForeignKey(j => j.CategoryId)
+         .OnDelete(DeleteBehavior.Restrict);
             // Fix: Multiple cascade paths for Applications
             modelBuilder.Entity<Applications>()
                 .HasOne(a => a.Candidate)
@@ -68,6 +74,8 @@ namespace SmartRecruit.Infrastructure.Data
             // Unique Application constraint
             modelBuilder.Entity<Applications>()
                 .HasIndex(a => new { a.JobId, a.CandidateId }).IsUnique();
+
+            modelBuilder.SeedSmartRecruitData();
         }
     }
 }
