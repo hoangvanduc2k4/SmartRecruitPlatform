@@ -29,7 +29,7 @@ namespace SmartRecruit.API
             });
             
             builder.Services.AddApplicationDI();
-            builder.Services.AddInfrastructureDI();
+            builder.Services.AddInfrastructureDI(builder.Configuration);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
