@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.22" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.22" />
+    <PackageReference Include="PdfPig" Version="0.1.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
 		  <PrivateAssets>all</PrivateAssets>
