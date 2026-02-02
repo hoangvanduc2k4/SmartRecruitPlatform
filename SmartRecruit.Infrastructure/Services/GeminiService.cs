@@ -47,6 +47,38 @@ namespace SmartRecruit.Infrastructure.Services
             return await SendGeminiRequestAsync<JobScreeningResponse>(prompt);
         }
 
+        public async Task<CvScreeningResponse> ScoreCvAsync(string cvContent, string jobDescription)
+        {
+            string prompt = $@"
+                Bạn là chuyên gia tuyển dụng. Hãy chấm điểm CV ứng viên dựa trên JD.
+                
+                NỘI DUNG JD:
+                {jobDescription}
+
+                NỘI DUNG CV:
+                {cvContent}
+
+                YÊU CẦU:
+                1. Đánh giá MatchScore (Tổng quan) từ 0-100.
+                2. Đánh giá SkillMatch (Kỹ năng) từ 0-100.
+                3. Đánh giá ExperienceMatch (Kinh nghiệm) từ 0-100.
+                4. Tóm tắt ngắn gọn (AI_Summary).
+                5. Liệt kê kỹ năng thiếu (MissingSkills).
+                6. Lời khuyên (Recommendation).
+
+                TRẢ VỀ JSON (không markdown, không code block) theo mẫu:
+                {{
+                    ""MatchScore"": (decimal),
+                    ""SkillMatch"": (decimal),
+                    ""ExperienceMatch"": (decimal),
+                    ""AI_Summary"": ""(string)"",
+                    ""MissingSkills"": [""(string)"", ""(string)""],
+                    ""Recommendation"": ""(string)""
+                }}";
+
+            return await SendGeminiRequestAsync<CvScreeningResponse>(prompt);
+        }
+
         private async Task<T> SendGeminiRequestAsync<T>(string prompt)
         {
             var requestBody = new
