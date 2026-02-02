@@ -4,6 +4,9 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Infrastructure.Data;
 using SmartRecruit.Infrastructure.Data.Interceptors;
 using SmartRecruit.Infrastructure.Repositories;
+using SmartRecruit.API.Extensions;
+using SmartRecruit.Application;
+using SmartRecruit.Infrastructure;
 
 namespace SmartRecruit.API
 {
@@ -16,7 +19,6 @@ namespace SmartRecruit.API
             // Add services to the container.
             builder.Services.AddSingleton<UpdateAuditInterceptor>();
             builder.Services.AddSingleton<SoftDeleteInterceptor>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
                 var audit = sp.GetRequiredService<UpdateAuditInterceptor>();
@@ -25,6 +27,10 @@ namespace SmartRecruit.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MyCnn"))
                        .AddInterceptors(audit, softDelete);
             });
+            
+            builder.Services.AddApplicationDI();
+            builder.Services.AddInfrastructureDI();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -40,6 +46,8 @@ namespace SmartRecruit.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseErrorHandlingMiddleware();
 
             app.UseAuthorization();
 

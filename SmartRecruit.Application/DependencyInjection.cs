@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Application.Services;
+using System.Reflection;
 
 namespace SmartRecruit.Application
 {
@@ -12,7 +10,10 @@ namespace SmartRecruit.Application
     {
         public static IServiceCollection AddApplicationDI(this IServiceCollection services)
         {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
+            services.AddScoped<IJobService, JobService>();
             return services;
-        } 
+        }
     }
 }

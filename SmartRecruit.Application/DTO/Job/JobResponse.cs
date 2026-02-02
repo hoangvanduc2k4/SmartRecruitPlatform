@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartRecruit.Application.DTO.Job
+﻿namespace SmartRecruit.Application.DTO.Job
 {
-    internal class JobResponse
-    {
-    }
+    public record JobResponse(
+        long Id,
+        string Title,
+        string Company,
+        string Benefits,
+        string Description,
+        decimal SalaryMin,
+        decimal SalaryMax,
+        string Location,
+        string JobType,
+        DateTime CreatedTime,
+        string Category,
+        bool IsDeleted
+    );
 }

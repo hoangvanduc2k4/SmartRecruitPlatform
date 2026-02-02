@@ -7,6 +7,8 @@ namespace SmartRecruit.Domain.Entities
     {
         public long RecruiterId { get; set; }
         public string Title { get; set; } = string.Empty;
+        public string Company { get; set; } = string.Empty; // New Field
+        public string Benefits { get; set; } = string.Empty; // New Field 2
         public string Description { get; set; } = string.Empty;
         public string Requirement { get; set; } = string.Empty;
         public string SkillsRequired { get; set; } = string.Empty;

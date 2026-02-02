@@ -110,6 +110,8 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 RecruiterId = f.PickRandom(recruiterIds),
                 CategoryId = f.PickRandom(categories).Id,
                 Title = f.Name.JobTitle().Limit(100),
+                Company = f.Company.CompanyName().Limit(100),
+                Benefits = f.Lorem.Sentence(5).Limit(200),
                 Description = f.Lorem.Sentence(12).Limit(500),
                 Requirement = f.Lorem.Sentence(8).Limit(500),
                 SkillsRequired = ".NET Core, C#, EF Core",

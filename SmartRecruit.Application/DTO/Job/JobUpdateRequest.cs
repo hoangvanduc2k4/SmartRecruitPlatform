@@ -4,6 +4,8 @@ namespace SmartRecruit.Application.DTO.Job
 {
     public record JobUpdateRequest(
           string Title,
+         string Company,
+         string Benefits,
          string Description,
          string Requirement,
          string SkillsRequired,
@@ -11,6 +13,6 @@ namespace SmartRecruit.Application.DTO.Job
          decimal SalaryMax,
          JobType JobType,
          string Location,
-         string Category
+         long CategoryId
     );
 }
