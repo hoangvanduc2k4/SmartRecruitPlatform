@@ -41,8 +41,9 @@ namespace SmartRecruit.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateJob([FromBody] JobCreateRequest request)
         {
+            // Background moderation will handle the check
             var job = await _jobService.CreateJobAsync(request);
-            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created successfully"));
+            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created successfully. Moderation is pending."));
         }
 
         [HttpPut("{id}")]

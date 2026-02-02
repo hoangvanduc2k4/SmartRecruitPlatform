@@ -1,10 +1,12 @@
 using AutoMapper;
+using System;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
+using Hangfire;
 
 namespace SmartRecruit.Application.Services
 {
@@ -13,14 +15,16 @@ namespace SmartRecruit.Application.Services
         private readonly IJobRepository _jobRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        // Inject AI Service here later
-        // private readonly IAIService _aiService;
+        private readonly IGeminiService _geminiService;
+        private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
 
-        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, Hangfire.IBackgroundJobClient backgroundJobClient)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _geminiService = geminiService;
+            _backgroundJobClient = backgroundJobClient;
         }
 
         public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId)
@@ -35,11 +39,7 @@ namespace SmartRecruit.Application.Services
         public async Task<PagedList<JobResponse>> GetJobsAsync(JobSearchRequest request)
         {
             var jobs = await _jobRepository.GetJobsAsync(request);
-
-
-            // Manual mapping or AutoMapper
             var jobResponses = _mapper.Map<List<JobResponse>>(jobs);
-
             return new PagedList<JobResponse>(jobResponses, jobs.TotalCount, jobs.CurrentPage, jobs.PageSize);
         }
 
@@ -47,20 +47,11 @@ namespace SmartRecruit.Application.Services
         {
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Job not found");
-
-            // Increment View Count logic could serve here or via dedicated endpoint
-            // job.ViewCount++; 
-            // await _jobRepository.UpdateJobAsync(job);
-
             return _mapper.Map<JobResponse>(job);
         }
 
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
-            // Placeholder: Call Gemini AI to validate content
-            // var aiValidation = await _aiService.ValidateJobContent(request.Description);
-            // if (!aiValidation.IsValid) throw new ArgumentException(aiValidation.Reason);
-
             var job = new Job
             {
                 Title = request.Title,
@@ -76,15 +67,55 @@ namespace SmartRecruit.Application.Services
                 CategoryId = request.CategoryId,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
-                Status = JobStatus.CHECKING // Default status
+                Status = JobStatus.CHECKING // Initial status
             };
 
             await _jobRepository.AddAsync(job);
             await _unitOfWork.CompleteAsync();
 
+            // Enqueue background moderation
+            _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
+
             // Refresh job to get Category Name
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);
             return _mapper.Map<JobResponse>(createdJob!);
+        }
+
+        public async Task ModerateJobAsync(long jobId)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) return;
+
+            try
+            {
+                var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, job.Description);
+
+                if (screeningResult.IsSafe)
+                {
+                    job.Status = JobStatus.APPROVED;
+                    job.ModerationNote = "Approved by AI.";
+                }
+                else
+                {
+                    job.Status = JobStatus.BLOCKED;
+                    job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Check for transient errors to allow Hangfire to retry
+                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("The model is overloaded"))
+                {
+                    throw; // Re-throw to let Hangfire retry with exponential backoff
+                }
+
+                // Permanent errors (config missing, validation, etc.) -> Block job
+                job.Status = JobStatus.BLOCKED;
+                job.ModerationNote = $"AI Check Failed: {ex.Message}";
+            }
+
+            _jobRepository.Update(job);
+            await _unitOfWork.CompleteAsync();
         }
 
         public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request)

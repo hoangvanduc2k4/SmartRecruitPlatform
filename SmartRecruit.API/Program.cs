@@ -1,12 +1,11 @@
 
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
-using SmartRecruit.Application.Interfaces.Repositories;
-using SmartRecruit.Infrastructure.Data;
-using SmartRecruit.Infrastructure.Data.Interceptors;
-using SmartRecruit.Infrastructure.Repositories;
 using SmartRecruit.API.Extensions;
 using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
+using SmartRecruit.Infrastructure.Data;
+using SmartRecruit.Infrastructure.Data.Interceptors;
 
 namespace SmartRecruit.API
 {
@@ -27,7 +26,7 @@ namespace SmartRecruit.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MyCnn"))
                        .AddInterceptors(audit, softDelete);
             });
-            
+
             builder.Services.AddApplicationDI();
             builder.Services.AddInfrastructureDI(builder.Configuration);
 
@@ -35,6 +34,27 @@ namespace SmartRecruit.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add Hangfire services.
+            builder.Services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(builder.Configuration.GetConnectionString("MyCnn"), new Hangfire.SqlServer.SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true,
+                    PrepareSchemaIfNecessary = false
+                }));
+
+            // Add the Hangfire server with limited workers
+            builder.Services.AddHangfireServer(options =>
+            {
+                options.WorkerCount = 5;
+            });
 
             var app = builder.Build();
 
@@ -50,6 +70,9 @@ namespace SmartRecruit.API
             app.UseErrorHandlingMiddleware();
 
             app.UseAuthorization();
+
+            // Hangfire Dashboard
+            app.UseHangfireDashboard();
 
 
             app.MapControllers();

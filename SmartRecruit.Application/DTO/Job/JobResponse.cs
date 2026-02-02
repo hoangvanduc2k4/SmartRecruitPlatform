@@ -1,4 +1,6 @@
-﻿namespace SmartRecruit.Application.DTO.Job
+﻿using SmartRecruit.Domain.Enums;
+
+namespace SmartRecruit.Application.DTO.Job
 {
     public record JobResponse(
         long Id,
@@ -12,6 +14,12 @@
         string JobType,
         DateTime CreatedTime,
         string Category,
-        bool IsDeleted
+        bool IsDeleted,
+        string Requirement,
+        string SkillsRequired,
+        JobStatus Status,
+        int ViewCount,
+        bool IsAppealed,
+        string? ModerationNote
     );
 }

@@ -21,7 +21,13 @@ namespace SmartRecruit.Application.Mappings
                     src.JobType.ToString(),
                     src.CreatedAt,
                     src.Category != null ? src.Category.Name : "Unknown",
-                    src.IsDeleted
+                    src.IsDeleted,
+                    src.Requirement,
+                    src.SkillsRequired,
+                    src.Status,
+                    src.ViewCount,
+                    src.IsAppealed,
+                    src.ModerationNote
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
         }
