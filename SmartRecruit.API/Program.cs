@@ -47,7 +47,7 @@ namespace SmartRecruit.API
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
-                    PrepareSchemaIfNecessary = false
+                    PrepareSchemaIfNecessary = true
                 }));
 
             // Add the Hangfire server with limited workers
