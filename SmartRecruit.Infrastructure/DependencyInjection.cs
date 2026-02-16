@@ -5,6 +5,7 @@ using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Infrastructure.Configurations;
 using SmartRecruit.Infrastructure.Repositories;
 using SmartRecruit.Infrastructure.Services;
+using SmartRecruit.Application.Interfaces.Services;
 
 namespace SmartRecruit.Infrastructure
 {
@@ -14,6 +15,9 @@ namespace SmartRecruit.Infrastructure
         {
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
             services.Configure<GeminiSettings>(configuration.GetSection("Gemini"));
+            
+            services.AddScoped<IUserService, UserService>(); // Added
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJobRepository, JobRepository>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
