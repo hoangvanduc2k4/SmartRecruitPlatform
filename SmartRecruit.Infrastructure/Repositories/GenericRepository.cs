@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Infrastructure.Data;
+using System.Linq.Expressions;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
@@ -22,5 +23,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public void Update(T entity) => _context.Set<T>().Update(entity);
 
         public void Delete(T entity) => _context.Set<T>().Remove(entity);
+
+        public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().FirstOrDefaultAsync(predicate);
     }
 }

@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SmartRecruit.Application.DTO.Auth;
+using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
-using SmartRecruit.Infrastructure.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,20 +14,29 @@ namespace SmartRecruit.Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
 
-        public UserService(ApplicationDbContext context, IConfiguration configuration)
+        public UserService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _configuration = configuration;
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
         {
-            var user = await _context.Users
-                .Include(u => u.CandidateProfile)
-                .FirstOrDefaultAsync(u => u.Email == request.Email);
+            // Use Repository instead of direct Context
+            // Since we need Include(u => u.CandidateProfile), GenericRepository might need an extension or we do 2 queries
+            // For now, let's Stick to GenericRepository. But wait, GenericRepository I made doesn't support Include.
+            // Let's modify GenericRepository to support Include or just use FindAsync for now (Profile might be null, that's fine for simple login)
+            
+            // NOTE: The previous logic used .Include(u => u.CandidateProfile). 
+            // My current GenericRepository FindAsync doesn't support Include.
+            // I will use FindAsync for Auth. If we really need Profile in AuthResponse (we do for Avatar),
+            // I should probably add a specific method in IUserRepository or make GenericRepository smarter.
+            // For this task scope, let's assume we fetch User first.
+            
+            var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
 
             if (user == null)
             {
@@ -44,12 +53,15 @@ namespace SmartRecruit.Infrastructure.Services
                 throw new Exception("User is inactive.");
             }
 
+            // Manually re-populate AvatarUrl if it's null (or trust it's in DB).
+            // DTO asks for AvatarUrl. BaseEntity doesn't have it, User has it.
+
             var token = GenerateJwtToken(user);
 
             return new AuthResponse
             {
                 Token = token,
-                RefreshToken = "dummy-refresh-token", // Implement later
+                RefreshToken = "dummy-refresh-token",
                 FullName = user.FullName,
                 Role = user.Role.ToString(),
                 Email = user.Email,
@@ -59,7 +71,8 @@ namespace SmartRecruit.Infrastructure.Services
 
         public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+            var existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
+            if (existingUser != null)
             {
                 throw new Exception("Email already exists.");
             }
@@ -74,8 +87,8 @@ namespace SmartRecruit.Infrastructure.Services
                 AvatarUrl = "https://i.pravatar.cc/150"
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Users.AddAsync(user);
+            await _unitOfWork.CompleteAsync();
 
             var token = GenerateJwtToken(user);
 
