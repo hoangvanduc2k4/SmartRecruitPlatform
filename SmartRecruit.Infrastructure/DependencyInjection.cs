@@ -16,6 +16,8 @@ namespace SmartRecruit.Infrastructure
             services.Configure<GeminiSettings>(configuration.GetSection("Gemini"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJobRepository, JobRepository>();
+            services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddHttpClient<IGeminiService, GeminiService>();
             return services;
