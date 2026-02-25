@@ -11,7 +11,8 @@ namespace SmartRecruit.Application.DTO.Application
         long? JobId,          // Lọc theo job
         int? Status,          // Lọc theo ApplicationStatus
         int Page = 1,
-        int PageSize = 10
+        int PageSize = 10,
+        bool SortByScore = false
      );
 
 }

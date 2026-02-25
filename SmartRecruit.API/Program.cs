@@ -35,6 +35,7 @@ namespace SmartRecruit.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
             // Add Hangfire services.
             builder.Services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
@@ -58,6 +59,7 @@ namespace SmartRecruit.API
 
             var app = builder.Build();
 
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -65,11 +67,24 @@ namespace SmartRecruit.API
                 app.UseSwaggerUI();
             }
 
+            // Tắt HTTPS redirect khi Development (tránh lỗi ERR_NGROK_3004 khi dùng ngrok)
+        // PayOS redirect về HTTP, nếu server redirect sang HTTPS thì ngrok sẽ báo lỗi
+        if (!app.Environment.IsDevelopment())
+        {
             app.UseHttpsRedirection();
+        }
+
+            // Bypass ngrok browser warning cho webhook calls (development only)
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers["ngrok-skip-browser-warning"] = "true";
+                await next();
+            });
 
             app.UseErrorHandlingMiddleware();
 
             app.UseAuthorization();
+
 
             // Hangfire Dashboard
             app.UseHangfireDashboard();

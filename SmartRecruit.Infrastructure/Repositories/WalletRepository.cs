@@ -14,7 +14,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public WalletRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
-        }
+        }   
 
         public async Task<Wallet?> GetWalletByUserIdAsync(long userId)
         {
@@ -56,6 +56,22 @@ namespace SmartRecruit.Infrastructure.Repositories
             query = query.OrderByDescending(t => t.CreatedAt);
 
             return await PagedList<Transaction>.CreateAsync(query, request.Page, request.PageSize);
+        }
+
+        public async Task<Transaction?> GetTransactionByOrderCodeAsync(long orderCode)
+        {
+            return await _context.Set<Transaction>()
+                .FirstOrDefaultAsync(t => t.OrderCode == orderCode);
+        }
+
+        public async Task AddTransactionAsync(Transaction transaction)
+        {
+            await _context.Set<Transaction>().AddAsync(transaction);
+        }
+
+        public void UpdateTransaction(Transaction transaction)
+        {
+            _context.Set<Transaction>().Update(transaction);
         }
     }
 }

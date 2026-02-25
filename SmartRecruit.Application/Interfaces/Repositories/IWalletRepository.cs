@@ -8,5 +8,8 @@ namespace SmartRecruit.Application.Interfaces.Repositories
     {
         Task<Wallet?> GetWalletByUserIdAsync(long userId);
         Task<PagedList<Transaction>> GetTransactionsAsync(TransactionSearchRequest request);
+        Task<Transaction?> GetTransactionByOrderCodeAsync(long orderCode);
+        Task AddTransactionAsync(Transaction transaction);
+        void UpdateTransaction(Transaction transaction);
     }
 }

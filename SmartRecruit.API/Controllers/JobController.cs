@@ -20,7 +20,7 @@ namespace SmartRecruit.API.Controllers
         public async Task<IActionResult> GetJobs([FromQuery] JobSearchRequest request)
         {
             var jobs = await _jobService.GetJobsAsync(request);
-            var response = jobs.WrapPaged(); 
+            var response = jobs.WrapPaged();
             return Ok(response);
         }
 
@@ -67,5 +67,37 @@ namespace SmartRecruit.API.Controllers
             string status = isVisible ? "Visible" : "Hidden";
             return Ok(new { IsVisible = isVisible }.Wrap($"Job is now {status}"));
         }
+
+        [HttpPost("{id}/boost")]
+        public async Task<IActionResult> BoostJob(long id, [FromBody] BoostJobRequest request)
+        {
+            try
+            {
+                var success = await _jobService.BoostJobAsync(id, request.UserId);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Job boosted successfully! It will now appear at the top of the listings."));
+                }
+                return BadRequest(new { }.Wrap("Failed to boost job."));
+            }
+
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { }.Wrap(ex.Message));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
     }
 }
+

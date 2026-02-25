@@ -16,14 +16,16 @@ namespace SmartRecruit.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGeminiService _geminiService;
+        private readonly IWalletRepository _walletRepository;
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
 
-        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, Hangfire.IBackgroundJobClient backgroundJobClient)
+        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, Hangfire.IBackgroundJobClient backgroundJobClient)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _geminiService = geminiService;
+            _walletRepository = walletRepository;
             _backgroundJobClient = backgroundJobClient;
         }
 
@@ -164,6 +166,57 @@ namespace SmartRecruit.Application.Services
             bool isVisible = job.Status != JobStatus.HIDDEN; // Current state
             await _jobRepository.UpdateVisibilityAsync(id, !isVisible); // Toggle
             return !isVisible;
+        }
+
+        public async Task<bool> BoostJobAsync(long jobId, long userId)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+
+            // 1. Validation
+            if (job.IsAppealed)
+            {
+                throw new InvalidOperationException("Cannot boost an appealed job.");
+            }
+
+            if (job.RecruiterId != userId)
+            {
+                throw new UnauthorizedAccessException("You can only boost your own jobs.");
+            }
+
+            // 2. Wallet & Balance Check
+            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            if (wallet == null) throw new KeyNotFoundException("Wallet not found for user.");
+
+            const decimal boostCost = 20000;
+            if (wallet.Balance < boostCost)
+            {
+                throw new InvalidOperationException("Insufficient balance to boost job.");
+            }
+
+            // 3. Process Payment
+            wallet.Balance -= boostCost;
+            _walletRepository.Update(wallet);
+
+            // 4. Update Job Boost Time
+            job.BoostExpiryTime = DateTime.UtcNow.AddMinutes(20);
+            _jobRepository.Update(job);
+
+            // 5. Create Transaction
+            var transaction = new Transaction
+            {
+                UserId = userId,
+                WalletId = wallet.Id,
+                Amount = boostCost,
+                Type = TransactionType.BOOST,
+                Status = TransactionStatus.SUCCESS,
+                Description = $"Boost job {job.Id}: {job.Title}",
+                CreatedAt = DateTime.UtcNow
+            };
+            await _walletRepository.AddTransactionAsync(transaction);
+
+            // 6. Complete Unit of Work
+            return await _unitOfWork.CompleteAsync() > 0;
         }
 
 

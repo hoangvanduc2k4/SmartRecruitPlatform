@@ -41,10 +41,32 @@ namespace SmartRecruit.Infrastructure.Repositories
                 query = query.Where(a => (int)a.Status == request.Status.Value);
             }
 
-            // Default sort: newest first
-            query = query.OrderByDescending(a => a.CreatedAt);
+            // Default sort: newest first, or by AI score if requested
+            if (request.SortByScore)
+            {
+                query = query.OrderByDescending(a => a.MatchScore);
+            }
+            else
+            {
+                query = query.OrderByDescending(a => a.CreatedAt);
+            }
 
             return await PagedList<Applications>.CreateAsync(query, request.Page, request.PageSize);
+        }
+
+        public async Task<bool> IsAlreadyAppliedAsync(long jobId, long candidateId)
+        {
+            return await _context.Set<Applications>()
+                .AnyAsync(a => a.JobId == jobId && a.CandidateId == candidateId);
+        }
+
+        public async Task<Applications?> GetApplicationWithDetailsAsync(long id)
+        {
+            return await _context.Set<Applications>()
+                .Include(a => a.Job)
+                .Include(a => a.Candidate)
+                    .ThenInclude(u => u.CandidateProfile)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }
