@@ -1,20 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SmartRecruit.WebPortal.Pages
+namespace SmartRecruitWeb.Pages;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    private readonly ILogger<IndexModel> _logger;
+
+    public IndexModel(ILogger<IndexModel> logger)
     {
-        private readonly ILogger<IndexModel> _logger;
+        _logger = logger;
+    }
 
-        public IndexModel(ILogger<IndexModel> logger)
+    public IActionResult OnGet()
+    {
+        var mockRole = Request.Cookies["MockUserRole"];
+        if (string.IsNullOrEmpty(mockRole))
         {
-            _logger = logger;
+            return Page();
         }
 
-        public void OnGet()
+        return mockRole switch
         {
-
-        }
+            "ADMIN" => RedirectToPage("/Admin/AdminDashboard"),
+            "RECRUITER" => RedirectToPage("/Recruiter/RecruiterJobs"),
+            "CANDIDATE" => RedirectToPage("/Candidate/Dashboard"),
+            _ => Page()
+        };
     }
 }

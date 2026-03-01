@@ -1,0 +1,76 @@
+@page "/AdminTransactions"
+@model SmartRecruitWeb.Pages.AdminTransactionsModel
+@{
+    ViewData["Title"] = "Global Transaction Ledger";
+    
+    // Data is loaded from PageModel
+}
+
+<div class="space-y-12 animate-in fade-in duration-700 pb-20">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div class="space-y-2">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-50 border border-green-100 text-green-700 shadow-sm">Financial Nexus</span>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter uppercase">Global Transaction Ledger</h2>
+            <p class="text-slate-500 font-medium">Real-time auditing of ecosystem capital throughput.</p>
+        </div>
+        <div class="flex gap-3">
+            <button class="h-12 px-6 border border-slate-200 text-slate-600 bg-white font-bold rounded-xl hover:bg-slate-50 transition">Reconcile All</button>
+            <button class="h-12 px-6 bg-slate-900 text-white font-bold rounded-xl shadow-lg hover:bg-slate-800 transition">Export Audit (XLSX)</button>
+        </div>
+    </div>
+
+    <!-- FINANCIAL OVERVIEW -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm group hover:scale-[1.02] transition-transform cursor-pointer">
+            <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-slate-100"><i class="fas fa-chart-line-up"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Platform Gross Revenue</p>
+            <h3 class="text-2xl font-black text-slate-900 tracking-tighter">45,200,000 VND</h3>
+        </div>
+        <div class="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm group hover:scale-[1.02] transition-transform cursor-pointer">
+            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-slate-100"><i class="fas fa-credit-card"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">PayOS Gateway Volume</p>
+            <h3 class="text-2xl font-black text-slate-900 tracking-tighter">32,400,000 VND</h3>
+        </div>
+        <div class="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm group hover:scale-[1.02] transition-transform cursor-pointer">
+            <div class="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-slate-100"><i class="fas fa-percentage"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">System Service Fees</p>
+            <h3 class="text-2xl font-black text-slate-900 tracking-tighter">12,800,000 VND</h3>
+        </div>
+    </div>
+
+    <div class="overflow-hidden border border-slate-200/60 shadow-xl shadow-slate-200/20 bg-white rounded-[3rem]">
+        <table class="w-full text-left">
+            <thead class="bg-slate-50/50 border-b border-slate-100">
+                <tr>
+                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Protocol Hash</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Origin Identity</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Transaction Type</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Net Value</th>
+                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Deployment Time</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+                @foreach (var t in Model.Transactions)
+                {
+                    <tr class="hover:bg-slate-50/80 transition-all group font-mono">
+                        <td class="px-10 py-8 text-indigo-600 font-black text-xs">@t.Id</td>
+                        <td class="px-8 py-8">
+                            <span class="text-sm font-black text-slate-900 uppercase">@t.User</span>
+                        </td>
+                        <td class="px-8 py-8">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 border border-slate-200 text-[9px] font-black uppercase tracking-widest rounded-lg">
+                                @t.Type.Replace("_", " ")
+                            </span>
+                        </td>
+                        <td class="px-8 py-8 text-right text-sm font-black tabular-nums @(t.Amount > 0 ? "text-green-600" : "text-slate-900")">
+                            @(t.Amount > 0 ? "+" : "")@t.Amount.ToString("N0") <span class="text-[9px] opacity-30">VND</span>
+                        </td>
+                        <td class="px-10 py-8 text-right text-[10px] text-slate-400 font-bold uppercase">@t.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, "?CurrentPage={0}")' />
+</div>

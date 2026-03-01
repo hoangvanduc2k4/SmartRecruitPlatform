@@ -1,0 +1,156 @@
+@page "/AdminOversight"
+@model SmartRecruitWeb.Pages.AdminOversightModel
+@{
+    ViewData["Title"] = "Content Oversight";
+    
+    // MOCK DATA for rendering
+    var aiLogs = new[] {
+        new { Id = "log-1", JobId = "job-99", RecruiterName = "Sady HR", Reason = "High similarity to known phishing JD", ContentSnippet = "Requesting bank details in description...", Timestamp = "2023-11-21 10:20", Severity = "HIGH" },
+        new { Id = "log-2", JobId = "job-100", RecruiterName = "Bot Rec", Reason = "Repeated skill injection spam", ContentSnippet = "React React React React React...", Timestamp = "2023-11-21 11:45", Severity = "MEDIUM" }
+    };
+    
+    var appeals = new[] {
+        new { Id = "ap-1", JobId = "job-1", RecruiterName = "John HR Manager", Message = "The AI incorrectly flagged our legal terms as phishing. Please review.", Status = "PENDING", Timestamp = "2023-11-21 09:00" }
+    };
+    
+    var transactions = new[] {
+        new { Id = "TXN-001", UserId = "rec-1", UserName = "John HR Manager", Amount = 5000000m, Description = "PayOS Topup #8812", Type = "TOPUP", CreatedAt = "2023-11-20 14:00" },
+        new { Id = "TXN-002", UserId = "rec-1", UserName = "John HR Manager", Amount = -50000m, Description = "Job Post: Senior .NET Dev", Type = "SPEND", CreatedAt = "2023-11-21 10:15" },
+        new { Id = "TXN-003", UserId = "rec-1", UserName = "John HR Manager", Amount = -20000m, Description = "Job Boost: Senior .NET Dev", Type = "SPEND", CreatedAt = "2023-11-21 12:00" }
+    };
+}
+
+<div class="space-y-12 animate-in fade-in duration-700 pb-20">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div class="space-y-2">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Audit & Compliance</span>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter uppercase">Content Oversight</h2>
+            <p class="text-slate-500 font-medium">Auditing AI decision logs, handling appeals, and verifying financial throughput.</p>
+        </div>
+
+        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+            <a href="?Tab=AI_LOGS" class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "AI_LOGS" ? "bg-white text-indigo-600 shadow-xl" : "text-slate-500 hover:text-slate-800")">
+                AI Logs
+            </a>
+            <a href="?Tab=APPEALS" class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "APPEALS" ? "bg-white text-indigo-600 shadow-xl" : "text-slate-500 hover:text-slate-800")">
+                Appeals (1)
+            </a>
+            <a href="?Tab=FINANCIAL" class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "FINANCIAL" ? "bg-white text-indigo-600 shadow-xl" : "text-slate-500 hover:text-slate-800")">
+                Financial Audit
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Tab == "AI_LOGS")
+    {
+        <div class="overflow-hidden border border-slate-200/60 bg-white rounded-[3rem] animate-in slide-in-from-bottom-5 shadow-sm">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50/50 border-b border-slate-100">
+                    <tr>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Target Job / Recruiter</th>
+                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reason for Block</th>
+                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Severity</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach (var log in aiLogs)
+                    {
+                        <tr class="hover:bg-slate-50 transition-all group">
+                            <td class="px-10 py-8">
+                                <p class="font-black text-slate-900 text-sm">Job ID: @log.JobId</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">@log.RecruiterName</p>
+                            </td>
+                            <td class="px-8 py-8">
+                                <p class="text-sm font-black text-red-600 mb-1">@log.Reason</p>
+                                <p class="text-[10px] text-slate-400 font-medium italic">"@log.ContentSnippet"</p>
+                            </td>
+                            <td class="px-8 py-8">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(log.Severity == "HIGH" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800")">
+                                    @log.Severity
+                                </span>
+                            </td>
+                            <td class="px-10 py-8 text-right text-[10px] font-black text-slate-400 uppercase">@log.Timestamp</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (Model.Tab == "APPEALS")
+    {
+        <div class="grid grid-cols-1 gap-8 animate-in slide-in-from-bottom-5">
+            @foreach (var appeal in appeals)
+            {
+                <div class="p-10 bg-white border border-slate-200 rounded-[3rem] group shadow-sm">
+                    <div class="flex flex-col lg:flex-row justify-between gap-10">
+                        <div class="flex-1 space-y-6">
+                            <div class="flex items-center gap-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(appeal.Status == "PENDING" ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800")">@appeal.Status</span>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">@appeal.Timestamp</span>
+                            </div>
+                            <h4 class="text-2xl font-black text-slate-900 tracking-tighter">Appeal from @appeal.RecruiterName</h4>
+                            <p class="text-slate-600 font-medium leading-relaxed bg-slate-50 p-6 rounded-2xl border border-slate-100 italic">"@appeal.Message"</p>
+                            <p class="text-[10px] font-black text-indigo-600 uppercase tracking-widest">Job Link Ref: #@appeal.JobId</p>
+                        </div>
+                        <div class="w-full lg:w-72 flex flex-col justify-center gap-4">
+                            @if (appeal.Status == "PENDING")
+                            {
+                                <form method="post" asp-page-handler="ApproveAppeal" class="m-0">
+                                    <button class="h-16 w-full rounded-2xl bg-green-600 border-0 shadow-xl shadow-green-100 text-white font-bold hover:bg-green-700 transition">Manual Approve Content</button>
+                                </form>
+                                <form method="post" asp-page-handler="RejectAppeal" class="m-0">
+                                    <button class="h-16 w-full rounded-2xl bg-red-50 text-red-600 border border-red-100 font-bold hover:bg-red-100 transition">Uphold Block</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="text-center py-10 opacity-40 italic">
+                                    <i class="fas fa-check-circle text-4xl mb-4 text-green-500"></i>
+                                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-900">Protocol Resolved</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.Tab == "FINANCIAL")
+    {
+        <div class="overflow-hidden border border-slate-200/60 bg-white rounded-[3rem] animate-in slide-in-from-bottom-5 shadow-sm">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50/50 border-b border-slate-100">
+                    <tr>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Transaction Hash</th>
+                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Identity</th>
+                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Description</th>
+                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Value (VND)</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach (var tx in transactions)
+                    {
+                        <tr class="hover:bg-slate-50 transition-all font-mono">
+                            <td class="px-10 py-8 text-indigo-600 font-black text-xs">@tx.Id</td>
+                            <td class="px-8 py-8">
+                                <p class="font-black text-slate-900 text-sm">@tx.UserName</p>
+                                <p class="text-[9px] text-slate-400 uppercase">ID: @tx.UserId</p>
+                            </td>
+                            <td class="px-8 py-8">
+                                <span class="text-[10px] font-black text-slate-500 uppercase bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">@tx.Description</span>
+                            </td>
+                            <td class="px-8 py-8 text-right text-sm font-black tabular-nums @(tx.Amount > 0 ? "text-green-600" : "text-slate-900")">
+                                @(tx.Amount > 0 ? "+" : "")@tx.Amount.ToString("N0")
+                            </td>
+                            <td class="px-10 py-8 text-right text-[10px] font-black text-slate-400 uppercase">@tx.CreatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
