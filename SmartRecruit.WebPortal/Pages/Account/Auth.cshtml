@@ -1,0 +1,177 @@
+@page "/Auth"
+@model SmartRecruitWeb.Pages.AuthModel
+@{
+    ViewData["Title"] = "Authenticate";
+}
+
+<div class="min-h-[85vh] flex items-center justify-center p-4">
+    <div class="w-full max-w-lg p-10 md:p-12 bg-white rounded-[2rem] border border-slate-200/60 shadow-2xl relative overflow-hidden">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 right-0 w-48 h-48 bg-indigo-50 rounded-full -mr-24 -mt-24 blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-violet-100 rounded-full -ml-16 -mb-16 blur-3xl opacity-50"></div>
+
+        <div class="text-center mb-8 relative z-10">
+            <div class="w-16 h-16 bg-indigo-600 rounded-[1.25rem] flex items-center justify-center text-2xl font-black text-white mx-auto mb-6 shadow-xl shadow-indigo-100 transform hover:rotate-6 transition-transform">SR</div>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter mb-1" id="auth-title">
+                Welcome Back
+            </h2>
+            <p class="text-slate-400 font-bold uppercase tracking-widest text-[9px]" id="auth-subtitle">
+                AI-Powered Recruitment Terminal
+            </p>
+        </div>
+
+        <div class="space-y-4 mb-8 relative z-10" id="google-login">
+            <button class="w-full h-14 bg-white border border-slate-200 rounded-2xl flex items-center justify-center gap-3 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm group">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google" />
+                <span class="text-[11px] font-black uppercase tracking-widest text-slate-600 group-hover:text-slate-900">Continue with Google</span>
+            </button>
+            <div class="flex items-center gap-4 text-slate-200">
+                <div class="h-px bg-slate-100 flex-1"></div>
+                <span class="text-[9px] font-black uppercase tracking-widest text-slate-300">or use credentials</span>
+                <div class="h-px bg-slate-100 flex-1"></div>
+            </div>
+        </div>
+
+        <form method="post" class="space-y-6 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <input type="hidden" asp-for="Mode" id="authMode" value="LOGIN" />
+
+            <!-- Register Only Fields -->
+            <div id="registerFields" class="hidden">
+                <div class="flex bg-slate-100 p-1.5 rounded-2xl mb-4 border border-slate-200/50">
+                    <label class="flex-1 text-center cursor-pointer">
+                        <input type="radio" asp-for="Role" value="CANDIDATE" class="peer sr-only" checked />
+                        <div class="py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all peer-checked:bg-white peer-checked:shadow-lg peer-checked:text-indigo-600 text-slate-400 hover:text-slate-600">Candidate</div>
+                    </label>
+                    <label class="flex-1 text-center cursor-pointer">
+                        <input type="radio" asp-for="Role" value="RECRUITER" class="peer sr-only" />
+                        <div class="py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all peer-checked:bg-white peer-checked:shadow-lg peer-checked:text-indigo-600 text-slate-400 hover:text-slate-600">Recruiter</div>
+                    </label>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Full Name</label>
+                    <input type="text" asp-for="FullName" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" placeholder="John Doe" />
+                </div>
+            </div>
+
+            <!-- Email (All Modes) -->
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Address</label>
+                <input type="email" asp-for="Email" required class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" placeholder="name@company.xyz" />
+            </div>
+
+            <!-- Password Fields -->
+            <div class="relative" id="passwordFieldGroup">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Password</label>
+                <input type="password" asp-for="Password" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" placeholder="••••••••" />
+                <button type="button" onclick="setMode('FORGOT_PASSWORD')" class="absolute right-1 top-0 text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline" id="forgotPwdBtn">
+                    Forgot?
+                </button>
+            </div>
+
+            <div id="confirmPasswordField" class="hidden mb-4 relative mt-4">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Confirm Password</label>
+                <input type="password" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none" placeholder="••••••••" />
+            </div>
+
+            <button type="submit" class="w-full h-14 text-sm mt-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100" id="submitBtn">
+                Initiate Access
+            </button>
+
+            <div class="text-center text-xs pt-4" id="toggleAuthMode">
+                <span class="text-slate-400 font-medium" id="toggleText">New to the platform?</span>
+                <button type="button" onclick="toggleMainMode()" class="text-indigo-600 font-black hover:underline uppercase tracking-wider ml-2" id="toggleBtn">
+                    Register Hub
+                </button>
+            </div>
+            
+            <button type="button" onclick="setMode('LOGIN')" id="backToLoginBtn" class="hidden w-full text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline mt-4">
+                Back to Login
+            </button>
+        </form>
+
+        <!-- PROTOTYPE TESTING TOOLBOX -->
+        <div class="mt-10 p-6 bg-slate-900 rounded-[2rem] border border-white/5 relative z-10 shadow-2xl">
+            <p class="text-[8px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-4 text-center">Bypass Protocol (Dev Only)</p>
+            <form method="post" asp-page-handler="QuickLogin">
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="submit" name="userRole" value="CANDIDATE" class="flex flex-col items-center gap-2 p-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
+                        <i class="fas fa-user text-[10px] text-indigo-300"></i>
+                        <span class="text-[7px] font-black uppercase text-slate-500 group-hover:text-white">User</span>
+                    </button>
+                    <button type="submit" name="userRole" value="RECRUITER" class="flex flex-col items-center gap-2 p-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
+                        <i class="fas fa-user-tie text-[10px] text-indigo-300"></i>
+                        <span class="text-[7px] font-black uppercase text-slate-500 group-hover:text-white">HR</span>
+                    </button>
+                    <button type="submit" name="userRole" value="ADMIN" class="flex flex-col items-center gap-2 p-3 bg-red-500/10 hover:bg-red-500/20 rounded-2xl border border-red-500/10 transition-all group">
+                        <i class="fas fa-shield-halved text-[10px] text-red-400"></i>
+                        <span class="text-[7px] font-black uppercase text-red-500 group-hover:text-white">Admin</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function setMode(mode) {
+            const authMode = document.getElementById('authMode');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const googleLogin = document.getElementById('google-login');
+            const registerFields = document.getElementById('registerFields');
+            const passwordFieldGroup = document.getElementById('passwordFieldGroup');
+            const confirmPasswordField = document.getElementById('confirmPasswordField');
+            const forgotPwdBtn = document.getElementById('forgotPwdBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const toggleAuthMode = document.getElementById('toggleAuthMode');
+            const backToLoginBtn = document.getElementById('backToLoginBtn');
+
+            authMode.value = mode;
+
+            if (mode === 'LOGIN') {
+                title.innerText = 'Welcome Back';
+                subtitle.innerText = 'AI-POWERED RECRUITMENT TERMINAL';
+                googleLogin.classList.remove('hidden');
+                registerFields.classList.add('hidden');
+                passwordFieldGroup.classList.remove('hidden');
+                confirmPasswordField.classList.add('hidden');
+                forgotPwdBtn.classList.remove('hidden');
+                submitBtn.innerText = 'Initiate Access';
+                toggleAuthMode.classList.remove('hidden');
+                backToLoginBtn.classList.add('hidden');
+                document.getElementById('toggleText').innerText = "New to the platform?";
+                document.getElementById('toggleBtn').innerText = "Register Hub";
+            } else if (mode === 'REGISTER') {
+                title.innerText = 'Create Account';
+                subtitle.innerText = 'AI-POWERED RECRUITMENT TERMINAL';
+                googleLogin.classList.remove('hidden');
+                registerFields.classList.remove('hidden');
+                passwordFieldGroup.classList.remove('hidden');
+                confirmPasswordField.classList.remove('hidden');
+                forgotPwdBtn.classList.add('hidden');
+                submitBtn.innerText = 'Create DNA Profile';
+                toggleAuthMode.classList.remove('hidden');
+                backToLoginBtn.classList.add('hidden');
+                document.getElementById('toggleText').innerText = "Already verified?";
+                document.getElementById('toggleBtn').innerText = "Login Terminal";
+            } else if (mode === 'FORGOT_PASSWORD') {
+                title.innerText = 'Recover Key';
+                subtitle.innerText = 'ENTER YOUR EMAIL TO RESET SECURITY ACCESS';
+                googleLogin.classList.add('hidden');
+                registerFields.classList.add('hidden');
+                passwordFieldGroup.classList.add('hidden');
+                confirmPasswordField.classList.add('hidden');
+                submitBtn.innerText = 'Send Reset Link';
+                toggleAuthMode.classList.add('hidden');
+                backToLoginBtn.classList.remove('hidden');
+            }
+        }
+
+        function toggleMainMode() {
+            const currentMode = document.getElementById('authMode').value;
+            setMode(currentMode === 'LOGIN' ? 'REGISTER' : 'LOGIN');
+        }
+    </script>
+}

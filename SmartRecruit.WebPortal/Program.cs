@@ -1,34 +1,64 @@
-namespace SmartRecruit.WebPortal
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+
+// Register IHttpContextAccessor for TokenService
+builder.Services.AddHttpContextAccessor();
+
+// Register Token Service & Auth Handler
+builder.Services.AddScoped<SmartRecruitWeb.Services.Api.ITokenService, SmartRecruitWeb.Services.Api.TokenService>();
+builder.Services.AddTransient<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
+
+// Configure Base API URL
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiBaseUrl") ?? "http://localhost:5000/api/";
+
+// Register API Services with HttpClient and JwtAuthHandler
+builder.Services.AddHttpClient<SmartRecruitWeb.Services.Api.IAuthApiService, SmartRecruitWeb.Services.Api.AuthApiService>(client =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+    client.BaseAddress = new Uri(apiBaseUrl);
+}).AddHttpMessageHandler<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
 
-            // Add services to the container.
-            builder.Services.AddRazorPages();
+builder.Services.AddHttpClient<SmartRecruitWeb.Services.Api.IJobApiService, SmartRecruitWeb.Services.Api.JobApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+}).AddHttpMessageHandler<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
 
-            var app = builder.Build();
+builder.Services.AddHttpClient<SmartRecruitWeb.Services.Api.IApplicationApiService, SmartRecruitWeb.Services.Api.ApplicationApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+}).AddHttpMessageHandler<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+builder.Services.AddHttpClient<SmartRecruitWeb.Services.Api.IWalletApiService, SmartRecruitWeb.Services.Api.WalletApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+}).AddHttpMessageHandler<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+builder.Services.AddHttpClient<SmartRecruitWeb.Services.Api.IAdminApiService, SmartRecruitWeb.Services.Api.AdminApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+}).AddHttpMessageHandler<SmartRecruitWeb.Services.Api.JwtAuthHandler>();
 
-            app.UseRouting();
+// Register Mock Data Service as a Singleton so all pages share the same mock data instance
+builder.Services.AddSingleton<SmartRecruitWeb.Services.IMockDataService, SmartRecruitWeb.Services.MockDataService>();
 
-            app.UseAuthorization();
+var app = builder.Build();
 
-            app.MapRazorPages();
-
-            app.Run();
-        }
-    }
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseStaticFiles();
+app.MapRazorPages();
+
+app.Run();

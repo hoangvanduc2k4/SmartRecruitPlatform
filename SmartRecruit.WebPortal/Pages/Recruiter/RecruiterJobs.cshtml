@@ -1,0 +1,187 @@
+@page "/RecruiterJobs"
+@model SmartRecruitWeb.Pages.RecruiterJobsModel
+@using SmartRecruitWeb.Models
+@{
+    ViewData["Title"] = "Recruitment Hub";
+}
+
+<div class="space-y-12 animate-in fade-in duration-700">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Recruiter Control Hub</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Recruitment Hub</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Manage missions and monitor talent throughput in real-time.</p>
+        </div>
+        <a href="/PostJob" class="inline-flex">
+            <button class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition">
+                <i class="fas fa-plus-circle mr-2"></i> Post New Mission
+            </button>
+        </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
+            <div class="w-14 h-14 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-indigo-100 group-hover:rotate-12 transition-transform"><i class="fas fa-eye text-xl"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Weekly Discovery</p>
+            <div class="flex items-baseline justify-between">
+                <h3 class="text-3xl font-black text-slate-900 tracking-tighter">4,812</h3>
+                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">+22%</span>
+            </div>
+        </div>
+        <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
+            <div class="w-14 h-14 bg-indigo-500 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-indigo-100 group-hover:rotate-12 transition-transform"><i class="fas fa-dna text-xl"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Neural Matches</p>
+            <div class="flex items-baseline justify-between">
+                <h3 class="text-3xl font-black text-slate-900 tracking-tighter">142</h3>
+                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">+15%</span>
+            </div>
+        </div>
+        <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
+            <div class="w-14 h-14 bg-amber-500 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-amber-100 group-hover:rotate-12 transition-transform"><i class="fas fa-bolt text-xl"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Pipeline Speed</p>
+            <div class="flex items-baseline justify-between">
+                <h3 class="text-3xl font-black text-slate-900 tracking-tighter">2.4 Days</h3>
+                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">-1.1d</span>
+            </div>
+        </div>
+        <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
+            <div class="w-14 h-14 bg-slate-900 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-slate-200 group-hover:rotate-12 transition-transform"><i class="fas fa-shield-check text-xl"></i></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Sourcing Quality</p>
+            <div class="flex items-baseline justify-between">
+                <h3 class="text-3xl font-black text-slate-900 tracking-tighter">9.2/10</h3>
+                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">+0.5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Table -->
+    <div class="overflow-hidden border border-slate-200/60 shadow-xl shadow-slate-200/30 bg-white rounded-3xl">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50/80 border-b border-slate-100">
+                    <tr>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Thông tin Job</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Trạng thái</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Lý do AI Block</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Ứng viên</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @if (Model.Jobs.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="5" class="px-8 py-12 text-center text-slate-500">
+                                No jobs found. Post a new mission to get started.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var job in Model.Jobs)
+                        {
+                            <tr class="hover:bg-indigo-50/20 transition-all group @(job.Status == JobStatus.BLOCKED ? "bg-red-50/10" : "")">
+                                <td class="px-8 py-8">
+                                    <p class="font-black text-slate-800 text-lg group-hover:text-indigo-600 transition-colors">@job.Title</p>
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 flex items-center gap-2">
+                                        <i class="fas fa-location-dot text-indigo-400"></i> @job.Location
+                                    </p>
+                                </td>
+                                <td class="px-6 py-8">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @(job.Status == JobStatus.PUBLISHED ? "bg-green-100 text-green-800" : job.Status == JobStatus.PENDING ? "bg-yellow-100 text-yellow-800" : job.Status == JobStatus.BLOCKED ? "bg-red-100 text-red-800" : "bg-slate-100 text-slate-800")">
+                                        @job.Status
+                                    </span>
+                                </td>
+                                <td class="px-6 py-8 max-w-xs">
+                                    @if (job.Status == JobStatus.BLOCKED)
+                                    {
+                                        <div class="flex flex-col gap-2">
+                                            <p class="text-[10px] text-red-500 font-bold leading-tight line-clamp-2">Nghi ngờ vi phạm quy định</p>
+                                            <button onclick="openAppeal('@job.Id')" class="text-[9px] font-black text-indigo-600 uppercase hover:underline text-left">Khiếu nại</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-[10px] text-slate-300 italic uppercase font-black">No issues</span>
+                                    }
+                                </td>
+                                <td class="px-6 py-8 text-center">
+                                    <span class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 text-sm font-black border border-indigo-100/50 shadow-inner">
+                                        @Model.Applications.Count(a => a.JobId == job.Id)
+                                    </span>
+                                </td>
+                                <td class="px-8 py-8 text-right">
+                                    <div class="flex justify-end items-center gap-3">
+                                        <a href="/JobDetail?Id=@job.Id" class="inline-flex">
+                                            <button class="bg-indigo-600 text-white hover:bg-indigo-700 text-[10px] font-black h-11 px-6 rounded-xl transition">
+                                                View & Manage
+                                            </button>
+                                        </a>
+                                        @if (job.Status != JobStatus.BLOCKED)
+                                        {
+                                            <form method="post" asp-page-handler="ToggleStatus" class="inline-flex m-0">
+                                                <input type="hidden" name="jobId" value="@job.Id" />
+                                                <button type="submit" title="@(job.Status == JobStatus.PUBLISHED ? "Hide Job" : "Show Job")" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border @(job.Status == JobStatus.PUBLISHED ? "bg-slate-50 text-slate-400 hover:text-amber-600 hover:bg-amber-50 border-slate-100" : "bg-green-50 text-green-600 border-green-100 hover:bg-green-100")">
+                                                    <i class="fas @(job.Status == JobStatus.PUBLISHED ? "fa-eye-slash" : "fa-eye")"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, "?CurrentPage={0}")' />
+</div>
+
+<!-- Appeal Modal -->
+<div id="appealModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeAppeal()"></div>
+    <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md mx-4 p-8 relative z-10 animate-in zoom-in-95 duration-200">
+        <h3 class="text-xl font-black text-slate-900 mb-6">Appeal AI Block</h3>
+        <form method="post" asp-page-handler="AppealBlock" class="space-y-6" onsubmit="return submitAppeal()">
+            <input type="hidden" name="jobId" id="appealJobId" />
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Giải trình khiếu nại</label>
+                <textarea name="message" required id="appealMsg" placeholder="Tại sao bài đăng này hợp lệ?" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+            </div>
+            <div class="flex gap-4">
+                <button type="button" class="flex-1 h-12 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition" onclick="closeAppeal()">Hủy</button>
+                <button type="submit" id="submitAppealBtn" class="flex-1 h-12 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition">Gửi</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAppeal(jobId) {
+            document.getElementById('appealJobId').value = jobId;
+            document.getElementById('appealMsg').value = '';
+            document.getElementById('appealModal').classList.remove('hidden');
+        }
+
+        function closeAppeal() {
+            document.getElementById('appealModal').classList.add('hidden');
+        }
+
+        function submitAppeal() {
+            var btn = document.getElementById('submitAppealBtn');
+            btn.innerHTML = 'Đang gửi...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            setTimeout(function() {
+                alert('Khiếu nại của bạn đã được gửi tới Ban quản trị. Chúng tôi sẽ phản hồi trong vòng 24h.');
+                closeAppeal();
+                btn.innerHTML = 'Gửi';
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }, 500);
+            return false; // Stop form submission for simulation
+        }
+    </script>
+}
