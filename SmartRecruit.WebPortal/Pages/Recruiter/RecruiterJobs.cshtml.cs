@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class RecruiterJobsModel : PageModel
     {
@@ -31,7 +29,7 @@ namespace SmartRecruitWeb.Pages
             if (user != null)
             {
                 var query = _mockDataService.Jobs.Where(j => j.RecruiterId == user.Id);
-                
+
                 var count = query.Count();
                 TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
                 if (CurrentPage < 1) CurrentPage = 1;
@@ -50,7 +48,7 @@ namespace SmartRecruitWeb.Pages
             }
             return RedirectToPage();
         }
-        
+
         public IActionResult OnPostAppealBlock(string jobId, string message)
         {
             // Just simulate appeal

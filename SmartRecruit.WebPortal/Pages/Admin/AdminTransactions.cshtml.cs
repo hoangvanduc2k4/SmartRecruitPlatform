@@ -1,8 +1,7 @@
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class AdminTransactionsModel : PageModel
     {
@@ -12,14 +11,15 @@ namespace SmartRecruitWeb.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
 
-        public class TransactionViewModel {
-            public string Id { get; set; }
-            public string User { get; set; }
-            public string Type { get; set; }
+        public class TransactionViewModel
+        {
+            public required string Id { get; set; }
+            public required string User { get; set; }
+            public required string Type { get; set; }
             public decimal Amount { get; set; }
-            public string Method { get; set; }
-            public string Date { get; set; }
-            public string Status { get; set; }
+            public required string Method { get; set; }
+            public required string Date { get; set; }
+            public required string Status { get; set; }
         }
 
         public System.Collections.Generic.IList<TransactionViewModel> Transactions { get; set; } = new System.Collections.Generic.List<TransactionViewModel>();

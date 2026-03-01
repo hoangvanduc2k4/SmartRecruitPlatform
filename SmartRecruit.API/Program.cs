@@ -2,8 +2,8 @@
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using SmartRecruit.API.Extensions;
-using SmartRecruit.API.Logging;
+using SmartRecruit.Extensions;
+using SmartRecruit.Logging;
 using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
 using SmartRecruit.Infrastructure.Data;

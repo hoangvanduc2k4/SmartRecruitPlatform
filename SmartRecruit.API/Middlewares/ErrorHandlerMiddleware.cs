@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.Json;
 using SmartRecruit.Application.Wrappers;
 
-namespace SmartRecruit.API.Middlewares
+namespace SmartRecruit.Middlewares
 {
     public class ErrorHandlerMiddleware
     {

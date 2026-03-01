@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class AuthModel : PageModel
     {
@@ -16,10 +16,10 @@ namespace SmartRecruitWeb.Pages
 
         [BindProperty]
         public string Email { get; set; } = string.Empty;
-        
+
         [BindProperty]
         public string Password { get; set; } = string.Empty;
-        
+
         [BindProperty]
         public string Mode { get; set; } = "LOGIN"; // LOGIN, REGISTER, FORGOT_PASSWORD
 
@@ -39,7 +39,7 @@ namespace SmartRecruitWeb.Pages
             Response.Cookies.Append("MockUserRole", Role.ToString());
             return RedirectToPage("/Index");
         }
-        
+
         public IActionResult OnPostQuickLogin(string userRole)
         {
             // Mock quick login, redirect to Index

@@ -1,7 +1,6 @@
-using SmartRecruitWeb.Models;
-using System.Net.Http.Json;
+using WebPortal.Models;
 
-namespace SmartRecruitWeb.Services.Api
+namespace WebPortal.Services.Api
 {
     public interface IJobApiService
     {
@@ -33,7 +32,7 @@ namespace SmartRecruitWeb.Services.Api
 
             var queryString = query.Any() ? "?" + string.Join("&", query) : "";
             var response = await _httpClient.GetAsync($"jobs{queryString}");
-            
+
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<List<Job>>() ?? new List<Job>();

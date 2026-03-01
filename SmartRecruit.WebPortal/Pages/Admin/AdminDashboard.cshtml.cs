@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class AdminDashboardModel : PageModel
     {

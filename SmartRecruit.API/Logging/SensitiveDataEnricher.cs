@@ -2,7 +2,7 @@ using Serilog.Core;
 using Serilog.Events;
 using System.Collections.Generic;
 
-namespace SmartRecruit.API.Logging
+namespace SmartRecruit.Logging
 {
     public class SensitiveDataEnricher : ILogEventEnricher
     {

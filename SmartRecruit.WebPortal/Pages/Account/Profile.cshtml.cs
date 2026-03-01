@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class ProfileModel : PageModel
     {

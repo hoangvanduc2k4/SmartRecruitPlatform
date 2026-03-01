@@ -1,7 +1,6 @@
-using SmartRecruitWeb.Models;
-using System.Net.Http.Json;
+using WebPortal.Models;
 
-namespace SmartRecruitWeb.Services.Api
+namespace WebPortal.Services.Api
 {
     public interface IApplicationApiService
     {

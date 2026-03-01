@@ -1,24 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
-using System.Linq;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class PostJobModel : PageModel
     {
         private readonly IMockDataService _mockDataService;
-        
+
         public PostJobModel(IMockDataService mockDataService)
         {
             _mockDataService = mockDataService;
         }
 
         [BindProperty]
-        public Job JobInput { get; set; } = new Job 
-        { 
-            JobType = JobType.FULL_TIME, 
+        public Job JobInput { get; set; } = new Job
+        {
+            JobType = JobType.FULL_TIME,
             Category = "Software Development",
             SalaryMin = 1000,
             SalaryMax = 3000
@@ -39,7 +38,7 @@ namespace SmartRecruitWeb.Pages
                 if (user.WalletBalance >= 50000)
                 {
                     user.WalletBalance -= 50000;
-                    
+
                     var newJob = new Job
                     {
                         Id = $"job-{System.Guid.NewGuid().ToString().Substring(0, 8)}",
@@ -56,12 +55,12 @@ namespace SmartRecruitWeb.Pages
                         Category = JobInput.Category ?? "Software Development",
                         CreatedAt = System.DateTime.Now
                     };
-                    
+
                     _mockDataService.Jobs.Add(newJob);
-                    
+
                     _mockDataService.Transactions.Add(new Transaction
                     {
-                        Id = $"tx-{System.Guid.NewGuid().ToString().Substring(0,8)}",
+                        Id = $"tx-{System.Guid.NewGuid().ToString().Substring(0, 8)}",
                         UserId = user.Id,
                         Amount = -50000,
                         Type = "JOB_POST",

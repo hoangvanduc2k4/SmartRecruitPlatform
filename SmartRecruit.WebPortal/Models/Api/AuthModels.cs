@@ -1,4 +1,4 @@
-namespace SmartRecruitWeb.Models.Api
+namespace WebPortal.Models.Api
 {
     public class LoginRequest
     {

@@ -1,6 +1,6 @@
 @page "/JobDetail"
-@model SmartRecruitWeb.Pages.JobDetailModel
-@using SmartRecruitWeb.Models
+@model WebPortal.Pages.JobDetailModel
+@using WebPortal.Models
 @{
     ViewData["Title"] = Model.Job?.Title ?? "Job Board";
     bool isRecruiter = Model.CurrentUser?.Role == UserRole.RECRUITER;

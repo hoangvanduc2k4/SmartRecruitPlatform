@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class ReportsModel : PageModel
     {

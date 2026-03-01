@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class AdminJobsModel : PageModel
     {
@@ -34,7 +32,7 @@ namespace SmartRecruitWeb.Pages
         public void OnGet()
         {
             var jobs = _mockDataService.Jobs.AsQueryable();
-            
+
             TotalPendingCount = jobs.Count(j => j.Status == JobStatus.PENDING);
             TotalActiveCount = jobs.Count(j => j.Status == JobStatus.PUBLISHED);
 
