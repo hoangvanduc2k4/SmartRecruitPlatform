@@ -3,22 +3,26 @@ using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Domain.Entities;
-using SmartRecruit.Domain.Enums;
 using SmartRecruit.Infrastructure.Data;
+using Microsoft.Extensions.Logging;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
     public class JobRepository : GenericRepository<Job>, IJobRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<JobRepository> _logger;
 
-        public JobRepository(ApplicationDbContext context) : base(context)
+        public JobRepository(ApplicationDbContext context, ILogger<JobRepository> logger) : base(context)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<PagedList<Job>> GetJobsAsync(JobSearchRequest request)
         {
+            _logger.LogTrace("Executing SQL query to fetch jobs with parameters: {@Request}", request);
             var query = _context.Set<Job>()
                 .Include(x => x.Category)
                 .AsQueryable();
@@ -151,10 +155,12 @@ namespace SmartRecruit.Infrastructure.Repositories
                 if (isVisible && job.Status == JobStatus.HIDDEN)
                 {
                     job.Status = JobStatus.APPROVED;
+                    _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to APPROVED (Visible)", id);
                 }
                 else if (!isVisible)
                 {
                     job.Status = JobStatus.HIDDEN;
+                    _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to HIDDEN", id);
                 }
 
                 _context.Set<Job>().Update(job);

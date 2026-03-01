@@ -6,6 +6,7 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Application.Services
 {
@@ -16,23 +17,27 @@ namespace SmartRecruit.Application.Services
         private readonly IMapper _mapper;
         private readonly IGeminiService _geminiService;
         private readonly IBackgroundJobClient _backgroundJobClient;
+        private readonly ILogger<ApplicationService> _logger;
 
         public ApplicationService(
             IApplicationRepository applicationRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IGeminiService geminiService,
-            IBackgroundJobClient backgroundJobClient)
+            IBackgroundJobClient backgroundJobClient,
+            ILogger<ApplicationService> logger)
         {
             _applicationRepository = applicationRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _geminiService = geminiService;
             _backgroundJobClient = backgroundJobClient;
+            _logger = logger;
         }
 
         public async Task<PagedList<ApplicationResponse>> GetApplicationsAsync(ApplicationSearchRequest request)
         {
+            _logger.LogInformation("Executing GetApplications use-case with search request: {@Request}", request);
             var applications = await _applicationRepository.GetApplicationsAsync(request);
             var dtos = _mapper.Map<List<ApplicationResponse>>(applications);
             return new PagedList<ApplicationResponse>(dtos, applications.TotalCount, applications.CurrentPage, applications.PageSize);
@@ -62,10 +67,14 @@ namespace SmartRecruit.Application.Services
 
         public async Task<bool> ApplyJobAsync(ApplyJobRequest request)
         {
+            _logger.LogInformation("Executing ApplyJob use-case for JobId: {JobId} by CandidateId: {CandidateId}", request.JobId, request.CandidateId);
             // 1. Kiểm tra xem đã apply chưa
             bool alreadyApplied = await _applicationRepository.IsAlreadyAppliedAsync(request.JobId, request.CandidateId);
             if (alreadyApplied)
+            {
+                _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has already applied for Job {JobId}", request.CandidateId, request.JobId);
                 throw new InvalidOperationException("You have already applied for this job.");
+            }
 
             // 2. Tạo bản ghi đơn giản
             var application = new Applications
@@ -81,6 +90,7 @@ namespace SmartRecruit.Application.Services
 
             // 3. Đẩy vào Hangfire để AI xử lý ngầm (Bất đồng bộ)
             _backgroundJobClient.Enqueue<IApplicationService>(x => x.ScoreApplicationAsync(application.Id));
+            _logger.LogInformation("ApplyJob use-case success: Application {ApplicationId} created and enqueued for AI scoring", application.Id);
 
             return true; // Chỉ cần trả về thành công
         }
@@ -106,8 +116,12 @@ namespace SmartRecruit.Application.Services
             {
                 // Allow Hangfire to retry on transient errors
                 if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("overloaded"))
+                {
+                    _logger.LogWarning(ex, "Transient error during ScoreApplication use-case for ApplicationId {ApplicationId}, retrying...", applicationId);
                     throw;
+                }
 
+                _logger.LogError(ex, "ScoreApplication use-case failed for ApplicationId {ApplicationId}", applicationId);
                 application.AI_Summary = $"AI Scoring Failed: {ex.Message}";
             }
 
@@ -179,7 +193,9 @@ namespace SmartRecruit.Application.Services
             application.UpdatedAt = DateTime.UtcNow;
 
             _applicationRepository.Update(application);
-            return await _unitOfWork.CompleteAsync() > 0;
+            var result = await _unitOfWork.CompleteAsync() > 0;
+            if (result) _logger.LogInformation("UpdateStatus use-case successful for ApplicationId {ApplicationId} to {Status}", id, newStatus);
+            return result;
         }
 
         public async Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)

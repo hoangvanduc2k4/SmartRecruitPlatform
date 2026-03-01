@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.API.Controllers
 {
@@ -10,10 +11,12 @@ namespace SmartRecruit.API.Controllers
     public class ApplicationController : ControllerBase
     {
         private readonly IApplicationService _applicationService;
+        private readonly ILogger<ApplicationController> _logger;
 
-        public ApplicationController(IApplicationService applicationService)
+        public ApplicationController(IApplicationService applicationService, ILogger<ApplicationController> logger)
         {
             _applicationService = applicationService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -22,6 +25,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetApplications([FromQuery] ApplicationSearchRequest request)
         {
+            _logger.LogInformation("API GetApplications called with parameters: {@Request}", request);
             var applications = await _applicationService.GetApplicationsAsync(request);
             return Ok(applications.WrapPaged());
         }
@@ -32,6 +36,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("candidate/{candidateId}")]
         public async Task<IActionResult> GetByCandidate(long candidateId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
+            _logger.LogInformation("API GetByCandidate called for CandidateId: {CandidateId}, Page: {Page}, PageSize: {PageSize}", candidateId, page, pageSize);
             var applications = await _applicationService.GetApplicationsByCandidateAsync(candidateId, page, pageSize);
             return Ok(applications.WrapPaged());
         }
@@ -42,6 +47,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("job/{jobId}")]
         public async Task<IActionResult> GetByJob(long jobId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] bool sortByScore = false)
         {
+            _logger.LogInformation("API GetByJob called for JobId: {JobId}, Page: {Page}, PageSize: {PageSize}, SortByScore: {SortByScore}", jobId, page, pageSize, sortByScore);
             var applications = await _applicationService.GetApplicationsByJobAsync(jobId, page, pageSize, sortByScore);
             return Ok(applications.WrapPaged());
         }
@@ -52,6 +58,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetApplicationById(long id)
         {
+            _logger.LogInformation("API GetApplicationById called for Id: {Id}", id);
             var application = await _applicationService.GetApplicationByIdAsync(id);
             return Ok(application.Wrap());
         }
@@ -63,6 +70,7 @@ namespace SmartRecruit.API.Controllers
         [HttpPost]
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
         {
+            _logger.LogInformation("API ApplyJob called by CandidateId: {CandidateId} for JobId: {JobId}", request.CandidateId, request.JobId);
             await _applicationService.ApplyJobAsync(request);
 
             // Trả về thông báo thành công, không kèm data Score bị null
@@ -78,6 +86,7 @@ namespace SmartRecruit.API.Controllers
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateApplicationStatusRequest request)
         {
+            _logger.LogInformation("API UpdateStatus called for ApplicationId: {Id} with Status: {Status}", id, request.Status);
             try
             {
                 var success = await _applicationService.UpdateStatusAsync(id, request);
@@ -97,6 +106,7 @@ namespace SmartRecruit.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred during UpdateStatus for ApplicationId: {Id}", id);
                 return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
             }
         }
@@ -107,6 +117,7 @@ namespace SmartRecruit.API.Controllers
         [HttpPut("bulk-status")]
         public async Task<IActionResult> BulkUpdateStatus([FromBody] BulkUpdateApplicationStatusRequest request)
         {
+            _logger.LogInformation("API BulkUpdateStatus called for {Count} applications to Status: {Status}", request.ApplicationIds.Count, request.Status);
             try
             {
                 var count = await _applicationService.BulkUpdateStatusAsync(request);
@@ -118,6 +129,7 @@ namespace SmartRecruit.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error occurred during BulkUpdateStatus");
                 return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
             }
         }

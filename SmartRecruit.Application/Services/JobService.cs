@@ -7,6 +7,7 @@ using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
 using Hangfire;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Application.Services
 {
@@ -18,8 +19,9 @@ namespace SmartRecruit.Application.Services
         private readonly IGeminiService _geminiService;
         private readonly IWalletRepository _walletRepository;
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
+        private readonly ILogger<JobService> _logger;
 
-        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, Hangfire.IBackgroundJobClient backgroundJobClient)
+        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, Hangfire.IBackgroundJobClient backgroundJobClient, ILogger<JobService> logger)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
@@ -27,6 +29,7 @@ namespace SmartRecruit.Application.Services
             _geminiService = geminiService;
             _walletRepository = walletRepository;
             _backgroundJobClient = backgroundJobClient;
+            _logger = logger;
         }
 
         public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId)
@@ -77,6 +80,7 @@ namespace SmartRecruit.Application.Services
 
             // Enqueue background moderation
             _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
+            _logger.LogInformation("CreateJob use-case success: Job {JobId} created and enqueued for AI moderation", job.Id);
 
             // Refresh job to get Category Name
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);
@@ -96,11 +100,13 @@ namespace SmartRecruit.Application.Services
                 {
                     job.Status = JobStatus.APPROVED;
                     job.ModerationNote = "Approved by AI.";
+                    _logger.LogInformation("ModerateJob use-case: Job {JobId} APPROVED by AI", jobId);
                 }
                 else
                 {
                     job.Status = JobStatus.BLOCKED;
                     job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
+                    _logger.LogWarning("ModerateJob use-case: Job {JobId} BLOCKED by AI. Reason: {Violations}", jobId, job.ModerationNote);
                 }
             }
             catch (Exception ex)
@@ -108,10 +114,12 @@ namespace SmartRecruit.Application.Services
                 // Check for transient errors to allow Hangfire to retry
                 if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("The model is overloaded"))
                 {
+                    _logger.LogWarning(ex, "ModerateJob use-case transient error for JobId {JobId}, retrying...", jobId);
                     throw; // Re-throw to let Hangfire retry with exponential backoff
                 }
 
                 // Permanent errors (config missing, validation, etc.) -> Block job
+                _logger.LogError(ex, "ModerateJob use-case failed for JobId {JobId}", jobId);
                 job.Status = JobStatus.BLOCKED;
                 job.ModerationNote = $"AI Check Failed: {ex.Message}";
             }
@@ -216,7 +224,9 @@ namespace SmartRecruit.Application.Services
             await _walletRepository.AddTransactionAsync(transaction);
 
             // 6. Complete Unit of Work
-            return await _unitOfWork.CompleteAsync() > 0;
+            var result = await _unitOfWork.CompleteAsync() > 0;
+            if (result) _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+            return result;
         }
 
 

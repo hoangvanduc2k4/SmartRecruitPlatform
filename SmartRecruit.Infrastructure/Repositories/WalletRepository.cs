@@ -2,22 +2,26 @@ using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.DTO.Wallet;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
-using SmartRecruit.Domain.Entities;
 using SmartRecruit.Infrastructure.Data;
+using Microsoft.Extensions.Logging;
+using SmartRecruit.Domain.Entities;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
     public class WalletRepository : GenericRepository<Wallet>, IWalletRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<WalletRepository> _logger;
 
-        public WalletRepository(ApplicationDbContext context) : base(context)
+        public WalletRepository(ApplicationDbContext context, ILogger<WalletRepository> logger) : base(context)
         {
             _context = context;
+            _logger = logger;
         }   
 
         public async Task<Wallet?> GetWalletByUserIdAsync(long userId)
         {
+            _logger.LogTrace("Executing SQL query to fetch Wallet by UserId: {UserId}", userId);
             return await _context.Set<Wallet>()
                 .Include(w => w.User)
                 .FirstOrDefaultAsync(w => w.UserId == userId);
@@ -25,6 +29,7 @@ namespace SmartRecruit.Infrastructure.Repositories
 
         public async Task<PagedList<Transaction>> GetTransactionsAsync(TransactionSearchRequest request)
         {
+            _logger.LogTrace("Executing SQL query to fetch transactions with parameters: {@Request}", request);
             var query = _context.Set<Transaction>()
                 .AsQueryable();
 
@@ -71,6 +76,7 @@ namespace SmartRecruit.Infrastructure.Repositories
 
         public void UpdateTransaction(Transaction transaction)
         {
+            _logger.LogTrace("Executing SQL update for transaction OrderCode: {OrderCode} to Status: {Status}", transaction.OrderCode, transaction.Status);
             _context.Set<Transaction>().Update(transaction);
         }
     }

@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Infrastructure.Services
 {
@@ -22,6 +23,7 @@ namespace SmartRecruit.Infrastructure.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly PayOSSettings _settings;
         private readonly PayOSClient _sdkClient;
+        private readonly ILogger<PaymentService> _logger;
 
         private const string PayOSApiBase = "https://api-merchant.payos.vn";
 
@@ -29,12 +31,14 @@ namespace SmartRecruit.Infrastructure.Services
             IHttpClientFactory httpClientFactory,
             IWalletRepository walletRepository,
             IUnitOfWork unitOfWork,
-            IOptions<PayOSSettings> settings)
+            IOptions<PayOSSettings> settings,
+            ILogger<PaymentService> logger)
         {
             _httpClientFactory = httpClientFactory;
             _walletRepository = walletRepository;
             _unitOfWork = unitOfWork;
             _settings = settings.Value;
+            _logger = logger;
 
             // SDK client chỉ dùng cho webhook signature verification
             _sdkClient = new PayOSClient(new PayOSOptions
@@ -47,6 +51,7 @@ namespace SmartRecruit.Infrastructure.Services
 
         public async Task<CreatePaymentResponse> CreatePaymentLinkAsync(CreatePaymentRequest request)
         {
+            _logger.LogInformation("Calling external system PayOS to CreatePaymentLinkAsync for UserId: {UserId}, Amount: {Amount}", request.UserId, request.Amount);
             var wallet = await _walletRepository.GetWalletByUserIdAsync(request.UserId)
                 ?? throw new KeyNotFoundException($"Wallet not found for user {request.UserId}");
 
@@ -106,6 +111,7 @@ namespace SmartRecruit.Infrastructure.Services
             if (code != "00")
             {
                 var msgProp = root.TryGetProperty("desc", out var d) ? d.GetString() : responseStr;
+                _logger.LogError("PayOS error [{Code}]: {Message}", code, msgProp);
                 throw new InvalidOperationException($"PayOS error [{code}]: {msgProp}");
             }
 
@@ -134,6 +140,7 @@ namespace SmartRecruit.Infrastructure.Services
             {
                 if (webhookBody.Data != null)
                 {
+                    _logger.LogWarning("Webhook failed with code {Code}, marking transaction {OrderCode} as FAILED", webhookBody.Code, webhookBody.Data.OrderCode);
                     var failedTx = await _walletRepository.GetTransactionByOrderCodeAsync(webhookBody.Data.OrderCode);
                     if (failedTx != null && failedTx.Status == TransactionStatus.PENDING)
                     {
@@ -162,6 +169,7 @@ namespace SmartRecruit.Infrastructure.Services
             {
                 wallet.Balance += transaction.Amount;
                 _walletRepository.Update(wallet);
+                _logger.LogInformation("External system PayOS Transaction {OrderCode} SUCCESS. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
             }
 
             await _unitOfWork.CompleteAsync();
@@ -176,6 +184,7 @@ namespace SmartRecruit.Infrastructure.Services
             transaction.Status = TransactionStatus.FAILED;
             _walletRepository.UpdateTransaction(transaction);
             await _unitOfWork.CompleteAsync();
+            _logger.LogInformation("External system PayOS Transaction {OrderCode} cancelled and marked as FAILED", orderCode);
         }
 
         /// <summary>
