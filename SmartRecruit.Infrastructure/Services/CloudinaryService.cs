@@ -6,15 +6,18 @@ using SmartRecruit.Infrastructure.Configurations;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Infrastructure.Services
 {
     public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary _cloudinary;
+        private readonly ILogger<CloudinaryService> _logger;
 
-        public CloudinaryService(IOptions<CloudinarySettings> config)
+        public CloudinaryService(IOptions<CloudinarySettings> config, ILogger<CloudinaryService> logger)
         {
+            _logger = logger;
             var account = new Account(
                 config.Value.CloudName,
                 config.Value.ApiKey,
@@ -26,6 +29,8 @@ namespace SmartRecruit.Infrastructure.Services
 
         public async Task<string> ManageFileAsync(Stream? fileStream, string? fileName, string? publicIdOrUrl)
         {
+            _logger.LogInformation("Calling external system Cloudinary to ManageFileAsync with fileName: {FileName}, publicIdOrUrl: {PublicIdOrUrl}", fileName, publicIdOrUrl);
+            
             // Case 1: UPDATE or DELETE (If publicIdOrUrl is provided, try to delete the old file first)
             if (!string.IsNullOrEmpty(publicIdOrUrl))
             {
@@ -48,9 +53,11 @@ namespace SmartRecruit.Infrastructure.Services
                              deletionParams.ResourceType = ResourceType.Image;
 
                         await _cloudinary.DestroyAsync(deletionParams);
+                        _logger.LogInformation("Cloudinary external system: Deleted existing file with publicId: {PublicId}", publicId);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        _logger.LogWarning(ex, "Failed to delete existing file in Cloudinary (might not exist)");
                         // Ignore delete errors (file might not exist)
                     }
                 }
@@ -113,9 +120,11 @@ namespace SmartRecruit.Infrastructure.Services
 
                 if (uploadResult.Error != null)
                 {
+                        _logger.LogError("Cloudinary upload failed: {Error}", uploadResult.Error.Message);
                         throw new Exception(uploadResult.Error.Message);
                 }
 
+                _logger.LogInformation("Cloudinary external system: upload successful, URL: {Url}", uploadResult.SecureUrl.ToString());
                 return uploadResult.SecureUrl.ToString();
             }
 

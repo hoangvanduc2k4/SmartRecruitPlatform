@@ -2,22 +2,26 @@ using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
-using SmartRecruit.Domain.Entities;
 using SmartRecruit.Infrastructure.Data;
+using Microsoft.Extensions.Logging;
+using SmartRecruit.Domain.Entities;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
     public class ApplicationRepository : GenericRepository<Applications>, IApplicationRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ApplicationRepository> _logger;
 
-        public ApplicationRepository(ApplicationDbContext context) : base(context)
+        public ApplicationRepository(ApplicationDbContext context, ILogger<ApplicationRepository> logger) : base(context)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<PagedList<Applications>> GetApplicationsAsync(ApplicationSearchRequest request)
         {
+            _logger.LogTrace("Executing SQL query to fetch applications with parameters: {@Request}", request);
             var query = _context.Set<Applications>()
                 .Include(a => a.Job)
                 .Include(a => a.Candidate)
@@ -56,6 +60,7 @@ namespace SmartRecruit.Infrastructure.Repositories
 
         public async Task<bool> IsAlreadyAppliedAsync(long jobId, long candidateId)
         {
+            _logger.LogTrace("Executing SQL query to check if JobId {JobId} is already applied by CandidateId {CandidateId}", jobId, candidateId);
             return await _context.Set<Applications>()
                 .AnyAsync(a => a.JobId == jobId && a.CandidateId == candidateId);
         }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.API.Controllers
 {
@@ -10,15 +11,18 @@ namespace SmartRecruit.API.Controllers
     public class JobController : ControllerBase
     {
         private readonly IJobService _jobService;
+        private readonly ILogger<JobController> _logger;
 
-        public JobController(IJobService jobService)
+        public JobController(IJobService jobService, ILogger<JobController> logger)
         {
             _jobService = jobService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetJobs([FromQuery] JobSearchRequest request)
         {
+            _logger.LogInformation("API GetJobs called with search parameters: {@Request}", request);
             var jobs = await _jobService.GetJobsAsync(request);
             var response = jobs.WrapPaged();
             return Ok(response);

@@ -45,7 +45,7 @@ namespace SmartRecruit.API.Controllers
                 var rawBody = await reader.ReadToEndAsync();
                 Request.Body.Position = 0;
 
-                _logger.LogInformation("[PAYOS WEBHOOK RAW] {RawBody}", rawBody);
+                _logger.LogDebug("API Webhook called with rawBody: {RawBody}", rawBody);
 
                 // Parse thành DTO
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -70,7 +70,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("success")]
         public IActionResult PaymentSuccess([FromQuery] long orderCode)
         {
-            _logger.LogInformation("Payment success redirect: orderCode={OrderCode}", orderCode);
+            _logger.LogInformation("API PaymentSuccess called with orderCode={OrderCode}", orderCode);
             return Ok(new { message = "Payment completed. Your wallet will be updated shortly.", orderCode });
         }
 
@@ -80,7 +80,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("cancel")]
         public async Task<IActionResult> PaymentCancel([FromQuery] long orderCode)
         {
-            _logger.LogInformation("Payment cancelled: orderCode={OrderCode}", orderCode);
+            _logger.LogInformation("API PaymentCancel called with orderCode={OrderCode}", orderCode);
             await _paymentService.CancelTransactionAsync(orderCode);
             return Ok(new { message = "Payment cancelled.", orderCode });
         }
