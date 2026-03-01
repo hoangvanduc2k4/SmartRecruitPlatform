@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace SmartRecruitWeb.Services.Api
+namespace WebPortal.Services.Api
 {
     public class JwtAuthHandler : DelegatingHandler
     {
@@ -43,7 +43,7 @@ namespace SmartRecruitWeb.Services.Api
                         var newAccessToken = _tokenService.GetAccessToken();
                         // Retry original request with new token
                         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
-                        
+
                         // Need to clone the request since it has already been sent
                         response.Dispose();
                         var clonedRequest = await CloneRequestAsync(request);
@@ -69,17 +69,17 @@ namespace SmartRecruitWeb.Services.Api
 
                 // Create a separate HttpClient to avoid circular dependency / infinite loops
                 using var client = new HttpClient { BaseAddress = new Uri(baseUrl) };
-                
+
                 var payload = new { Token = accessToken, RefreshToken = refreshToken };
                 var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
                 var response = await client.PostAsync("auth/refresh-token", content, cancellationToken);
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     var newTokens = JsonSerializer.Deserialize<RefreshTokenResponse>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    
+
                     if (newTokens != null && !string.IsNullOrEmpty(newTokens.Token))
                     {
                         // Assuming 60 mins expiry for new token as a fallback if not provided
@@ -87,7 +87,7 @@ namespace SmartRecruitWeb.Services.Api
                         return true;
                     }
                 }
-                
+
                 return false;
             }
             catch
@@ -120,7 +120,7 @@ namespace SmartRecruitWeb.Services.Api
             {
                 clone.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
-            
+
             foreach (var prop in request.Options)
             {
                 clone.Options.Set(new HttpRequestOptionsKey<object>(prop.Key), prop.Value);

@@ -27,7 +27,7 @@ namespace SmartRecruit.Infrastructure.Services
 
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(baseUrl))
             {
-                throw new Exception("Missing configuration for Gemini API.");
+                throw new Exception("Missing configuration for Gemini ");
             }
 
             _apiUrl = $"{baseUrl}?key={apiKey}";

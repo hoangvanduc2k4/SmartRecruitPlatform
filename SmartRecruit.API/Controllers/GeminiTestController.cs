@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using SmartRecruit.Application.Interfaces.Repositories;
 using UglyToad.PdfPig;
 
-namespace SmartRecruit.API.Controllers
+namespace SmartRecruit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

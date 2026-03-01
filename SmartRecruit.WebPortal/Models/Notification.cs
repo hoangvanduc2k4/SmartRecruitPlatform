@@ -1,6 +1,4 @@
-using System;
-
-namespace SmartRecruitWeb.Models
+namespace WebPortal.Models
 {
     public class Notification
     {

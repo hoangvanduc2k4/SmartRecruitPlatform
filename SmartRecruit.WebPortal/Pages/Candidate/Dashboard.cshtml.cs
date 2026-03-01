@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class DashboardModel : PageModel
     {
@@ -30,7 +28,7 @@ namespace SmartRecruitWeb.Pages
         {
             // Simulate logged in candidate
             CurrentUser = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.CANDIDATE) ?? new User();
-            
+
             var query = _mockDataService.Applications
                 .Where(a => a.CandidateId == CurrentUser.Id)
                 .OrderByDescending(a => a.AppliedAt);

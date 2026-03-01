@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SmartRecruitWeb.Models;
-using SmartRecruitWeb.Services;
+using WebPortal.Models;
+using WebPortal.Services;
 
-namespace SmartRecruitWeb.Pages
+namespace WebPortal.Pages
 {
     public class JobDetailModel : PageModel
     {
@@ -18,7 +16,7 @@ namespace SmartRecruitWeb.Pages
 
         public Job? Job { get; set; }
         public List<Application> Applications { get; set; } = new List<Application>();
-        
+
         [BindProperty(SupportsGet = true)]
         public string Id { get; set; } = string.Empty;
 

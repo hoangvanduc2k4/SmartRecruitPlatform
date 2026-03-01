@@ -4,7 +4,7 @@ using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 
-namespace SmartRecruit.API.Controllers
+namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/applications")]

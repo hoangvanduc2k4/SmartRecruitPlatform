@@ -5,7 +5,7 @@ using SmartRecruit.Application.Interfaces.Services;
 using System.Text;
 using System.Text.Json;
 
-namespace SmartRecruit.API.Controllers
+namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/payment")]

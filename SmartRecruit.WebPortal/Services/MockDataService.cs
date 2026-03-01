@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SmartRecruitWeb.Models;
+using WebPortal.Models;
 
-namespace SmartRecruitWeb.Services
+namespace WebPortal.Services
 {
     public interface IMockDataService
     {
@@ -32,14 +29,14 @@ namespace SmartRecruitWeb.Services
             var random = new Random();
             var firstNames = new[] { "An", "Binh", "Chi", "Dung", "Giang", "Hieu", "Khanh", "Linh", "Minh", "Nam", "Phuc", "Quan", "Son", "Thao", "Tuan", "Vy", "Yen" };
             var lastNames = new[] { "Nguyen", "Tran", "Le", "Pham", "Hoang", "Huynh", "Phan", "Vu", "Vo", "Dang", "Bui", "Do" };
-            
+
             // Generate Users
             for (int i = 0; i < 100; i++)
             {
                 var role = i < 5 ? UserRole.ADMIN : (i < 30 ? UserRole.RECRUITER : UserRole.CANDIDATE);
                 var firstName = firstNames[random.Next(firstNames.Length)];
                 var lastName = lastNames[random.Next(lastNames.Length)];
-                
+
                 Users.Add(new User
                 {
                     Id = $"user-{i}",

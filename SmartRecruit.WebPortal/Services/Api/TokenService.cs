@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Http;
-using System;
-
-namespace SmartRecruitWeb.Services.Api
+namespace WebPortal.Services.Api
 {
     public interface ITokenService
     {
@@ -22,12 +19,12 @@ namespace SmartRecruitWeb.Services.Api
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetAccessToken()
+        public string? GetAccessToken()
         {
             return _httpContextAccessor.HttpContext?.Request.Cookies[AccessTokenKey];
         }
 
-        public string GetRefreshToken()
+        public string? GetRefreshToken()
         {
             return _httpContextAccessor.HttpContext?.Request.Cookies[RefreshTokenKey];
         }
@@ -56,7 +53,7 @@ namespace SmartRecruitWeb.Services.Api
             };
 
             _httpContextAccessor.HttpContext.Response.Cookies.Append(AccessTokenKey, accessToken, cookieOptions);
-            
+
             if (!string.IsNullOrEmpty(refreshToken))
             {
                 _httpContextAccessor.HttpContext.Response.Cookies.Append(RefreshTokenKey, refreshToken, refreshCookieOptions);
@@ -66,7 +63,7 @@ namespace SmartRecruitWeb.Services.Api
         public void ClearTokens()
         {
             if (_httpContextAccessor.HttpContext == null) return;
-            
+
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(AccessTokenKey);
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(RefreshTokenKey);
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("MockUserRole"); // Delete mock as well for safety

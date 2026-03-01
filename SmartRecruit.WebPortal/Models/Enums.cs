@@ -1,4 +1,4 @@
-namespace SmartRecruitWeb.Models
+namespace WebPortal.Models
 {
     public enum UserRole
     {
