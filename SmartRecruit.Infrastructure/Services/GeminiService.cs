@@ -8,23 +8,26 @@ using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Infrastructure.Configurations;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Infrastructure.Services
 {
     public class GeminiService : IGeminiService
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger<GeminiService> _logger;
         private readonly string _apiUrl;
 
-        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config)
+        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config, ILogger<GeminiService> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
             var apiKey = config.Value.ApiKey;
             var baseUrl = config.Value.Url;
 
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(baseUrl))
             {
-                throw new Exception("Missing configuration for Gemini API.");
+                throw new Exception("Missing configuration for Gemini ");
             }
 
             _apiUrl = $"{baseUrl}?key={apiKey}";
@@ -44,6 +47,7 @@ namespace SmartRecruit.Infrastructure.Services
                     ""Analysis"": ""(string)""
                 }}";
 
+            _logger.LogInformation("Calling external system Gemini API to CheckJobContent for title: {Title}", title);
             return await SendGeminiRequestAsync<JobScreeningResponse>(prompt);
         }
 
@@ -76,6 +80,7 @@ namespace SmartRecruit.Infrastructure.Services
                     ""Recommendation"": ""(string)""
                 }}";
 
+            _logger.LogInformation("Calling external system Gemini API for Scoring CV against job description");
             return await SendGeminiRequestAsync<CvScreeningResponse>(prompt);
         }
 
@@ -108,8 +113,9 @@ namespace SmartRecruit.Infrastructure.Services
             {
                 return JsonConvert.DeserializeObject<T>(aiText);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to parse JSON response from Gemini API: {ResponseText}", aiText);
                 throw new Exception($"Invalid JSON format: {aiText}");
             }
         }

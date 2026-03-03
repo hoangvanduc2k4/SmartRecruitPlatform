@@ -13,6 +13,8 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request);
         Task<bool> DeleteJobAsync(long id);
         Task<bool> ToggleVisibilityAsync(long id);
+        Task<bool> BoostJobAsync(long jobId, long userId);
         Task ModerateJobAsync(long jobId);
+
     }
 }

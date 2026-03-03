@@ -1,0 +1,95 @@
+@page "/AdminJobs"
+@model WebPortal.Pages.AdminJobsModel
+@{
+    ViewData["Title"] = "Job Verification Queue";
+}
+
+<div class="space-y-12 animate-in fade-in duration-700 pb-20">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div class="space-y-2">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-yellow-100 border border-yellow-200 text-yellow-800 shadow-sm">Moderation Terminal</span>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter uppercase">Job Verification Queue</h2>
+            <p class="text-slate-500 font-medium">Ensuring mission log quality and platform integrity.</p>
+        </div>
+        <div class="flex gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+            <a href="?Tab=PENDING" class="h-10 px-6 flex items-center justify-center text-[10px] uppercase font-black tracking-widest rounded-xl transition-all @(Model.Tab == "PENDING" ? "bg-white shadow-sm text-slate-900" : "text-slate-500 hover:text-slate-700")">
+                Pending (@Model.TotalPendingCount)
+            </a>
+            <a href="?Tab=ACTIVE" class="h-10 px-6 flex items-center justify-center text-[10px] uppercase font-black tracking-widest rounded-xl transition-all @(Model.Tab == "ACTIVE" ? "bg-white shadow-sm text-slate-900" : "text-slate-500 hover:text-slate-700")">
+                Active (@Model.TotalActiveCount)
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8">
+        @{
+            var displayJobs = Model.Tab == "PENDING" ? Model.PendingJobs : Model.ActiveJobs;
+        }
+
+        @foreach (var job in displayJobs)
+        {
+            <div class="p-10 bg-white rounded-[2.5rem] border border-slate-200 hover:border-indigo-500/30 transition-all group relative overflow-hidden shadow-sm">
+                <div class="absolute top-0 right-0 p-10 opacity-5 text-9xl group-hover:rotate-12 transition-transform duration-700"><i class="fas fa-briefcase"></i></div>
+
+                <div class="flex flex-col lg:flex-row justify-between gap-12 relative z-10">
+                    <div class="flex-1 space-y-6">
+                        <div class="space-y-2">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 text-indigo-700 border border-indigo-100">@job.Category</span>
+                            <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@job.Title</h3>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-3">
+                                <i class="fas fa-user-tie text-indigo-400"></i> Recruiter ID: @job.RecruiterId <span class="opacity-20">•</span> Ref: #@job.Id.Substring(job.Id.Length - 6).ToUpper()
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 py-6 border-y border-slate-50">
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-widest text-slate-400">Mission Parameters</h4>
+                                <p class="text-sm font-medium text-slate-600 line-clamp-3 leading-relaxed">@job.Description</p>
+                            </div>
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-widest text-slate-400">Technical DNA</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach (var s in job.SkillsRequired)
+                                    {
+                                        <span class="px-2 py-1 bg-slate-50 text-slate-500 rounded-lg text-[8px] font-black uppercase tracking-widest border border-slate-100">@s</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-72 space-y-4 flex flex-col justify-center">
+                        <div class="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 mb-4">
+                            <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Budget Matrix</p>
+                            <p class="text-xl font-black text-indigo-600">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</p>
+                        </div>
+                        
+                        @if (Model.Tab == "PENDING")
+                        {
+                            <form method="post" class="space-y-3">
+                                <input type="hidden" name="id" value="@job.Id" />
+                                <button type="submit" asp-page-handler="Approve" class="h-16 w-full rounded-2xl shadow-xl shadow-green-100/50 bg-green-600 text-white font-bold border-0 hover:bg-green-700 transition">Verify & Publish</button>
+                                <button type="submit" asp-page-handler="Reject" class="h-16 w-full rounded-2xl bg-red-50 text-red-600 font-bold border border-red-100 hover:bg-red-100 transition">Reject Protocol</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="h-16 w-full rounded-2xl bg-slate-50 text-slate-400 font-bold border border-slate-200 flex items-center justify-center uppercase text-[10px] tracking-widest"><i class="fas fa-check-circle mr-2 text-green-500 text-lg"></i> Already Verified</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (displayJobs.Count == 0)
+        {
+            <div class="py-40 text-center bg-white rounded-[4rem] border-2 border-dashed border-slate-100">
+                <i class="fas fa-clipboard-check text-5xl text-slate-100 mb-6"></i>
+                <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 italic">No mission logs awaiting moderation in this sector.</p>
+            </div>
+        }
+    </div>
+
+    <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, $"?Tab={Model.Tab}&CurrentPage={{0}}")' />
+    }
+</div>

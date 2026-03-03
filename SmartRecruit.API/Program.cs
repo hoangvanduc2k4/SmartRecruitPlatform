@@ -1,7 +1,9 @@
 
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
-using SmartRecruit.API.Extensions;
+using Serilog;
+using SmartRecruit.Extensions;
+using SmartRecruit.Logging;
 using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
 using SmartRecruit.Infrastructure.Data;
@@ -14,6 +16,12 @@ namespace SmartRecruit.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configure Serilog
+            builder.Host.UseSerilog((context, configuration) =>
+                configuration
+                    .Enrich.With(new SensitiveDataEnricher())
+                    .ReadFrom.Configuration(context.Configuration));
 
             // Add services to the container.
             builder.Services.AddSingleton<UpdateAuditInterceptor>();
@@ -87,6 +95,7 @@ namespace SmartRecruit.API
                 });
             });
 
+
             // Add Hangfire services.
             builder.Services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
@@ -99,7 +108,7 @@ namespace SmartRecruit.API
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
-                    PrepareSchemaIfNecessary = true
+                    PrepareSchemaIfNecessary = false
                 }));
 
             // Add the Hangfire server with limited workers
@@ -110,6 +119,7 @@ namespace SmartRecruit.API
 
             var app = builder.Build();
 
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -117,12 +127,32 @@ namespace SmartRecruit.API
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // Tắt HTTPS redirect khi Development (tránh lỗi ERR_NGROK_3004 khi dùng ngrok)
+            // PayOS redirect về HTTP, nếu server redirect sang HTTPS thì ngrok sẽ báo lỗi
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+
+            // Bypass ngrok browser warning cho webhook calls (development only)
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers["ngrok-skip-browser-warning"] = "true";
+
+                var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault() ?? context.TraceIdentifier;
+                context.Response.Headers["X-Correlation-ID"] = correlationId;
+
+                using (Serilog.Context.LogContext.PushProperty("CorrelationId", correlationId))
+                {
+                    await next();
+                }
+            });
 
             app.UseErrorHandlingMiddleware();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             // Hangfire Dashboard
             app.UseHangfireDashboard();

@@ -1,0 +1,164 @@
+@page "/Jobs"
+@model WebPortal.Pages.JobsModel
+@using WebPortal.Models
+@{
+    ViewData["Title"] = "Job Board";
+}
+
+<div class="space-y-12 animate-in fade-in duration-700">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div class="space-y-2">
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Nexus Discovery</span>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter">Explore Mission Log</h2>
+            <p class="text-slate-500 font-medium">Synthesizing @Model.Jobs.Count potential career matches from the global talent pool.</p>
+        </div>
+        <div class="flex gap-3">
+            <form method="get" class="relative group" id="searchForm">
+                <!-- Keep other filters in state -->
+                <input type="hidden" name="LocationFilter" value="@Model.LocationFilter" />
+                <input type="hidden" name="CategoryFilter" value="@Model.CategoryFilter" />
+                <input type="hidden" name="TypeFilter" value="@Model.TypeFilter" />
+                <input type="hidden" name="MinSalary" value="@Model.MinSalary" />
+
+                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors"></i>
+                <input type="text" name="SearchTerm" placeholder="Search roles, tech, or DNA patterns..." class="h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-2xl w-full md:w-80 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" value="@Model.SearchTerm" onchange="document.getElementById('searchForm').submit();" />
+            </form>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-3 space-y-8">
+            <form method="get" class="p-8 space-y-8 sticky top-28 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg" id="filterForm">
+                <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sector Locus</h4>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach (var loc in Model.AvailableLocations)
+                        {
+                            <button type="submit" name="LocationFilter" value="@loc" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all @(Model.LocationFilter == loc ? "bg-indigo-600 text-white border-indigo-600 shadow-xl" : "bg-slate-50 text-slate-500 border-slate-100 hover:border-indigo-300")">
+                                @loc
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Industry Category</h4>
+                    <select name="CategoryFilter" onchange="document.getElementById('filterForm').submit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        @foreach (var cat in Model.AvailableCategories)
+                        {
+                            if (Model.CategoryFilter == cat) {
+                                <option value="@cat" selected>@cat</option>
+                            } else {
+                                <option value="@cat">@cat</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Operation Type</h4>
+                    <div class="space-y-2">
+                        @{
+                            var types = new List<string> { "ALL" };
+                            types.AddRange(Enum.GetNames<JobType>());
+                        }
+                        @foreach (var t in types)
+                        {
+                            <label class="flex items-center gap-3 p-3 bg-slate-50/50 rounded-xl border border-slate-100 cursor-pointer hover:bg-white hover:border-indigo-400 transition-all group">
+                                <input type="radio" name="TypeFilter" value="@t" onchange="document.getElementById('filterForm').submit();" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@t.Replace("_", " ")</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-6 pt-4 border-t border-slate-50">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Salary Floor</h4>
+                        <span class="text-xs font-black text-indigo-600">$<span id="salaryDisplay">@Model.MinSalary</span></span>
+                    </div>
+                    <input type="range" name="MinSalary" min="0" max="10000" step="500" value="@Model.MinSalary" oninput="document.getElementById('salaryDisplay').innerText = this.value;" onchange="document.getElementById('filterForm').submit();" class="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                </div>
+
+                <a href="/Jobs" class="block w-full text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 mt-4">Reset Matrix</a>
+            </form>
+        </aside>
+
+        <!-- Job List -->
+        <div class="lg:col-span-9 space-y-6">
+            @if (Model.Jobs.Count == 0)
+            {
+                <div class="py-32 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                    <i class="fas fa-dna text-4xl text-slate-100 mb-6"></i>
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 italic text-center">No compatible DNA matches found in current sector.</p>
+                </div>
+            }
+            else
+            {
+                <div class="space-y-6">
+                    @foreach (var job in Model.Jobs)
+                    {
+                        <a href="/JobDetail?id=@job.Id" class="block group">
+                            <!-- Job Card Content (unchanged) ... -->
+                            <div class="p-8 bg-white rounded-[2.5rem] border border-slate-200/60 transition-all duration-500 relative @(job.IsBoosted ? "bg-white shadow-[0_0_40px_rgba(99,102,241,0.15)] border-indigo-100 hover:shadow-[0_0_60px_rgba(99,102,241,0.25)] hover:border-indigo-300 transform hover:-translate-y-1" : "hover:translate-x-2 hover:shadow-2xl hover:shadow-indigo-100/50")">
+                                @if (job.IsBoosted)
+                                {
+                                    <div class="absolute top-0 right-10">
+                                        <div class="bg-yellow-400 text-slate-900 text-[9px] font-black uppercase tracking-widest px-4 py-1.5 rounded-b-xl shadow-lg flex items-center gap-2">
+                                            <i class="fas fa-fire-flame-curved animate-bounce"></i> Hot Trending
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                                    <div class="w-16 h-16 rounded-[1.5rem] flex items-center justify-center text-2xl transition-transform group-hover:scale-110 @(job.IsBoosted ? "bg-indigo-600 text-white shadow-xl shadow-indigo-200" : "bg-slate-900 text-white shadow-lg")">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+
+                                    <div class="flex-1 space-y-2">
+                                        <div class="flex flex-wrap items-center gap-3">
+                                            <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">@job.Title</h3>
+                                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest @(job.JobType == JobType.REMOTE ? "bg-blue-50 border-blue-100 text-blue-700" : "bg-slate-50 border-slate-200 text-slate-700") border shadow-sm">
+                                                @job.JobType.ToString().Replace("_", " ")
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-x-6 gap-y-1">
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                                <i class="fas fa-location-dot text-indigo-400"></i> @job.Location
+                                            </span>
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                                <i class="fas fa-microchip text-slate-300"></i> @job.Category
+                                            </span>
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                                <i class="fas fa-eye text-slate-300"></i> @job.ViewCount Views
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-right w-full md:w-auto pt-6 md:pt-0 border-t md:border-0 border-slate-50 flex flex-row md:flex-col justify-between items-center md:items-end gap-2">
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Est. Reward</p>
+                                        <p class="text-2xl font-black text-indigo-600 tracking-tighter">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 pt-8 border-t border-slate-50 flex flex-wrap gap-2 items-center">
+                                    <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest mr-2">Core Tech:</span>
+                                    @foreach (var s in job.SkillsRequired)
+                                    {
+                                        <span class="px-3 py-1.5 bg-slate-50 text-slate-500 rounded-lg text-[9px] font-black uppercase tracking-wider border border-slate-100">@s</span>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+                <!-- Pagination UI -->
+                <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, $"?SearchTerm={Model.SearchTerm}&LocationFilter={Model.LocationFilter}&CategoryFilter={Model.CategoryFilter}&TypeFilter={Model.TypeFilter}&MinSalary={Model.MinSalary}&CurrentPage={{0}}")' />
+            }
+        </div>
+    </div>
+</div>

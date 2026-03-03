@@ -1,0 +1,83 @@
+using Microsoft.EntityFrameworkCore;
+using SmartRecruit.Application.DTO.Wallet;
+using SmartRecruit.Application.Helpers;
+using SmartRecruit.Application.Interfaces.Repositories;
+using SmartRecruit.Infrastructure.Data;
+using Microsoft.Extensions.Logging;
+using SmartRecruit.Domain.Entities;
+
+namespace SmartRecruit.Infrastructure.Repositories
+{
+    public class WalletRepository : GenericRepository<Wallet>, IWalletRepository
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<WalletRepository> _logger;
+
+        public WalletRepository(ApplicationDbContext context, ILogger<WalletRepository> logger) : base(context)
+        {
+            _context = context;
+            _logger = logger;
+        }   
+
+        public async Task<Wallet?> GetWalletByUserIdAsync(long userId)
+        {
+            _logger.LogTrace("Executing SQL query to fetch Wallet by UserId: {UserId}", userId);
+            return await _context.Set<Wallet>()
+                .Include(w => w.User)
+                .FirstOrDefaultAsync(w => w.UserId == userId);
+        }
+
+        public async Task<PagedList<Transaction>> GetTransactionsAsync(TransactionSearchRequest request)
+        {
+            _logger.LogTrace("Executing SQL query to fetch transactions with parameters: {@Request}", request);
+            var query = _context.Set<Transaction>()
+                .AsQueryable();
+
+            // Filter by UserId
+            if (request.UserId.HasValue)
+            {
+                query = query.Where(t => t.UserId == request.UserId.Value);
+            }
+
+            // Filter by WalletId
+            if (request.WalletId.HasValue)
+            {
+                query = query.Where(t => t.WalletId == request.WalletId.Value);
+            }
+
+            // Filter by TransactionType
+            if (request.Type.HasValue)
+            {
+                query = query.Where(t => (int)t.Type == request.Type.Value);
+            }
+
+            // Filter by TransactionStatus
+            if (request.Status.HasValue)
+            {
+                query = query.Where(t => (int)t.Status == request.Status.Value);
+            }
+
+            // Default sort: newest first
+            query = query.OrderByDescending(t => t.CreatedAt);
+
+            return await PagedList<Transaction>.CreateAsync(query, request.Page, request.PageSize);
+        }
+
+        public async Task<Transaction?> GetTransactionByOrderCodeAsync(long orderCode)
+        {
+            return await _context.Set<Transaction>()
+                .FirstOrDefaultAsync(t => t.OrderCode == orderCode);
+        }
+
+        public async Task AddTransactionAsync(Transaction transaction)
+        {
+            await _context.Set<Transaction>().AddAsync(transaction);
+        }
+
+        public void UpdateTransaction(Transaction transaction)
+        {
+            _logger.LogTrace("Executing SQL update for transaction OrderCode: {OrderCode} to Status: {Status}", transaction.OrderCode, transaction.Status);
+            _context.Set<Transaction>().Update(transaction);
+        }
+    }
+}

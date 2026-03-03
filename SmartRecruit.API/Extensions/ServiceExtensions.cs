@@ -1,6 +1,6 @@
-using SmartRecruit.API.Middlewares;
+using SmartRecruit.Middlewares;
 
-namespace SmartRecruit.API.Extensions
+namespace SmartRecruit.Extensions
 {
     public static class ServiceExtensions
     {

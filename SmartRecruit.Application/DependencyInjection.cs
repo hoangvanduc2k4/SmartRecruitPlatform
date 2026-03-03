@@ -13,6 +13,8 @@ namespace SmartRecruit.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(typeof(DependencyInjection).Assembly);
             services.AddScoped<IJobService, JobService>();
+            services.AddScoped<IApplicationService, ApplicationService>();
+            services.AddScoped<IWalletService, WalletService>();
             return services;
         }
     }

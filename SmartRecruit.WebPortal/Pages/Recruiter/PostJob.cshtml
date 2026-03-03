@@ -1,0 +1,91 @@
+@page "/PostJob"
+@model WebPortal.Pages.PostJobModel
+@using WebPortal.Models
+@{
+    ViewData["Title"] = "Create New Job Posting";
+}
+
+<div class="max-w-3xl mx-auto animate-in fade-in duration-700 pb-32">
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Create New Job Posting</h2>
+        <p class="text-slate-500">Premium posting costs 50,000 VNĐ from your wallet.</p>
+    </div>
+
+    <form method="post" class="space-y-6" onsubmit="return submitJob()">
+        <div class="p-8 space-y-6 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg">
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Title</label>
+                <input type="text" asp-for="JobInput.Title" required placeholder="e.g. Senior Software Engineer" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Job Type</label>
+                    <select asp-for="JobInput.JobType" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
+                        <option value="FULL_TIME">Full Time</option>
+                        <option value="PART_TIME">Part Time</option>
+                        <option value="REMOTE">Remote</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Required Skills (comma separated)</label>
+                    <input type="text" asp-for="SkillsInput" placeholder="React, .NET, SQL, Docker" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Location</label>
+                    <input type="text" asp-for="JobInput.Location" placeholder="e.g. Ho Chi Minh or Remote" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Category</label>
+                    <select asp-for="JobInput.Category" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
+                        <option value="Software Development">Software Development</option>
+                        <option value="Design">Design</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Management">Management</option>
+                        <option value="DevOps & Cloud">DevOps & Cloud</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salary Min ($)</label>
+                    <input type="number" asp-for="JobInput.SalaryMin" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salary Max ($)</label>
+                    <input type="number" asp-for="JobInput.SalaryMax" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Job Description</label>
+                <textarea asp-for="JobInput.Description" placeholder="Describe the role and day-to-day responsibilities..." class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Requirements</label>
+                <textarea asp-for="JobInput.Requirement" placeholder="What should the candidate have? (e.g. 5+ years experience...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-3">
+            <button type="button" onclick="history.back()" class="h-12 px-6 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">Cancel</button>
+            <button type="submit" class="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-100 transition" id="submitBtn">Post Job (-50k VNĐ)</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function submitJob() {
+            var btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Initializing...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            return true;
+        }
+    </script>
+}

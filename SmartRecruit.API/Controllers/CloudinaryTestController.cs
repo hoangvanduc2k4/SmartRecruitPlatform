@@ -4,7 +4,7 @@ using SmartRecruit.Application.Interfaces.Services;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SmartRecruit.API.Controllers
+namespace SmartRecruit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
