@@ -41,6 +41,18 @@ namespace SmartRecruit.API.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            try
+            {
+                var result = await _userService.RefreshTokenAsync(request.RefreshToken);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

@@ -57,11 +57,23 @@ namespace SmartRecruit.Infrastructure.Services
             // DTO asks for AvatarUrl. BaseEntity doesn't have it, User has it.
 
             var token = GenerateJwtToken(user);
+            var refreshToken = GenerateRefreshToken();
+
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = refreshToken,
+                UserId = user.Id,
+                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                IsRevoked = false
+            };
+
+            await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
+            await _unitOfWork.CompleteAsync();
 
             return new AuthResponse
             {
                 Token = token,
-                RefreshToken = "dummy-refresh-token",
+                RefreshToken = refreshToken,
                 FullName = user.FullName,
                 Role = user.Role.ToString(),
                 Email = user.Email,
@@ -91,16 +103,99 @@ namespace SmartRecruit.Infrastructure.Services
             await _unitOfWork.CompleteAsync();
 
             var token = GenerateJwtToken(user);
+            var refreshToken = GenerateRefreshToken();
+
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = refreshToken,
+                UserId = user.Id,
+                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                IsRevoked = false
+            };
+
+            await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
+            await _unitOfWork.CompleteAsync();
 
             return new AuthResponse
             {
                 Token = token,
-                RefreshToken = "dummy-refresh-token",
+                RefreshToken = refreshToken,
                 FullName = user.FullName,
                 Role = user.Role.ToString(),
                 Email = user.Email,
                 AvatarUrl = user.AvatarUrl
             };
+        }
+
+        public async Task<AuthResponse> RefreshTokenAsync(string token)
+        {
+            var storedToken = await _unitOfWork.RefreshTokens.FindAsync(t => t.Token == token);
+
+            if (storedToken == null)
+            {
+                throw new Exception("Invalid Token");
+            }
+
+            if (storedToken.IsExpired || storedToken.IsRevoked)
+            {
+                throw new Exception("Token is expired or revoked");
+            }
+
+            var user = await _unitOfWork.Users.GetByIdAsync(storedToken.UserId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (!user.IsActive)
+            {
+                 throw new Exception("User is inactive.");
+            }
+
+
+
+            // Revoke current token
+            storedToken.IsRevoked = true;
+            _unitOfWork.RefreshTokens.Update(storedToken);
+
+            // User already fetched above
+            // var user = await _unitOfWork.Users.GetByIdAsync(storedToken.UserId); // Removed duplicate
+
+            // Generate new pair
+            var newAccessToken = GenerateJwtToken(user);
+            var newRefreshToken = GenerateRefreshToken();
+
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = newRefreshToken,
+                UserId = user.Id,
+                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                IsRevoked = false
+            };
+
+            await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
+            await _unitOfWork.CompleteAsync();
+
+            return new AuthResponse
+            {
+                Id = user.Id,
+                Token = newAccessToken,
+                RefreshToken = newRefreshToken,
+                FullName = user.FullName,
+                Role = user.Role.ToString(),
+                Email = user.Email,
+                AvatarUrl = user.AvatarUrl
+            };
+        }
+
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
         }
 
         private string GenerateJwtToken(User user)
@@ -124,7 +219,7 @@ namespace SmartRecruit.Infrastructure.Services
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddMinutes(15),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
