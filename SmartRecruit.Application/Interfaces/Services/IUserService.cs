@@ -4,8 +4,6 @@ namespace SmartRecruit.Application.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<AuthResponse> LoginAsync(LoginRequest request);
-        Task<AuthResponse> RegisterAsync(RegisterRequest request);
-        Task<AuthResponse> RefreshTokenAsync(string token);
+        // Future user management methods (e.g., GetProfile, UpdateUser, BanUser) will go here.
     }
 }

@@ -11,6 +11,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public IGenericRepository<User> Users { get; private set; }
         public IGenericRepository<Job> Jobs { get; private set; }
         public IGenericRepository<Wallet> Wallets { get; private set; }
+        public IGenericRepository<RefreshToken> RefreshTokens { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -19,6 +20,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             Users = new GenericRepository<User>(_context);
             Jobs = new GenericRepository<Job>(_context);
             Wallets = new GenericRepository<Wallet>(_context);
+            RefreshTokens = new GenericRepository<RefreshToken>(_context);
         }
 
         public async Task<int> CompleteAsync()

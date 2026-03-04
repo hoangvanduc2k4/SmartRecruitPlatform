@@ -8,11 +8,11 @@ namespace SmartRecruit.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IUserService userService)
+        public AuthController(IAuthService authService)
         {
-            _userService = userService;
+            _authService = authService;
         }
 
         [HttpPost("login")]
@@ -20,7 +20,7 @@ namespace SmartRecruit.API.Controllers
         {
             try
             {
-                var result = await _userService.LoginAsync(request);
+                var result = await _authService.LoginAsync(request);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -34,19 +34,21 @@ namespace SmartRecruit.API.Controllers
         {
             try
             {
-                var result = await _userService.RegisterAsync(request);
+                var result = await _authService.RegisterAsync(request);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             try
             {
-                var result = await _userService.RefreshTokenAsync(request.RefreshToken);
+                var result = await _authService.RefreshTokenAsync(request.RefreshToken);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -17,6 +17,7 @@ namespace SmartRecruit.Infrastructure
             services.Configure<GeminiSettings>(configuration.GetSection("Gemini"));
             
             services.AddScoped<IUserService, UserService>(); // Added
+            services.AddScoped<ITokenService, TokenService>();
             services.Configure<PayOSSettings>(configuration.GetSection("PayOS"));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
