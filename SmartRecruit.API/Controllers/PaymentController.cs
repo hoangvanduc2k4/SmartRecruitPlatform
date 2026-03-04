@@ -39,13 +39,13 @@ namespace SmartRecruit.Controllers
         {
             try
             {
-                // Đọc raw body để debug
+                // Đọc raw body
                 Request.EnableBuffering();
                 using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
                 var rawBody = await reader.ReadToEndAsync();
                 Request.Body.Position = 0;
 
-                _logger.LogDebug("API Webhook called with rawBody: {RawBody}", rawBody);
+                _logger.LogInformation("API Webhook called, BodyLength={Len}", rawBody.Length);
 
                 // Parse thành DTO
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -54,7 +54,7 @@ namespace SmartRecruit.Controllers
                 if (webhookBody == null)
                     return Ok(new { success = false, message = "Cannot deserialize webhook body." });
 
-                await _paymentService.HandleWebhookAsync(webhookBody, rawBody);
+                await _paymentService.HandleWebhookAsync(webhookBody);
                 return Ok(new { success = true });
             }
             catch (Exception ex)
@@ -65,13 +65,18 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
-        /// PayOS redirect về khi thanh toán thành công (chỉ dùng cho frontend redirect)
+        /// PayOS redirect về khi thanh toán thành công.
+        /// Gọi PayOS API để verify và credit wallet ngay tại đây (không cần webhook).
         /// </summary>
         [HttpGet("success")]
-        public IActionResult PaymentSuccess([FromQuery] long orderCode)
+        public async Task<IActionResult> PaymentSuccess([FromQuery] long orderCode)
         {
             _logger.LogInformation("API PaymentSuccess called with orderCode={OrderCode}", orderCode);
-            return Ok(new { message = "Payment completed. Your wallet will be updated shortly.", orderCode });
+            var confirmed = await _paymentService.ConfirmPaymentByOrderCodeAsync(orderCode);
+            if (confirmed)
+                return Ok(new { message = "Payment confirmed. Wallet has been updated.", orderCode });
+            else
+                return Ok(new { message = "Payment completed but wallet update pending (may have already been processed).", orderCode });
         }
 
         /// <summary>
