@@ -7,5 +7,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<AuthResponse> LoginAsync(LoginRequest request);
         Task<AuthResponse> RegisterAsync(RegisterRequest request);
         Task<AuthResponse> RefreshTokenAsync(string token);
+        Task<AuthResponse> GoogleLoginAsync(GoogleLoginRequest request);
     }
 }
