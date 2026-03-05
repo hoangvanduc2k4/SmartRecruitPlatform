@@ -7,5 +7,7 @@
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task<T?> FindAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> FindAllAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
     }
 }

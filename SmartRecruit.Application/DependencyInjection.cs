@@ -15,6 +15,7 @@ namespace SmartRecruit.Application
             services.AddScoped<IJobService, JobService>();
             services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IWalletService, WalletService>();
+            services.AddScoped<IAuthService, AuthService>();
             return services;
         }
     }

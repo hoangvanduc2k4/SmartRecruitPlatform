@@ -11,6 +11,7 @@ namespace SmartRecruit.Domain.Entities
         public string AvatarUrl { get; set; } = "https://i.pravatar.cc/150";
         public UserRole Role { get; set; } = UserRole.CANDIDATE;
         public bool IsActive { get; set; } = true;
+        public bool EmailVerified { get; set; } = false;
         public string? LockReason { get; set; }
 
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();

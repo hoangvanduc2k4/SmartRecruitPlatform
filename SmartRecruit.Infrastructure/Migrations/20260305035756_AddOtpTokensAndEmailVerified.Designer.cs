@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartRecruit.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SmartRecruit.Infrastructure.Data;
 namespace SmartRecruit.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260305035756_AddOtpTokensAndEmailVerified")]
+    partial class AddOtpTokensAndEmailVerified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -12362,9 +12365,6 @@ namespace SmartRecruit.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AttemptCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -15987,11 +15987,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@smartrecruit.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Admin System",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 2
                         },
                         new
@@ -16000,11 +16000,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "turner.bednar58@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jordane Muller",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16013,11 +16013,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "madilyn.grant@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Conor Gaylord",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16026,11 +16026,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "presley.hirthe55@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Trey Shields",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16039,11 +16039,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lenora_bergstrom48@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lorine Ziemann",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16052,11 +16052,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "aileen.barton@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kathryne Donnelly",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16065,11 +16065,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "clay69@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ephraim Morissette",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16078,11 +16078,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "cyrus.breitenberg47@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Vivien O'Conner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16091,11 +16091,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dana2@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chelsie Daniel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16104,11 +16104,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "roel_connelly68@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Georgiana Hettinger",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16117,11 +16117,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "cleveland_hirthe@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Julien Price",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16130,11 +16130,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "delaney.labadie@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rosemary Reynolds",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16143,11 +16143,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dane94@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Adan Schroeder",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16156,11 +16156,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "twila24@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ismael Mertz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16169,11 +16169,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nils.oreilly85@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Garret Lockman",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16182,11 +16182,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "sarai31@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Toney Kihn",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16195,11 +16195,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lester1@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Susanna Von",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16208,11 +16208,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "loraine_roberts@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Valentin Funk",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16221,11 +16221,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "krystina10@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Celestino Kuhlman",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16234,11 +16234,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jeanie.thompson38@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Eve Greenfelder",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16247,11 +16247,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "renee.predovic33@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Sylvester Toy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16260,11 +16260,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "humberto98@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Alexandra Denesik",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16273,11 +16273,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "elliot3@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Edison Halvorson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16286,11 +16286,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "cordell_rowe12@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dejah Harvey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16299,11 +16299,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "joshuah_marvin@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Tessie Pagac",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16312,11 +16312,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "leonora_waelchi77@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lucio Johns",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16325,11 +16325,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jimmie8@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Marta Waters",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16338,11 +16338,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "elva_abshire48@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Billy Homenick",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16351,11 +16351,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "osborne_oconnell@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cecil Murray",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16364,11 +16364,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "gwen62@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Raphaelle Hilpert",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16377,11 +16377,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "laura_lind@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Payton Kling",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16390,11 +16390,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "rex_crooks@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hermann Gislason",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16403,11 +16403,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "tom55@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Daphne Hessel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16416,11 +16416,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alverta.dickens33@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Zoila Jacobson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16429,11 +16429,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "viola72@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Damian Jenkins",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16442,11 +16442,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "garrison92@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lavina Wilkinson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16455,11 +16455,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "trycia.beer2@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jasen Casper",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16468,11 +16468,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "antwan92@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Katelin Heller",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16481,11 +16481,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "katelin_klocko@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Parker Donnelly",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16494,11 +16494,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "leland6@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ophelia Runolfsdottir",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16507,11 +16507,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "darian.gutkowski55@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Delilah Schmidt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16520,11 +16520,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "walker_witting3@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Winston Lesch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16533,11 +16533,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "elenora_stracke14@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Sarai Kozey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16546,11 +16546,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "caterina.green@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Allene Hansen",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16559,11 +16559,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "maybell_hessel@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Eda Friesen",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16572,11 +16572,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yasmeen.brakus48@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jayson Nicolas",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16585,11 +16585,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "carole99@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Nathan Dooley",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16598,11 +16598,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "tony_heller@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Modesta Batz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16611,11 +16611,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "sincere_heidenreich@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Adam Fadel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16624,11 +16624,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "leilani46@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kirstin Terry",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16637,11 +16637,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ashlynn_boyle@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Gretchen Greenholt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 1
                         },
                         new
@@ -16650,11 +16650,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nia58@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Norberto Reynolds",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16663,11 +16663,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "arne_kub@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Marielle Raynor",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16676,11 +16676,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "gracie.mclaughlin41@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Emmet Lynch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16689,11 +16689,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ressie32@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dino Sporer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16702,11 +16702,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "webster74@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bryana Connelly",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16715,11 +16715,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hailie49@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Brando Ledner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16728,11 +16728,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "pauline.wehner49@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mason Lang",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16741,11 +16741,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jon_yundt29@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kaylin Leannon",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16754,11 +16754,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ian_konopelski@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Joesph Mraz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16767,11 +16767,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "torey43@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cheyanne Sanford",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16780,11 +16780,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "thea79@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Alexandrine Medhurst",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16793,11 +16793,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "catherine74@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hilario Hane",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16806,11 +16806,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "omer.marks89@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mabelle Schoen",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16819,11 +16819,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "karen17@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mylene Wintheiser",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16832,11 +16832,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "herminia76@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dwight Bernhard",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16845,11 +16845,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kaley_kunze@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bulah Goldner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16858,11 +16858,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hipolito29@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Sandy Cronin",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16871,11 +16871,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "damian12@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Herta Tremblay",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16884,11 +16884,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "evan_nolan30@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kyler Hegmann",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16897,11 +16897,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "haylee26@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Zaria Bartell",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16910,11 +16910,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "shaun_windler@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Erwin Brown",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16923,11 +16923,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "antwon_thiel57@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Columbus Ferry",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16936,11 +16936,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "luis12@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Clint Stehr",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16949,11 +16949,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "anthony.spencer53@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Marcella Jones",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16962,11 +16962,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "leanna_cruickshank13@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Erik Mraz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16975,11 +16975,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kendrick_lindgren98@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Xander Kuphal",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -16988,11 +16988,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "bryce.okeefe@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Claude Botsford",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17001,11 +17001,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "robbie89@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mallory Stark",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17014,11 +17014,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kiera_wehner@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dock Nolan",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17027,11 +17027,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ernie.boyle96@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lenora McKenzie",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17040,11 +17040,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "earnest34@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Margarete DuBuque",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17053,11 +17053,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "eduardo50@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Elenora Conroy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17066,11 +17066,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "thea.kemmer58@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Virgie Schmeler",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17079,11 +17079,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "filiberto.reichel81@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kaylie Pacocha",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17092,11 +17092,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "daren37@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cristopher Lesch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17105,11 +17105,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "emory_daugherty64@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dejah Marks",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17118,11 +17118,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "fae.koch27@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ansley Waelchi",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17131,11 +17131,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lina.oreilly@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Francisca Kuhn",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17144,11 +17144,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "godfrey.hansen@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rhianna Bailey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17157,11 +17157,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "olaf_crooks@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Loraine Stracke",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17170,11 +17170,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dorothea_corkery96@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jodie Will",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17183,11 +17183,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "genevieve.jacobi46@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Madie Purdy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17196,11 +17196,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "constantin_kirlin37@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Freda Barton",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17209,11 +17209,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "naomie68@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Pearline Schiller",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17222,11 +17222,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hudson34@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Joseph Pollich",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17235,11 +17235,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "gregg53@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Tyson Emmerich",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17248,11 +17248,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "joseph.macgyver@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Else Davis",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17261,11 +17261,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "price_weissnat@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bertram Stamm",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17274,11 +17274,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dannie6@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lafayette Rodriguez",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17287,11 +17287,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "deondre18@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Carolyne Olson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17300,11 +17300,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "rosemarie.mosciski81@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ernie Fadel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17313,11 +17313,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "vivian_mueller@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jaunita Nicolas",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17326,11 +17326,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "pamela_kessler@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jewell D'Amore",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17339,11 +17339,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alexandre.kozey@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Adrian Gislason",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17352,11 +17352,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "amy51@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Brando Wilkinson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17365,11 +17365,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kyleigh51@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rebekah Bednar",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17378,11 +17378,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lydia.mcclure84@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Broderick Koch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17391,11 +17391,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ottilie87@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Aliza McKenzie",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17404,11 +17404,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "angelica95@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rupert Veum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17417,11 +17417,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ethyl_bosco@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Paul Dooley",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17430,11 +17430,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "berry.hansen59@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Geovanni Trantow",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17443,11 +17443,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "connor85@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cindy Bosco",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17456,11 +17456,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "floyd_fritsch21@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hildegard West",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17469,11 +17469,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ryder90@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dedrick Torphy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17482,11 +17482,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "cathrine91@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Margaretta Zboncak",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17495,11 +17495,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nils47@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Marion Conroy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17508,11 +17508,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "robin_zieme50@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Morton Brakus",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17521,11 +17521,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ana.wyman@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Branson Senger",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17534,11 +17534,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "eliseo.kshlerin@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Edyth Zieme",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17547,11 +17547,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lavonne_glover@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Sharon Kulas",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17560,11 +17560,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "justice_ritchie4@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Alberta Douglas",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17573,11 +17573,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "delmer81@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Gregorio Greenholt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17586,11 +17586,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "graham_lang84@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bruce Reilly",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17599,11 +17599,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "clarabelle5@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Graham Klocko",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17612,11 +17612,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "marcelina.stanton@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Judy Frami",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17625,11 +17625,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "foster_block72@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Darion Veum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17638,11 +17638,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jarrett.mertz@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Savannah Veum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17651,11 +17651,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "darian80@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Tamara Lynch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17664,11 +17664,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "skyla.wintheiser1@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Anne Hackett",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17677,11 +17677,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "belle62@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Caitlyn Sawayn",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17690,11 +17690,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "brando_jerde@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rozella Hodkiewicz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17703,11 +17703,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kiera.bins@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mathew Mosciski",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17716,11 +17716,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "vito21@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hank Dibbert",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17729,11 +17729,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "talia84@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Alessandro Goldner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17742,11 +17742,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "mikayla76@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Clemmie Hoeger",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17755,11 +17755,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "terence_hahn57@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ethan Huel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17768,11 +17768,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kaela_pollich@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dejuan Conn",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17781,11 +17781,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "maximilian_jenkins1@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Crystel Schmidt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17794,11 +17794,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "antonia6@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rusty Sauer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17807,11 +17807,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "keaton43@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Amaya Jaskolski",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17820,11 +17820,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "johathan.smitham17@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Arely Legros",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17833,11 +17833,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "eulah_balistreri@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lauren Smith",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17846,11 +17846,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lavina11@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ali Walker",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17859,11 +17859,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jamey_glover@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cody Cole",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17872,11 +17872,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ivah63@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Forrest Turcotte",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17885,11 +17885,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nathanial72@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Nella Mitchell",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17898,11 +17898,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "arielle18@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jessika Lehner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17911,11 +17911,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "serena.cassin41@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lola Hintz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17924,11 +17924,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "sylvan.fay58@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Sherwood Emard",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17937,11 +17937,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alexandra.feest85@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Pascale Goldner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17950,11 +17950,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "edwin.hammes@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kayleigh Heidenreich",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17963,11 +17963,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "maxwell_mitchell68@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Cara Glover",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17976,11 +17976,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "donna66@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rafael Stamm",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -17989,11 +17989,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "adrianna.miller15@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Veda Maggio",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18002,11 +18002,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alyce_bogisich8@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Austen Feil",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18015,11 +18015,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alden.macgyver@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Paul Monahan",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18028,11 +18028,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "juliet.brown66@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Leo Pfeffer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18041,11 +18041,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jamar.lowe79@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Juana Brekke",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18054,11 +18054,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ramona93@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jean Skiles",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18067,11 +18067,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "christy53@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Britney Braun",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18080,11 +18080,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "marcella.maggio@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ethel Harvey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18093,11 +18093,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "mallory.turcotte96@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Gilbert Zemlak",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18106,11 +18106,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "pattie_kessler@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Freida O'Keefe",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18119,11 +18119,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kyle_padberg49@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kip Kertzmann",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18132,11 +18132,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "antonetta12@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Shakira Hills",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18145,11 +18145,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "johnathan_dibbert14@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Darryl Johns",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18158,11 +18158,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "josue.kilback@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Andy Metz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18171,11 +18171,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dallin_rice97@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Monserrat Koch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18184,11 +18184,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "rodger27@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Miles Schoen",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18197,11 +18197,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dina_bruen92@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dovie Conroy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18210,11 +18210,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "johann10@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Elnora Friesen",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18223,11 +18223,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kaley99@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ernesto Graham",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18236,11 +18236,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "demarco5@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Karl Weber",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18249,11 +18249,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "terrance_willms57@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chelsie Lakin",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18262,11 +18262,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ceasar.orn16@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chauncey Senger",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18275,11 +18275,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lizzie_corwin@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Durward Stark",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18288,11 +18288,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "mireille_kreiger@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Salvador Howell",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18301,11 +18301,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "selmer58@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Laney Spinka",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18314,11 +18314,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "eryn36@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dusty Durgan",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18327,11 +18327,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "coby25@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Herta McDermott",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18340,11 +18340,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "stephanie_corwin6@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Mikel Wolf",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18353,11 +18353,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "tatum_heller@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Issac Schiller",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18366,11 +18366,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "sarina_mayer@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Estevan Gulgowski",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18379,11 +18379,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "erich_mclaughlin88@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Joyce Fahey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18392,11 +18392,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kieran.kertzmann97@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kristian Feeney",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18405,11 +18405,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "judy.cassin@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rebecca Raynor",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18418,11 +18418,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hailee.rosenbaum@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "George Littel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18431,11 +18431,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "isabelle48@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Retta Howe",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18444,11 +18444,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "henderson.smith@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Gabriel Ryan",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18457,11 +18457,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "annetta.gorczany63@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Marty Berge",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18470,11 +18470,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "rocky_gerlach@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Samanta McLaughlin",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18483,11 +18483,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "elvie.howell90@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Yesenia Lueilwitz",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18496,11 +18496,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "jeremy.roob10@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Edythe Bayer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18509,11 +18509,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "isadore.weissnat@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jaylan Roob",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18522,11 +18522,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "naomie_stehr@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Harmon Yundt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18535,11 +18535,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "cydney53@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Judge Bergnaum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18548,11 +18548,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "furman51@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ezra Hand",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18561,11 +18561,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "pearline_labadie79@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Edwina Cremin",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18574,11 +18574,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ezekiel_fritsch@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Myrtice Brakus",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18587,11 +18587,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "elena94@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Leslie Lindgren",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18600,11 +18600,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "antwon_mann74@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Arely Bernier",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18613,11 +18613,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "reva_collins@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Urban Heidenreich",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18626,11 +18626,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alek_mueller55@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chanel Stokes",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18639,11 +18639,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "vivianne22@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "King Schuppe",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18652,11 +18652,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guillermo46@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hipolito Huels",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18665,11 +18665,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "raina59@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Allison Kautzer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18678,11 +18678,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "boyd79@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lurline Hilpert",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18691,11 +18691,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "deborah.torphy21@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Holly Schinner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18704,11 +18704,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lina.stehr@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Issac Reynolds",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18717,11 +18717,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "mustafa.kshlerin22@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Raphael Crist",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18730,11 +18730,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "vesta_cole@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Rosamond Lang",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18743,11 +18743,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "henri_ward@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Carolyne Schuster",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18756,11 +18756,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "emile.erdman15@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Thad Fadel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18769,11 +18769,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "keegan.wolf@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Arlo Pacocha",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18782,11 +18782,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "giuseppe.conroy23@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Alene Auer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18795,11 +18795,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kenyatta65@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hilton Mante",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18808,11 +18808,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "laura_marks16@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Maximo Greenholt",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18821,11 +18821,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "maggie_feil@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kiera Koelpin",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18834,11 +18834,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "isai54@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kailee Hackett",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18847,11 +18847,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "aracely29@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Icie Huels",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18860,11 +18860,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "abraham_gleason52@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Georgianna Wintheiser",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18873,11 +18873,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "karlee9@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Terrance Baumbach",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18886,11 +18886,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "raleigh.cummerata@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Dawn Labadie",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18899,11 +18899,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "florencio72@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ignatius Kunze",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18912,11 +18912,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "franco89@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chadrick O'Keefe",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18925,11 +18925,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "lorenzo7@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Francisca Wilkinson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18938,11 +18938,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "paris.hessel@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bernadine Fahey",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18951,11 +18951,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "ada15@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kassandra Green",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18964,11 +18964,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "stuart_kuphal47@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chadd Davis",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18977,11 +18977,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "theo.dooley88@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Chandler Skiles",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -18990,11 +18990,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "dedric_terry@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Kevon Lehner",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19003,11 +19003,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "eula54@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Flo Anderson",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19016,11 +19016,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nathanial.murazik@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Morris Skiles",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19029,11 +19029,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "brianne_toy14@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hyman Ferry",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19042,11 +19042,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "miles.heathcote@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jadyn Terry",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19055,11 +19055,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "zoie.kling@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Stewart Koch",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19068,11 +19068,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "colby_murphy78@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Jace Carroll",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19081,11 +19081,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "reese.kilback10@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Winfield Runte",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19094,11 +19094,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hermina_borer@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lessie Walter",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19107,11 +19107,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "christine46@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Lizeth Veum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19120,11 +19120,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "flavie_waters69@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Candelario Thiel",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19133,11 +19133,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "madyson_schaden@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Juana Crist",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19146,11 +19146,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "emiliano23@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Enoch Veum",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19159,11 +19159,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kasey.runolfsson68@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Luciano Block",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19172,11 +19172,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "winston9@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Ashton Bernhard",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19185,11 +19185,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "krista.greenholt@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Tate Kemmer",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19198,11 +19198,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "casey_vonrueden@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Adolfo Feest",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19211,11 +19211,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "chance_hyatt@yahoo.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Antonetta Hoppe",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19224,11 +19224,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "juvenal.johnston@gmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Hollie Conroy",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         },
                         new
@@ -19237,11 +19237,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "alicia.mcdermott@hotmail.com",
-                            EmailVerified = true,
+                            EmailVerified = false,
                             FullName = "Bell Witting",
                             IsActive = true,
                             IsDeleted = false,
-                            PasswordHash = "$2a$11$YeTdMC/Xk5ifx4by9peAIO9ucfnYgDcah1WuuzGeb2XYGtZCWyVN.",
+                            PasswordHash = "$2a$11$eRw0tIELGMIaqnUgJ3lGV.cRVPg/Ojyije3twm94RHEhvhs2hVBou",
                             Role = 0
                         });
                 });
