@@ -14,13 +14,15 @@ namespace SmartRecruit.Application.Services
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
+        private readonly IOtpService _otpService;
 
-        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, IConfiguration configuration, IEmailService emailService)
+        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, IConfiguration configuration, IEmailService emailService, IOtpService otpService)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _configuration = configuration;
             _emailService = emailService;
+            _otpService = otpService;
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
@@ -285,47 +287,34 @@ namespace SmartRecruit.Application.Services
             if (user.EmailVerified)
                 throw new Exception("Email is already verified.");
 
-            var code = new Random().Next(100000, 999999).ToString();
-            
-            var otpToken = new OtpToken
-            {
-                Email = email,
-                Code = code,
-                Type = "VerifyEmail",
-                ExpiryDate = DateTime.UtcNow.AddMinutes(15),
-                IsUsed = false
-            };
+            if (!await _otpService.CanCreateNewOtpAsync(email, "VerifyEmail"))
+                throw new Exception("Vui lòng chờ 2 phút trước khi yêu cầu mã xác thực mới.");
 
-            await _unitOfWork.OtpTokens.AddAsync(otpToken);
-            await _unitOfWork.CompleteAsync();
+            var otpToken = await _otpService.CreateOtpAsync(email, "VerifyEmail");
 
             string subject = "Verify your email - SmartRecruit";
-            string body = $"<h1>SmartRecruit</h1><p>Your email verification code is: <strong>{code}</strong></p><p>This code will expire in 15 minutes.</p>";
+            string body = $"<h1>SmartRecruit</h1><p>Your email verification code is: <strong>{otpToken.Code}</strong></p><p>This code will expire in 15 minutes.</p>";
             
             await _emailService.SendHtmlEmailAsync(email, subject, body);
         }
 
         public async Task VerifyEmailAsync(VerifyEmailRequest request)
         {
-            var otp = await _unitOfWork.OtpTokens.FindAsync(o => 
-                o.Email == request.Email && 
-                o.Code == request.Code && 
-                o.Type == "VerifyEmail" && 
-                !o.IsUsed && 
-                o.ExpiryDate > DateTime.UtcNow);
-
-            if (otp == null)
-                throw new Exception("Invalid or expired verification code.");
-
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (user == null)
                 throw new Exception("User not found.");
+            if (user.EmailVerified)
+                throw new Exception("Email is already verified.");
+
+            var isValid = await _otpService.VerifyOtpAsync(request.Email, request.Code, "VerifyEmail");
+            if (!isValid)
+            {
+                await _otpService.IncrementAttemptCountAsync(request.Email, request.Code, "VerifyEmail");
+                throw new Exception("Mã xác thực không đúng hoặc đã hết hạn.");
+            }
 
             user.EmailVerified = true;
-            otp.IsUsed = true;
-
             _unitOfWork.Users.Update(user);
-            _unitOfWork.OtpTokens.Update(otp);
             await _unitOfWork.CompleteAsync();
         }
 
@@ -335,47 +324,40 @@ namespace SmartRecruit.Application.Services
             if (user == null)
                 throw new Exception("User not found.");
 
-            var code = new Random().Next(100000, 999999).ToString();
-            
-            var otpToken = new OtpToken
-            {
-                Email = request.Email,
-                Code = code,
-                Type = "ForgotPassword",
-                ExpiryDate = DateTime.UtcNow.AddMinutes(15),
-                IsUsed = false
-            };
+            if (!await _otpService.CanCreateNewOtpAsync(request.Email, "ForgotPassword"))
+                throw new Exception("Vui lòng chờ 2 phút trước khi yêu cầu mã khôi phục mới.");
 
-            await _unitOfWork.OtpTokens.AddAsync(otpToken);
-            await _unitOfWork.CompleteAsync();
+            var otpToken = await _otpService.CreateOtpAsync(request.Email, "ForgotPassword");
 
             string subject = "Reset your password - SmartRecruit";
-            string body = $"<h1>SmartRecruit</h1><p>Your password reset code is: <strong>{code}</strong></p><p>This code will expire in 15 minutes.</p>";
+            string body = $"<h1>SmartRecruit</h1><p>Your password reset code is: <strong>{otpToken.Code}</strong></p><p>This code will expire in 15 minutes.</p>";
             
             await _emailService.SendHtmlEmailAsync(request.Email, subject, body);
         }
 
         public async Task ResetPasswordAsync(ResetPasswordRequest request)
         {
-            var otp = await _unitOfWork.OtpTokens.FindAsync(o => 
-                o.Email == request.Email && 
-                o.Code == request.Code && 
-                o.Type == "ForgotPassword" && 
-                !o.IsUsed && 
-                o.ExpiryDate > DateTime.UtcNow);
-
-            if (otp == null)
-                throw new Exception("Invalid or expired reset code.");
-
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (user == null)
                 throw new Exception("User not found.");
 
+            var isValid = await _otpService.VerifyOtpAsync(request.Email, request.Code, "ForgotPassword");
+            if (!isValid)
+            {
+                await _otpService.IncrementAttemptCountAsync(request.Email, request.Code, "ForgotPassword");
+                throw new Exception("Mã khôi phục không đúng hoặc đã hết hạn.");
+            }
+
             user.PasswordHash = PasswordUtil.HashPassword(request.NewPassword);
-            otp.IsUsed = true;
+
+            var activeTokens = await _unitOfWork.RefreshTokens.FindAllAsync(t => t.UserId == user.Id && !t.IsRevoked);
+            foreach (var t in activeTokens)
+            {
+                t.IsRevoked = true;
+                _unitOfWork.RefreshTokens.Update(t);
+            }
 
             _unitOfWork.Users.Update(user);
-            _unitOfWork.OtpTokens.Update(otp);
             await _unitOfWork.CompleteAsync();
         }
     }

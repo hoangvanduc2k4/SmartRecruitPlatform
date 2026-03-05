@@ -25,5 +25,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public void Delete(T entity) => _context.Set<T>().Remove(entity);
 
         public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().FirstOrDefaultAsync(predicate);
+
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().Where(predicate).ToListAsync();
     }
 }

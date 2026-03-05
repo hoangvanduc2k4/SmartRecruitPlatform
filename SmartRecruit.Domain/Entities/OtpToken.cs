@@ -9,5 +9,6 @@ namespace SmartRecruit.Domain.Entities
         public string Type { get; set; } = string.Empty; // e.g. "VerifyEmail", "ForgotPassword"
         public DateTime ExpiryDate { get; set; }
         public bool IsUsed { get; set; } = false;
+        public int AttemptCount { get; set; } = 0;
     }
 }

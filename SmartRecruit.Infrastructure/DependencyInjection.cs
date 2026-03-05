@@ -19,6 +19,7 @@ namespace SmartRecruit.Infrastructure
             
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>(); // Added
+            services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<ITokenService, TokenService>();
             services.Configure<PayOSSettings>(configuration.GetSection("PayOS"));
 

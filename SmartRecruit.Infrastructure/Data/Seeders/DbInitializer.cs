@@ -44,7 +44,8 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 FullName = "Admin System",
                 Role = UserRole.ADMIN,
                 PasswordHash = commonHash,
-                CreatedAt = createdAt
+                CreatedAt = createdAt,
+                EmailVerified = true
             });
 
             int userIdCounter = 2;
@@ -57,7 +58,8 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                     FullName = f.Name.FullName().Limit(100),
                     Role = UserRole.RECRUITER,
                     PasswordHash = commonHash,
-                    CreatedAt = createdAt
+                    CreatedAt = createdAt,
+                    EmailVerified = true
                 }));
 
             // Candidates (200: ID 52 - 251)
@@ -73,7 +75,8 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                     FullName = f.Name.FullName().Limit(100),
                     Role = UserRole.CANDIDATE,
                     PasswordHash = commonHash,
-                    CreatedAt = createdAt
+                    CreatedAt = createdAt,
+                    EmailVerified = true
                 }));
             }
             modelBuilder.Entity<User>().HasData(users);

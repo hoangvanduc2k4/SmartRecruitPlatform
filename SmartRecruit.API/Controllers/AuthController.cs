@@ -98,6 +98,20 @@ namespace SmartRecruit.API.Controllers
             }
         }
 
+        [HttpPost("resend-verification-email")]
+        public async Task<IActionResult> ResendVerificationEmail([FromBody] ResendVerificationEmailRequest request)
+        {
+            try
+            {
+                await _authService.SendVerificationEmailAsync(request.Email);
+                return Ok(new { message = "Verification email sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
