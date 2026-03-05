@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PayOS;
 using PayOS.Models.Webhooks;
@@ -11,8 +12,6 @@ using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Infrastructure.Services
 {
@@ -125,14 +124,21 @@ namespace SmartRecruit.Infrastructure.Services
             );
         }
 
-        public async Task HandleWebhookAsync(PayOSWebhookBody webhookBody, string rawBody)
+        public async Task HandleWebhookAsync(PayOSWebhookBody webhookBody)
         {
-            // Dùng PayOS SDK verify - chính xác hơn custom HMAC
-            if (!string.IsNullOrEmpty(webhookBody.Signature) && webhookBody.Data != null)
+            // Kiểm tra signature, trừ khi SkipSignatureVerification = true trong config (dùng cho dev/test)
+            if (!_settings.SkipSignatureVerification)
             {
-                var valid = await VerifyWithSdkAsync(webhookBody);
-                if (!valid)
-                    throw new UnauthorizedAccessException("Invalid PayOS webhook signature.");
+                if (!string.IsNullOrEmpty(webhookBody.Signature) && webhookBody.Data != null)
+                {
+                    var valid = await VerifyWithSdkAsync(webhookBody);
+                    if (!valid)
+                        throw new UnauthorizedAccessException("Invalid PayOS webhook signature.");
+                }
+            }
+            else
+            {
+                _logger.LogWarning("[DEV] Skipping PayOS webhook signature verification (SkipSignatureVerification=true)");
             }
 
             // Nếu hủy hoặc thất bại (code != "00") → đánh dấu FAILED = 2
@@ -188,6 +194,80 @@ namespace SmartRecruit.Infrastructure.Services
         }
 
         /// <summary>
+        /// Gọi PayOS API để check trạng thái order, nếu PAID → credit wallet.
+        /// Dùng làm fallback tại /payment/success khi webhook không forward được (môi trường dev).
+        /// </summary>
+        public async Task<bool> ConfirmPaymentByOrderCodeAsync(long orderCode)
+        {
+            try
+            {
+                var transaction = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
+                if (transaction == null)
+                {
+                    _logger.LogWarning("ConfirmPaymentByOrderCode: Transaction not found for orderCode {OrderCode}", orderCode);
+                    return false;
+                }
+
+                // Idempotent: đã SUCCESS rồi thì không xử lý lại
+                if (transaction.Status == TransactionStatus.SUCCESS)
+                {
+                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} already SUCCESS", orderCode);
+                    return true;
+                }
+
+                // Gọi PayOS API query payment link status
+                var client = _httpClientFactory.CreateClient("PayOS");
+                var httpReq = new HttpRequestMessage(HttpMethod.Get, $"{PayOSApiBase}/v2/payment-requests/{orderCode}");
+                httpReq.Headers.Add("x-client-id", _settings.ClientId);
+                httpReq.Headers.Add("x-api-key", _settings.ApiKey);
+
+                var response = await client.SendAsync(httpReq);
+                var responseStr = await response.Content.ReadAsStringAsync();
+
+                _logger.LogInformation("ConfirmPaymentByOrderCode: PayOS responded {Status}: {Body}", response.StatusCode, responseStr);
+
+                using var doc = JsonDocument.Parse(responseStr);
+                var root = doc.RootElement;
+
+                if (!root.TryGetProperty("code", out var codeEl) || codeEl.GetString() != "00")
+                {
+                    _logger.LogWarning("ConfirmPaymentByOrderCode: PayOS query failed for {OrderCode}: {Body}", orderCode, responseStr);
+                    return false;
+                }
+
+                // Lấy status từ data.status
+                var dataEl = root.GetProperty("data");
+                var status = dataEl.TryGetProperty("status", out var stEl) ? stEl.GetString() : null;
+
+                if (status != "PAID")
+                {
+                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} status={Status}, not PAID yet", orderCode, status);
+                    return false;
+                }
+
+                // PAID → credit wallet
+                transaction.Status = TransactionStatus.SUCCESS;
+                _walletRepository.UpdateTransaction(transaction);
+
+                var wallet = await _walletRepository.GetByIdAsync(transaction.WalletId);
+                if (wallet != null)
+                {
+                    wallet.Balance += transaction.Amount;
+                    _walletRepository.Update(wallet);
+                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} PAID. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
+                }
+
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ConfirmPaymentByOrderCode: Error for orderCode {OrderCode}", orderCode);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Dùng PayOS SDK's built-in VerifyAsync — đây là cách chính xác nhất.
         /// SDK biết đúng field set và format của signature.
         /// </summary>
@@ -238,7 +318,7 @@ namespace SmartRecruit.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[PAYOS VERIFY ERROR] {ex.Message}");
+                _logger.LogError(ex, "[PAYOS VERIFY ERROR] {Message}", ex.Message);
                 return false;
             }
         }

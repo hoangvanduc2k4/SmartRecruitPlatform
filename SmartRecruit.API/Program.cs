@@ -133,27 +133,7 @@ namespace SmartRecruit.API
                 app.UseSwaggerUI();
             }
 
-            // Tắt HTTPS redirect khi Development (tránh lỗi ERR_NGROK_3004 khi dùng ngrok)
-            // PayOS redirect về HTTP, nếu server redirect sang HTTPS thì ngrok sẽ báo lỗi
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseHttpsRedirection();
-            }
-
-            // Bypass ngrok browser warning cho webhook calls (development only)
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers["ngrok-skip-browser-warning"] = "true";
-
-                var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault() ?? context.TraceIdentifier;
-                context.Response.Headers["X-Correlation-ID"] = correlationId;
-
-                using (Serilog.Context.LogContext.PushProperty("CorrelationId", correlationId))
-                {
-                    await next();
-                }
-            });
-
+          
             app.UseErrorHandlingMiddleware();
 
             app.UseCors("AllowAll");

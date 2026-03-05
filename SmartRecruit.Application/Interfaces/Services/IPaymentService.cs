@@ -13,11 +13,17 @@ namespace SmartRecruit.Application.Interfaces.Services
         /// Xử lý Webhook từ PayOS khi thanh toán hoàn tất.
         /// Nhận raw JSON body từ PayOS để tự verify và xử lý.
         /// </summary>
-        Task HandleWebhookAsync(PayOSWebhookBody webhookBody, string rawBody);
+        Task HandleWebhookAsync(PayOSWebhookBody webhookBody);
 
         /// <summary>
         /// Đánh dấu transaction là FAILED khi user hủy thanh toán (browser redirect về /cancel)
         /// </summary>
         Task CancelTransactionAsync(long orderCode);
+
+        /// <summary>
+        /// Gọi PayOS API để verify trạng thái thanh toán theo orderCode.
+        /// Nếu PAID → credit wallet. Dùng khi webhook không deliver được (dev/local).
+        /// </summary>
+        Task<bool> ConfirmPaymentByOrderCodeAsync(long orderCode);
     }
 }
