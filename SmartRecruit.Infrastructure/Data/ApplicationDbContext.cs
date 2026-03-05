@@ -11,6 +11,7 @@ namespace SmartRecruit.Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<OtpToken> OtpTokens { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<CandidateProfile> CandidateProfiles { get; set; }
         public DbSet<Applications> Applications { get; set; }

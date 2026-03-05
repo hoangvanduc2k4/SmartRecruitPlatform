@@ -15,7 +15,9 @@ namespace SmartRecruit.Infrastructure
         {
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
             services.Configure<GeminiSettings>(configuration.GetSection("Gemini"));
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>(); // Added
             services.AddScoped<ITokenService, TokenService>();
             services.Configure<PayOSSettings>(configuration.GetSection("PayOS"));

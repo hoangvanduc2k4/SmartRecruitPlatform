@@ -8,6 +8,7 @@ using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
 using SmartRecruit.Infrastructure.Data;
 using SmartRecruit.Infrastructure.Data.Interceptors;
+using SmartRecruit.Infrastructure.Jobs;
 
 namespace SmartRecruit.API
 {
@@ -145,6 +146,11 @@ namespace SmartRecruit.API
             // Hangfire Dashboard
             app.UseHangfireDashboard();
 
+            RecurringJob.AddOrUpdate<TokenCleanupJob>(
+                "token-cleanup-daily",
+                job => job.RunAsync(),
+                Cron.Daily
+            );
 
             app.MapControllers();
 

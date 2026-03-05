@@ -70,5 +70,60 @@ namespace SmartRecruit.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
+        {
+            try
+            {
+                await _authService.LogoutAsync(request);
+                return Ok(new { message = "Logged out successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("verify-email")]
+        public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request)
+        {
+            try
+            {
+                await _authService.VerifyEmailAsync(request);
+                return Ok(new { message = "Email verified successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            try
+            {
+                await _authService.ForgotPasswordAsync(request);
+                return Ok(new { message = "Password reset code sent to email" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            try
+            {
+                await _authService.ResetPasswordAsync(request);
+                return Ok(new { message = "Password has been reset successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

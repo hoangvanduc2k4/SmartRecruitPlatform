@@ -13,12 +13,14 @@ namespace SmartRecruit.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, IConfiguration configuration)
+        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, IConfiguration configuration, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
@@ -38,6 +40,11 @@ namespace SmartRecruit.Application.Services
             if (!user.IsActive)
             {
                 throw new Exception("User is inactive.");
+            }
+
+            if (!user.EmailVerified)
+            {
+                throw new Exception("Please verify your email address before logging in.");
             }
 
             var token = _tokenService.GenerateJwtToken(user);
@@ -99,6 +106,15 @@ namespace SmartRecruit.Application.Services
 
             await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
             await _unitOfWork.CompleteAsync();
+
+            try
+            {
+                await SendVerificationEmailAsync(user.Email);
+            }
+            catch
+            {
+                // Silently fail if email SMTP is not configured properly, but log in prod.
+            }
 
             return new AuthResponse
             {
@@ -204,7 +220,8 @@ namespace SmartRecruit.Application.Services
                     FullName = string.IsNullOrWhiteSpace(payload.Name) ? email.Split('@')[0] : payload.Name,
                     AvatarUrl = payload.Picture ?? "https://i.pravatar.cc/150",
                     Role = SmartRecruit.Domain.Enums.UserRole.CANDIDATE,
-                    IsActive = true
+                    IsActive = true,
+                    EmailVerified = true
                 };
 
                 await _unitOfWork.Users.AddAsync(user);
@@ -246,6 +263,120 @@ namespace SmartRecruit.Application.Services
                 Email = user.Email,
                 AvatarUrl = user.AvatarUrl
             };
+        }
+
+        public async Task LogoutAsync(LogoutRequest request)
+        {
+            var storedToken = await _unitOfWork.RefreshTokens.FindAsync(t => t.Token == request.RefreshToken);
+            if (storedToken == null)
+                throw new Exception("Invalid Token.");
+
+            storedToken.IsRevoked = true;
+            _unitOfWork.RefreshTokens.Update(storedToken);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task SendVerificationEmailAsync(string email)
+        {
+            var user = await _unitOfWork.Users.FindAsync(u => u.Email == email);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            if (user.EmailVerified)
+                throw new Exception("Email is already verified.");
+
+            var code = new Random().Next(100000, 999999).ToString();
+            
+            var otpToken = new OtpToken
+            {
+                Email = email,
+                Code = code,
+                Type = "VerifyEmail",
+                ExpiryDate = DateTime.UtcNow.AddMinutes(15),
+                IsUsed = false
+            };
+
+            await _unitOfWork.OtpTokens.AddAsync(otpToken);
+            await _unitOfWork.CompleteAsync();
+
+            string subject = "Verify your email - SmartRecruit";
+            string body = $"<h1>SmartRecruit</h1><p>Your email verification code is: <strong>{code}</strong></p><p>This code will expire in 15 minutes.</p>";
+            
+            await _emailService.SendHtmlEmailAsync(email, subject, body);
+        }
+
+        public async Task VerifyEmailAsync(VerifyEmailRequest request)
+        {
+            var otp = await _unitOfWork.OtpTokens.FindAsync(o => 
+                o.Email == request.Email && 
+                o.Code == request.Code && 
+                o.Type == "VerifyEmail" && 
+                !o.IsUsed && 
+                o.ExpiryDate > DateTime.UtcNow);
+
+            if (otp == null)
+                throw new Exception("Invalid or expired verification code.");
+
+            var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            user.EmailVerified = true;
+            otp.IsUsed = true;
+
+            _unitOfWork.Users.Update(user);
+            _unitOfWork.OtpTokens.Update(otp);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task ForgotPasswordAsync(ForgotPasswordRequest request)
+        {
+            var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            var code = new Random().Next(100000, 999999).ToString();
+            
+            var otpToken = new OtpToken
+            {
+                Email = request.Email,
+                Code = code,
+                Type = "ForgotPassword",
+                ExpiryDate = DateTime.UtcNow.AddMinutes(15),
+                IsUsed = false
+            };
+
+            await _unitOfWork.OtpTokens.AddAsync(otpToken);
+            await _unitOfWork.CompleteAsync();
+
+            string subject = "Reset your password - SmartRecruit";
+            string body = $"<h1>SmartRecruit</h1><p>Your password reset code is: <strong>{code}</strong></p><p>This code will expire in 15 minutes.</p>";
+            
+            await _emailService.SendHtmlEmailAsync(request.Email, subject, body);
+        }
+
+        public async Task ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var otp = await _unitOfWork.OtpTokens.FindAsync(o => 
+                o.Email == request.Email && 
+                o.Code == request.Code && 
+                o.Type == "ForgotPassword" && 
+                !o.IsUsed && 
+                o.ExpiryDate > DateTime.UtcNow);
+
+            if (otp == null)
+                throw new Exception("Invalid or expired reset code.");
+
+            var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            user.PasswordHash = PasswordUtil.HashPassword(request.NewPassword);
+            otp.IsUsed = true;
+
+            _unitOfWork.Users.Update(user);
+            _unitOfWork.OtpTokens.Update(otp);
+            await _unitOfWork.CompleteAsync();
         }
     }
 }
