@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Auth;
+using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 
 namespace SmartRecruit.API.Controllers
@@ -18,126 +19,64 @@ namespace SmartRecruit.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            try
-            {
-                var result = await _authService.LoginAsync(request);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var result = await _authService.LoginAsync(request);
+            return Ok(result.Wrap("Login successful"));
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            try
-            {
-                var result = await _authService.RegisterAsync(request);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var result = await _authService.RegisterAsync(request);
+            return Ok(result.Wrap("Registration successful"));
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            try
-            {
-                var result = await _authService.RefreshTokenAsync(request.RefreshToken);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var result = await _authService.RefreshTokenAsync(request.RefreshToken);
+            return Ok(result.Wrap("Token refreshed successfully"));
         }
 
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)
         {
-            try
-            {
-                var result = await _authService.GoogleLoginAsync(request);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var result = await _authService.GoogleLoginAsync(request);
+            return Ok(result.Wrap("Google login successful"));
         }
+        
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
-            try
-            {
-                await _authService.LogoutAsync(request);
-                return Ok(new { message = "Logged out successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            await _authService.LogoutAsync(request);
+            return Ok(new { }.Wrap("Logged out successfully"));
         }
 
         [HttpPost("verify-email")]
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request)
         {
-            try
-            {
-                await _authService.VerifyEmailAsync(request);
-                return Ok(new { message = "Email verified successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            await _authService.VerifyEmailAsync(request);
+            return Ok(new { }.Wrap("Email verified successfully"));
         }
 
         [HttpPost("resend-verification-email")]
         public async Task<IActionResult> ResendVerificationEmail([FromBody] ResendVerificationEmailRequest request)
         {
-            try
-            {
-                await _authService.SendVerificationEmailAsync(request.Email);
-                return Ok(new { message = "Verification email sent successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            await _authService.SendVerificationEmailAsync(request.Email);
+            return Ok(new { }.Wrap("Verification email sent successfully"));
         }
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
-            try
-            {
-                await _authService.ForgotPasswordAsync(request);
-                return Ok(new { message = "Password reset code sent to email" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            await _authService.ForgotPasswordAsync(request);
+            return Ok(new { }.Wrap("Password reset code sent to email"));
         }
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            try
-            {
-                await _authService.ResetPasswordAsync(request);
-                return Ok(new { message = "Password has been reset successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            await _authService.ResetPasswordAsync(request);
+            return Ok(new { }.Wrap("Password has been reset successfully"));
         }
     }
 }

@@ -31,22 +31,22 @@ namespace SmartRecruit.Application.Services
 
             if (user == null)
             {
-                throw new Exception("Invalid email or password.");
+                throw new ArgumentException("Invalid email or password.");
             }
 
             if (!PasswordUtil.VerifyPassword(request.Password, user.PasswordHash))
             {
-                throw new Exception("Invalid email or password.");
+                throw new ArgumentException("Invalid email or password.");
             }
 
             if (!user.IsActive)
             {
-                throw new Exception("User is inactive.");
+                throw new ArgumentException("User is inactive.");
             }
 
             if (!user.EmailVerified)
             {
-                throw new Exception("Please verify your email address before logging in.");
+                throw new ArgumentException("Please verify your email address before logging in.");
             }
 
             var token = _tokenService.GenerateJwtToken(user);
@@ -79,7 +79,7 @@ namespace SmartRecruit.Application.Services
             var existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (existingUser != null)
             {
-                throw new Exception("Email already exists.");
+                throw new ArgumentException("Email already exists.");
             }
 
             var user = new User
@@ -135,23 +135,23 @@ namespace SmartRecruit.Application.Services
 
             if (storedToken == null)
             {
-                throw new Exception("Invalid Token");
+                throw new ArgumentException("Invalid Token");
             }
 
             if (storedToken.IsExpired || storedToken.IsRevoked)
             {
-                throw new Exception("Token is expired or revoked");
+                throw new ArgumentException("Token is expired or revoked");
             }
 
             var user = await _unitOfWork.Users.GetByIdAsync(storedToken.UserId);
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new KeyNotFoundException("User not found");
             }
 
             if (!user.IsActive)
             {
-                 throw new Exception("User is inactive.");
+                 throw new ArgumentException("User is inactive.");
             }
 
             // Revoke current token
@@ -188,7 +188,7 @@ namespace SmartRecruit.Application.Services
         {
             var clientId = _configuration["Google:ClientId"];
             if (string.IsNullOrEmpty(clientId))
-                throw new Exception("Google ClientId is not configured.");
+                throw new ArgumentException("Google ClientId is not configured.");
 
             GoogleJsonWebSignature.Payload payload;
             try
@@ -201,11 +201,11 @@ namespace SmartRecruit.Application.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Invalid Google token: {ex.Message}");
+                throw new ArgumentException($"Invalid Google token: {ex.Message}");
             }
 
             if (payload == null || string.IsNullOrEmpty(payload.Email))
-                throw new Exception("Cannot extract email from Google token.");
+                throw new ArgumentException("Cannot extract email from Google token.");
 
             var email = payload.Email.ToLowerInvariant();
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == email);
@@ -232,7 +232,7 @@ namespace SmartRecruit.Application.Services
             else
             {
                 if (!user.IsActive)
-                    throw new Exception("User is inactive.");
+                    throw new ArgumentException("User is inactive.");
 
                 if (!string.IsNullOrEmpty(payload.Picture) && user.AvatarUrl != payload.Picture)
                 {
@@ -271,7 +271,7 @@ namespace SmartRecruit.Application.Services
         {
             var storedToken = await _unitOfWork.RefreshTokens.FindAsync(t => t.Token == request.RefreshToken);
             if (storedToken == null)
-                throw new Exception("Invalid Token.");
+                throw new ArgumentException("Invalid Token.");
 
             storedToken.IsRevoked = true;
             _unitOfWork.RefreshTokens.Update(storedToken);
@@ -282,13 +282,13 @@ namespace SmartRecruit.Application.Services
         {
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == email);
             if (user == null)
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException("User not found.");
 
             if (user.EmailVerified)
-                throw new Exception("Email is already verified.");
+                throw new ArgumentException("Email is already verified.");
 
             if (!await _otpService.CanCreateNewOtpAsync(email, "VerifyEmail"))
-                throw new Exception("Vui lòng chờ 2 phút trước khi yêu cầu mã xác thực mới.");
+                throw new ArgumentException("Please wait 2 minutes before requesting a new verification code.");
 
             var otpToken = await _otpService.CreateOtpAsync(email, "VerifyEmail");
 
@@ -302,15 +302,15 @@ namespace SmartRecruit.Application.Services
         {
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (user == null)
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException("User not found.");
             if (user.EmailVerified)
-                throw new Exception("Email is already verified.");
+                throw new ArgumentException("Email is already verified.");
 
             var isValid = await _otpService.VerifyOtpAsync(request.Email, request.Code, "VerifyEmail");
             if (!isValid)
             {
                 await _otpService.IncrementAttemptCountAsync(request.Email, request.Code, "VerifyEmail");
-                throw new Exception("Mã xác thực không đúng hoặc đã hết hạn.");
+                throw new ArgumentException("Invalid or expired verification code.");
             }
 
             user.EmailVerified = true;
@@ -322,10 +322,10 @@ namespace SmartRecruit.Application.Services
         {
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (user == null)
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException("User not found.");
 
             if (!await _otpService.CanCreateNewOtpAsync(request.Email, "ForgotPassword"))
-                throw new Exception("Vui lòng chờ 2 phút trước khi yêu cầu mã khôi phục mới.");
+                throw new ArgumentException("Please wait 2 minutes before requesting a new reset code.");
 
             var otpToken = await _otpService.CreateOtpAsync(request.Email, "ForgotPassword");
 
@@ -339,13 +339,13 @@ namespace SmartRecruit.Application.Services
         {
             var user = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (user == null)
-                throw new Exception("User not found.");
+                throw new KeyNotFoundException("User not found.");
 
             var isValid = await _otpService.VerifyOtpAsync(request.Email, request.Code, "ForgotPassword");
             if (!isValid)
             {
                 await _otpService.IncrementAttemptCountAsync(request.Email, request.Code, "ForgotPassword");
-                throw new Exception("Mã khôi phục không đúng hoặc đã hết hạn.");
+                throw new ArgumentException("Invalid or expired reset code.");
             }
 
             user.PasswordHash = PasswordUtil.HashPassword(request.NewPassword);

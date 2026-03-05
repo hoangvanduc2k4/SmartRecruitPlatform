@@ -83,7 +83,7 @@ namespace SmartRecruit.Infrastructure.Services
                 otp.IsUsed = true; // Invalidate after 5 attempts
                 _unitOfWork.OtpTokens.Update(otp);
                 await _unitOfWork.CompleteAsync();
-                throw new Exception("Quá số lần nhập sai cho phép. Vui lòng gửi lại mã OTP.");
+                throw new ArgumentException("Maximum failed attempts reached. Please request a new OTP.");
             }
 
             // Valid
