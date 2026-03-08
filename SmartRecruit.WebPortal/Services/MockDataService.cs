@@ -39,12 +39,12 @@ namespace WebPortal.Services
 
                 Users.Add(new User
                 {
-                    Id = $"user-{i}",
-                    Email = $"{firstName.ToLower()}.{lastName.ToLower()}{i}@example.com",
+                    Id = i + 1,
+                    Email = $"{firstName.ToLower()}.{lastName.ToLower()}{i + 1}@example.com",
                     FullName = $"{lastName} {firstName}",
                     Role = role,
                     WalletBalance = role == UserRole.RECRUITER ? random.Next(1000, 50000) * 1000 : 0,
-                    AvatarUrl = $"https://i.pravatar.cc/150?u={i}",
+                    AvatarUrl = $"https://i.pravatar.cc/150?u={i + 1}",
                     IsVip = role == UserRole.RECRUITER && random.NextDouble() < 0.3,
                     IsLocked = random.NextDouble() < 0.05
                 });
@@ -73,28 +73,26 @@ namespace WebPortal.Services
 
                 Jobs.Add(new Job
                 {
-                    Id = $"job-{i}",
+                    Id = i + 1,
                     RecruiterId = recruiter.Id,
                     Title = title,
                     Description = $"We are hiring a {title} to join our amazing team. Great benefits and culture.",
                     Requirement = $"At least {random.Next(1, 5)} years of experience with {skillsPool[random.Next(skillsPool.Length)]}.",
-                    SkillsRequired = requiredSkills,
+                    SkillsRequired = string.Join(", ", requiredSkills),
                     SalaryMin = salaryMin,
                     SalaryMax = salaryMin + random.Next(500, 2000),
                     JobType = jobTypes[random.Next(jobTypes.Length)],
                     Status = status,
                     ViewCount = random.Next(0, 1000),
-                    CreatedAt = DateTime.Now.AddDays(-random.Next(1, 1000)),
+                    CreatedTime = DateTime.Now.AddDays(-random.Next(1, 1000)),
                     Location = locations[random.Next(locations.Length)],
                     Category = categories[random.Next(categories.Length)],
-                    IsBoosted = random.NextDouble() < 0.2,
-                    BlockReason = status == JobStatus.BLOCKED ? "Suspicious content detected by AI" : null
                 });
             }
 
             // Generate Applications
             var candidates = Users.Where(u => u.Role == UserRole.CANDIDATE).ToList();
-            var activeJobs = Jobs.Where(j => j.Status == JobStatus.PUBLISHED).ToList();
+            var activeJobs = Jobs.Where(j => j.Status == JobStatus.APPROVED).ToList();
 
             for (int i = 0; i < 2000; i++)
             {
@@ -104,13 +102,13 @@ namespace WebPortal.Services
 
                 Applications.Add(new Application
                 {
-                    Id = $"app-{i}",
+                    Id = i + 1,
                     JobId = job.Id,
                     CandidateId = candidate.Id,
                     CandidateName = candidate.FullName,
                     MatchScore = random.Next(40, 100),
                     Status = appStatuses[random.Next(appStatuses.Length)],
-                    AppliedAt = job.CreatedAt.AddDays(random.Next(1, 30)),
+                    CreatedAt = job.CreatedTime.AddDays(random.Next(1, 30)),
                     Notes = random.NextDouble() < 0.3 ? "Promising candidate" : null
                 });
             }

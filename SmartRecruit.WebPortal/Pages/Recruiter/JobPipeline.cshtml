@@ -5,9 +5,8 @@
     ViewData["Title"] = "Job Pipeline";
     var statuses = new[]
     {
-        new { Status = ApplicationStatus.APPLIED, Label = "Applied", Icon = "fa-paper-plane", Color = "bg-blue-400 shadow-blue-400/30" },
-        new { Status = ApplicationStatus.SCREENING, Label = "Screening", Icon = "fa-search", Color = "bg-indigo-400 shadow-indigo-400/30" },
-        new { Status = ApplicationStatus.INTERVIEW, Label = "Interview", Icon = "fa-comments", Color = "bg-amber-400 shadow-amber-400/30" },
+        new { Status = ApplicationStatus.REVIEWING, Label = "Reviewing", Icon = "fa-search", Color = "bg-indigo-400 shadow-indigo-400/30" },
+        new { Status = ApplicationStatus.INTERVIEWING, Label = "Interview", Icon = "fa-comments", Color = "bg-amber-400 shadow-amber-400/30" },
         new { Status = ApplicationStatus.OFFERED, Label = "Offer", Icon = "fa-gift", Color = "bg-green-400 shadow-green-400/30" },
         new { Status = ApplicationStatus.REJECTED, Label = "Rejected Pool", Icon = "fa-circle-xmark", Color = "bg-red-400 shadow-red-400/30" }
     };
@@ -74,7 +73,7 @@
                                     }
                                     else
                                     {
-                                        <input type="hidden" name="status" value="@ApplicationStatus.APPLIED.ToString()" />
+                                        <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING.ToString()" />
                                         <button type="submit" class="h-10 px-4 text-[9px] rounded-xl bg-green-600 text-white font-bold border-0 hover:bg-green-700 ml-2 uppercase tracking-widest whitespace-nowrap">
                                             Restore
                                         </button>
@@ -86,7 +85,7 @@
                                     <form method="post" asp-page-handler="UpdateStatus" class="flex" id="advanceForm_@app.Id">
                                         <input type="hidden" name="id" value="@app.Id" />
                                         @{
-                                            var possibleStatuses = new[] { ApplicationStatus.APPLIED, ApplicationStatus.SCREENING, ApplicationStatus.INTERVIEW, ApplicationStatus.OFFERED };
+                                            var possibleStatuses = new[] { ApplicationStatus.REVIEWING, ApplicationStatus.INTERVIEWING, ApplicationStatus.OFFERED };
                                             var idx = System.Array.IndexOf(possibleStatuses, col.Status);
                                             var nextStatus = possibleStatuses[idx + 1];
                                         }

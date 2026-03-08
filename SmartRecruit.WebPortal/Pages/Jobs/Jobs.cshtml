@@ -47,13 +47,10 @@
                 <div class="space-y-4">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Industry Category</h4>
                     <select name="CategoryFilter" onchange="document.getElementById('filterForm').submit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
-                        @foreach (var cat in Model.AvailableCategories)
+                        <option value="0" selected="@(Model.CategoryFilter == null || Model.CategoryFilter == 0)">ALL CATEGORIES</option>
+                        @foreach (var cat in Model.Categories)
                         {
-                            if (Model.CategoryFilter == cat) {
-                                <option value="@cat" selected>@cat</option>
-                            } else {
-                                <option value="@cat">@cat</option>
-                            }
+                            <option value="@cat.Id" selected="@(Model.CategoryFilter == cat.Id)">@cat.Name.ToUpper()</option>
                         }
                     </select>
                 </div>
@@ -146,7 +143,7 @@
 
                                 <div class="mt-8 pt-8 border-t border-slate-50 flex flex-wrap gap-2 items-center">
                                     <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest mr-2">Core Tech:</span>
-                                    @foreach (var s in job.SkillsRequired)
+                                    @foreach (var s in job.SkillsRequiredList)
                                     {
                                         <span class="px-3 py-1.5 bg-slate-50 text-slate-500 rounded-lg text-[9px] font-black uppercase tracking-wider border border-slate-100">@s</span>
                                     }
