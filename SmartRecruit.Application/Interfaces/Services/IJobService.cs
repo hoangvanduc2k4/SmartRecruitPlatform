@@ -15,6 +15,7 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> ToggleVisibilityAsync(long id);
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task ModerateJobAsync(long jobId);
+        Task<IEnumerable<string>> GetLocationsAsync();
 
     }
 }

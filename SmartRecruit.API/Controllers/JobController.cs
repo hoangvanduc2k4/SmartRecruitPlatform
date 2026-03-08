@@ -102,6 +102,13 @@ namespace SmartRecruit.Controllers
                 return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
             }
         }
+
+        [HttpGet("locations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var locations = await _jobService.GetLocationsAsync();
+            return Ok(new { Data = locations }.Wrap());
+        }
     }
 }
 
