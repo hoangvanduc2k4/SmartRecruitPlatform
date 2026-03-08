@@ -39,17 +39,17 @@ namespace WebPortal.Pages
             }
         }
 
-        public IActionResult OnPostToggleStatus(string jobId)
+        public IActionResult OnPostToggleStatus(long jobId)
         {
             var job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == jobId);
             if (job != null)
             {
-                job.Status = job.Status == JobStatus.PUBLISHED ? JobStatus.CLOSED : JobStatus.PUBLISHED;
+                job.Status = job.Status == JobStatus.APPROVED ? JobStatus.HIDDEN : JobStatus.APPROVED;
             }
             return RedirectToPage();
         }
 
-        public IActionResult OnPostAppealBlock(string jobId, string message)
+        public IActionResult OnPostAppealBlock(long jobId, string message)
         {
             // Just simulate appeal
             return RedirectToPage();

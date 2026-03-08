@@ -1,60 +1,64 @@
+using System.Text.Json;
 using WebPortal.Models;
+using WebPortal.Models.Api;
 
 namespace WebPortal.Services.Api
 {
     public interface IApplicationApiService
     {
-        Task<List<Application>> GetMyApplicationsAsync();
-        Task<List<Application>> GetApplicationsByJobAsync(string jobId);
-        Task<bool> ApplyToJobAsync(string jobId);
-        Task<bool> UpdateApplicationStatusAsync(string applicationId, ApplicationStatus status);
-        Task<bool> BulkUpdateApplicationStatusAsync(List<string> applicationIds, ApplicationStatus status);
+        Task<PagedResponse<Application>> GetApplicationsByJobAsync(long jobId, int page = 1, int pageSize = 10, bool sortByScore = false);
+        Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
+        Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
+        Task<bool> ApplyAsync(long jobId, long candidateId);
     }
 
     public class ApplicationApiService : IApplicationApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions _jsonOptions;
 
         public ApplicationApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-        }
-
-        public async Task<List<Application>> GetMyApplicationsAsync()
-        {
-            var response = await _httpClient.GetAsync("applications/my-applications");
-            if (response.IsSuccessStatusCode)
+            _jsonOptions = new JsonSerializerOptions
             {
-                return await response.Content.ReadFromJsonAsync<List<Application>>() ?? new List<Application>();
-            }
-            return new List<Application>();
+                PropertyNameCaseInsensitive = true
+            };
+            _jsonOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
         }
 
-        public async Task<List<Application>> GetApplicationsByJobAsync(string jobId)
+        public async Task<PagedResponse<Application>> GetApplicationsByJobAsync(long jobId, int page = 1, int pageSize = 10, bool sortByScore = false)
         {
-            var response = await _httpClient.GetAsync($"applications/job/{jobId}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response.Content.ReadFromJsonAsync<List<Application>>() ?? new List<Application>();
+                var response = await _httpClient.GetAsync($"applications/job/{jobId}?page={page}&pageSize={pageSize}&sortByScore={sortByScore}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<PagedResponse<Application>>(_jsonOptions) ?? new PagedResponse<Application>();
+                }
             }
-            return new List<Application>();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ApplicationApiService] Error fetching applications for job {jobId}: {ex.Message}");
+            }
+            return new PagedResponse<Application>();
         }
 
-        public async Task<bool> ApplyToJobAsync(string jobId)
+        public async Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)
         {
-            var response = await _httpClient.PostAsync($"jobs/{jobId}/apply", null);
+            var response = await _httpClient.PutAsJsonAsync($"applications/{id}/status", request, _jsonOptions);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateApplicationStatusAsync(string applicationId, ApplicationStatus status)
+        public async Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)
         {
-            var response = await _httpClient.PatchAsJsonAsync($"applications/{applicationId}/status", new { Status = status });
+            var response = await _httpClient.PutAsJsonAsync("applications/bulk-status", request, _jsonOptions);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> BulkUpdateApplicationStatusAsync(List<string> applicationIds, ApplicationStatus status)
+        public async Task<bool> ApplyAsync(long jobId, long candidateId)
         {
-            var response = await _httpClient.PatchAsJsonAsync("applications/bulk-status", new { ApplicationIds = applicationIds, Status = status });
+            var response = await _httpClient.PostAsJsonAsync("applications", new { JobId = jobId, CandidateId = candidateId });
             return response.IsSuccessStatusCode;
         }
     }

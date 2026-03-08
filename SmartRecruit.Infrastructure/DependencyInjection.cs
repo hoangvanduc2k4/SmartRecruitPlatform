@@ -27,6 +27,7 @@ namespace SmartRecruit.Infrastructure
             services.AddScoped<IJobRepository, JobRepository>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddHttpClient("PayOS", (sp, client) =>

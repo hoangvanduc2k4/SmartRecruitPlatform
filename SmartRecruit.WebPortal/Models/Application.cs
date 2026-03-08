@@ -2,13 +2,19 @@ namespace WebPortal.Models
 {
     public class Application
     {
-        public string Id { get; set; } = string.Empty;
-        public string JobId { get; set; } = string.Empty;
-        public string CandidateId { get; set; } = string.Empty;
+        public long Id { get; set; }
+        public long JobId { get; set; }
+        public string JobTitle { get; set; } = string.Empty;
+        public string Company { get; set; } = string.Empty;
+        public long CandidateId { get; set; }
         public string CandidateName { get; set; } = string.Empty;
-        public double MatchScore { get; set; }
+        public string CandidateEmail { get; set; } = string.Empty;
+        public decimal MatchScore { get; set; }
+        public decimal SkillMatch { get; set; }
+        public decimal ExperienceMatch { get; set; }
+        public string? AI_Summary { get; set; }
         public ApplicationStatus Status { get; set; }
-        public DateTime AppliedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string? Notes { get; set; }
     }
 }

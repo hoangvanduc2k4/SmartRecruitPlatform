@@ -9,26 +9,24 @@ namespace WebPortal.Models
 
     public enum JobStatus
     {
-        PENDING,
-        PUBLISHED,
-        CLOSED,
-        EXPIRED,
-        BLOCKED
+        CHECKING = 0,
+        APPROVED = 1,
+        BLOCKED = 2,
+        HIDDEN = 3
     }
 
     public enum JobType
     {
-        FULL_TIME,
-        PART_TIME,
-        REMOTE
+        FULL_TIME = 0,
+        PART_TIME = 1,
+        REMOTE = 2
     }
 
     public enum ApplicationStatus
     {
-        APPLIED,
-        SCREENING,
-        INTERVIEW,
-        OFFERED,
-        REJECTED
+        REVIEWING = 0,
+        INTERVIEWING = 1,
+        OFFERED = 2,
+        REJECTED = 3
     }
 }

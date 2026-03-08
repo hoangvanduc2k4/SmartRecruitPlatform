@@ -31,7 +31,7 @@ namespace WebPortal.Pages
 
             var query = _mockDataService.Applications
                 .Where(a => a.CandidateId == CurrentUser.Id)
-                .OrderByDescending(a => a.AppliedAt);
+                .OrderByDescending(a => a.CreatedAt);
 
             var count = query.Count();
             TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
