@@ -32,7 +32,10 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public int MinSalary { get; set; } = 0;
 
-        public List<string> AvailableLocations { get; set; } = new List<string> { "ALL", "Ha Noi", "Ho Chi Minh", "Da Nang", "Remote" };
+        [BindProperty(SupportsGet = true)]
+        public int? MaxSalary { get; set; }
+
+        public List<string> AvailableLocations { get; set; } = new List<string>();
         public List<Category> Categories { get; set; } = new List<Category>();
 
         [BindProperty(SupportsGet = true)]
@@ -44,6 +47,9 @@ namespace WebPortal.Pages
         public async Task OnGetAsync()
         {
             Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
+            var locations = await _jobApiService.GetLocationsAsync();
+            AvailableLocations = new List<string> { "ALL" };
+            AvailableLocations.AddRange(locations);
 
             JobType? parsedType = null;
             if (!string.IsNullOrEmpty(TypeFilter) && TypeFilter != "ALL")
@@ -60,6 +66,7 @@ namespace WebPortal.Pages
                 CategoryFilter,
                 parsedType,
                 MinSalary,
+                MaxSalary,
                 CurrentPage,
                 PageSize
             );

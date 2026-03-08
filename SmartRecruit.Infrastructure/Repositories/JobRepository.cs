@@ -167,5 +167,14 @@ namespace SmartRecruit.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            return await _context.Set<Job>()
+                .Where(j => !string.IsNullOrEmpty(j.Location))
+                .Select(j => j.Location)
+                .Distinct()
+                .ToListAsync();
+        }
     }
 }

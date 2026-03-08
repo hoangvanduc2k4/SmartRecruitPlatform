@@ -5,7 +5,7 @@ namespace WebPortal.Services.Api
 {
     public interface IJobApiService
     {
-        Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, int page = 1, int pageSize = 10);
+        Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10);
         Task<Job?> GetJobByIdAsync(string id);
         Task<Job?> CreateJobAsync(Job job);
         Task<bool> UpdateJobAsync(string id, Job job);
@@ -13,6 +13,7 @@ namespace WebPortal.Services.Api
         Task<bool> ToggleVisibilityAsync(string id);
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task<IEnumerable<Category>> GetCategoriesAsync();
+        Task<IEnumerable<string>> GetLocationsAsync();
     }
 
     public class JobApiService : IJobApiService
@@ -24,7 +25,7 @@ namespace WebPortal.Services.Api
             _httpClient = httpClient;
         }
 
-        public async Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, int page = 1, int pageSize = 10)
+        public async Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10)
         {
             var query = new List<string>();
             if (!string.IsNullOrEmpty(search)) query.Add($"keyword={Uri.EscapeDataString(search)}");
@@ -32,6 +33,7 @@ namespace WebPortal.Services.Api
             if (categoryId.HasValue && categoryId.Value > 0) query.Add($"categoryId={categoryId.Value}");
             if (type.HasValue) query.Add($"jobType={(int)type.Value}");
             if (minSalary.HasValue) query.Add($"minSalary={minSalary.Value}");
+            if (maxSalary.HasValue) query.Add($"maxSalary={maxSalary.Value}");
             query.Add($"page={page}");
             query.Add($"pageSize={pageSize}");
 
@@ -124,6 +126,25 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error fetching categories: {ex.Message}");
             }
             return new List<Category>();
+        }
+
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("jobs/locations");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<string>>>(options);
+                    return apiResponse?.Data ?? new List<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching locations: {ex.Message}");
+            }
+            return new List<string>();
         }
     }
 }

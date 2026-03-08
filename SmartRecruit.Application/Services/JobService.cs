@@ -1,5 +1,7 @@
 using AutoMapper;
 using System;
+using System.Text;
+using System.Globalization;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
@@ -229,6 +231,45 @@ namespace SmartRecruit.Application.Services
             return result;
         }
 
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            var rawLocations = await _jobRepository.GetLocationsAsync();
+            
+            // Clean & Normalize: "Hà Nội" vs "ha noi" or "HÀ NỘI"
+            // We'll use a dictionary to keep track of the "pretty" version while deduplicating by normalized key
+            var uniqueLocations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+            foreach (var loc in rawLocations)
+            {
+                var normalized = NormalizeString(loc);
+                if (!uniqueLocations.ContainsKey(normalized))
+                {
+                    uniqueLocations[normalized] = loc; // Keep the first original one encountered
+                }
+            }
+
+            return uniqueLocations.Values
+                .OrderBy(x => x, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+        }
+
+        private string NormalizeString(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
+
+            var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+            var stringBuilder = new System.Text.StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC).ToLowerInvariant().Trim();
+        }
     }
 }
