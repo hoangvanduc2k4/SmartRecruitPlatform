@@ -17,7 +17,7 @@ namespace WebPortal.Pages
         public Application Application { get; set; }
         public Job Job { get; set; }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(long id)
         {
             Application = _mockDataService.Applications.FirstOrDefault(a => a.Id == id);
             if (Application != null)
@@ -31,7 +31,7 @@ namespace WebPortal.Pages
             return Page();
         }
 
-        public IActionResult OnPostUpdateStatus(string id, string status)
+        public IActionResult OnPostUpdateStatus(long id, string status)
         {
             var app = _mockDataService.Applications.FirstOrDefault(a => a.Id == id);
             if (app != null && System.Enum.TryParse<ApplicationStatus>(status, out var nextStatus))

@@ -1,8 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using WebPortal.Services;
 using WebPortal.Services.Api;
-using System;
 
 namespace SmartRecruitWeb.Extensions
 {
@@ -19,6 +16,11 @@ namespace SmartRecruitWeb.Extensions
 
             // Configure Base API URL
             var apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl") ?? "http://localhost:5000/api/";
+
+            if (!apiBaseUrl.EndsWith("/"))
+            {
+                apiBaseUrl += "/";
+            }
 
             // Register API Services with HttpClient and JwtAuthHandler
             services.AddHttpClient<IAuthApiService, AuthApiService>(client =>

@@ -1,17 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Models.Api;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class JobDetailModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IJobApiService _jobApiService;
+        private readonly IApplicationApiService _applicationApiService;
+        private readonly IAuthApiService _authApiService;
 
-        public JobDetailModel(IMockDataService mockDataService)
+        public JobDetailModel(
+            IJobApiService jobApiService,
+            IApplicationApiService applicationApiService,
+            IAuthApiService authApiService)
         {
-            _mockDataService = mockDataService;
+            _jobApiService = jobApiService;
+            _applicationApiService = applicationApiService;
+            _authApiService = authApiService;
         }
 
         public Job? Job { get; set; }
@@ -23,8 +31,7 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
 
-        // Mock User Data for context
-        public User CurrentUser { get; set; }
+        public UserDto? CurrentUser { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
@@ -33,69 +40,84 @@ namespace WebPortal.Pages
         public int PageSize { get; set; } = 5;
         public int TotalApplicationCount { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Simulating logged-in Recruiter for demo purposes
-            CurrentUser = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.RECRUITER) ?? new User { Role = UserRole.CANDIDATE };
+            // Fetch Current User Profile
+            CurrentUser = await _authApiService.GetProfileAsync();
 
-            if (!string.IsNullOrEmpty(Id))
+            if (long.TryParse(Id, out var longId))
             {
-                Job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == Id);
+                Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
                 if (Job != null)
                 {
-                    var query = _mockDataService.Applications
-                        .Where(a => a.JobId == Id)
-                        .OrderByDescending(a => a.MatchScore);
+                    // Fetch applications for this job
+                    var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
+                    Applications = (List<Application>)pagedApps.Data;
+                    TotalApplicationCount = pagedApps.TotalCount;
+                    TotalPages = pagedApps.TotalPages;
 
-                    TotalApplicationCount = query.Count();
-
-                    if (Tab == "APPLICANTS")
+                    if (Tab == "DETAILS")
                     {
-                        TotalPages = (int)System.Math.Ceiling(TotalApplicationCount / (double)PageSize);
-                        if (CurrentPage < 1) CurrentPage = 1;
-
-                        Applications = query.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
-                    }
-                    else
-                    {
-                        Applications = query.ToList();
+                        // In Details tab, we might want ALL apps for the count if not already fetched
                     }
                 }
+                else
+                {
+                    return NotFound();
+                }
             }
+            return Page();
         }
 
-        public IActionResult OnPostUpdateStatus(string applicationId, string status, string returnTab = "APPLICANTS")
+        public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, ApplicationStatus status, string returnTab = "APPLICANTS")
         {
-            var app = _mockDataService.Applications.FirstOrDefault(a => a.Id == applicationId);
-            if (app != null && System.Enum.TryParse<ApplicationStatus>(status, out var parsedStatus))
+            var request = new UpdateApplicationStatusRequest { Status = status };
+
+            // Special handling for mandatory fields in backend
+            if (status == ApplicationStatus.INTERVIEWING)
             {
-                app.Status = parsedStatus;
+                request.InterviewDate = DateTime.Now.AddDays(1); // Default for demo
             }
+            else if (status == ApplicationStatus.REJECTED)
+            {
+                request.RejectionReason = "Not matching requirements."; // Default for demo
+            }
+
+            await _applicationApiService.UpdateStatusAsync(applicationId, request);
             return RedirectToPage(new { Id = Id, Tab = returnTab });
         }
 
-        public IActionResult OnPostBulkReject(List<string> selectedApplications)
+        public async Task<IActionResult> OnPostBulkRejectAsync(List<long> selectedApplications)
         {
             if (selectedApplications != null && selectedApplications.Any())
             {
-                foreach (var appId in selectedApplications)
+                var request = new BulkUpdateApplicationStatusRequest
                 {
-                    var app = _mockDataService.Applications.FirstOrDefault(a => a.Id == appId);
-                    if (app != null && app.JobId == Id)
-                    {
-                        app.Status = ApplicationStatus.REJECTED;
-                    }
-                }
+                    ApplicationIds = selectedApplications,
+                    Status = ApplicationStatus.REJECTED,
+                    RejectionReason = "Bulk Rejection"
+                };
+                await _applicationApiService.BulkUpdateStatusAsync(request);
             }
             return RedirectToPage(new { Id = Id, Tab = "APPLICANTS" });
         }
 
-        public IActionResult OnPostBoost()
+        public async Task<IActionResult> OnPostBoostAsync()
         {
-            var job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == Id);
-            if (job != null)
+            CurrentUser = await _authApiService.GetProfileAsync();
+            if (long.TryParse(Id, out var longId) && CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
             {
-                job.IsBoosted = true;
+                await _jobApiService.BoostJobAsync(longId, userId);
+            }
+            return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
+        }
+
+        public async Task<IActionResult> OnPostApplyAsync()
+        {
+            CurrentUser = await _authApiService.GetProfileAsync();
+            if (long.TryParse(Id, out var longId) && CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
+            {
+                await _applicationApiService.ApplyAsync(longId, userId);
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }

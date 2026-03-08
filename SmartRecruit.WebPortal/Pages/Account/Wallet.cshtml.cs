@@ -32,9 +32,9 @@ namespace WebPortal.Pages
             {
                 Transactions = new List<Transaction>
                 {
-                    new Transaction { Id = "tx-1", UserId = CurrentUser.Id, Amount = -50000, Type = "SERVICE_FEE", Description = "Job Post: Senior .NET Dev", CreatedAt = System.DateTime.Now.AddDays(-2) },
-                    new Transaction { Id = "tx-2", UserId = CurrentUser.Id, Amount = 500000, Type = "TOP_UP", Description = "Top Up: PayOS", CreatedAt = System.DateTime.Now.AddDays(-3) },
-                    new Transaction { Id = "tx-3", UserId = CurrentUser.Id, Amount = -10000, Type = "JOB_BOOST", Description = "Candidate Unlock: Bob Backend", CreatedAt = System.DateTime.Now.AddDays(-4) }
+                    new Transaction { Id = 1001, UserId = CurrentUser.Id, Amount = -50000, Type = "SERVICE_FEE", Description = "Job Post: Senior .NET Dev", CreatedAt = System.DateTime.Now.AddDays(-2) },
+                    new Transaction { Id = 1002, UserId = CurrentUser.Id, Amount = 500000, Type = "TOP_UP", Description = "Top Up: PayOS", CreatedAt = System.DateTime.Now.AddDays(-3) },
+                    new Transaction { Id = 1003, UserId = CurrentUser.Id, Amount = -10000, Type = "JOB_BOOST", Description = "Candidate Unlock: Bob Backend", CreatedAt = System.DateTime.Now.AddDays(-4) }
                 };
             }
         }
@@ -48,7 +48,7 @@ namespace WebPortal.Pages
                 user.WalletBalance += amount;
                 _mockDataService.Transactions.Add(new Transaction
                 {
-                    Id = $"tx-{System.Guid.NewGuid().ToString().Substring(0, 8)}",
+                    Id = (long)_mockDataService.Transactions.Count + 1,
                     UserId = user.Id,
                     Amount = amount,
                     Type = "TOP_UP",

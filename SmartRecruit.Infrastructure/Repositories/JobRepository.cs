@@ -105,8 +105,14 @@ namespace SmartRecruit.Infrastructure.Repositories
             // "Tin nào vừa được thanh toán Boost thành công sẽ ngay lập tức chiếm vị trí Top 1"
             // This means we should sort boosted jobs by BoostExpiryTime DESC (since boost duration is fixed at 20 mins, newest boost will have latest expiry)
 
-            orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime > now)
-                                .ThenByDescending(x => x.BoostExpiryTime) // Most recently boosted first
+            // 1. Boosted jobs first: we sort by BoostExpiryTime DESC.
+            // If BoostExpiryTime is null or in the past, they will naturally be sorted after currently boosted jobs if we use a default value for nulls,
+            // or we can sort by HasBoost first, then ExpiryTime.
+            
+            // To ensure "Boosted jobs appear on top, ordered by most recently boosted (which means latest expiry time)",
+            // we first order by whether they are currently boosted:
+            orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
+                                .ThenByDescending(x => x.BoostExpiryTime) // Within boosted, newest boost (latest expiry) first. For non-boosted, this puts previously boosted jobs higher.
                                 .ThenByDescending(x => x.ViewCount)
                                 .ThenByDescending(x => x.SalaryMax)
                                 .ThenBy(x => x.CreatedAt); // Oldest created first as tie-breaker
@@ -166,6 +172,15 @@ namespace SmartRecruit.Infrastructure.Repositories
                 _context.Set<Job>().Update(job);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            return await _context.Set<Job>()
+                .Where(j => !string.IsNullOrEmpty(j.Location))
+                .Select(j => j.Location)
+                .Distinct()
+                .ToListAsync();
         }
     }
 }

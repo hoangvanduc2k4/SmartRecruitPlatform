@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class RecruiterJobsModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IAuthApiService _authApiService;
+        private readonly IJobApiService _jobApiService;
+        private readonly IApplicationApiService _applicationApiService;
 
-        public RecruiterJobsModel(IMockDataService mockDataService)
+        public RecruiterJobsModel(IAuthApiService authApiService, IJobApiService jobApiService, IApplicationApiService applicationApiService)
         {
-            _mockDataService = mockDataService;
+            _authApiService = authApiService;
+            _jobApiService = jobApiService;
+            _applicationApiService = applicationApiService;
         }
 
         public IList<Job> Jobs { get; set; } = new List<Job>();
@@ -23,33 +27,39 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            var user = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.RECRUITER) ?? _mockDataService.Users.FirstOrDefault();
+            var user = await _authApiService.GetProfileAsync();
             if (user != null)
             {
-                var query = _mockDataService.Jobs.Where(j => j.RecruiterId == user.Id);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(1, CurrentPage, PageSize);
+                if (response.Success && response.Data != null)
+                {
+                    Jobs = response.Data.ToList();
+                    TotalPages = response.TotalPages;
 
-                var count = query.Count();
-                TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
-                if (CurrentPage < 1) CurrentPage = 1;
-
-                Jobs = query.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
-                Applications = _mockDataService.Applications.ToList();
+                    foreach (var job in Jobs)
+                    {
+                        var appsResponse = await _applicationApiService.GetApplicationsByJobAsync(job.Id, 1, 100);
+                        if (appsResponse.Success && appsResponse.Data != null)
+                        {
+                            foreach (var app in appsResponse.Data)
+                            {
+                                Applications.Add(app);
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        public IActionResult OnPostToggleStatus(string jobId)
+        public async Task<IActionResult> OnPostToggleStatusAsync(long jobId)
         {
-            var job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == jobId);
-            if (job != null)
-            {
-                job.Status = job.Status == JobStatus.PUBLISHED ? JobStatus.CLOSED : JobStatus.PUBLISHED;
-            }
+            await _jobApiService.ToggleVisibilityAsync(jobId.ToString());
             return RedirectToPage();
         }
 
-        public IActionResult OnPostAppealBlock(string jobId, string message)
+        public IActionResult OnPostAppealBlock(long jobId, string message)
         {
             // Just simulate appeal
             return RedirectToPage();
