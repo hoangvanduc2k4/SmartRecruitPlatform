@@ -107,7 +107,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> GetLocations()
         {
             var locations = await _jobService.GetLocationsAsync();
-            return Ok(new { Data = locations }.Wrap());
+            return Ok(locations.Wrap());
         }
     }
 }
