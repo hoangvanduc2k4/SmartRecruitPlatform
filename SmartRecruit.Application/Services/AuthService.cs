@@ -5,6 +5,7 @@ using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Google.Apis.Auth;
+using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Application.Services
 {
@@ -15,14 +16,22 @@ namespace SmartRecruit.Application.Services
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
         private readonly IOtpService _otpService;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, IConfiguration configuration, IEmailService emailService, IOtpService otpService)
+        public AuthService(
+            IUnitOfWork unitOfWork, 
+            ITokenService tokenService, 
+            IConfiguration configuration, 
+            IEmailService emailService, 
+            IOtpService otpService,
+            ILogger<AuthService> logger)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _configuration = configuration;
             _emailService = emailService;
             _otpService = otpService;
+            _logger = logger;
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
@@ -31,21 +40,25 @@ namespace SmartRecruit.Application.Services
 
             if (user == null)
             {
+                _logger.LogWarning("Login failed for {Email}: Invalid email or password.", request.Email);
                 throw new ArgumentException("Invalid email or password.");
             }
 
             if (!PasswordUtil.VerifyPassword(request.Password, user.PasswordHash))
             {
+                _logger.LogWarning("Login failed for {Email}: Invalid email or password.", request.Email);
                 throw new ArgumentException("Invalid email or password.");
             }
 
             if (!user.IsActive)
             {
+                _logger.LogWarning("Login failed for {Email}: User is inactive.", request.Email);
                 throw new ArgumentException("User is inactive.");
             }
 
             if (!user.EmailVerified)
             {
+                _logger.LogWarning("Login failed for {Email}: Email not verified.", request.Email);
                 throw new ArgumentException("Please verify your email address before logging in.");
             }
 
@@ -63,6 +76,8 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
             await _unitOfWork.CompleteAsync();
 
+            _logger.LogInformation("Login successful for user: {Email} (UserId: {UserId})", user.Email, user.Id);
+
             return new AuthResponse
             {
                 Token = token,
@@ -74,11 +89,12 @@ namespace SmartRecruit.Application.Services
             };
         }
 
-        public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+        public async Task RegisterAsync(RegisterRequest request)
         {
             var existingUser = await _unitOfWork.Users.FindAsync(u => u.Email == request.Email);
             if (existingUser != null)
             {
+                _logger.LogWarning("Registration failed: Email {Email} already exists.", request.Email);
                 throw new ArgumentException("Email already exists.");
             }
 
@@ -95,38 +111,17 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.Users.AddAsync(user);
             await _unitOfWork.CompleteAsync();
 
-            var token = _tokenService.GenerateJwtToken(user);
-            var refreshToken = _tokenService.GenerateRefreshToken();
-
-            var refreshTokenEntity = new RefreshToken
-            {
-                Token = refreshToken,
-                UserId = user.Id,
-                ExpiryDate = DateTime.UtcNow.AddDays(7),
-                IsRevoked = false
-            };
-
-            await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
-            await _unitOfWork.CompleteAsync();
+            _logger.LogInformation("Registration successful: User {Email} created (UserId: {UserId}).", user.Email, user.Id);
 
             try
             {
                 await SendVerificationEmailAsync(user.Email);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to send verification email to newly registered user: {Email}", user.Email);
                 // Silently fail if email SMTP is not configured properly, but log in prod.
             }
-
-            return new AuthResponse
-            {
-                Token = token,
-                RefreshToken = refreshToken,
-                FullName = user.FullName,
-                Role = user.Role.ToString(),
-                Email = user.Email,
-                AvatarUrl = user.AvatarUrl
-            };
         }
 
         public async Task<AuthResponse> RefreshTokenAsync(string token)
@@ -135,22 +130,26 @@ namespace SmartRecruit.Application.Services
 
             if (storedToken == null)
             {
+                _logger.LogWarning("Refresh token failed: Token not found.");
                 throw new ArgumentException("Invalid Token");
             }
 
             if (storedToken.IsExpired || storedToken.IsRevoked)
             {
+                _logger.LogWarning("Refresh token failed: Token is expired or revoked. (TokenId: {TokenId})", storedToken.Id);
                 throw new ArgumentException("Token is expired or revoked");
             }
 
             var user = await _unitOfWork.Users.GetByIdAsync(storedToken.UserId);
             if (user == null)
             {
+                _logger.LogWarning("Refresh token failed: User not found for UserId {UserId}.", storedToken.UserId);
                 throw new KeyNotFoundException("User not found");
             }
 
             if (!user.IsActive)
             {
+                 _logger.LogWarning("Refresh token failed: User {UserId} is inactive.", user.Id);
                  throw new ArgumentException("User is inactive.");
             }
 
@@ -172,6 +171,8 @@ namespace SmartRecruit.Application.Services
 
             await _unitOfWork.RefreshTokens.AddAsync(refreshTokenEntity);
             await _unitOfWork.CompleteAsync();
+
+            _logger.LogInformation("Refresh token successful for UserId: {UserId}.", user.Id);
 
             return new AuthResponse
             {
@@ -271,11 +272,16 @@ namespace SmartRecruit.Application.Services
         {
             var storedToken = await _unitOfWork.RefreshTokens.FindAsync(t => t.Token == request.RefreshToken);
             if (storedToken == null)
+            {
+                _logger.LogWarning("Logout failed: Provided refresh token not found.");
                 throw new ArgumentException("Invalid Token.");
+            }
 
             storedToken.IsRevoked = true;
             _unitOfWork.RefreshTokens.Update(storedToken);
             await _unitOfWork.CompleteAsync();
+
+            _logger.LogInformation("Logout successful: Refresh token revoked for UserId: {UserId}.", storedToken.UserId);
         }
 
         public async Task SendVerificationEmailAsync(string email)

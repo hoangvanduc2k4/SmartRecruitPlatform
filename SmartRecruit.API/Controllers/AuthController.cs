@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Auth;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
-
 namespace SmartRecruit.API.Controllers
 {
     [Route("api/[controller]")]
@@ -26,8 +25,8 @@ namespace SmartRecruit.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var result = await _authService.RegisterAsync(request);
-            return Ok(result.Wrap("Registration successful"));
+            await _authService.RegisterAsync(request);
+            return Ok(new { }.Wrap("Registration successful. Please check your email for the verification code."));
         }
 
         [HttpPost("refresh-token")]
@@ -43,7 +42,6 @@ namespace SmartRecruit.API.Controllers
             var result = await _authService.GoogleLoginAsync(request);
             return Ok(result.Wrap("Google login successful"));
         }
-        
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
