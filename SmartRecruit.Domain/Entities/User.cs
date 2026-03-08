@@ -17,6 +17,7 @@ namespace SmartRecruit.Domain.Entities
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 
         public virtual CandidateProfile? CandidateProfile { get; set; }
+        public virtual CompanyProfile? CompanyProfile { get; set; }
         public virtual Wallet? Wallet { get; set; }
         public virtual ICollection<Job> JobsPosted { get; set; } = new List<Job>();
         public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
