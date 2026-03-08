@@ -7,7 +7,7 @@ namespace SmartRecruit.Application.Interfaces.Services
     public interface IJobService
     {
         Task<PagedList<JobResponse>> GetJobsAsync(JobSearchRequest request);
-        Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId);
+        Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
         Task<JobResponse> GetJobByIdAsync(long id);
         Task<JobResponse> CreateJobAsync(JobCreateRequest request);
         Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request);

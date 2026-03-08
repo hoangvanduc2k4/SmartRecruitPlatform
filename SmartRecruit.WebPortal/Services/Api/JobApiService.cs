@@ -6,6 +6,7 @@ namespace WebPortal.Services.Api
     public interface IJobApiService
     {
         Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10);
+        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
         Task<Job?> GetJobByIdAsync(string id);
         Task<Job?> CreateJobAsync(Job job);
         Task<bool> UpdateJobAsync(string id, Job job);
@@ -55,6 +56,18 @@ namespace WebPortal.Services.Api
                 return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
             }
             return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
+        }
+
+        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
+        {
+            var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}?page={page}&pageSize={pageSize}");
+            if (response.IsSuccessStatusCode)
+            {
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
+            }
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch recruiter jobs" };
         }
 
         public async Task<Job?> GetJobByIdAsync(string id)
