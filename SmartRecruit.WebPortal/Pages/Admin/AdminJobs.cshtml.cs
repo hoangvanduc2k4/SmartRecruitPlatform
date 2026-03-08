@@ -33,8 +33,8 @@ namespace WebPortal.Pages
         {
             var jobs = _mockDataService.Jobs.AsQueryable();
 
-            TotalPendingCount = jobs.Count(j => j.Status == JobStatus.PENDING);
-            TotalActiveCount = jobs.Count(j => j.Status == JobStatus.PUBLISHED);
+            TotalPendingCount = jobs.Count(j => j.Status == JobStatus.CHECKING);
+            TotalActiveCount = jobs.Count(j => j.Status == JobStatus.APPROVED);
 
             var count = Tab == "PENDING" ? TotalPendingCount : TotalActiveCount;
             TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
@@ -42,36 +42,36 @@ namespace WebPortal.Pages
 
             if (Tab == "PENDING")
             {
-                PendingJobs = jobs.Where(j => j.Status == JobStatus.PENDING)
+                PendingJobs = jobs.Where(j => j.Status == JobStatus.CHECKING)
                                   .Skip((CurrentPage - 1) * PageSize)
                                   .Take(PageSize)
                                   .ToList();
             }
             else
             {
-                ActiveJobs = jobs.Where(j => j.Status == JobStatus.PUBLISHED)
+                ActiveJobs = jobs.Where(j => j.Status == JobStatus.APPROVED)
                                  .Skip((CurrentPage - 1) * PageSize)
                                  .Take(PageSize)
                                  .ToList();
             }
         }
 
-        public IActionResult OnPostApprove(string id)
+        public IActionResult OnPostApprove(int id)
         {
             var job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == id);
             if (job != null)
             {
-                job.Status = JobStatus.PUBLISHED;
+                job.Status = JobStatus.APPROVED;
             }
             return RedirectToPage(new { Tab = "PENDING" });
         }
 
-        public IActionResult OnPostReject(string id)
+        public IActionResult OnPostReject(int id)
         {
             var job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == id);
             if (job != null)
             {
-                job.Status = JobStatus.CLOSED;
+                job.Status = JobStatus.HIDDEN;
             }
             return RedirectToPage(new { Tab = "PENDING" });
         }

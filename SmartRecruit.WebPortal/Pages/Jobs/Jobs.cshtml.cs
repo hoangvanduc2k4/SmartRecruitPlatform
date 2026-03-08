@@ -2,16 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
 using WebPortal.Services;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class JobsModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IJobApiService _jobApiService;
 
-        public JobsModel(IMockDataService mockDataService)
+        public JobsModel(IJobApiService jobApiService)
         {
-            _mockDataService = mockDataService;
+            _jobApiService = jobApiService;
         }
 
         public IList<Job> Jobs { get; set; } = new List<Job>();
@@ -23,7 +24,7 @@ namespace WebPortal.Pages
         public string LocationFilter { get; set; } = "ALL";
 
         [BindProperty(SupportsGet = true)]
-        public string CategoryFilter { get; set; } = "ALL";
+        public long? CategoryFilter { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string TypeFilter { get; set; } = "ALL";
@@ -31,58 +32,56 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public int MinSalary { get; set; } = 0;
 
+        [BindProperty(SupportsGet = true)]
+        public int? MaxSalary { get; set; }
+
         public List<string> AvailableLocations { get; set; } = new List<string>();
-        public List<string> AvailableCategories { get; set; } = new List<string>();
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
 
         public int TotalPages { get; set; }
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 6;
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            var allJobs = _mockDataService.Jobs;
+            Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
+            var locations = await _jobApiService.GetLocationsAsync();
+            AvailableLocations = new List<string> { "ALL" };
+            AvailableLocations.AddRange(locations);
 
-            AvailableLocations = allJobs.Select(j => j.Location).Distinct().ToList();
-            AvailableLocations.Insert(0, "ALL");
-
-            AvailableCategories = allJobs.Select(j => j.Category).Distinct().ToList();
-            AvailableCategories.Insert(0, "ALL");
-
-            var query = allJobs.Where(j => j.Status == JobStatus.PUBLISHED).AsQueryable();
-
-            if (!string.IsNullOrEmpty(SearchTerm))
+            JobType? parsedType = null;
+            if (!string.IsNullOrEmpty(TypeFilter) && TypeFilter != "ALL")
             {
-                query = query.Where(j => j.Title.Contains(SearchTerm, System.StringComparison.OrdinalIgnoreCase) ||
-                                         j.SkillsRequired.Any(s => s.Contains(SearchTerm, System.StringComparison.OrdinalIgnoreCase)));
+                if (System.Enum.TryParse<JobType>(TypeFilter, out var t))
+                {
+                    parsedType = t;
+                }
             }
 
-            if (LocationFilter != "ALL")
+            var response = await _jobApiService.GetJobsAsync(
+                SearchTerm,
+                LocationFilter,
+                CategoryFilter,
+                parsedType,
+                MinSalary,
+                MaxSalary,
+                CurrentPage,
+                PageSize
+            );
+
+            if (response.Success && response.Data != null)
             {
-                query = query.Where(j => j.Location == LocationFilter);
+                Jobs = response.Data.ToList();
+                TotalPages = response.TotalPages;
+                CurrentPage = response.Page;
             }
-
-            if (CategoryFilter != "ALL")
+            else
             {
-                query = query.Where(j => j.Category == CategoryFilter);
+                Jobs = new List<Job>();
+                TotalPages = 0;
             }
-
-            if (TypeFilter != "ALL" && System.Enum.TryParse<JobType>(TypeFilter, out var parsedType))
-            {
-                query = query.Where(j => j.JobType == parsedType);
-            }
-
-            query = query.Where(j => j.SalaryMax >= MinSalary);
-
-            var count = query.Count();
-            TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
-            if (CurrentPage < 1) CurrentPage = 1;
-
-            Jobs = query.OrderByDescending(j => j.IsBoosted)
-                        .Skip((CurrentPage - 1) * PageSize)
-                        .Take(PageSize)
-                        .ToList();
         }
     }
 }

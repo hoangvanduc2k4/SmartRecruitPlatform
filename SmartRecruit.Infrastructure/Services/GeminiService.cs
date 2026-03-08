@@ -1,14 +1,11 @@
-using System;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SmartRecruit.Application.DTO.Job;
+using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Infrastructure.Configurations;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace SmartRecruit.Infrastructure.Services
 {
@@ -16,14 +13,16 @@ namespace SmartRecruit.Infrastructure.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<GeminiService> _logger;
+        private readonly IAILogRepository _ailogRepository;
         private readonly string _apiUrl;
 
-        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config, ILogger<GeminiService> logger)
+        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config, ILogger<GeminiService> logger, IAILogRepository ailogRepository)
         {
             _httpClient = httpClient;
             _logger = logger;
             var apiKey = config.Value.ApiKey;
             var baseUrl = config.Value.Url;
+            _ailogRepository = ailogRepository;
 
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(baseUrl))
             {
@@ -108,7 +107,6 @@ namespace SmartRecruit.Infrastructure.Services
 
             string aiText = jsonResponse.candidates[0].content.parts[0].text;
             aiText = aiText.Replace("```json", "").Replace("```", "").Trim();
-
             try
             {
                 return JsonConvert.DeserializeObject<T>(aiText);

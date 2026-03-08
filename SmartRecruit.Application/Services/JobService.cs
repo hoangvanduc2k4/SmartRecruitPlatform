@@ -1,5 +1,7 @@
 using AutoMapper;
 using System;
+using System.Text;
+using System.Globalization;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
@@ -18,23 +20,25 @@ namespace SmartRecruit.Application.Services
         private readonly IMapper _mapper;
         private readonly IGeminiService _geminiService;
         private readonly IWalletRepository _walletRepository;
+        private readonly IAILogRepository _aiLogRepository;
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
         private readonly ILogger<JobService> _logger;
 
-        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, Hangfire.IBackgroundJobClient backgroundJobClient, ILogger<JobService> logger)
+        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, IAILogRepository aiLogRepository, Hangfire.IBackgroundJobClient backgroundJobClient, ILogger<JobService> logger)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _geminiService = geminiService;
             _walletRepository = walletRepository;
+            _aiLogRepository = aiLogRepository;
             _backgroundJobClient = backgroundJobClient;
             _logger = logger;
         }
 
-        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId)
+        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
         {
-            var request = new JobSearchRequest(null, null, null, null, null, null, null, null, 1, 100, true, true)
+            var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true)
             {
                 RecruiterId = recruiterId
             };
@@ -95,6 +99,19 @@ namespace SmartRecruit.Application.Services
             try
             {
                 var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, job.Description);
+
+                var aiLog = new AILog
+                {
+                    JobId = job.Id,
+                    AIType = AIType.SCREENING,
+                    InputText = $"Title: {job.Title}\nDescription: {job.Description}",
+                    OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
+                    Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
+                    Reason = screeningResult.IsSafe ? "No policy violations detected." : $"{screeningResult.ViolationType} - {screeningResult.Analysis}",
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                await _aiLogRepository.AddAsync(aiLog);
 
                 if (screeningResult.IsSafe)
                 {
@@ -229,6 +246,45 @@ namespace SmartRecruit.Application.Services
             return result;
         }
 
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            var rawLocations = await _jobRepository.GetLocationsAsync();
+            
+            // Clean & Normalize: "Hà Nội" vs "ha noi" or "HÀ NỘI"
+            // We'll use a dictionary to keep track of the "pretty" version while deduplicating by normalized key
+            var uniqueLocations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+            foreach (var loc in rawLocations)
+            {
+                var normalized = NormalizeString(loc);
+                if (!uniqueLocations.ContainsKey(normalized))
+                {
+                    uniqueLocations[normalized] = loc; // Keep the first original one encountered
+                }
+            }
+
+            return uniqueLocations.Values
+                .OrderBy(x => x, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+        }
+
+        private string NormalizeString(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
+
+            var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+            var stringBuilder = new System.Text.StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC).ToLowerInvariant().Trim();
+        }
     }
 }

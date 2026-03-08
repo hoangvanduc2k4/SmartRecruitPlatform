@@ -89,7 +89,7 @@
                                     </p>
                                 </td>
                                 <td class="px-6 py-8">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @(job.Status == JobStatus.PUBLISHED ? "bg-green-100 text-green-800" : job.Status == JobStatus.PENDING ? "bg-yellow-100 text-yellow-800" : job.Status == JobStatus.BLOCKED ? "bg-red-100 text-red-800" : "bg-slate-100 text-slate-800")">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @(job.Status == JobStatus.APPROVED ? "bg-green-100 text-green-800" : job.Status == JobStatus.CHECKING ? "bg-yellow-100 text-yellow-800" : job.Status == JobStatus.BLOCKED ? "bg-red-100 text-red-800" : "bg-slate-100 text-slate-800")">
                                         @job.Status
                                     </span>
                                 </td>
@@ -122,8 +122,8 @@
                                         {
                                             <form method="post" asp-page-handler="ToggleStatus" class="inline-flex m-0">
                                                 <input type="hidden" name="jobId" value="@job.Id" />
-                                                <button type="submit" title="@(job.Status == JobStatus.PUBLISHED ? "Hide Job" : "Show Job")" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border @(job.Status == JobStatus.PUBLISHED ? "bg-slate-50 text-slate-400 hover:text-amber-600 hover:bg-amber-50 border-slate-100" : "bg-green-50 text-green-600 border-green-100 hover:bg-green-100")">
-                                                    <i class="fas @(job.Status == JobStatus.PUBLISHED ? "fa-eye-slash" : "fa-eye")"></i>
+                                                <button type="submit" title="@(job.Status == JobStatus.APPROVED ? "Hide Job" : "Show Job")" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border @(job.Status == JobStatus.APPROVED ? "bg-slate-50 text-slate-400 hover:text-amber-600 hover:bg-amber-50 border-slate-100" : "bg-green-50 text-green-600 border-green-100 hover:bg-green-100")">
+                                                    <i class="fas @(job.Status == JobStatus.APPROVED ? "fa-eye-slash" : "fa-eye")"></i>
                                                 </button>
                                             </form>
                                         }

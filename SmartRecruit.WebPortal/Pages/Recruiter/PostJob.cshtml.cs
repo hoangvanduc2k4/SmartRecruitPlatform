@@ -41,26 +41,26 @@ namespace WebPortal.Pages
 
                     var newJob = new Job
                     {
-                        Id = $"job-{System.Guid.NewGuid().ToString().Substring(0, 8)}",
+                        Id = (long)_mockDataService.Jobs.Count + 1,
                         RecruiterId = user.Id,
                         Title = JobInput.Title ?? "",
                         Description = JobInput.Description ?? "",
                         Requirement = JobInput.Requirement ?? "",
-                        SkillsRequired = (SkillsInput ?? "").Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList(),
+                        SkillsRequired = SkillsInput ?? "",
                         SalaryMin = JobInput.SalaryMin,
                         SalaryMax = JobInput.SalaryMax,
                         JobType = JobInput.JobType,
-                        Status = JobStatus.PUBLISHED,
+                        Status = JobStatus.APPROVED,
                         Location = string.IsNullOrEmpty(JobInput.Location) ? "Remote" : JobInput.Location,
                         Category = JobInput.Category ?? "Software Development",
-                        CreatedAt = System.DateTime.Now
+                        CreatedTime = System.DateTime.Now
                     };
 
                     _mockDataService.Jobs.Add(newJob);
 
                     _mockDataService.Transactions.Add(new Transaction
                     {
-                        Id = $"tx-{System.Guid.NewGuid().ToString().Substring(0, 8)}",
+                        Id = (long)_mockDataService.Transactions.Count + 1,
                         UserId = user.Id,
                         Amount = -50000,
                         Type = "JOB_POST",

@@ -21,6 +21,7 @@ namespace SmartRecruit.Infrastructure.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<AILog> AILogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

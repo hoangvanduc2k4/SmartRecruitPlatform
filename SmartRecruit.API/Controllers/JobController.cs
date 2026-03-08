@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
-using Microsoft.Extensions.Logging;
 
 namespace SmartRecruit.Controllers
 {
@@ -29,9 +28,9 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("recruiter/{recruiterId}")]
-        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId)
+        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId);
+            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId, page, pageSize);
             return Ok(jobs.WrapPaged());
         }
 
@@ -93,7 +92,7 @@ namespace SmartRecruit.Controllers
             {
                 return NotFound(new { }.Wrap(ex.Message));
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 return Forbid();
             }
@@ -101,6 +100,13 @@ namespace SmartRecruit.Controllers
             {
                 return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
             }
+        }
+
+        [HttpGet("locations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var locations = await _jobService.GetLocationsAsync();
+            return Ok(locations.Wrap());
         }
     }
 }

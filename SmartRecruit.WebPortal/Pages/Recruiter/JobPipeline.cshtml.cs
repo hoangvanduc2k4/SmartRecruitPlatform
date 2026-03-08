@@ -17,7 +17,7 @@ namespace WebPortal.Pages
         public Job Job { get; set; }
         public IList<Application> Applications { get; set; } = new List<Application>();
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(int id)
         {
             Job = _mockDataService.Jobs.FirstOrDefault(j => j.Id == id);
             if (Job != null)
@@ -31,7 +31,7 @@ namespace WebPortal.Pages
             return Page();
         }
 
-        public IActionResult OnPostUpdateStatus(string id, string status)
+        public IActionResult OnPostUpdateStatus(int id, string status)
         {
             var app = _mockDataService.Applications.FirstOrDefault(a => a.Id == id);
             if (app != null)
@@ -40,7 +40,7 @@ namespace WebPortal.Pages
                 {
                     app.Status = nextStatus;
                 }
-                return RedirectToPage(new { id = app.JobId });
+                return RedirectToPage(new { id = app.JobId.ToString() });
             }
             return RedirectToPage("/Recruiter/RecruiterJobs");
         }

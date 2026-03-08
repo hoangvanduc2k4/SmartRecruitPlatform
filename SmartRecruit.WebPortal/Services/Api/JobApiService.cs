@@ -1,15 +1,20 @@
 using WebPortal.Models;
+using WebPortal.Models.Api;
 
 namespace WebPortal.Services.Api
 {
     public interface IJobApiService
     {
-        Task<List<Job>> GetJobsAsync(string? search, string? location, string? category, JobType? type, decimal? minSalary);
+        Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10);
+        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
         Task<Job?> GetJobByIdAsync(string id);
         Task<Job?> CreateJobAsync(Job job);
         Task<bool> UpdateJobAsync(string id, Job job);
         Task<bool> DeleteJobAsync(string id);
         Task<bool> ToggleVisibilityAsync(string id);
+        Task<bool> BoostJobAsync(long jobId, long userId);
+        Task<IEnumerable<Category>> GetCategoriesAsync();
+        Task<IEnumerable<string>> GetLocationsAsync();
     }
 
     public class JobApiService : IJobApiService
@@ -21,31 +26,60 @@ namespace WebPortal.Services.Api
             _httpClient = httpClient;
         }
 
-        public async Task<List<Job>> GetJobsAsync(string? search, string? location, string? category, JobType? type, decimal? minSalary)
+        public async Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10)
         {
             var query = new List<string>();
-            if (!string.IsNullOrEmpty(search)) query.Add($"search={Uri.EscapeDataString(search)}");
-            if (!string.IsNullOrEmpty(location)) query.Add($"location={Uri.EscapeDataString(location)}");
-            if (!string.IsNullOrEmpty(category) && category != "All Categories") query.Add($"category={Uri.EscapeDataString(category)}");
-            if (type.HasValue) query.Add($"type={type.Value}");
+            if (!string.IsNullOrEmpty(search)) query.Add($"keyword={Uri.EscapeDataString(search)}");
+            if (!string.IsNullOrEmpty(location) && location != "ALL") query.Add($"location={Uri.EscapeDataString(location)}");
+            if (categoryId.HasValue && categoryId.Value > 0) query.Add($"categoryId={categoryId.Value}");
+            if (type.HasValue) query.Add($"jobType={(int)type.Value}");
             if (minSalary.HasValue) query.Add($"minSalary={minSalary.Value}");
+            if (maxSalary.HasValue) query.Add($"maxSalary={maxSalary.Value}");
+            query.Add($"page={page}");
+            query.Add($"pageSize={pageSize}");
 
             var queryString = query.Any() ? "?" + string.Join("&", query) : "";
+            System.Console.WriteLine($"[JobApiService] Fetching: jobs{queryString}");
             var response = await _httpClient.GetAsync($"jobs{queryString}");
+            System.Console.WriteLine($"[JobApiService] Response: {response.StatusCode}");
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<List<Job>>() ?? new List<Job>();
+                var content = await response.Content.ReadAsStringAsync();
+                System.Console.WriteLine($"[JobApiService] Content Length: {content.Length}");
+                // System.Console.WriteLine($"[JobApiService] Content: {content.Substring(0, Math.Min(content.Length, 500))}");
+                var options = new System.Text.Json.JsonSerializerOptions 
+                { 
+                    PropertyNameCaseInsensitive = true 
+                };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
             }
-            return new List<Job>();
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
+        }
+
+        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
+        {
+            var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}?page={page}&pageSize={pageSize}");
+            if (response.IsSuccessStatusCode)
+            {
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
+            }
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch recruiter jobs" };
         }
 
         public async Task<Job?> GetJobByIdAsync(string id)
         {
-            var response = await _httpClient.GetAsync($"jobs/{id}");
+            if (!long.TryParse(id, out var longId)) return null;
+            var response = await _httpClient.GetAsync($"jobs/{longId}");
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<Job>();
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
+                return apiResponse?.Data;
             }
             return null;
         }
@@ -55,27 +89,75 @@ namespace WebPortal.Services.Api
             var response = await _httpClient.PostAsJsonAsync("jobs", job);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<Job>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>();
+                return apiResponse?.Data;
             }
             return null;
         }
 
         public async Task<bool> UpdateJobAsync(string id, Job job)
         {
-            var response = await _httpClient.PutAsJsonAsync($"jobs/{id}", job);
+            if (!long.TryParse(id, out var longId)) return false;
+            var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteJobAsync(string id)
         {
-            var response = await _httpClient.DeleteAsync($"jobs/{id}");
+            if (!long.TryParse(id, out var longId)) return false;
+            var response = await _httpClient.DeleteAsync($"jobs/{longId}");
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> ToggleVisibilityAsync(string id)
         {
-            var response = await _httpClient.PatchAsync($"jobs/{id}/visibility", null);
+            if (!long.TryParse(id, out var longId)) return false;
+            var response = await _httpClient.PatchAsync($"jobs/{longId}/visibility", null);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> BoostJobAsync(long jobId, long userId)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"jobs/{jobId}/boost", new { UserId = userId });
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("categories");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<Category>>>(options);
+                    return apiResponse?.Data ?? new List<Category>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching categories: {ex.Message}");
+            }
+            return new List<Category>();
+        }
+
+        public async Task<IEnumerable<string>> GetLocationsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("jobs/locations");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<string>>>(options);
+                    return apiResponse?.Data ?? new List<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching locations: {ex.Message}");
+            }
+            return new List<string>();
         }
     }
 }
