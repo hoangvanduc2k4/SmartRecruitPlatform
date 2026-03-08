@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Validations\Job\" />
     <Folder Include="Validations\AI\" />
   </ItemGroup>
