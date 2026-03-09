@@ -10,11 +10,13 @@ namespace SmartRecruit.Controllers
     public class JobController : ControllerBase
     {
         private readonly IJobService _jobService;
+        private readonly ISavedJobService _savedJobService;
         private readonly ILogger<JobController> _logger;
 
-        public JobController(IJobService jobService, ILogger<JobController> logger)
+        public JobController(IJobService jobService, ISavedJobService savedJobService, ILogger<JobController> logger)
         {
             _jobService = jobService;
+            _savedJobService = savedJobService;
             _logger = logger;
         }
 
@@ -107,6 +109,32 @@ namespace SmartRecruit.Controllers
         {
             var locations = await _jobService.GetLocationsAsync();
             return Ok(locations.Wrap());
+        }
+
+        [HttpPost("{id}/save")]
+        public async Task<IActionResult> ToggleSaveJob(long id, [FromQuery] long userId)
+        {
+            try
+            {
+                var isSaved = await _savedJobService.ToggleSaveJobAsync(id, userId);
+                var message = isSaved ? "Job saved successfully" : "Job unsaved successfully";
+                return Ok(new { IsSaved = isSaved }.Wrap(message));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        [HttpGet("saved")]
+        public async Task<IActionResult> GetSavedJobs([FromQuery] long userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var jobs = await _savedJobService.GetSavedJobsAsync(userId, page, pageSize);
+            return Ok(jobs.WrapPaged());
         }
     }
 }

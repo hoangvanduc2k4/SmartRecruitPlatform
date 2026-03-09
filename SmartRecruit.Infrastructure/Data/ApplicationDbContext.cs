@@ -21,6 +21,7 @@ namespace SmartRecruit.Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<AILog> AILogs { get; set; }
+        public DbSet<SavedJob> SavedJobs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,6 +59,13 @@ namespace SmartRecruit.Infrastructure.Data
                 .HasForeignKey(r => r.JobId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Fix: Multiple cascade paths for SavedJobs
+            modelBuilder.Entity<SavedJob>()
+                .HasOne(sj => sj.User)
+                .WithMany(u => u.SavedJobs)
+                .HasForeignKey(sj => sj.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Fix: Transactions
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Wallet)
@@ -71,11 +79,17 @@ namespace SmartRecruit.Infrastructure.Data
             modelBuilder.Entity<Wallet>().Property(w => w.Balance).HasPrecision(18, 2);
             modelBuilder.Entity<Transaction>().Property(t => t.Amount).HasPrecision(18, 2);
             modelBuilder.Entity<Applications>().Property(a => a.MatchScore).HasPrecision(5, 2);
+            modelBuilder.Entity<Applications>().Property(a => a.ExperienceMatch).HasPrecision(5, 2);
+            modelBuilder.Entity<Applications>().Property(a => a.SkillMatch).HasPrecision(5, 2);
             modelBuilder.Entity<CandidateProfile>().Property(cp => cp.ExpectedSalary).HasPrecision(18, 2);
 
             // Unique Application constraint
             modelBuilder.Entity<Applications>()
                 .HasIndex(a => new { a.JobId, a.CandidateId }).IsUnique();
+
+            // Unique SavedJob constraint
+            modelBuilder.Entity<SavedJob>()
+                .HasIndex(sj => new { sj.UserId, sj.JobId }).IsUnique();
 
             modelBuilder.SeedSmartRecruitData();
         }

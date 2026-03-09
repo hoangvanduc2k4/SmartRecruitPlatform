@@ -9,6 +9,7 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         IGenericRepository<Wallet> Wallets { get; }
         IGenericRepository<RefreshToken> RefreshTokens { get; }
         IGenericRepository<OtpToken> OtpTokens { get; }
+        IGenericRepository<SavedJob> SavedJobs { get; }
 
         Task<int> CompleteAsync();
     }

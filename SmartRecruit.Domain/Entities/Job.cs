@@ -25,5 +25,6 @@ namespace SmartRecruit.Domain.Entities
         public bool IsAppealed { get; set; } = false;
         public virtual User Recruiter { get; set; } = null!;
         public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
+        public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();
     }
 }
