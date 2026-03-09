@@ -7,6 +7,7 @@ namespace WebPortal.Services.Api
     public interface IApplicationApiService
     {
         Task<PagedResponse<Application>> GetApplicationsByJobAsync(long jobId, int page = 1, int pageSize = 10, bool sortByScore = false);
+        Task<Application?> GetApplicationByIdAsync(long id);
         Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
         Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
         Task<bool> ApplyAsync(long jobId, long candidateId);
@@ -42,6 +43,24 @@ namespace WebPortal.Services.Api
                 Console.WriteLine($"[ApplicationApiService] Error fetching applications for job {jobId}: {ex.Message}");
             }
             return new PagedResponse<Application>();
+        }
+
+        public async Task<Application?> GetApplicationByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"applications/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ApiResponse<Application>>(_jsonOptions);
+                    return result?.Data;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ApplicationApiService] Error fetching application {id}: {ex.Message}");
+            }
+            return null;
         }
 
         public async Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)

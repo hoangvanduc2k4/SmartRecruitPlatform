@@ -21,6 +21,7 @@ namespace WebPortal.Models
         public int ViewCount { get; set; }
         public DateTime CreatedTime { get; set; }
         public string Location { get; set; } = string.Empty;
+        public long CategoryId { get; set; }
         public string Category { get; set; } = string.Empty;
         public bool IsBoosted { get; set; }
         public bool IsDeleted { get; set; }

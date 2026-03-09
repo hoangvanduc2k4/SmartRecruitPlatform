@@ -30,9 +30,9 @@ namespace WebPortal.Pages
         public async Task OnGetAsync()
         {
             var user = await _authApiService.GetProfileAsync();
-            if (user != null)
+            if (user != null && long.TryParse(user.Id, out var recruiterId))
             {
-                var response = await _jobApiService.GetJobsByRecruiterAsync(1, CurrentPage, PageSize);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId, CurrentPage, PageSize);
                 if (response.Success && response.Data != null)
                 {
                     Jobs = response.Data.ToList();
@@ -56,6 +56,12 @@ namespace WebPortal.Pages
         public async Task<IActionResult> OnPostToggleStatusAsync(long jobId)
         {
             await _jobApiService.ToggleVisibilityAsync(jobId.ToString());
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(long jobId)
+        {
+            await _jobApiService.DeleteJobAsync(jobId.ToString());
             return RedirectToPage();
         }
 

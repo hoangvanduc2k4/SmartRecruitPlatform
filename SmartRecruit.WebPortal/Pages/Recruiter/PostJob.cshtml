@@ -8,8 +8,21 @@
 <div class="max-w-3xl mx-auto animate-in fade-in duration-700 pb-32">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Create New Job Posting</h2>
-        <p class="text-slate-500">Premium posting costs 50,000 VNĐ from your wallet.</p>
+        <div class="flex justify-between items-center mt-2">
+            <p class="text-slate-500">Premium posting costs 50,000 VNĐ from your wallet.</p>
+            <div class="bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100">
+                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest block">Your Balance</span>
+                <span class="text-indigo-700 font-bold">@Model.WalletBalance.ToString("N0") VNĐ</span>
+            </div>
+        </div>
     </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-medium">
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
 
     <form method="post" class="space-y-6" onsubmit="return submitJob()">
         <div class="p-8 space-y-6 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg">
@@ -22,9 +35,9 @@
                 <div class="flex flex-col gap-1">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Job Type</label>
                     <select asp-for="JobInput.JobType" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
-                        <option value="FULL_TIME">Full Time</option>
-                        <option value="PART_TIME">Part Time</option>
-                        <option value="REMOTE">Remote</option>
+                        <option value="0">Full Time</option>
+                        <option value="1">Part Time</option>
+                        <option value="2">Remote</option>
                     </select>
                 </div>
                 <div>
@@ -40,12 +53,12 @@
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Category</label>
-                    <select asp-for="JobInput.Category" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
-                        <option value="Software Development">Software Development</option>
-                        <option value="Design">Design</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Management">Management</option>
-                        <option value="DevOps & Cloud">DevOps & Cloud</option>
+                    <select asp-for="JobInput.CategoryId" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
+                        <option value="">-- Select Category --</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
                     </select>
                 </div>
             </div>
