@@ -19,6 +19,7 @@ namespace WebPortal.Services.Api
         Task<bool> IsJobSavedAsync(long jobId, long userId);
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
+        Task<bool> AppealJobAsync(long jobId, string message);
     }
 
     public class JobApiService : IJobApiService
@@ -222,6 +223,20 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error fetching saved jobs for user {userId}: {ex.Message}");
             }
             return new PagedResponse<Job> { Success = false, Message = "Failed to fetch saved jobs" };
+        }
+
+        public async Task<bool> AppealJobAsync(long jobId, string message)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync($"jobs/{jobId}/appeal", message);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error appealing job {jobId}: {ex.Message}");
+            }
+            return false;
         }
     }
 }

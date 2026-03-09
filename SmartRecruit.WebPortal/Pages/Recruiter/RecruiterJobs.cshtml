@@ -97,13 +97,22 @@
                                     @if (job.Status == JobStatus.BLOCKED)
                                     {
                                         <div class="flex flex-col gap-2">
-                                            <p class="text-[10px] text-red-500 font-bold leading-tight line-clamp-2">Nghi ngờ vi phạm quy định</p>
-                                            <button onclick="openAppeal('@job.Id')" class="text-[9px] font-black text-indigo-600 uppercase hover:underline text-left">Khiếu nại</button>
+                                            <p class="text-[10px] text-red-500 font-bold leading-tight">@job.ModerationNote</p>
+                                            @if (job.IsAppealed)
+                                            {
+                                                <span class="text-[9px] font-black text-amber-600 uppercase italic flex items-center gap-1">
+                                                    <i class="fas fa-clock"></i> Đang chờ xử lý khiếu nại
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <button onclick="openAppeal('@job.Id')" class="text-[9px] font-black text-indigo-600 uppercase hover:underline text-left">Gửi Khiếu nại</button>
+                                            }
                                         </div>
                                     }
                                     else
                                     {
-                                        <span class="text-[10px] text-slate-300 italic uppercase font-black">No issues</span>
+                                        <span class="text-[10px] text-slate-300 italic uppercase font-black">@job.ModerationNote</span>
                                     }
                                 </td>
                                 <td class="px-6 py-8 text-center">
@@ -151,7 +160,7 @@
     <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeAppeal()"></div>
     <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md mx-4 p-8 relative z-10 animate-in zoom-in-95 duration-200">
         <h3 class="text-xl font-black text-slate-900 mb-6">Appeal AI Block</h3>
-        <form method="post" asp-page-handler="AppealBlock" class="space-y-6" onsubmit="return submitAppeal()">
+        <form method="post" asp-page-handler="AppealBlock" class="space-y-6" id="appealForm">
             <input type="hidden" name="jobId" id="appealJobId" />
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Giải trình khiếu nại</label>
@@ -177,17 +186,12 @@
             document.getElementById('appealModal').classList.add('hidden');
         }
 
-        function submitAppeal() {
+        document.getElementById('appealForm').onsubmit = function() {
             var btn = document.getElementById('submitAppealBtn');
-            btn.innerHTML = 'Đang gửi...';
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Đang gửi...';
+            btn.disabled = true;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
-            setTimeout(function() {
-                alert('Khiếu nại của bạn đã được gửi tới Ban quản trị. Chúng tôi sẽ phản hồi trong vòng 24h.');
-                closeAppeal();
-                btn.innerHTML = 'Gửi';
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-            }, 500);
-            return false; // Stop form submission for simulation
-        }
+            return true;
+        };
     </script>
 }

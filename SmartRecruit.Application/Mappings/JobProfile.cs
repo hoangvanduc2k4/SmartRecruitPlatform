@@ -27,7 +27,8 @@ namespace SmartRecruit.Application.Mappings
                     src.Status,
                     src.ViewCount,
                     src.IsAppealed,
-                    src.ModerationNote
+                    src.ModerationNote,
+                    src.AppealMessage
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
         }

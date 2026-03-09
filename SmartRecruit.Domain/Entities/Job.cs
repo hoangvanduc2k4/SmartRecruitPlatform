@@ -23,6 +23,7 @@ namespace SmartRecruit.Domain.Entities
         public DateTime? BoostExpiryTime { get; set; }
         public string? ModerationNote { get; set; }
         public bool IsAppealed { get; set; } = false;
+        public string? AppealMessage { get; set; }
         public virtual User Recruiter { get; set; } = null!;
         public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
         public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();

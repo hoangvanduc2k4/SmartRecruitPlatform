@@ -65,9 +65,9 @@ namespace WebPortal.Pages
             return RedirectToPage();
         }
 
-        public IActionResult OnPostAppealBlock(long jobId, string message)
+        public async Task<IActionResult> OnPostAppealBlockAsync(long jobId, string message)
         {
-            // Just simulate appeal
+            await _jobApiService.AppealJobAsync(jobId, message);
             return RedirectToPage();
         }
     }
