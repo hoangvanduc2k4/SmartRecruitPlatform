@@ -268,6 +268,19 @@ namespace SmartRecruit.Application.Services
                 .ToList();
         }
 
+        public async Task<bool> AppealJobAsync(long jobId, string message)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+
+            job.IsAppealed = true;
+            job.AppealMessage = message;
+            // Optionally, we could keep the status as BLOCKED but indicate it's under review
+            
+            _jobRepository.Update(job);
+            return await _unitOfWork.CompleteAsync() > 0;
+        }
+
         private string NormalizeString(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return string.Empty;

@@ -143,6 +143,13 @@ namespace SmartRecruit.Controllers
             var jobs = await _savedJobService.GetSavedJobsAsync(userId, page, pageSize);
             return Ok(jobs.WrapPaged());
         }
+
+        [HttpPost("{id}/appeal")]
+        public async Task<IActionResult> AppealJob(long id, [FromBody] string message)
+        {
+            var success = await _jobService.AppealJobAsync(id, message);
+            return Ok(new { Success = success }.Wrap("Appeal submitted successfully"));
+        }
     }
 }
 
