@@ -1,24 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class PostJobModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IJobApiService _jobApiService;
+        private readonly IAuthApiService _authApiService;
+        private readonly IWalletApiService _walletApiService;
 
-        public PostJobModel(IMockDataService mockDataService)
+        public PostJobModel(IJobApiService jobApiService, IAuthApiService authApiService, IWalletApiService walletApiService)
         {
-            _mockDataService = mockDataService;
+            _jobApiService = jobApiService;
+            _authApiService = authApiService;
+            _walletApiService = walletApiService;
         }
 
         [BindProperty]
         public Job JobInput { get; set; } = new Job
         {
             JobType = JobType.FULL_TIME,
-            Category = "Software Development",
             SalaryMin = 1000,
             SalaryMax = 3000
         };
@@ -26,50 +29,59 @@ namespace WebPortal.Pages
         [BindProperty]
         public string SkillsInput { get; set; } = string.Empty;
 
-        public void OnGet()
+        public IEnumerable<Category> Categories { get; set; } = new List<Category>();
+        public decimal WalletBalance { get; set; }
+
+        public async Task OnGetAsync()
         {
+            Categories = await _jobApiService.GetCategoriesAsync();
+            var wallet = await _walletApiService.GetWalletInfoAsync();
+            if (wallet != null)
+            {
+                WalletBalance = wallet.Balance;
+            }
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var user = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.RECRUITER);
-            if (user != null)
+            var user = await _authApiService.GetProfileAsync();
+            if (user == null || !long.TryParse(user.Id, out var recruiterId))
             {
-                if (user.WalletBalance >= 50000)
-                {
-                    user.WalletBalance -= 50000;
-
-                    var newJob = new Job
-                    {
-                        Id = (long)_mockDataService.Jobs.Count + 1,
-                        RecruiterId = user.Id,
-                        Title = JobInput.Title ?? "",
-                        Description = JobInput.Description ?? "",
-                        Requirement = JobInput.Requirement ?? "",
-                        SkillsRequired = SkillsInput ?? "",
-                        SalaryMin = JobInput.SalaryMin,
-                        SalaryMax = JobInput.SalaryMax,
-                        JobType = JobInput.JobType,
-                        Status = JobStatus.APPROVED,
-                        Location = string.IsNullOrEmpty(JobInput.Location) ? "Remote" : JobInput.Location,
-                        Category = JobInput.Category ?? "Software Development",
-                        CreatedTime = System.DateTime.Now
-                    };
-
-                    _mockDataService.Jobs.Add(newJob);
-
-                    _mockDataService.Transactions.Add(new Transaction
-                    {
-                        Id = (long)_mockDataService.Transactions.Count + 1,
-                        UserId = user.Id,
-                        Amount = -50000,
-                        Type = "JOB_POST",
-                        Description = $"Job Post: {newJob.Title}",
-                        CreatedAt = System.DateTime.Now
-                    });
-                }
+                return RedirectToPage("/Account/Login");
             }
-            return RedirectToPage("/Jobs/Jobs");
+
+            // Wallet check
+            var wallet = await _walletApiService.GetWalletInfoAsync();
+            if (wallet == null || wallet.Balance < 50000)
+            {
+                ModelState.AddModelError(string.Empty, "Insufficient wallet balance. Posting a job costs 50,000 VNĐ.");
+                Categories = await _jobApiService.GetCategoriesAsync();
+                WalletBalance = wallet?.Balance ?? 0;
+                return Page();
+            }
+
+            var result = await _jobApiService.CreateJobAsync(new Job
+            {
+                RecruiterId = recruiterId,
+                Title = JobInput.Title ?? "",
+                Description = JobInput.Description ?? "",
+                Requirement = JobInput.Requirement ?? "",
+                SkillsRequired = SkillsInput ?? "",
+                SalaryMin = JobInput.SalaryMin,
+                SalaryMax = JobInput.SalaryMax,
+                JobType = JobInput.JobType,
+                Location = string.IsNullOrEmpty(JobInput.Location) ? "Remote" : JobInput.Location,
+                CategoryId = JobInput.CategoryId
+            });
+
+            if (result != null)
+            {
+                return RedirectToPage("/Recruiter/RecruiterJobs");
+            }
+
+            ModelState.AddModelError(string.Empty, "Failed to create job. Please try again.");
+            Categories = await _jobApiService.GetCategoriesAsync();
+            return Page();
         }
     }
 }
