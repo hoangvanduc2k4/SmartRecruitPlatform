@@ -30,9 +30,9 @@ namespace WebPortal.Pages
         public async Task OnGetAsync()
         {
             var user = await _authApiService.GetProfileAsync();
-            if (user != null)
+            if (user != null && long.TryParse(user.Id, out var recruiterId))
             {
-                var response = await _jobApiService.GetJobsByRecruiterAsync(1, CurrentPage, PageSize);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId, CurrentPage, PageSize);
                 if (response.Success && response.Data != null)
                 {
                     Jobs = response.Data.ToList();
@@ -59,9 +59,15 @@ namespace WebPortal.Pages
             return RedirectToPage();
         }
 
-        public IActionResult OnPostAppealBlock(long jobId, string message)
+        public async Task<IActionResult> OnPostDeleteAsync(long jobId)
         {
-            // Just simulate appeal
+            await _jobApiService.DeleteJobAsync(jobId.ToString());
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostAppealBlockAsync(long jobId, string message)
+        {
+            await _jobApiService.AppealJobAsync(jobId, message);
             return RedirectToPage();
         }
     }
