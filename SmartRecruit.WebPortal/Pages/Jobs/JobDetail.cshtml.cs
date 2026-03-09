@@ -32,6 +32,7 @@ namespace WebPortal.Pages
         public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
 
         public UserDto? CurrentUser { get; set; }
+        public bool IsSaved { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
@@ -50,16 +51,17 @@ namespace WebPortal.Pages
                 Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
                 if (Job != null)
                 {
+                    // Check if job is saved
+                    if (CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
+                    {
+                        IsSaved = await _jobApiService.IsJobSavedAsync(longId, userId);
+                    }
+
                     // Fetch applications for this job
                     var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
                     Applications = (List<Application>)pagedApps.Data;
                     TotalApplicationCount = pagedApps.TotalCount;
                     TotalPages = pagedApps.TotalPages;
-
-                    if (Tab == "DETAILS")
-                    {
-                        // In Details tab, we might want ALL apps for the count if not already fetched
-                    }
                 }
                 else
                 {
@@ -67,6 +69,21 @@ namespace WebPortal.Pages
                 }
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostToggleSaveAsync()
+        {
+            CurrentUser = await _authApiService.GetProfileAsync();
+            if (CurrentUser == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            if (long.TryParse(Id, out var longId) && long.TryParse(CurrentUser.Id, out var userId))
+            {
+                await _jobApiService.ToggleSaveJobAsync(longId, userId);
+            }
+            return RedirectToPage(new { Id = Id, Tab = Tab });
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, ApplicationStatus status, string returnTab = "APPLICANTS")

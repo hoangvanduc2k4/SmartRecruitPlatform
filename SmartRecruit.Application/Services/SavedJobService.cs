@@ -44,6 +44,12 @@ namespace SmartRecruit.Application.Services
             return true; // Saved
         }
 
+        public async Task<bool> IsJobSavedAsync(long jobId, long userId)
+        {
+            var existing = await _unitOfWork.SavedJobs.FindAsync(sj => sj.JobId == jobId && sj.UserId == userId);
+            return existing != null;
+        }
+
         public async Task<PagedList<JobResponse>> GetSavedJobsAsync(long userId, int page, int pageSize)
         {
             var savedJobs = await _unitOfWork.SavedJobs.FindAllAsync(sj => sj.UserId == userId);

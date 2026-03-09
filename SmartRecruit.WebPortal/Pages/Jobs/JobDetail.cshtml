@@ -24,7 +24,15 @@ else
                         <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-yellow-100 border border-yellow-200 text-yellow-800 shadow-sm animate-pulse">BOOSTED ACTIVE</span>
                     }
                 </div>
-                <h1 class="text-4xl font-black text-slate-900 tracking-tighter uppercase">@Model.Job.Title</h1>
+                <div class="flex items-center gap-6">
+                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter uppercase">@Model.Job.Title</h1>
+                    <form method="post" asp-page-handler="ToggleSave" class="inline-flex m-0">
+                        <input type="hidden" name="Id" value="@Model.Job.Id" />
+                        <button type="submit" title="@(Model.IsSaved ? "Unsave Mission" : "Save Mission")" class="w-12 h-12 rounded-2xl flex items-center justify-center transition-all @(Model.IsSaved ? "bg-red-50 text-red-500 border border-red-100 shadow-xl shadow-red-100/50" : "bg-slate-50 text-slate-400 border border-slate-100 hover:text-red-500 hover:bg-red-50")">
+                            <i class="@(Model.IsSaved ? "fas" : "far") fa-heart text-xl"></i>
+                        </button>
+                    </form>
+                </div>
                 <p class="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-2 flex items-center gap-2">
                     <i class="fas fa-location-dot text-indigo-500"></i> @Model.Job.Location
                     <span class="text-slate-200">|</span>

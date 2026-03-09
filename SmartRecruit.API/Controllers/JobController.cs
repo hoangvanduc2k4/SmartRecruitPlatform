@@ -130,6 +130,13 @@ namespace SmartRecruit.Controllers
             }
         }
 
+        [HttpGet("{id}/is-saved")]
+        public async Task<IActionResult> IsJobSaved(long id, [FromQuery] long userId)
+        {
+            var isSaved = await _savedJobService.IsJobSavedAsync(id, userId);
+            return Ok(new { IsSaved = isSaved }.Wrap());
+        }
+
         [HttpGet("saved")]
         public async Task<IActionResult> GetSavedJobs([FromQuery] long userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {

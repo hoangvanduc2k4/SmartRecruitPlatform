@@ -1,5 +1,6 @@
 using WebPortal.Models;
 using WebPortal.Models.Api;
+using System.Text.Json;
 
 namespace WebPortal.Services.Api
 {
@@ -15,6 +16,9 @@ namespace WebPortal.Services.Api
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<IEnumerable<string>> GetLocationsAsync();
+        Task<bool> IsJobSavedAsync(long jobId, long userId);
+        Task<bool> ToggleSaveJobAsync(long jobId, long userId);
+        Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
     }
 
     public class JobApiService : IJobApiService
@@ -158,6 +162,66 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error fetching locations: {ex.Message}");
             }
             return new List<string>();
+        }
+        public async Task<bool> IsJobSavedAsync(long jobId, long userId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"jobs/{jobId}/is-saved?userId={userId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();
+                    if (result != null && result.Data.TryGetProperty("isSaved", out var isSavedProp))
+                    {
+                        return isSavedProp.GetBoolean();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error checking if job {jobId} is saved: {ex.Message}");
+            }
+            return false;
+        }
+
+        public async Task<bool> ToggleSaveJobAsync(long jobId, long userId)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"jobs/{jobId}/save?userId={userId}", null);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();
+                    if (result != null && result.Data.TryGetProperty("isSaved", out var isSavedProp))
+                    {
+                        return isSavedProp.GetBoolean();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error toggling save for job {jobId}: {ex.Message}");
+            }
+            return false;
+        }
+
+        public async Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"jobs/saved?userId={userId}&page={page}&pageSize={pageSize}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                    return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching saved jobs for user {userId}: {ex.Message}");
+            }
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch saved jobs" };
         }
     }
 }
