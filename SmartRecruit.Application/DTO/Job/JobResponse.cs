@@ -20,6 +20,7 @@ namespace SmartRecruit.Application.DTO.Job
         JobStatus Status,
         int ViewCount,
         bool IsAppealed,
-        string? ModerationNote
+        string? ModerationNote,
+        string? AppealMessage
     );
 }

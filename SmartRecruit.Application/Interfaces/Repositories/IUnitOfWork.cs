@@ -11,6 +11,7 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         IGenericRepository<OtpToken> OtpTokens { get; }
         IGenericRepository<CandidateProfile> CandidateProfiles { get; }
         IGenericRepository<CompanyProfile> CompanyProfiles { get; }
+        IGenericRepository<SavedJob> SavedJobs { get; }
 
         Task<int> CompleteAsync();
     }

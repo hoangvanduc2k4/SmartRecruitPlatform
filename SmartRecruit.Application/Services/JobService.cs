@@ -165,8 +165,17 @@ namespace SmartRecruit.Application.Services
             job.CategoryId = request.CategoryId;
             // job.UpdatedTime = DateTime.UtcNow; 
 
+            // Trigger re-moderation on update
+            job.Status = JobStatus.CHECKING;
+            job.IsAppealed = false;
+            job.AppealMessage = null;
+
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
+
+            // Enqueue background moderation
+            _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
+            _logger.LogInformation("UpdateJob use-case success: Job {JobId} updated and re-enqueued for AI moderation", job.Id);
 
             // Refresh job to get Category Name
             var updatedJob = await _jobRepository.GetByIdAsync(job.Id);
@@ -266,6 +275,19 @@ namespace SmartRecruit.Application.Services
             return uniqueLocations.Values
                 .OrderBy(x => x, StringComparer.CurrentCultureIgnoreCase)
                 .ToList();
+        }
+
+        public async Task<bool> AppealJobAsync(long jobId, string message)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+
+            job.IsAppealed = true;
+            job.AppealMessage = message;
+            // Optionally, we could keep the status as BLOCKED but indicate it's under review
+            
+            _jobRepository.Update(job);
+            return await _unitOfWork.CompleteAsync() > 0;
         }
 
         private string NormalizeString(string text)

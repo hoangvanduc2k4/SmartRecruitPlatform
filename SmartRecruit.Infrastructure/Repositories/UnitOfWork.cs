@@ -15,6 +15,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public IGenericRepository<OtpToken> OtpTokens { get; private set; }
         public IGenericRepository<CandidateProfile> CandidateProfiles { get; private set; }
         public IGenericRepository<CompanyProfile> CompanyProfiles { get; private set; }
+        public IGenericRepository<SavedJob> SavedJobs { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -27,6 +28,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             OtpTokens = new GenericRepository<OtpToken>(_context);
             CandidateProfiles = new GenericRepository<CandidateProfile>(_context);
             CompanyProfiles = new GenericRepository<CompanyProfile>(_context);
+            SavedJobs = new GenericRepository<SavedJob>(_context);
         }
 
         public async Task<int> CompleteAsync()

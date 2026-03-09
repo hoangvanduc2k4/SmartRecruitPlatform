@@ -16,6 +16,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task ModerateJobAsync(long jobId);
         Task<IEnumerable<string>> GetLocationsAsync();
-
+        Task<bool> AppealJobAsync(long jobId, string message);
     }
 }
