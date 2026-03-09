@@ -165,8 +165,17 @@ namespace SmartRecruit.Application.Services
             job.CategoryId = request.CategoryId;
             // job.UpdatedTime = DateTime.UtcNow; 
 
+            // Trigger re-moderation on update
+            job.Status = JobStatus.CHECKING;
+            job.IsAppealed = false;
+            job.AppealMessage = null;
+
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
+
+            // Enqueue background moderation
+            _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
+            _logger.LogInformation("UpdateJob use-case success: Job {JobId} updated and re-enqueued for AI moderation", job.Id);
 
             // Refresh job to get Category Name
             var updatedJob = await _jobRepository.GetByIdAsync(job.Id);
