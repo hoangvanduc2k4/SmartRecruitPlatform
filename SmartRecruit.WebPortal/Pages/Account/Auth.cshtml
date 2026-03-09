@@ -138,33 +138,42 @@
 @section Scripts {
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
+        // Container for the hidden GIS button — rendered once, reused on each click
+        let _googleButtonContainer = null;
+
         function handleGoogleLogin() {
-            // Initialize the Google Identity Services client
+            // Initialize once
             window.google.accounts.id.initialize({
                 client_id: "382239454095-dm5214vllda451uo99lo90nvn82805cc.apps.googleusercontent.com",
                 callback: handleCredentialResponse,
-                context: "signin",
                 ux_mode: "popup"
             });
-            
-            // Trigger the Google Sign-in popup manually
-            window.google.accounts.id.prompt((notification) => {
-                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                    // Fallback to rendering a hidden button and clicking it if prompt is blocked
-                    const googleLoginWrapper = document.createElement('div');
-                    googleLoginWrapper.style.display = 'none';
-                    document.body.appendChild(googleLoginWrapper);
-                    
-                    window.google.accounts.id.renderButton(googleLoginWrapper, {
-                        type: 'standard',
-                        theme: 'outline',
-                        size: 'large'
-                    });
-                    
-                    const button = googleLoginWrapper.querySelector('div[role=button]');
-                    if(button) button.click();
-                }
-            });
+
+            // Create a hidden container for the Google button if it doesn't exist yet
+            if (!_googleButtonContainer) {
+                _googleButtonContainer = document.createElement('div');
+                _googleButtonContainer.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
+                document.body.appendChild(_googleButtonContainer);
+
+                // Render the official Google button into the hidden container
+                window.google.accounts.id.renderButton(_googleButtonContainer, {
+                    type: 'standard',
+                    theme: 'outline',
+                    size: 'large',
+                    text: 'signin_with',
+                    shape: 'pill'
+                });
+            }
+
+            // Click the rendered Google button to open the account picker popup
+            const btn = _googleButtonContainer.querySelector('div[role=button]');
+            if (btn) {
+                btn.click();
+            } else {
+                // Fallback: re-render and try again after a short delay
+                _googleButtonContainer = null;
+                setTimeout(handleGoogleLogin, 300);
+            }
         }
 
         async function handleCredentialResponse(response) {
