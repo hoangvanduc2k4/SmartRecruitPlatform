@@ -1,11 +1,15 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
 namespace WebPortal.Services.Api
 {
     public interface ITokenService
     {
-        string GetAccessToken();
-        string GetRefreshToken();
+        string? GetAccessToken();
+        string? GetRefreshToken();
         void SetTokens(string accessToken, string refreshToken, int expiresInMinutes);
         void ClearTokens();
+        ClaimsPrincipal? GetUserPrincipal();
     }
 
     public class TokenService : ITokenService
@@ -67,6 +71,24 @@ namespace WebPortal.Services.Api
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(AccessTokenKey);
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(RefreshTokenKey);
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("MockUserRole"); // Delete mock as well for safety
+        }
+
+        public ClaimsPrincipal? GetUserPrincipal()
+        {
+            var token = GetAccessToken();
+            if (string.IsNullOrEmpty(token)) return null;
+
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+                var identity = new ClaimsIdentity(jwtToken.Claims, "jwt");
+                return new ClaimsPrincipal(identity);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
