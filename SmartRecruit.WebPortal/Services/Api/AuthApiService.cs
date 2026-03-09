@@ -8,8 +8,8 @@ namespace WebPortal.Services.Api
         Task<LoginResponse?> GoogleLoginAsync(string idToken);
         Task<bool> RegisterAsync(RegisterRequest request);
         Task<bool> LogoutAsync();
-        Task<UserDto?> GetProfileAsync();
-        Task<bool> UpdateProfileAsync(UserDto request);
+        Task<UserProfileResponse?> GetProfileAsync();
+        Task<bool> UpdateProfileAsync(UpdateProfileRequest request);
         Task<bool> VerifyEmailAsync(VerifyEmailRequest request);
         Task<bool> ResendVerificationEmailAsync(string email);
         Task<bool> ForgotPasswordAsync(string email);
@@ -121,20 +121,28 @@ namespace WebPortal.Services.Api
             return false;
         }
 
-        public async Task<UserDto?> GetProfileAsync()
+        public async Task<UserProfileResponse?> GetProfileAsync()
         {
             var response = await _httpClient.GetAsync("users/profile");
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<UserDto>();
+                var options = new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+                };
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserProfileResponse>>(options);
+                if (apiResponse != null && apiResponse.Success && apiResponse.Data != null)
+                    return apiResponse.Data;
             }
             return null;
         }
 
-        public async Task<bool> UpdateProfileAsync(UserDto request)
+        public async Task<bool> UpdateProfileAsync(UpdateProfileRequest request)
         {
             var response = await _httpClient.PutAsJsonAsync("users/profile", request);
-            return response.IsSuccessStatusCode;
+            await EnsureSuccessOrThrowAsync(response);
+            return true;
         }
 
         public async Task<bool> VerifyEmailAsync(VerifyEmailRequest request)

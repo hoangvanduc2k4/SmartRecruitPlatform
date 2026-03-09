@@ -1,42 +1,75 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Models.Api;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class ProfileModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IAuthApiService _authApiService;
 
-        public ProfileModel(IMockDataService mockDataService)
+        public ProfileModel(IAuthApiService authApiService)
         {
-            _mockDataService = mockDataService;
+            _authApiService = authApiService;
         }
 
-        public User CurrentUser { get; set; } = new User();
-        public List<string> Skills { get; set; } = new List<string> { "C#", "React", "SQL", "System Design", "Cloud Architecture" };
+        public UserProfileResponse? CurrentUser { get; set; }
+        public string? ErrorMessage { get; set; }
+        public string? SuccessMessage { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS, SECURITY
+        public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS (Candidate), COMPANY (Recruiter), SECURITY
 
-        public void OnGet()
+        [BindProperty]
+        public UpdateProfileRequest UpdateInput { get; set; } = new();
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            CurrentUser = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.CANDIDATE) ?? new User();
+            try
+            {
+                CurrentUser = await _authApiService.GetProfileAsync();
+                if (CurrentUser == null)
+                    return RedirectToPage("/Account/Auth");
+
+                // Pre-fill update form with current values
+                UpdateInput.FullName = CurrentUser.FullName;
+                if (CurrentUser.CandidateProfile != null)
+                {
+                    UpdateInput.Skills = CurrentUser.CandidateProfile.Skills;
+                    UpdateInput.ExperienceYears = CurrentUser.CandidateProfile.ExperienceYears;
+                    UpdateInput.ExpectedSalary = CurrentUser.CandidateProfile.ExpectedSalary;
+                }
+                if (CurrentUser.CompanyProfile != null)
+                {
+                    UpdateInput.CompanyName = CurrentUser.CompanyProfile.CompanyName;
+                    UpdateInput.CompanyDescription = CurrentUser.CompanyProfile.CompanyDescription;
+                    UpdateInput.WebsiteUrl = CurrentUser.CompanyProfile.WebsiteUrl;
+                    UpdateInput.Address = CurrentUser.CompanyProfile.Address;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+            return Page();
         }
 
-        public IActionResult OnPostUploadSim()
+        public async Task<IActionResult> OnPostUpdateAsync()
         {
-            // Simulate AI parsing
-            Skills.Add("ASP.NET Core");
-            Skills.Add("Azure");
-            return RedirectToPage(new { Tab = "SKILLS" });
-        }
-
-        public IActionResult OnPostUpdatePassword(string currentPassword, string newPassword, string confirmPassword)
-        {
-            // Mock update password
-            return RedirectToPage(new { Tab = "SECURITY" });
+            try
+            {
+                var success = await _authApiService.UpdateProfileAsync(UpdateInput);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Profile synchronized successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            return RedirectToPage(new { Tab });
         }
     }
 }

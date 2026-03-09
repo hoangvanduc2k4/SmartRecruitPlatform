@@ -1,7 +1,9 @@
 @page "/Profile"
 @model WebPortal.Pages.ProfileModel
 @{
-    ViewData["Title"] = "Profile Nexus";
+    ViewData["Title"] = "Profile";
+    var isCandidate = Model.CurrentUser?.Role?.ToUpper() == "CANDIDATE";
+    var isRecruiter = Model.CurrentUser?.Role?.ToUpper() == "RECRUITER";
 }
 
 <div class="space-y-10 animate-in fade-in duration-700 pb-32">
@@ -12,174 +14,293 @@
             <p class="text-slate-500 font-medium">Synchronizing your professional DNA and security protocols.</p>
         </div>
 
-        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-sm">
-            <a href="?Tab=IDENTITY" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "IDENTITY" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">IDENTITY</a>
-            <a href="?Tab=SKILLS" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "SKILLS" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">SKILLS</a>
-            <a href="?Tab=SECURITY" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "SECURITY" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">SECURITY</a>
+        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-sm flex-wrap gap-1">
+            <a href="?Tab=IDENTITY" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "IDENTITY" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">Identity</a>
+            @if (isCandidate)
+            {
+                <a href="?Tab=SKILLS" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "SKILLS" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">Skills & CV</a>
+            }
+            @if (isRecruiter)
+            {
+                <a href="?Tab=COMPANY" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(Model.Tab == "COMPANY" ? "bg-white text-indigo-600 shadow-lg" : "text-slate-500 hover:text-slate-800")">Company</a>
+            }
         </div>
     </div>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-sm text-emerald-700 flex items-center gap-3">
+            <i class="fas fa-check-circle text-emerald-400"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null || !string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="p-4 bg-red-50 border border-red-100 rounded-2xl text-sm text-red-700 flex items-center gap-3">
+            <i class="fas fa-exclamation-triangle text-red-400"></i> @(TempData["ErrorMessage"] ?? Model.ErrorMessage)
+        </div>
+    }
+
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <!-- Left Column: Fixed Bio -->
+        <!-- Left Column: Fixed Bio Card -->
         <div class="lg:col-span-4 space-y-8">
             <div class="p-10 text-center bg-white border border-slate-200/60 shadow-xl shadow-slate-200/10 rounded-[2rem]">
                 <div class="relative inline-block mb-8">
                     <div class="absolute inset-0 bg-indigo-600 rounded-[3rem] blur-2xl opacity-10"></div>
-                    <img src="@Model.CurrentUser.AvatarUrl" class="w-40 h-40 rounded-[2.5rem] border-8 border-slate-50 shadow-2xl mx-auto object-cover relative z-10" alt="" />
-                    <button class="absolute -bottom-2 -right-2 w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center border-4 border-white shadow-xl hover:scale-110 transition-transform z-20">
-                        <i class="fas fa-camera text-xs"></i>
-                    </button>
+                    @if (!string.IsNullOrEmpty(Model.CurrentUser?.AvatarUrl))
+                    {
+                        <img src="@Model.CurrentUser.AvatarUrl" class="w-40 h-40 rounded-[2.5rem] border-8 border-slate-50 shadow-2xl mx-auto object-cover relative z-10" alt="Avatar" />
+                    }
+                    else
+                    {
+                        <div class="w-40 h-40 rounded-[2.5rem] border-8 border-slate-50 shadow-2xl mx-auto relative z-10 bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+                            <span class="text-5xl font-black text-white">@(Model.CurrentUser?.FullName?.Substring(0, 1).ToUpper() ?? "?")</span>
+                        </div>
+                    }
                 </div>
-                <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-1">@Model.CurrentUser.FullName</h3>
-                <p class="text-indigo-600 font-black uppercase tracking-[0.3em] text-[9px]">@Model.CurrentUser.Role</p>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-1">@(Model.CurrentUser?.FullName ?? "—")</h3>
+                <p class="text-indigo-600 font-black uppercase tracking-[0.3em] text-[9px]">@(Model.CurrentUser?.Role ?? "—")</p>
+                <p class="text-slate-400 text-xs mt-1 font-medium">@(Model.CurrentUser?.Email ?? "")</p>
 
-                <div class="mt-10 space-y-3">
-                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center">
-                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Trust Rating</span>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">9.8/10</span>
+                <div class="mt-8 space-y-4 text-left">
+                    <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 flex justify-between items-center group hover:bg-white hover:border-indigo-100 transition-all">
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Member Since</span>
+                        <span class="text-[10px] font-black text-slate-900">@(Model.CurrentUser?.CreatedAt.ToString("MMM yyyy") ?? "—")</span>
                     </div>
-                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center">
-                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Security Level</span>
-                        <span class="text-[10px] font-black text-slate-900">Tier 1 Alpha</span>
-                    </div>
+
+                    @if (isCandidate && Model.CurrentUser?.CandidateProfile != null)
+                    {
+                        <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 flex justify-between items-center group hover:bg-white hover:border-violet-100 transition-all">
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Experience</span>
+                            <span class="text-[10px] font-black text-slate-900">@Model.CurrentUser.CandidateProfile.ExperienceYears yr(s)</span>
+                        </div>
+                        @if (Model.CurrentUser.CandidateProfile.ExpectedSalary.HasValue)
+                        {
+                            <div class="p-4 bg-emerald-50/30 rounded-2xl border border-emerald-100/50 flex justify-between items-center group hover:bg-white hover:border-emerald-100 transition-all">
+                                <span class="text-[9px] font-black text-emerald-600/50 uppercase tracking-widest">Expected</span>
+                                <span class="text-[10px] font-black text-emerald-600">@Model.CurrentUser.CandidateProfile.ExpectedSalary?.ToString("N0") đ</span>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.CurrentUser.CandidateProfile.Skills))
+                        {
+                            <div class="pt-4 space-y-3">
+                                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest px-1">Professional DNA</span>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach (var skill in Model.CurrentUser.CandidateProfile.Skills.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-tighter rounded-lg border border-indigo-100/50">@skill.Trim()</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @if (isRecruiter && Model.CurrentUser?.CompanyProfile != null)
+                    {
+                        <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 flex justify-between items-center group hover:bg-white hover:border-indigo-100 transition-all">
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Company</span>
+                            <span class="text-[10px] font-black text-slate-900">@(Model.CurrentUser.CompanyProfile.CompanyName ?? "—")</span>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CurrentUser.CompanyProfile.WebsiteUrl))
+                        {
+                            <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 flex justify-between items-center group hover:bg-white hover:border-indigo-100 transition-all">
+                                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Portal</span>
+                                <a href="@Model.CurrentUser.CompanyProfile.WebsiteUrl" target="_blank" class="text-[10px] font-black text-indigo-600 hover:underline truncate max-w-[150px]">@Model.CurrentUser.CompanyProfile.WebsiteUrl.Replace("https://", "").Replace("http://", "")</a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
 
-        <!-- Right Column: Tab Content -->
+        <!-- Right Column: Tabs -->
         <div class="lg:col-span-8">
-            @if (Model.Tab == "IDENTITY")
-            {
-                <div class="p-12 space-y-8 bg-white rounded-[2rem] border border-slate-200 animate-in fade-in slide-in-from-right-4 duration-500 shadow-sm">
-                    <div class="flex justify-between items-center pb-6 border-b border-slate-50">
-                        <h4 class="text-[12px] font-black uppercase tracking-widest text-slate-900">Personal Metadata</h4>
-                        <span class="bg-slate-100 text-slate-600 text-[10px] font-black tracking-widest uppercase px-3 py-1 rounded-full">Read Only</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Full Name</label>
-                            <input type="text" value="@Model.CurrentUser.FullName" disabled class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-500 outline-none" />
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Email Hub</label>
-                            <input type="text" value="@Model.CurrentUser.Email" disabled class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-500 outline-none" />
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Identity Role</label>
-                            <input type="text" value="@Model.CurrentUser.Role" disabled class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-500 outline-none" />
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Created At</label>
-                            <input type="text" value="@System.DateTime.Now.ToString("MMM dd, yyyy")" disabled class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-500 outline-none" />
-                        </div>
-                    </div>
-                    <div class="pt-8 flex justify-end">
-                        <button class="h-12 px-8 bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl hover:bg-slate-50 transition-colors shadow-sm text-[10px] uppercase tracking-widest">Request Identity Change</button>
-                    </div>
-                </div>
-            }
+            <form method="post" asp-page-handler="Update">
+                <input type="hidden" asp-for="Tab" />
 
-            @if (Model.Tab == "SKILLS")
-            {
-                <div class="p-12 space-y-10 bg-white rounded-[2rem] border border-slate-200 animate-in fade-in slide-in-from-right-4 duration-500 shadow-sm">
-                    <form method="post" asp-page-handler="UploadSim" id="uploadForm">
-                        <button type="submit" class="w-full text-left" onclick="showParsing()">
-                            <div class="border-4 border-dashed border-slate-200 rounded-[2.5rem] p-12 text-center transition-all cursor-pointer group bg-slate-50 hover:bg-white hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-50" id="uploadBox">
-                                <div class="space-y-4" id="uploadIdle">
-                                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-indigo-600 mx-auto shadow-md group-hover:scale-110 transition-transform">
-                                        <i class="fas fa-microchip text-2xl"></i>
+                @if (Model.Tab == "IDENTITY")
+                {
+                    <div class="p-12 space-y-10 bg-white rounded-[2.5rem] border border-slate-200/60 animate-in fade-in slide-in-from-right-8 duration-700 shadow-xl shadow-slate-200/10">
+                        <div class="flex justify-between items-center pb-8 border-b border-slate-50">
+                            <div>
+                                <h4 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 mb-1">Personal Metadata</h4>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase">Basic identity and system access protocols</p>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-fingerprint text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Full Identity Name</label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                        <i class="fas fa-user-tag text-xs"></i>
                                     </div>
-                                    <h5 class="text-xl font-black text-slate-800">Upload New Resume</h5>
-                                    <p class="text-[10px] text-slate-400 font-medium max-w-xs mx-auto">Update your competency matrix automatically with AI parsing.</p>
-                                </div>
-                                <div class="hidden flex-col items-center gap-4 py-4" id="uploadSpin">
-                                    <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-                                    <p class="text-[10px] font-black uppercase tracking-widest text-indigo-600">Syncing Technical DNA...</p>
+                                    <input asp-for="UpdateInput.FullName" placeholder="Enter your full name" 
+                                           class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-50/50 transition-all outline-none" />
                                 </div>
                             </div>
-                        </button>
-                    </form>
-
-                    <div class="space-y-6">
-                        <h4 class="text-[12px] font-black uppercase tracking-widest text-slate-900">Mapped Competencies</h4>
-                        <div class="flex flex-wrap gap-2">
-                            @foreach (var s in Model.Skills)
-                            {
-                                <div class="px-5 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 flex items-center gap-3">
-                                    @s <i class="fas fa-times opacity-30 cursor-pointer hover:text-red-500 transition-colors"></i>
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Email Hub (Immutable)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                    </div>
+                                    <input type="text" value="@(Model.CurrentUser?.Email)" disabled 
+                                           class="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-400 outline-none cursor-not-allowed" />
                                 </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @if (Model.Tab == "SECURITY")
-            {
-                <div class="p-12 space-y-10 bg-white rounded-[2rem] border border-slate-200 animate-in fade-in slide-in-from-right-4 duration-500 shadow-sm">
-                    <div class="space-y-2">
-                        <h4 class="text-[12px] font-black uppercase tracking-widest text-slate-900">Access Key Management</h4>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Last updated: 3 months ago</p>
-                    </div>
-
-                    <form method="post" asp-page-handler="UpdatePassword" class="space-y-6" onsubmit="return validatePassword()">
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Current Terminal Key</label>
-                            <input type="password" name="currentPassword" required placeholder="••••••••" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">New Security Key</label>
-                                <input type="password" name="newPassword" id="newPwd" required placeholder="••••••••" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Confirm New Key</label>
-                                <input type="password" name="confirmPassword" id="confPwd" required placeholder="••••••••" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">System Role</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300">
+                                        <i class="fas fa-shield-halved text-xs"></i>
+                                    </div>
+                                    <input type="text" value="@(Model.CurrentUser?.Role)" disabled 
+                                           class="w-full h-14 bg-slate-100/50 border border-slate-100 rounded-2xl pl-11 pr-4 text-[10px] font-black uppercase tracking-widest text-slate-500 outline-none" />
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Registration Date</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300">
+                                        <i class="fas fa-calendar-check text-xs"></i>
+                                    </div>
+                                    <input type="text" value="@(Model.CurrentUser?.CreatedAt.ToString("MMMM dd, yyyy"))" disabled 
+                                           class="w-full h-14 bg-slate-100/50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-400 outline-none" />
+                                </div>
                             </div>
                         </div>
-
-                        <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex gap-4">
-                            <i class="fas fa-triangle-exclamation text-amber-500 mt-1"></i>
-                            <div>
-                                <p class="text-[10px] font-black text-amber-800 uppercase tracking-widest mb-1">Security Warning</p>
-                                <p class="text-[10px] text-amber-600 leading-relaxed font-medium">Changing your password will terminate all other active sessions across your authenticated devices.</p>
-                            </div>
-                        </div>
-
-                        <div class="pt-6 border-t border-slate-50 flex justify-end">
-                            <button type="submit" class="px-10 h-14 bg-indigo-600 text-white font-bold rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition" id="savePwdBtn">
-                                Commit Key Update
+                        <div class="pt-10 flex justify-end border-t border-slate-50">
+                            <button type="submit" class="px-12 h-14 bg-indigo-600 text-white font-black rounded-2xl shadow-2xl shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-1 transition-all active:translate-y-0 text-[10px] uppercase tracking-[0.2em] flex items-center gap-3">
+                                <i class="fas fa-cloud-arrow-up text-xs"></i> Synchronize Changes
                             </button>
                         </div>
-                    </form>
-                </div>
-            }
+                    </div>
+                }
+
+                @if (Model.Tab == "SKILLS" && isCandidate)
+                {
+                    <div class="p-12 space-y-10 bg-white rounded-[2.5rem] border border-slate-200/60 animate-in fade-in slide-in-from-right-8 duration-700 shadow-xl shadow-slate-200/10">
+                        <div class="flex justify-between items-center pb-8 border-b border-slate-50">
+                            <div>
+                                <h4 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 mb-1">Skills & Professional DNA</h4>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase">Define your core capabilities and experience metrics</p>
+                            </div>
+                            <div class="w-12 h-12 bg-violet-50 rounded-2xl flex items-center justify-center text-violet-600">
+                                <i class="fas fa-brain text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-8">
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Skill Set (Comma Separated)</label>
+                                <div class="relative group">
+                                    <div class="absolute top-4 left-4 text-slate-400 group-focus-within:text-violet-500 transition-colors">
+                                        <i class="fas fa-code text-xs"></i>
+                                    </div>
+                                    <textarea asp-for="UpdateInput.Skills" rows="4"
+                                              class="w-full bg-slate-50 border border-slate-100 rounded-[1.5rem] pl-11 pr-6 py-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-50/50 transition-all outline-none resize-none leading-relaxed"
+                                              placeholder="e.g. C#, ASP.NET Core, React, SQL Server, Azure..."></textarea>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="space-y-3">
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Professional Experience (Years)</label>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-violet-500 transition-colors">
+                                            <i class="fas fa-briefcase text-xs"></i>
+                                        </div>
+                                        <input asp-for="UpdateInput.ExperienceYears" type="number" min="0" max="50"
+                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-50/50 transition-all outline-none" />
+                                    </div>
+                                </div>
+                                <div class="space-y-3">
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Expected Salary (VND / Month)</label>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                                            <i class="fas fa-hand-holding-dollar text-xs"></i>
+                                        </div>
+                                        <input asp-for="UpdateInput.ExpectedSalary" type="number" min="0" step="500000"
+                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-black text-emerald-600 focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-50/50 transition-all outline-none"
+                                               placeholder="e.g. 20000000" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-10 flex justify-end border-t border-slate-50">
+                            <button type="submit" class="px-12 h-14 bg-violet-600 text-white font-black rounded-2xl shadow-2xl shadow-violet-200 hover:bg-violet-700 hover:-translate-y-1 transition-all text-[10px] uppercase tracking-[0.2em] flex items-center gap-3">
+                                <i class="fas fa-save text-xs"></i> Update Skills Map
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Tab == "COMPANY" && isRecruiter)
+                {
+                    <div class="p-12 space-y-10 bg-white rounded-[2.5rem] border border-slate-200/60 animate-in fade-in slide-in-from-right-8 duration-700 shadow-xl shadow-slate-200/10">
+                        <div class="flex justify-between items-center pb-8 border-b border-slate-50">
+                            <div>
+                                <h4 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 mb-1">Company Identity</h4>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase">Define your corporate presence and brand information</p>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-building text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="space-y-3">
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Legal Company Name</label>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                            <i class="fas fa-building-circle-check text-xs"></i>
+                                        </div>
+                                        <input asp-for="UpdateInput.CompanyName" 
+                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                                    </div>
+                                </div>
+                                <div class="space-y-3">
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Official Website URL</label>
+                                    <div class="relative group">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                            <i class="fas fa-globe text-xs"></i>
+                                        </div>
+                                        <input asp-for="UpdateInput.WebsiteUrl" type="url" 
+                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-indigo-600 focus:bg-white focus:border-indigo-400 transition-all outline-none" placeholder="https://yourcompany.com" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Corporate Address</label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                        <i class="fas fa-location-dot text-xs"></i>
+                                    </div>
+                                    <input asp-for="UpdateInput.Address" 
+                                           class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Company Vision & Description</label>
+                                <div class="relative group">
+                                    <div class="absolute top-4 left-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                        <i class="fas fa-quote-left text-xs"></i>
+                                    </div>
+                                    <textarea asp-for="UpdateInput.CompanyDescription" rows="5"
+                                              class="w-full bg-slate-50 border border-slate-100 rounded-[1.5rem] pl-11 pr-6 py-4 text-sm font-semibold text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none resize-none leading-relaxed"
+                                              placeholder="Tell us about your company's mission..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-10 flex justify-end border-t border-slate-50">
+                            <button type="submit" class="px-12 h-14 bg-indigo-600 text-white font-black rounded-2xl shadow-2xl shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-1 transition-all text-[10px] uppercase tracking-[0.2em] flex items-center gap-3">
+                                <i class="fas fa-save text-xs"></i> Update Corporate Profile
+                            </button>
+                        </div>
+                    </div>
+                }
+            </form>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function showParsing() {
-            document.getElementById('uploadIdle').classList.add('hidden');
-            document.getElementById('uploadSpin').classList.remove('hidden');
-            document.getElementById('uploadSpin').classList.add('flex');
-            const box = document.getElementById('uploadBox');
-            box.classList.remove('bg-slate-50', 'border-slate-200');
-            box.classList.add('bg-indigo-50', 'border-indigo-200');
-        }
-
-        function validatePassword() {
-            var newP = document.getElementById('newPwd').value;
-            var confP = document.getElementById('confPwd').value;
-            if (newP !== confP) {
-                alert("New passwords do not match.");
-                return false;
-            }
-            var btn = document.getElementById('savePwdBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Committing...';
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-            return true;
-        }
-    </script>
-}
