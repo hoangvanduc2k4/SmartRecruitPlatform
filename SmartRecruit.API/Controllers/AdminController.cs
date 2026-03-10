@@ -4,6 +4,7 @@ using SmartRecruit.Application.DTO.AILog;
 using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Application.DTO.Wallet;
 
 namespace SmartRecruit.API.Controllers
 {
@@ -14,12 +15,14 @@ namespace SmartRecruit.API.Controllers
     {
         private readonly IAILogService _aiLogService;
         private readonly IUserService _userService;
+        private readonly IWalletService _walletService;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IAILogService aiLogService, IUserService userService, ILogger<AdminController> logger)
+        public AdminController(IAILogService aiLogService, IUserService userService, IWalletService walletService, ILogger<AdminController> logger)
         {
             _aiLogService = aiLogService;
             _userService = userService;
+            _walletService = walletService;
             _logger = logger;
         }
 
@@ -47,6 +50,22 @@ namespace SmartRecruit.API.Controllers
             var success = await _userService.UpdateUserStatusAsync(id, request);
             string message = request.IsActive ? "User account activated successfully" : "User account locked successfully";
             return Ok(new { Success = success }.Wrap(message));
+        }
+
+        [HttpGet("finance/stats")]
+        public async Task<IActionResult> GetFinanceStats()
+        {
+            _logger.LogInformation("API GetFinanceStats called");
+            var stats = await _walletService.GetFinanceStatsAsync();
+            return Ok(stats.Wrap("Finance statistics retrieved successfully"));
+        }
+
+        [HttpGet("finance/logs")]
+        public async Task<IActionResult> GetFinanceLogs([FromQuery] TransactionSearchRequest request)
+        {
+            _logger.LogInformation("API GetFinanceLogs called with parameters: {@Request}", request);
+            var logs = await _walletService.GetTransactionsAsync(request);
+            return Ok(logs.WrapPaged("Financial logs retrieved successfully"));
         }
     }
 }
