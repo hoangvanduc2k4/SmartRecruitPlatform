@@ -33,7 +33,7 @@ namespace SmartRecruit.Application.Services
             }
 
             user.IsActive = request.IsActive;
-            user.LockReason = request.LockReason;
+            user.LockReason = request.IsActive ? null : request.LockReason;
 
             _unitOfWork.Users.Update(user);
             return await _unitOfWork.CompleteAsync() > 0;
