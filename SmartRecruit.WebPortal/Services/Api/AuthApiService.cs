@@ -15,6 +15,7 @@ namespace WebPortal.Services.Api
         Task<bool> ForgotPasswordAsync(string email);
         Task<bool> ResetPasswordAsync(ResetPasswordRequest request);
         Task<bool> UploadCvAsync(Stream fileStream, string fileName);
+        Task<bool> UploadAvatarAsync(Stream fileStream, string fileName);
     }
 
     public class AuthApiService : IAuthApiService
@@ -191,6 +192,26 @@ namespace WebPortal.Services.Api
             await EnsureSuccessOrThrowAsync(response);
             return true;
         }
+        public async Task<bool> UploadAvatarAsync(Stream fileStream, string fileName)
+        {
+            using var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(fileStream);
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+            var mimeType = extension switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".webp" => "image/webp",
+                _ => "image/jpeg"
+            };
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mimeType);
+            content.Add(streamContent, "file", fileName);
+
+            var response = await _httpClient.PostAsync("users/profile/upload-avatar", content);
+            await EnsureSuccessOrThrowAsync(response);
+            return true;
+        }
+
 
         private async Task EnsureSuccessOrThrowAsync(HttpResponseMessage response)
         {

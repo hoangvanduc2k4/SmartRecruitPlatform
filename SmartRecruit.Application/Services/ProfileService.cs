@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -208,6 +208,38 @@ namespace SmartRecruit.Application.Services
             _logger.LogInformation("CV uploaded and text extracted for user {UserId}", userId);
 
             return await GetCurrentUserProfileAsync(userId);
+        }
+        public async Task<UserProfileResponse> UploadAvatarAsync(long userId, Stream fileStream, string fileName)
+        {
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            if (fileStream == null || fileStream.Length == 0)
+            {
+                throw new InvalidOperationException("Uploaded avatar file is empty.");
+            }
+
+            if (fileStream.CanSeek) fileStream.Position = 0;
+
+            var oldUrl = IsCloudinaryAvatarUrl(user.AvatarUrl) ? user.AvatarUrl : null;
+            var avatarUrl = await _cloudinaryService.ManageFileAsync(fileStream, fileName, oldUrl);
+
+            user.AvatarUrl = avatarUrl;
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.CompleteAsync();
+
+            _logger.LogInformation("Avatar uploaded for user {UserId}", userId);
+            return await GetCurrentUserProfileAsync(userId);
+        }
+
+        private static bool IsCloudinaryAvatarUrl(string? url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return false;
+            return url.Contains("res.cloudinary.com", StringComparison.OrdinalIgnoreCase)
+                && url.Contains("/SmartRecruit/Avatars/", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

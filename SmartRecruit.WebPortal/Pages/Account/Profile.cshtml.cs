@@ -27,6 +27,9 @@ namespace WebPortal.Pages
         [BindProperty]
         public IFormFile? CvFile { get; set; }
 
+        [BindProperty]
+        public IFormFile? AvatarFile { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             try
@@ -104,6 +107,39 @@ namespace WebPortal.Pages
             }
 
             return RedirectToPage(new { Tab = "CVS" });
+        }
+
+        public async Task<IActionResult> OnPostUploadAvatarAsync()
+        {
+            if (AvatarFile == null || AvatarFile.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Please select an image file to upload.";
+                return RedirectToPage(new { Tab });
+            }
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extension = Path.GetExtension(AvatarFile.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(extension))
+            {
+                TempData["ErrorMessage"] = "Only JPG, PNG, or WEBP images are supported.";
+                return RedirectToPage(new { Tab });
+            }
+
+            try
+            {
+                using var stream = AvatarFile.OpenReadStream();
+                var success = await _authApiService.UploadAvatarAsync(stream, AvatarFile.FileName);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Avatar updated successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage(new { Tab });
         }
     }
 }

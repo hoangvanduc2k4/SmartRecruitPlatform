@@ -1,8 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Constants;
+using System.IO;
+using System.Linq;
 using System.Security.Claims;
 
 namespace SmartRecruit.API.Controllers
@@ -56,6 +59,26 @@ namespace SmartRecruit.API.Controllers
             var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
             
             return Ok(profile.Wrap("CV uploaded and text extracted successfully"));
+        }
+        [HttpPost("upload-avatar")]
+        public async Task<IActionResult> UploadAvatar(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            if (file.Length > Policies.MaxAvatarFileSize)
+                return BadRequest($"Avatar file size must be <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
+
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            if (!allowed.Contains(ext))
+                return BadRequest("Only JPG, PNG, or WEBP images are supported for avatar upload.");
+
+            var userId = GetUserIdFromClaims();
+            using var stream = file.OpenReadStream();
+            var profile = await _profileService.UploadAvatarAsync(userId, stream, file.FileName);
+
+            return Ok(profile.Wrap("Avatar uploaded successfully"));
         }
     }
 }
