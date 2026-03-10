@@ -8,7 +8,8 @@ namespace SmartRecruit.Application.Mappings
     {
         public AdminProfile()
         {
-            CreateMap<User, AdminUserResponse>();
+            CreateMap<User, AdminUserResponse>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString()));
         }
     }
 }

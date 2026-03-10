@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.Application.DTO.AILog;
 using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Extensions;
@@ -8,6 +9,7 @@ namespace SmartRecruit.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "ADMIN")]
     public class AdminController : ControllerBase
     {
         private readonly IAILogService _aiLogService;
@@ -26,7 +28,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetAILogs called with search parameters: {@Request}", request);
             var logs = await _aiLogService.GetAILogsAsync(request);
-            var response = logs.WrapPaged();
+            var response = logs.WrapPaged("AI logs retrieved successfully");
             return Ok(response);
         }
 
@@ -35,7 +37,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetUsers called with parameters: {@Request}", request);
             var users = await _userService.GetUsersAsync(request);
-            return Ok(users.WrapPaged());
+            return Ok(users.WrapPaged("Users retrieved successfully"));
         }
 
         [HttpPatch("users/{id}/status")]
@@ -43,7 +45,8 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API UpdateUserStatus called for UserId: {UserId}, Status: {IsActive}", id, request.IsActive);
             var success = await _userService.UpdateUserStatusAsync(id, request);
-            return Ok(new { Success = success }.Wrap("User status updated successfully"));
+            string message = request.IsActive ? "User account activated successfully" : "User account locked successfully";
+            return Ok(new { Success = success }.Wrap(message));
         }
     }
 }
