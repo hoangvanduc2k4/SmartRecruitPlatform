@@ -4,9 +4,9 @@ namespace SmartRecruit.Application.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<User> Users { get; }
+        IUserRepository Users { get; }
         IGenericRepository<Job> Jobs { get; }
-        IGenericRepository<Wallet> Wallets { get; }
+        IWalletRepository Wallets { get; }
         IGenericRepository<RefreshToken> RefreshTokens { get; }
         IGenericRepository<OtpToken> OtpTokens { get; }
         IGenericRepository<CandidateProfile> CandidateProfiles { get; }

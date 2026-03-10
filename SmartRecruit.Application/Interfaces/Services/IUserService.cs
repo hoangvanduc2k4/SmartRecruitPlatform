@@ -1,9 +1,11 @@
-using SmartRecruit.Application.DTO.Auth;
+using SmartRecruit.Application.DTO.Admin;
+using SmartRecruit.Application.Helpers;
 
 namespace SmartRecruit.Application.Interfaces.Services
 {
     public interface IUserService
     {
-        // Future user management methods (e.g., GetProfile, UpdateUser, BanUser) will go here.
+        Task<PagedList<AdminUserResponse>> GetUsersAsync(UserSearchRequest request);
+        Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request);
     }
 }

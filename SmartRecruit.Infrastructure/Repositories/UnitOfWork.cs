@@ -1,4 +1,5 @@
-﻿using SmartRecruit.Application.Interfaces.Repositories;
+﻿using Microsoft.Extensions.Logging;
+using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Infrastructure.Data;
 
@@ -7,23 +8,25 @@ namespace SmartRecruit.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILoggerFactory _loggerFactory;
 
-        public IGenericRepository<User> Users { get; private set; }
+        public IUserRepository Users { get; private set; }
         public IGenericRepository<Job> Jobs { get; private set; }
-        public IGenericRepository<Wallet> Wallets { get; private set; }
+        public IWalletRepository Wallets { get; private set; }
         public IGenericRepository<RefreshToken> RefreshTokens { get; private set; }
         public IGenericRepository<OtpToken> OtpTokens { get; private set; }
         public IGenericRepository<CandidateProfile> CandidateProfiles { get; private set; }
         public IGenericRepository<CompanyProfile> CompanyProfiles { get; private set; }
         public IGenericRepository<SavedJob> SavedJobs { get; private set; }
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
+            _loggerFactory = loggerFactory;
 
-            Users = new GenericRepository<User>(_context);
+            Users = new UserRepository(_context);
             Jobs = new GenericRepository<Job>(_context);
-            Wallets = new GenericRepository<Wallet>(_context);
+            Wallets = new WalletRepository(_context, _loggerFactory.CreateLogger<WalletRepository>());
             RefreshTokens = new GenericRepository<RefreshToken>(_context);
             OtpTokens = new GenericRepository<OtpToken>(_context);
             CandidateProfiles = new GenericRepository<CandidateProfile>(_context);

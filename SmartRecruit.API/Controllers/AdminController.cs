@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.AILog;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 
@@ -10,11 +11,13 @@ namespace SmartRecruit.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAILogService _aiLogService;
+        private readonly IUserService _userService;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IAILogService aiLogService, ILogger<AdminController> logger)
+        public AdminController(IAILogService aiLogService, IUserService userService, ILogger<AdminController> logger)
         {
             _aiLogService = aiLogService;
+            _userService = userService;
             _logger = logger;
         }
 
@@ -25,6 +28,22 @@ namespace SmartRecruit.API.Controllers
             var logs = await _aiLogService.GetAILogsAsync(request);
             var response = logs.WrapPaged();
             return Ok(response);
+        }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers([FromQuery] UserSearchRequest request)
+        {
+            _logger.LogInformation("API GetUsers called with parameters: {@Request}", request);
+            var users = await _userService.GetUsersAsync(request);
+            return Ok(users.WrapPaged());
+        }
+
+        [HttpPatch("users/{id}/status")]
+        public async Task<IActionResult> UpdateUserStatus(long id, [FromBody] UpdateUserStatusRequest request)
+        {
+            _logger.LogInformation("API UpdateUserStatus called for UserId: {UserId}, Status: {IsActive}", id, request.IsActive);
+            var success = await _userService.UpdateUserStatusAsync(id, request);
+            return Ok(new { Success = success }.Wrap("User status updated successfully"));
         }
     }
 }
