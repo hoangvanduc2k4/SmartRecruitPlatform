@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using WebPortal.Models;
 using WebPortal.Models.Api;
 using WebPortal.Services.Api;
@@ -10,16 +11,16 @@ namespace WebPortal.Pages
     {
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
-        private readonly IAuthApiService _authApiService;
+        private readonly ITokenService _tokenService;
 
         public JobDetailModel(
             IJobApiService jobApiService,
             IApplicationApiService applicationApiService,
-            IAuthApiService authApiService)
+            ITokenService tokenService)
         {
             _jobApiService = jobApiService;
             _applicationApiService = applicationApiService;
-            _authApiService = authApiService;
+            _tokenService = tokenService;
         }
 
         public Job? Job { get; set; }
@@ -40,21 +41,56 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
         public int TotalApplicationCount { get; set; }
+        private long? GetCurrentUserId()
+        {
+            var principal = _tokenService.GetUserPrincipal();
+            if (principal == null) return null;
+
+            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
+            {
+                return userId;
+            }
+            return null;
+        }
+
+        private UserRole? GetCurrentUserRole()
+        {
+            var principal = _tokenService.GetUserPrincipal();
+            if (principal == null) return null;
+
+            var roleClaim = principal.FindFirst("role")?.Value ?? principal.FindFirst(ClaimTypes.Role)?.Value;
+            if (Enum.TryParse<UserRole>(roleClaim, out var role))
+            {
+                return role;
+            }
+            return null;
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Fetch Current User Profile
-            CurrentUser = await _authApiService.GetProfileAsync();
+            // Populate basic user info from claims for the view
+            var role = GetCurrentUserRole();
+            if (role.HasValue)
+            {
+                CurrentUser = new UserDto
+                {
+                    Id = GetCurrentUserId()?.ToString() ?? "",
+                    Role = role.Value
+                };
+            }
 
             if (long.TryParse(Id, out var longId))
             {
                 Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
                 if (Job != null)
                 {
+                    var currentUserId = GetCurrentUserId();
                     // Check if job is saved
-                    if (CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
+                    if (currentUserId.HasValue)
                     {
-                        IsSaved = await _jobApiService.IsJobSavedAsync(longId, userId);
+                        IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
                     }
 
                     // Fetch applications for this job
@@ -73,15 +109,16 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostToggleSaveAsync()
         {
-            CurrentUser = await _authApiService.GetProfileAsync();
-            if (CurrentUser == null)
+            var currentUserId = GetCurrentUserId();
+
+            if (!currentUserId.HasValue)
             {
                 return RedirectToPage("/Account/Login");
             }
 
-            if (long.TryParse(Id, out var longId) && long.TryParse(CurrentUser.Id, out var userId))
+            if (long.TryParse(Id, out var longId))
             {
-                await _jobApiService.ToggleSaveJobAsync(longId, userId);
+                await _jobApiService.ToggleSaveJobAsync(longId, currentUserId.Value);
             }
             return RedirectToPage(new { Id = Id, Tab = Tab });
         }
@@ -90,14 +127,13 @@ namespace WebPortal.Pages
         {
             var request = new UpdateApplicationStatusRequest { Status = status };
 
-            // Special handling for mandatory fields in backend
             if (status == ApplicationStatus.INTERVIEWING)
             {
-                request.InterviewDate = DateTime.Now.AddDays(1); // Default for demo
+                request.InterviewDate = DateTime.Now.AddDays(1);
             }
             else if (status == ApplicationStatus.REJECTED)
             {
-                request.RejectionReason = "Not matching requirements."; // Default for demo
+                request.RejectionReason = "Not matching requirements.";
             }
 
             await _applicationApiService.UpdateStatusAsync(applicationId, request);
@@ -121,20 +157,22 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostBoostAsync()
         {
-            CurrentUser = await _authApiService.GetProfileAsync();
-            if (long.TryParse(Id, out var longId) && CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
+            var currentUserId = GetCurrentUserId();
+
+            if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
             {
-                await _jobApiService.BoostJobAsync(longId, userId);
+                await _jobApiService.BoostJobAsync(longId, currentUserId.Value);
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }
 
         public async Task<IActionResult> OnPostApplyAsync()
         {
-            CurrentUser = await _authApiService.GetProfileAsync();
-            if (long.TryParse(Id, out var longId) && CurrentUser != null && long.TryParse(CurrentUser.Id, out var userId))
+            var currentUserId = GetCurrentUserId();
+
+            if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
             {
-                await _applicationApiService.ApplyAsync(longId, userId);
+                await _applicationApiService.ApplyAsync(longId, currentUserId.Value);
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }

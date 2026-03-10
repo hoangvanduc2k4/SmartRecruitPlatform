@@ -1,4 +1,4 @@
-using WebPortal.Models.Api;
+﻿using WebPortal.Models.Api;
 
 namespace WebPortal.Services.Api
 {
@@ -8,12 +8,14 @@ namespace WebPortal.Services.Api
         Task<LoginResponse?> GoogleLoginAsync(string idToken);
         Task<bool> RegisterAsync(RegisterRequest request);
         Task<bool> LogoutAsync();
-        Task<UserDto?> GetProfileAsync();
-        Task<bool> UpdateProfileAsync(UserDto request);
+        Task<UserProfileResponse?> GetProfileAsync();
+        Task<bool> UpdateProfileAsync(UpdateProfileRequest request);
         Task<bool> VerifyEmailAsync(VerifyEmailRequest request);
         Task<bool> ResendVerificationEmailAsync(string email);
         Task<bool> ForgotPasswordAsync(string email);
         Task<bool> ResetPasswordAsync(ResetPasswordRequest request);
+        Task<bool> UploadCvAsync(Stream fileStream, string fileName);
+        Task<bool> UploadAvatarAsync(Stream fileStream, string fileName);
     }
 
     public class AuthApiService : IAuthApiService
@@ -47,6 +49,10 @@ namespace WebPortal.Services.Api
             else
             {
                 var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
+            }
                 try
                 {
                     var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -121,20 +127,27 @@ namespace WebPortal.Services.Api
             return false;
         }
 
-        public async Task<UserDto?> GetProfileAsync()
+        public async Task<UserProfileResponse?> GetProfileAsync()
         {
             var response = await _httpClient.GetAsync("users/profile");
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<UserDto>();
+                var options = new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+                };
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserProfileResponse>>(options);
+                if (apiResponse != null && apiResponse.Success && apiResponse.Data != null)
+                    return apiResponse.Data;
             }
             return null;
         }
 
-        public async Task<bool> UpdateProfileAsync(UserDto request)
+        public async Task<bool> UpdateProfileAsync(UpdateProfileRequest request)
         {
             var response = await _httpClient.PutAsJsonAsync("users/profile", request);
-            return response.IsSuccessStatusCode;
+            return await HandleProfileResponseAsync(response);
         }
 
         public async Task<bool> VerifyEmailAsync(VerifyEmailRequest request)
@@ -167,11 +180,70 @@ namespace WebPortal.Services.Api
             return true;
         }
 
+        public async Task<bool> UploadCvAsync(Stream fileStream, string fileName)
+        {
+            using var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(fileStream);
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+            content.Add(streamContent, "file", fileName);
+
+            var response = await _httpClient.PostAsync("users/profile/upload-cv", content);
+            await EnsureSuccessOrThrowAsync(response);
+            return true;
+        }
+        public async Task<bool> UploadAvatarAsync(Stream fileStream, string fileName)
+        {
+            using var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(fileStream);
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+            var mimeType = extension switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".webp" => "image/webp",
+                _ => "image/jpeg"
+            };
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mimeType);
+            content.Add(streamContent, "file", fileName);
+
+            var response = await _httpClient.PostAsync("users/profile/upload-avatar", content);
+            return await HandleProfileResponseAsync(response);
+        }
+
+        private async Task<bool> HandleProfileResponseAsync(HttpResponseMessage response)
+        {
+            await EnsureSuccessOrThrowAsync(response);
+
+            var options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+            };
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserProfileResponse>>(options);
+
+            if (apiResponse != null && apiResponse.Success && apiResponse.Data != null)
+            {
+                var result = apiResponse.Data;
+                if (!string.IsNullOrEmpty(result.NewToken))
+                {
+                    // Refresh the local token store with the new JWT
+                    _tokenService.SetTokens(result.NewToken, _tokenService.GetRefreshToken() ?? "", 15);
+                }
+                return true;
+            }
+            return false;
+        }
+
+
         private async Task EnsureSuccessOrThrowAsync(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode) return;
 
             var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
+            }
             try
             {
                 using var document = System.Text.Json.JsonDocument.Parse(content);
@@ -205,6 +277,10 @@ namespace WebPortal.Services.Api
                     }
                 }
             }
+            catch (System.Text.Json.JsonException)
+            {
+                throw new Exception("API Error Response: " + content);
+            }
             catch (Exception ex) when (ex.Message != null && !ex.Message.StartsWith("API Error") && !ex.Message.StartsWith("The JSON value"))
             {
                 throw; // Rethrow parsed exceptions securely extracted from JSON
@@ -217,3 +293,4 @@ namespace WebPortal.Services.Api
         }
     }
 }
+

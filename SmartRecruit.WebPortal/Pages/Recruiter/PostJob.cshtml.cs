@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using WebPortal.Models;
 using WebPortal.Services.Api;
 
@@ -8,14 +9,14 @@ namespace WebPortal.Pages
     public class PostJobModel : PageModel
     {
         private readonly IJobApiService _jobApiService;
-        private readonly IAuthApiService _authApiService;
         private readonly IWalletApiService _walletApiService;
+        private readonly ITokenService _tokenService;
 
-        public PostJobModel(IJobApiService jobApiService, IAuthApiService authApiService, IWalletApiService walletApiService)
+        public PostJobModel(IJobApiService jobApiService, IWalletApiService walletApiService, ITokenService tokenService)
         {
             _jobApiService = jobApiService;
-            _authApiService = authApiService;
             _walletApiService = walletApiService;
+            _tokenService = tokenService;
         }
 
         [BindProperty]
@@ -31,6 +32,21 @@ namespace WebPortal.Pages
 
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
         public decimal WalletBalance { get; set; }
+        public int PageSize { get; set; } = 5;
+
+        private long? GetCurrentUserId()
+        {
+            var principal = _tokenService.GetUserPrincipal();
+            if (principal == null) return null;
+
+            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
+            {
+                return userId;
+            }
+            return null;
+        }
 
         public async Task OnGetAsync()
         {
@@ -44,8 +60,8 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _authApiService.GetProfileAsync();
-            if (user == null || !long.TryParse(user.Id, out var recruiterId))
+            var recruiterId = GetCurrentUserId();
+            if (!recruiterId.HasValue)
             {
                 return RedirectToPage("/Account/Login");
             }
@@ -62,7 +78,7 @@ namespace WebPortal.Pages
 
             var result = await _jobApiService.CreateJobAsync(new Job
             {
-                RecruiterId = recruiterId,
+                RecruiterId = recruiterId.Value,
                 Title = JobInput.Title ?? "",
                 Description = JobInput.Description ?? "",
                 Requirement = JobInput.Requirement ?? "",

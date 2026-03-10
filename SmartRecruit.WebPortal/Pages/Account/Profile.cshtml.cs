@@ -1,42 +1,146 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Models.Api;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class ProfileModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IAuthApiService _authApiService;
 
-        public ProfileModel(IMockDataService mockDataService)
+        public ProfileModel(IAuthApiService authApiService)
         {
-            _mockDataService = mockDataService;
+            _authApiService = authApiService;
         }
 
-        public User CurrentUser { get; set; } = new User();
-        public List<string> Skills { get; set; } = new List<string> { "C#", "React", "SQL", "System Design", "Cloud Architecture" };
+        public UserProfileResponse? CurrentUser { get; set; }
+        public string? ErrorMessage { get; set; }
+        public string? SuccessMessage { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS, SECURITY
+        public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS (Candidate), COMPANY (Recruiter), SECURITY
 
-        public void OnGet()
+        [BindProperty]
+        public UpdateProfileRequest UpdateInput { get; set; } = new();
+
+        [BindProperty]
+        public IFormFile? CvFile { get; set; }
+
+        [BindProperty]
+        public IFormFile? AvatarFile { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            CurrentUser = _mockDataService.Users.FirstOrDefault(u => u.Role == UserRole.CANDIDATE) ?? new User();
+            try
+            {
+                CurrentUser = await _authApiService.GetProfileAsync();
+                if (CurrentUser == null)
+                    return RedirectToPage("/Account/Auth");
+
+                // Pre-fill update form with current values
+                UpdateInput.FullName = CurrentUser.FullName;
+                if (CurrentUser.CandidateProfile != null)
+                {
+                    UpdateInput.Skills = CurrentUser.CandidateProfile.Skills;
+                    UpdateInput.ExperienceYears = CurrentUser.CandidateProfile.ExperienceYears;
+                    UpdateInput.ExpectedSalary = CurrentUser.CandidateProfile.ExpectedSalary;
+                }
+                if (CurrentUser.CompanyProfile != null)
+                {
+                    UpdateInput.CompanyName = CurrentUser.CompanyProfile.CompanyName;
+                    UpdateInput.CompanyDescription = CurrentUser.CompanyProfile.CompanyDescription;
+                    UpdateInput.WebsiteUrl = CurrentUser.CompanyProfile.WebsiteUrl;
+                    UpdateInput.Address = CurrentUser.CompanyProfile.Address;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+            return Page();
         }
 
-        public IActionResult OnPostUploadSim()
+        public async Task<IActionResult> OnPostUpdateAsync()
         {
-            // Simulate AI parsing
-            Skills.Add("ASP.NET Core");
-            Skills.Add("Azure");
-            return RedirectToPage(new { Tab = "SKILLS" });
+            try
+            {
+                var success = await _authApiService.UpdateProfileAsync(UpdateInput);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Profile synchronized successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            return RedirectToPage(new { Tab });
         }
 
-        public IActionResult OnPostUpdatePassword(string currentPassword, string newPassword, string confirmPassword)
+        public async Task<IActionResult> OnPostUploadCvAsync()
         {
-            // Mock update password
-            return RedirectToPage(new { Tab = "SECURITY" });
+            if (CvFile == null || CvFile.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Please select a CV file (PDF) to upload.";
+                return RedirectToPage(new { Tab = "CVS" });
+            }
+
+            if (!CvFile.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["ErrorMessage"] = "Only PDF files are supported for CV upload.";
+                return RedirectToPage(new { Tab = "CVS" });
+            }
+
+            try
+            {
+                using var stream = CvFile.OpenReadStream();
+                var success = await _authApiService.UploadCvAsync(stream, CvFile.FileName);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "CV uploaded and text extracted successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage(new { Tab = "CVS" });
+        }
+
+        public async Task<IActionResult> OnPostUploadAvatarAsync()
+        {
+            if (AvatarFile == null || AvatarFile.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Please select an image file to upload.";
+                return RedirectToPage(new { Tab });
+            }
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extension = Path.GetExtension(AvatarFile.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(extension))
+            {
+                TempData["ErrorMessage"] = "Only JPG, PNG, or WEBP images are supported.";
+                return RedirectToPage(new { Tab });
+            }
+
+            try
+            {
+                using var stream = AvatarFile.OpenReadStream();
+                var success = await _authApiService.UploadAvatarAsync(stream, AvatarFile.FileName);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Avatar updated successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage(new { Tab });
         }
     }
 }
+

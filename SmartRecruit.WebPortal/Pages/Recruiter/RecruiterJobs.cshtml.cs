@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using WebPortal.Models;
 using WebPortal.Services.Api;
 
@@ -7,15 +8,15 @@ namespace WebPortal.Pages
 {
     public class RecruiterJobsModel : PageModel
     {
-        private readonly IAuthApiService _authApiService;
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
+        private readonly ITokenService _tokenService;
 
-        public RecruiterJobsModel(IAuthApiService authApiService, IJobApiService jobApiService, IApplicationApiService applicationApiService)
+        public RecruiterJobsModel(IJobApiService jobApiService, IApplicationApiService applicationApiService, ITokenService tokenService)
         {
-            _authApiService = authApiService;
             _jobApiService = jobApiService;
             _applicationApiService = applicationApiService;
+            _tokenService = tokenService;
         }
 
         public IList<Job> Jobs { get; set; } = new List<Job>();
@@ -27,12 +28,26 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
 
+        private long? GetCurrentUserId()
+        {
+            var principal = _tokenService.GetUserPrincipal();
+            if (principal == null) return null;
+
+            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
+            {
+                return userId;
+            }
+            return null;
+        }
+
         public async Task OnGetAsync()
         {
-            var user = await _authApiService.GetProfileAsync();
-            if (user != null && long.TryParse(user.Id, out var recruiterId))
+            var recruiterId = GetCurrentUserId();
+            if (recruiterId.HasValue)
             {
-                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId, CurrentPage, PageSize);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize);
                 if (response.Success && response.Data != null)
                 {
                     Jobs = response.Data.ToList();

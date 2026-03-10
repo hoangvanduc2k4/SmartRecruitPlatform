@@ -32,7 +32,8 @@ namespace SmartRecruit.Infrastructure.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("id", user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("Fullname", user.FullName)
+                new Claim("Fullname", user.FullName),
+                new Claim("AvatarUrl", user.AvatarUrl ?? "")
             };
 
             var token = new JwtSecurityToken(

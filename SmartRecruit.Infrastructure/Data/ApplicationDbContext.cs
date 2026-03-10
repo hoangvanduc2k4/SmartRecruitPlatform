@@ -14,6 +14,7 @@ namespace SmartRecruit.Infrastructure.Data
         public DbSet<OtpToken> OtpTokens { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<CandidateProfile> CandidateProfiles { get; set; }
+        public DbSet<CompanyProfile> CompanyProfiles { get; set; }
         public DbSet<Applications> Applications { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
@@ -72,6 +73,18 @@ namespace SmartRecruit.Infrastructure.Data
                 .WithMany(w => w.Transactions)
                 .HasForeignKey(t => t.WalletId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.CompanyProfile)
+                .WithOne(cp => cp.User)
+                .HasForeignKey<CompanyProfile>(cp => cp.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.CandidateProfile)
+                .WithOne(cp => cp.User)
+                .HasForeignKey<CandidateProfile>(cp => cp.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // --- 3. Decimal Precision (Avoid warnings) ---
             modelBuilder.Entity<Job>().Property(j => j.SalaryMin).HasPrecision(18, 2);
