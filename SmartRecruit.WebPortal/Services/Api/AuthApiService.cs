@@ -147,8 +147,7 @@ namespace WebPortal.Services.Api
         public async Task<bool> UpdateProfileAsync(UpdateProfileRequest request)
         {
             var response = await _httpClient.PutAsJsonAsync("users/profile", request);
-            await EnsureSuccessOrThrowAsync(response);
-            return true;
+            return await HandleProfileResponseAsync(response);
         }
 
         public async Task<bool> VerifyEmailAsync(VerifyEmailRequest request)
@@ -208,8 +207,31 @@ namespace WebPortal.Services.Api
             content.Add(streamContent, "file", fileName);
 
             var response = await _httpClient.PostAsync("users/profile/upload-avatar", content);
+            return await HandleProfileResponseAsync(response);
+        }
+
+        private async Task<bool> HandleProfileResponseAsync(HttpResponseMessage response)
+        {
             await EnsureSuccessOrThrowAsync(response);
-            return true;
+
+            var options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+            };
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserProfileResponse>>(options);
+
+            if (apiResponse != null && apiResponse.Success && apiResponse.Data != null)
+            {
+                var result = apiResponse.Data;
+                if (!string.IsNullOrEmpty(result.NewToken))
+                {
+                    // Refresh the local token store with the new JWT
+                    _tokenService.SetTokens(result.NewToken, _tokenService.GetRefreshToken() ?? "", 15);
+                }
+                return true;
+            }
+            return false;
         }
 
 

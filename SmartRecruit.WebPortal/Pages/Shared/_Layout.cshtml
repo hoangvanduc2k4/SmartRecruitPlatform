@@ -24,6 +24,7 @@
                     var userPrincipal = TokenService.GetUserPrincipal();
                     var userRole = userPrincipal?.FindFirstValue(ClaimTypes.Role)?.ToUpper() ?? "";
                     var userName = userPrincipal?.FindFirstValue("Fullname") ?? "User";
+                    var avatarUrl = userPrincipal?.FindFirstValue("AvatarUrl");
                 }
                 @if (userRole != "ADMIN")
                 {
@@ -100,8 +101,15 @@
 
                 <div class="relative group">
                     <button class="flex items-center gap-3 p-1.5 pr-4 bg-slate-100/50 rounded-2xl border border-slate-200/20 hover:border-indigo-500/30 transition-all">
-                        <div class="w-8 h-8 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                            <i class="fas fa-user"></i>
+                        <div class="w-8 h-8 rounded-xl bg-white text-slate-900 flex items-center justify-center font-bold text-xs shadow-sm overflow-hidden">
+                            @if (!string.IsNullOrEmpty(avatarUrl))
+                            {
+                                <img src="@avatarUrl" alt="Avatar" class="w-full h-full object-cover" />
+                            }
+                            else
+                            {
+                                <i class="fas fa-user"></i>
+                            }
                         </div>
                         <div class="text-left hidden sm:block">
                             <p class="text-[10px] font-black text-slate-900 truncate max-w-[100px] leading-none capitalize">@userName</p>

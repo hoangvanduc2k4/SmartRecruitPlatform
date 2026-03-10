@@ -11,6 +11,7 @@ namespace WebPortal.Models.Api
 
         public CandidateProfileInfo? CandidateProfile { get; set; }
         public CompanyProfileInfo? CompanyProfile { get; set; }
+        public string? NewToken { get; set; }
     }
 
     public class CandidateProfileInfo

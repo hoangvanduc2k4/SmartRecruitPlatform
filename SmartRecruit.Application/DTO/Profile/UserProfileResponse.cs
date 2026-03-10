@@ -13,5 +13,6 @@ namespace SmartRecruit.Application.DTO.Profile
 
         public CandidateProfileDto? CandidateProfile { get; set; }
         public CompanyProfileDto? CompanyProfile { get; set; }
+        public string? NewToken { get; set; }
     }
 }
