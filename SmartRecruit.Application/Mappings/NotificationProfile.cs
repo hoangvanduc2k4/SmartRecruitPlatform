@@ -8,7 +8,8 @@ namespace SmartRecruit.Application.Mappings
     {
         public NotificationProfile()
         {
-            CreateMap<Notification, NotificationResponse>();
+            CreateMap<Notification, NotificationResponse>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()));
         }
     }
 }
