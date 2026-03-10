@@ -1,4 +1,4 @@
-using WebPortal.Models.Api;
+﻿using WebPortal.Models.Api;
 
 namespace WebPortal.Services.Api
 {
@@ -48,6 +48,10 @@ namespace WebPortal.Services.Api
             else
             {
                 var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
+            }
                 try
                 {
                     var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -183,7 +187,7 @@ namespace WebPortal.Services.Api
             streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
             content.Add(streamContent, "file", fileName);
 
-            var response = await _httpClient.PostAsync("users/upload-cv", content);
+            var response = await _httpClient.PostAsync("users/profile/upload-cv", content);
             await EnsureSuccessOrThrowAsync(response);
             return true;
         }
@@ -193,6 +197,10 @@ namespace WebPortal.Services.Api
             if (response.IsSuccessStatusCode) return;
 
             var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
+            }
             try
             {
                 using var document = System.Text.Json.JsonDocument.Parse(content);
@@ -226,6 +234,10 @@ namespace WebPortal.Services.Api
                     }
                 }
             }
+            catch (System.Text.Json.JsonException)
+            {
+                throw new Exception("API Error Response: " + content);
+            }
             catch (Exception ex) when (ex.Message != null && !ex.Message.StartsWith("API Error") && !ex.Message.StartsWith("The JSON value"))
             {
                 throw; // Rethrow parsed exceptions securely extracted from JSON
@@ -238,3 +250,4 @@ namespace WebPortal.Services.Api
         }
     }
 }
+
