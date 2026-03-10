@@ -10,11 +10,15 @@ namespace SmartRecruit.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProfileService> _logger;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ICvService _cvService;
 
-        public ProfileService(IUnitOfWork unitOfWork, ILogger<ProfileService> logger)
+        public ProfileService(IUnitOfWork unitOfWork, ILogger<ProfileService> logger, ICloudinaryService cloudinaryService, ICvService cvService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _cloudinaryService = cloudinaryService;
+            _cvService = cvService;
         }
 
         public async Task<UserProfileResponse> GetCurrentUserProfileAsync(long userId)
@@ -133,6 +137,76 @@ namespace SmartRecruit.Application.Services
             _logger.LogInformation("Profile updated successfully for user {UserId}", userId);
 
             // Fetch and return the updated profile
+            return await GetCurrentUserProfileAsync(userId);
+        }
+
+        public async Task<UserProfileResponse> UploadCvAsync(long userId, Stream fileStream, string fileName)
+        {
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            if (user.Role != Domain.Enums.UserRole.CANDIDATE)
+            {
+                throw new InvalidOperationException("Only candidates can upload CVs.");
+            }
+
+            var candidateProfile = await _unitOfWork.CandidateProfiles.FindAsync(c => c.UserId == userId);
+            string? oldUrl = candidateProfile?.CVUrl;
+
+            // Read entire stream to buffer to ensure multiple services can consume it without interference
+            byte[] fileBytes;
+            using (var ms = new MemoryStream())
+            {
+                if (fileStream.CanSeek) fileStream.Position = 0;
+                await fileStream.CopyToAsync(ms);
+                fileBytes = ms.ToArray();
+            }
+
+            if (fileBytes.Length == 0)
+            {
+                throw new InvalidOperationException("Uploaded CV file is empty.");
+            }
+
+            _logger.LogInformation("CV data buffered for user {UserId}, size: {Size} bytes", userId, fileBytes.Length);
+
+            // 1. Extract Text
+            string cvText;
+            using (var extractStream = new MemoryStream(fileBytes))
+            {
+                cvText = await _cvService.ExtractTextAsync(extractStream);
+            }
+
+            // 2. Upload to Cloudinary
+            string cvUrl;
+            using (var uploadStream = new MemoryStream(fileBytes))
+            {
+                cvUrl = await _cloudinaryService.ManageFileAsync(uploadStream, fileName, oldUrl);
+            }
+
+            // 3. Update Profile
+            if (candidateProfile == null)
+            {
+                candidateProfile = new CandidateProfile
+                {
+                    UserId = userId,
+                    CVUrl = cvUrl,
+                    CVText = cvText
+                };
+                await _unitOfWork.CandidateProfiles.AddAsync(candidateProfile);
+            }
+            else
+            {
+                candidateProfile.CVUrl = cvUrl;
+                candidateProfile.CVText = cvText;
+                _unitOfWork.CandidateProfiles.Update(candidateProfile);
+            }
+
+            await _unitOfWork.CompleteAsync();
+            _logger.LogInformation("CV uploaded and text extracted for user {UserId}", userId);
+
             return await GetCurrentUserProfileAsync(userId);
         }
     }

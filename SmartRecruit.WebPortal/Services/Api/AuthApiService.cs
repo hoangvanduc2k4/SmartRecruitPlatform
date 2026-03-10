@@ -14,6 +14,7 @@ namespace WebPortal.Services.Api
         Task<bool> ResendVerificationEmailAsync(string email);
         Task<bool> ForgotPasswordAsync(string email);
         Task<bool> ResetPasswordAsync(ResetPasswordRequest request);
+        Task<bool> UploadCvAsync(Stream fileStream, string fileName);
     }
 
     public class AuthApiService : IAuthApiService
@@ -171,6 +172,18 @@ namespace WebPortal.Services.Api
         public async Task<bool> ResetPasswordAsync(ResetPasswordRequest request)
         {
             var response = await _httpClient.PostAsJsonAsync("auth/reset-password", request);
+            await EnsureSuccessOrThrowAsync(response);
+            return true;
+        }
+
+        public async Task<bool> UploadCvAsync(Stream fileStream, string fileName)
+        {
+            using var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(fileStream);
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+            content.Add(streamContent, "file", fileName);
+
+            var response = await _httpClient.PostAsync("users/upload-cv", content);
             await EnsureSuccessOrThrowAsync(response);
             return true;
         }

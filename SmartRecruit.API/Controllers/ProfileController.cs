@@ -44,5 +44,18 @@ namespace SmartRecruit.API.Controllers
             var updatedProfile = await _profileService.UpdateUserProfileAsync(userId, request);
             return Ok(updatedProfile.Wrap("Profile updated successfully"));
         }
+
+        [HttpPost("upload-cv")]
+        public async Task<IActionResult> UploadCv(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            var userId = GetUserIdFromClaims();
+            using var stream = file.OpenReadStream();
+            var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
+            
+            return Ok(profile.Wrap("CV uploaded and text extracted successfully"));
+        }
     }
 }

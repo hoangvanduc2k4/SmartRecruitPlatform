@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models.Api;
 using WebPortal.Services.Api;
@@ -23,6 +23,9 @@ namespace WebPortal.Pages
 
         [BindProperty]
         public UpdateProfileRequest UpdateInput { get; set; } = new();
+
+        [BindProperty]
+        public IFormFile? CvFile { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -71,5 +74,37 @@ namespace WebPortal.Pages
             }
             return RedirectToPage(new { Tab });
         }
+
+        public async Task<IActionResult> OnPostUploadCvAsync()
+        {
+            if (CvFile == null || CvFile.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Please select a CV file (PDF) to upload.";
+                return RedirectToPage(new { Tab = "CVS" });
+            }
+
+            if (!CvFile.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["ErrorMessage"] = "Only PDF files are supported for CV upload.";
+                return RedirectToPage(new { Tab = "CVS" });
+            }
+
+            try
+            {
+                using var stream = CvFile.OpenReadStream();
+                var success = await _authApiService.UploadCvAsync(stream, CvFile.FileName);
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "CV uploaded and text extracted successfully.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage(new { Tab = "CVS" });
+        }
     }
 }
+

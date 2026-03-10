@@ -6,5 +6,6 @@ namespace SmartRecruit.Application.Interfaces.Services
     {
         Task<UserProfileResponse> GetCurrentUserProfileAsync(long userId);
         Task<UserProfileResponse> UpdateUserProfileAsync(long userId, UpdateProfileRequest request);
+        Task<UserProfileResponse> UploadCvAsync(long userId, Stream fileStream, string fileName);
     }
 }
