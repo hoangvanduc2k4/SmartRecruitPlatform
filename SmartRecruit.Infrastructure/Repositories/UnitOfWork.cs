@@ -16,6 +16,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public IGenericRepository<CandidateProfile> CandidateProfiles { get; private set; }
         public IGenericRepository<CompanyProfile> CompanyProfiles { get; private set; }
         public IGenericRepository<SavedJob> SavedJobs { get; private set; }
+        public INotificationRepository Notifications { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -29,6 +30,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             CandidateProfiles = new GenericRepository<CandidateProfile>(_context);
             CompanyProfiles = new GenericRepository<CompanyProfile>(_context);
             SavedJobs = new GenericRepository<SavedJob>(_context);
+            Notifications = new NotificationRepository(_context);
         }
 
         public async Task<int> CompleteAsync()

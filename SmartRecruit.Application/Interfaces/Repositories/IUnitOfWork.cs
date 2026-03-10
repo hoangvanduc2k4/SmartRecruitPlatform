@@ -12,6 +12,7 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         IGenericRepository<CandidateProfile> CandidateProfiles { get; }
         IGenericRepository<CompanyProfile> CompanyProfiles { get; }
         IGenericRepository<SavedJob> SavedJobs { get; }
+        INotificationRepository Notifications { get; }
 
         Task<int> CompleteAsync();
     }
