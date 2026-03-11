@@ -20,6 +20,9 @@ namespace SmartRecruit.Application
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAILogService, AILogService>();
             services.AddScoped<ICvService, CvService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IReportService, ReportService>();
             return services;
         }
     }

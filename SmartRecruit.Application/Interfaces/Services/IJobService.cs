@@ -1,6 +1,7 @@
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Wrappers;
+using SmartRecruit.Application.DTO.Admin;
 
 namespace SmartRecruit.Application.Interfaces.Services
 {
@@ -17,5 +18,7 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task ModerateJobAsync(long jobId);
         Task<IEnumerable<string>> GetLocationsAsync();
         Task<bool> AppealJobAsync(long jobId, string message);
+        Task<PagedList<AppealResponse>> GetAppealedJobsAsync(int page, int pageSize);
+        Task<bool> OverrideAIAsync(long jobId);
     }
 }

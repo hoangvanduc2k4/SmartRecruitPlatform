@@ -1,5 +1,6 @@
 using AutoMapper;
 using SmartRecruit.Application.DTO.Wallet;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -37,6 +38,11 @@ namespace SmartRecruit.Application.Services
             var transactions = await _walletRepository.GetTransactionsAsync(request);
             var dtos = _mapper.Map<List<TransactionResponse>>(transactions);
             return new PagedList<TransactionResponse>(dtos, transactions.TotalCount, transactions.CurrentPage, transactions.PageSize);
+        }
+
+        public async Task<FinanceStatsResponse> GetFinanceStatsAsync()
+        {
+            return await _walletRepository.GetFinanceStatsAsync();
         }
     }
 }

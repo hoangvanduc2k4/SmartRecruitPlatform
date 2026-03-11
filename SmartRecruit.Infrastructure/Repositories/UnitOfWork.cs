@@ -8,7 +8,7 @@ namespace SmartRecruit.Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public IGenericRepository<User> Users { get; private set; }
+        public IUserRepository Users { get; private set; }
         public IGenericRepository<Job> Jobs { get; private set; }
         public IGenericRepository<Wallet> Wallets { get; private set; }
         public IGenericRepository<RefreshToken> RefreshTokens { get; private set; }
@@ -16,12 +16,14 @@ namespace SmartRecruit.Infrastructure.Repositories
         public IGenericRepository<CandidateProfile> CandidateProfiles { get; private set; }
         public IGenericRepository<CompanyProfile> CompanyProfiles { get; private set; }
         public IGenericRepository<SavedJob> SavedJobs { get; private set; }
+        public INotificationRepository Notifications { get; private set; }
+        public IGenericRepository<Report> Reports { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
 
-            Users = new GenericRepository<User>(_context);
+            Users = new UserRepository(_context);
             Jobs = new GenericRepository<Job>(_context);
             Wallets = new GenericRepository<Wallet>(_context);
             RefreshTokens = new GenericRepository<RefreshToken>(_context);
@@ -29,6 +31,8 @@ namespace SmartRecruit.Infrastructure.Repositories
             CandidateProfiles = new GenericRepository<CandidateProfile>(_context);
             CompanyProfiles = new GenericRepository<CompanyProfile>(_context);
             SavedJobs = new GenericRepository<SavedJob>(_context);
+            Notifications = new NotificationRepository(_context);
+            Reports = new GenericRepository<Report>(_context);
         }
 
         public async Task<int> CompleteAsync()

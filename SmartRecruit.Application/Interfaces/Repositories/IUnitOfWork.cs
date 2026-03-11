@@ -4,7 +4,7 @@ namespace SmartRecruit.Application.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<User> Users { get; }
+        IUserRepository Users { get; }
         IGenericRepository<Job> Jobs { get; }
         IGenericRepository<Wallet> Wallets { get; }
         IGenericRepository<RefreshToken> RefreshTokens { get; }
@@ -12,6 +12,8 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         IGenericRepository<CandidateProfile> CandidateProfiles { get; }
         IGenericRepository<CompanyProfile> CompanyProfiles { get; }
         IGenericRepository<SavedJob> SavedJobs { get; }
+        INotificationRepository Notifications { get; }
+        IGenericRepository<Report> Reports { get; }
 
         Task<int> CompleteAsync();
     }

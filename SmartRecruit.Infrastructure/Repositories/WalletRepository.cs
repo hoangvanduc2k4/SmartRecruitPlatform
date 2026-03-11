@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.DTO.Wallet;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Infrastructure.Data;
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
@@ -78,6 +80,59 @@ namespace SmartRecruit.Infrastructure.Repositories
         {
             _logger.LogTrace("Executing SQL update for transaction OrderCode: {OrderCode} to Status: {Status}", transaction.OrderCode, transaction.Status);
             _context.Set<Transaction>().Update(transaction);
+        }
+
+        public async Task<FinanceStatsResponse> GetFinanceStatsAsync()
+        {
+            var transactions = await _context.Set<Transaction>()
+                .Where(t => t.Status == TransactionStatus.SUCCESS)
+                .ToListAsync();
+
+            var totalTransactions = await _context.Set<Transaction>().CountAsync();
+            var pendingCount = await _context.Set<Transaction>().CountAsync(t => t.Status == TransactionStatus.PENDING);
+            var successCount = await _context.Set<Transaction>().CountAsync(t => t.Status == TransactionStatus.SUCCESS);
+            var failedCount = await _context.Set<Transaction>().CountAsync(t => t.Status == TransactionStatus.FAILED);
+
+            var cashInflow = transactions
+                .Where(t => t.Type == TransactionType.TOPUP)
+                .Sum(t => t.Amount);
+
+            var recognizedRevenue = transactions
+                .Where(t => t.Type != TransactionType.TOPUP)
+                .Sum(t => t.Amount);
+
+            var jobPostRevenue = transactions
+                .Where(t => t.Type == TransactionType.JOB_POST)
+                .Sum(t => t.Amount);
+
+            var boostRevenue = transactions
+                .Where(t => t.Type == TransactionType.BOOST)
+                .Sum(t => t.Amount);
+
+            var vipRevenue = transactions
+                .Where(t => t.Type == TransactionType.VIP)
+                .Sum(t => t.Amount);
+
+            var otherRevenue = transactions
+                .Where(t => t.Type == TransactionType.OTHER)
+                .Sum(t => t.Amount);
+
+            var systemCirculatingBalance = await _context.Set<Wallet>().SumAsync(w => w.Balance);
+
+            return new FinanceStatsResponse
+            {
+                TotalCashInflow = cashInflow,
+                SystemCirculatingBalance = systemCirculatingBalance,
+                TotalRecognizedRevenue = recognizedRevenue,
+                JobPostRevenue = jobPostRevenue,
+                BoostRevenue = boostRevenue,
+                VipRevenue = vipRevenue,
+                OtherRevenue = otherRevenue,
+                TotalTransactions = totalTransactions,
+                PendingTransactions = pendingCount,
+                SuccessTransactions = successCount,
+                FailedTransactions = failedCount
+            };
         }
     }
 }

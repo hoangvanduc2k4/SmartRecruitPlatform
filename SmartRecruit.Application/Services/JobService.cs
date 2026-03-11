@@ -3,6 +3,7 @@ using System;
 using System.Text;
 using System.Globalization;
 using SmartRecruit.Application.DTO.Job;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -284,8 +285,47 @@ namespace SmartRecruit.Application.Services
 
             job.IsAppealed = true;
             job.AppealMessage = message;
-            // Optionally, we could keep the status as BLOCKED but indicate it's under review
             
+            _jobRepository.Update(job);
+            return await _unitOfWork.CompleteAsync() > 0;
+        }
+
+        public async Task<PagedList<AppealResponse>> GetAppealedJobsAsync(int page, int pageSize)
+        {
+            // Use the repository method that includes the Recruiter
+            var pagedJobs = await _jobRepository.GetAppealedJobsAsync(page, pageSize);
+
+            var responses = new List<AppealResponse>();
+            foreach (var job in pagedJobs)
+            {
+                var aiLog = (await _aiLogRepository.GetAILogsAsync(new DTO.AILog.AILogRequest { JobId = job.Id }))
+                    .OrderByDescending(l => l.CreatedAt)
+                    .FirstOrDefault();
+
+                responses.Add(new AppealResponse
+                {
+                    JobId = job.Id,
+                    JobTitle = job.Title,
+                    RecruiterId = job.RecruiterId,
+                    RecruiterName = job.Recruiter?.FullName ?? "Unknown",
+                    AppealMessage = job.AppealMessage ?? string.Empty,
+                    AILogReason = aiLog?.Reason,
+                    CreatedAt = job.CreatedAt
+                });
+            }
+
+            return new PagedList<AppealResponse>(responses, pagedJobs.TotalCount, page, pageSize);
+        }
+
+        public async Task<bool> OverrideAIAsync(long jobId)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+
+            job.Status = JobStatus.APPROVED;
+            job.IsAppealed = false; // Reset appeal state
+            job.ModerationNote = $"Directly approved by Admin on {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}";
+
             _jobRepository.Update(job);
             return await _unitOfWork.CompleteAsync() > 0;
         }

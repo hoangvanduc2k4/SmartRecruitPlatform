@@ -1,3 +1,4 @@
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.DTO.Wallet;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Domain.Entities;
@@ -11,5 +12,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task<Transaction?> GetTransactionByOrderCodeAsync(long orderCode);
         Task AddTransactionAsync(Transaction transaction);
         void UpdateTransaction(Transaction transaction);
+        Task<FinanceStatsResponse> GetFinanceStatsAsync();
     }
 }
