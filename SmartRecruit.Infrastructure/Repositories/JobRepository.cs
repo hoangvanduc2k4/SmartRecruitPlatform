@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
@@ -181,6 +181,16 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .Select(j => j.Location)
                 .Distinct()
                 .ToListAsync();
+        }
+
+        public async Task<PagedList<Job>> GetAppealedJobsAsync(int page, int pageSize)
+        {
+            var query = _context.Set<Job>()
+                .Include(j => j.Recruiter)
+                .Where(j => j.IsAppealed && !j.IsDeleted)
+                .OrderByDescending(j => j.CreatedAt);
+
+            return await PagedList<Job>.CreateAsync(query, page, pageSize);
         }
     }
 }

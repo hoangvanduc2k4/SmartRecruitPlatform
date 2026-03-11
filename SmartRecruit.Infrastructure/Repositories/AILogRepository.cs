@@ -22,8 +22,14 @@ namespace SmartRecruit.Infrastructure.Repositories
         {
             _logger.LogTrace("Executing SQL query to fetch ai logs with parameters: {@Request}", request);
 
-            var query = _context.AILogs.OrderByDescending(x => x.CreatedAt);
-            return await PagedList<AILog>.CreateAsync(query, request.Page, request.PageSize);
+            var baseQuery = _context.AILogs.AsQueryable();
+            if (request.JobId.HasValue)
+            {
+                baseQuery = baseQuery.Where(x => x.JobId == request.JobId.Value);
+            }
+
+            var orderedQuery = baseQuery.OrderByDescending(x => x.CreatedAt);
+            return await PagedList<AILog>.CreateAsync(orderedQuery, request.Page, request.PageSize);
         }
     }
 }

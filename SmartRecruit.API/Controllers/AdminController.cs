@@ -15,13 +15,15 @@ namespace SmartRecruit.API.Controllers
     {
         private readonly IAILogService _aiLogService;
         private readonly IUserService _userService;
+        private readonly IJobService _jobService;
         private readonly IWalletService _walletService;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IAILogService aiLogService, IUserService userService, IWalletService walletService, ILogger<AdminController> logger)
+        public AdminController(IAILogService aiLogService, IUserService userService, IJobService jobService, IWalletService walletService, ILogger<AdminController> logger)
         {
             _aiLogService = aiLogService;
             _userService = userService;
+            _jobService = jobService;
             _walletService = walletService;
             _logger = logger;
         }
@@ -66,6 +68,31 @@ namespace SmartRecruit.API.Controllers
             _logger.LogInformation("API GetFinanceLogs called with parameters: {@Request}", request);
             var logs = await _walletService.GetTransactionsAsync(request);
             return Ok(logs.WrapPaged("Financial logs retrieved successfully"));
+        }
+
+        [HttpGet("content/appeals")]
+        public async Task<IActionResult> GetAppeals([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            _logger.LogInformation("API GetAppeals called with page: {Page}", page);
+            var appeals = await _jobService.GetAppealedJobsAsync(page, pageSize);
+            return Ok(appeals.WrapPaged("AI appeals retrieved successfully"));
+        }
+
+        [HttpPost("content/jobs/{id}/override-ai")]
+        public async Task<IActionResult> OverrideAI(long id)
+        {
+            _logger.LogInformation("API OverrideAI called for JobId: {JobId}", id);
+            var success = await _jobService.OverrideAIAsync(id);
+            return Ok(new { Success = success }.Wrap("Job moderation overridden and approved successfully"));
+        }
+
+        [HttpGet("content/reports")]
+        public async Task<IActionResult> GetReports([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            _logger.LogInformation("API GetReports called with page: {Page}", page);
+            var reportService = HttpContext.RequestServices.GetRequiredService<IReportService>();
+            var reports = await reportService.GetReportsAsync(page, pageSize);
+            return Ok(reports.WrapPaged("User reports retrieved successfully"));
         }
     }
 }
