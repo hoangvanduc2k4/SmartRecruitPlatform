@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Extensions;
@@ -14,7 +14,7 @@ namespace SmartRecruit.API.Controllers
     [Route("api/users/profile")]
     [ApiController]
     [Authorize]
-    public class ProfileController : ControllerBase
+    public class ProfileController : BaseController
     {
         private readonly IProfileService _profileService;
         private readonly ITokenService _tokenService;
@@ -27,16 +27,6 @@ namespace SmartRecruit.API.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        private long GetUserIdFromClaims()
-        {
-            var userIdClaim = User.FindFirst("id")?.Value;
-            if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
-            {
-                throw new UnauthorizedAccessException("Invalid token user ID.");
-            }
-            return userId;
-        }
-
         private async Task<string> GenerateNewTokenAsync(long userId)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
@@ -47,7 +37,7 @@ namespace SmartRecruit.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfile()
         {
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
             var profile = await _profileService.GetCurrentUserProfileAsync(userId);
             return Ok(profile.Wrap("Profile retrieved successfully"));
         }
@@ -55,7 +45,7 @@ namespace SmartRecruit.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
             var updatedProfile = await _profileService.UpdateUserProfileAsync(userId, request);
             updatedProfile.NewToken = await GenerateNewTokenAsync(userId);
             return Ok(updatedProfile.Wrap("Profile updated successfully"));
@@ -67,7 +57,7 @@ namespace SmartRecruit.API.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
             using var stream = file.OpenReadStream();
             var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
             
@@ -87,7 +77,7 @@ namespace SmartRecruit.API.Controllers
             if (!allowed.Contains(ext))
                 return BadRequest("Only JPG, PNG, or WEBP images are supported for avatar upload.");
 
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
             using var stream = file.OpenReadStream();
             var profile = await _profileService.UploadAvatarAsync(userId, stream, file.FileName);
             profile.NewToken = await GenerateNewTokenAsync(userId);
