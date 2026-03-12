@@ -38,6 +38,10 @@ namespace SmartRecruit.Middlewares
                         // bad request error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case UnauthorizedAccessException e:
+                        // unauthorized error
+                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        break;
                     case DbUpdateException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         responseModel.Message = e.InnerException?.Message ?? e.Message;

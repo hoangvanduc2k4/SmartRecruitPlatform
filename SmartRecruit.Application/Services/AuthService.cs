@@ -131,13 +131,15 @@ namespace SmartRecruit.Application.Services
             if (storedToken == null)
             {
                 _logger.LogWarning("Refresh token failed: Token not found.");
-                throw new ArgumentException("Invalid Token");
+                //throw new ArgumentException("Invalid Token");
+                throw new UnauthorizedAccessException("Invalid Token");
             }
 
             if (storedToken.IsExpired || storedToken.IsRevoked)
             {
                 _logger.LogWarning("Refresh token failed: Token is expired or revoked. (TokenId: {TokenId})", storedToken.Id);
-                throw new ArgumentException("Token is expired or revoked");
+                //throw new ArgumentException("Token is expired or revoked");
+                throw new UnauthorizedAccessException("Token is expired or revoked");
             }
 
             var user = await _unitOfWork.Users.GetByIdAsync(storedToken.UserId);

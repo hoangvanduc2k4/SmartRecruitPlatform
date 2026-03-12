@@ -31,18 +31,17 @@ namespace WebPortal.Services.Api
             var response = await base.SendAsync(request, cancellationToken);
 
             // 3. Handle 401 Unauthorized (Refresh Token logic)
-            if (response.StatusCode == HttpStatusCode.Unauthorized && !string.IsNullOrEmpty(accessToken))
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 var refreshToken = _tokenService.GetRefreshToken();
                 if (!string.IsNullOrEmpty(refreshToken))
                 {
                     // Attempt to refresh token
-                    var tokensRefreshed = await RefreshTokensAsync(accessToken, refreshToken, cancellationToken);
-                    if (tokensRefreshed)
+                    var authResponse = await RefreshTokensAsync(accessToken, refreshToken, cancellationToken);
+                    if (authResponse != null)
                     {
-                        var newAccessToken = _tokenService.GetAccessToken();
-                        // Retry original request with new token
-                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAccessToken);
+                        // Retry original request with NEWLY RECEIVED token (not from cookie yet!)
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResponse.Token);
 
                         // Need to clone the request since it has already been sent
                         response.Dispose();
@@ -60,39 +59,40 @@ namespace WebPortal.Services.Api
             return response;
         }
 
-        private async Task<bool> RefreshTokensAsync(string accessToken, string refreshToken, CancellationToken cancellationToken)
+        private async Task<AuthResponse?> RefreshTokensAsync(string? accessToken, string refreshToken, CancellationToken cancellationToken)
         {
             try
             {
                 var baseUrl = _configuration["ApiBaseUrl"];
-                if (string.IsNullOrEmpty(baseUrl)) return false;
+                if (string.IsNullOrEmpty(baseUrl)) return null;
 
                 // Create a separate HttpClient to avoid circular dependency / infinite loops
                 using var client = new HttpClient { BaseAddress = new Uri(baseUrl) };
 
-                var payload = new { Token = accessToken, RefreshToken = refreshToken };
-                var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+                var refreshRequest = new { RefreshToken = refreshToken };
+                var content = new StringContent(JsonSerializer.Serialize(refreshRequest), Encoding.UTF8, "application/json");
 
                 var response = await client.PostAsync("auth/refresh-token", content, cancellationToken);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
-                    var newTokens = JsonSerializer.Deserialize<RefreshTokenResponse>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var apiResponse = JsonSerializer.Deserialize<ApiResponse<AuthResponse>>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                    if (newTokens != null && !string.IsNullOrEmpty(newTokens.Token))
+                    if (apiResponse != null && apiResponse.Success && apiResponse.Data != null)
                     {
-                        // Assuming 60 mins expiry for new token as a fallback if not provided
-                        _tokenService.SetTokens(newTokens.Token, newTokens.RefreshToken, 60);
-                        return true;
+                        var newTokens = apiResponse.Data;
+                        // Default expiration is 15 mins for access token, matches AuthService.cs
+                        _tokenService.SetTokens(newTokens.Token, newTokens.RefreshToken, 15);
+                        return newTokens;
                     }
                 }
 
-                return false;
+                return null;
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -129,7 +129,15 @@ namespace WebPortal.Services.Api
             return clone;
         }
 
-        private class RefreshTokenResponse
+        // --- Helper Classes for Deserialization (Internal to avoid namespace clutter) ---
+        private class ApiResponse<T>
+        {
+            public bool Success { get; set; }
+            public T? Data { get; set; }
+            public string Message { get; set; } = string.Empty;
+        }
+
+        private class AuthResponse
         {
             public string Token { get; set; } = string.Empty;
             public string RefreshToken { get; set; } = string.Empty;
