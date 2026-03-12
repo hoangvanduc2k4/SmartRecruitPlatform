@@ -1,4 +1,4 @@
-﻿@page "/Profile"
+@page "/Profile"
 @model WebPortal.Pages.ProfileModel
 @{
     ViewData["Title"] = "Profile";
@@ -276,6 +276,13 @@
         <div class="space-y-8">
             @if (!string.IsNullOrEmpty(Model.CurrentUser?.CandidateProfile?.CVUrl))
             {
+                 <div class="flex items-center justify-between mb-2">
+                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Document Visualization</span>
+                     <button type="button" onclick="reloadCVPreview()" class="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700 flex items-center gap-2 transition-all group/reload">
+                         <i class="fas fa-sync-alt group-hover/reload:rotate-180 transition-transform duration-500"></i> Force Reload
+                     </button>
+                 </div>
+
                 <div class="p-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-red-500 border border-slate-100">
@@ -297,17 +304,19 @@
 
 
                                 <div class="relative w-full rounded-2xl border border-slate-200 shadow-inner bg-slate-50 flex justify-center items-center overflow-hidden group" style="height: 800px;">
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 z-0">
+                                    <div id="cvLoadingState" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 z-0 transition-opacity duration-300">
                                         <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
                                         <span class="text-xs font-bold uppercase tracking-widest">Loading Preview...</span>
                                     </div>
 
-                                    <iframe src="https://docs.google.com/gview?url=@(System.Net.WebUtility.UrlEncode(Model.CurrentUser.CandidateProfile.CVUrl))&embedded=true"
-                                            class="relative z-10 w-full h-full border-none bg-transparent"
+                                    <iframe id="cvIframe" 
+                                            src="https://docs.google.com/gview?url=@(System.Net.WebUtility.UrlEncode(Model.CurrentUser.CandidateProfile.CVUrl))&embedded=true"
+                                            class="relative z-10 w-full h-full border-none bg-transparent opacity-0 transition-opacity duration-500"
                                             title="CV Preview"
-                                            onload="this.previousElementSibling.style.display='none';">
+                                            onload="handleCVLoad(this)">
                                     </iframe>
                                 </div>
+
             }
             else
             {
@@ -433,6 +442,63 @@
             document.getElementById('avatarForm').submit();
         }
     }
+
+    // CV Preview Reliability Logic
+    let cvLoadTimer;
+    let cvRetryCount = 0;
+    const MAX_CV_RETRIES = 1;
+
+    function handleCVLoad(iframe) {
+        clearTimeout(cvLoadTimer);
+        const loadingState = document.getElementById('cvLoadingState');
+        if (loadingState) {
+            loadingState.classList.add('opacity-0');
+            setTimeout(() => loadingState.style.display = 'none', 300);
+        }
+        iframe.classList.remove('opacity-0');
+        console.log("CV Preview loaded successfully.");
+    }
+
+    function reloadCVPreview() {
+        const iframe = document.getElementById('cvIframe');
+        if (!iframe) return;
+
+        const loadingState = document.getElementById('cvLoadingState');
+        if (loadingState) {
+            loadingState.style.display = 'flex';
+            loadingState.classList.remove('opacity-0');
+        }
+        iframe.classList.add('opacity-0');
+
+        // Add a cache-buster timestamp
+        const currentSrc = new URL(iframe.src);
+        currentSrc.searchParams.set('v', new Date().getTime());
+        iframe.src = currentSrc.toString();
+
+        startCVWatchdog();
+    }
+
+    function startCVWatchdog() {
+        clearTimeout(cvLoadTimer);
+        cvLoadTimer = setTimeout(() => {
+            const iframe = document.getElementById('cvIframe');
+            if (iframe && iframe.classList.contains('opacity-0')) {
+                console.warn("CV Preview timeout detected - attempting reload.");
+                if (cvRetryCount < MAX_CV_RETRIES) {
+                    cvRetryCount++;
+                    reloadCVPreview();
+                }
+            }
+        }, 7000); // 7 second timeout
+    }
+
+    // Initialize watchdog on page load if iframe exists
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('cvIframe')) {
+            startCVWatchdog();
+        }
+    });
 </script>
+
 
 
