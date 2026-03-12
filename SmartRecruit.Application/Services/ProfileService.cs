@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -23,6 +23,7 @@ namespace SmartRecruit.Application.Services
 
         public async Task<UserProfileResponse> GetCurrentUserProfileAsync(long userId)
         {
+            _logger.LogInformation("GetCurrentUserProfile use-case: Fetching profile for User {UserId}", userId);
             // Note: Since IGenericRepository might not support eager loading multiple includes easily,
             // we will fetch the user and then explicitly fetch candidate/company profile if needed.
             var user = await _unitOfWork.Users.GetByIdAsync(userId);

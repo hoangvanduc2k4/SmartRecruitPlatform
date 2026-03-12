@@ -1,4 +1,4 @@
-﻿using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Entities;
 
 namespace SmartRecruit.Application.Interfaces.Repositories
 {

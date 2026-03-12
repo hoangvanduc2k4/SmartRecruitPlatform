@@ -215,6 +215,7 @@ namespace SmartRecruit.Application.Services
 
             if (user == null)
             {
+                _logger.LogInformation("Google Login: Creating new user for email {Email}", email);
                 var randomPassword = Guid.NewGuid().ToString("N").Substring(0, 10) + "Aa1!";
                 var passwordHash = PasswordUtil.HashPassword(randomPassword);
 
@@ -231,11 +232,15 @@ namespace SmartRecruit.Application.Services
 
                 await _unitOfWork.Users.AddAsync(user);
                 await _unitOfWork.CompleteAsync();
+                _logger.LogInformation("Google Login successful: New user created for {Email} (UserId: {UserId})", email, user.Id);
             }
             else
             {
                 if (!user.IsActive)
+                {
+                    _logger.LogWarning("Google Login failed for {Email}: User is inactive.", email);
                     throw new ArgumentException("User is inactive.");
+                }
 
                 if (!string.IsNullOrEmpty(payload.Picture) && user.AvatarUrl != payload.Picture)
                 {
@@ -243,6 +248,7 @@ namespace SmartRecruit.Application.Services
                     _unitOfWork.Users.Update(user);
                     await _unitOfWork.CompleteAsync();
                 }
+                _logger.LogInformation("Google Login successful for existing user: {Email} (UserId: {UserId})", email, user.Id);
             }
 
             var token = _tokenService.GenerateJwtToken(user);

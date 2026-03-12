@@ -19,12 +19,14 @@ namespace SmartRecruit.API.Controllers
         private readonly IProfileService _profileService;
         private readonly ITokenService _tokenService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<ProfileController> _logger;
 
-        public ProfileController(IProfileService profileService, ITokenService tokenService, IUnitOfWork unitOfWork)
+        public ProfileController(IProfileService profileService, ITokenService tokenService, IUnitOfWork unitOfWork, ILogger<ProfileController> logger)
         {
             _profileService = profileService;
             _tokenService = tokenService;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         private async Task<string> GenerateNewTokenAsync(long userId)
@@ -38,6 +40,7 @@ namespace SmartRecruit.API.Controllers
         public async Task<IActionResult> GetProfile()
         {
             var userId = CurrentUserId;
+            _logger.LogInformation("API GetProfile called for User: {UserId}", userId);
             var profile = await _profileService.GetCurrentUserProfileAsync(userId);
             return Ok(profile.Wrap("Profile retrieved successfully"));
         }
@@ -46,6 +49,7 @@ namespace SmartRecruit.API.Controllers
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
             var userId = CurrentUserId;
+            _logger.LogInformation("API UpdateProfile called for User: {UserId}", userId);
             var updatedProfile = await _profileService.UpdateUserProfileAsync(userId, request);
             updatedProfile.NewToken = await GenerateNewTokenAsync(userId);
             return Ok(updatedProfile.Wrap("Profile updated successfully"));
@@ -58,6 +62,7 @@ namespace SmartRecruit.API.Controllers
                 return BadRequest("No file uploaded.");
 
             var userId = CurrentUserId;
+            _logger.LogInformation("API UploadCv called for User: {UserId}, FileName: {FileName}", userId, file.FileName);
             using var stream = file.OpenReadStream();
             var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
             
@@ -78,6 +83,7 @@ namespace SmartRecruit.API.Controllers
                 return BadRequest("Only JPG, PNG, or WEBP images are supported for avatar upload.");
 
             var userId = CurrentUserId;
+            _logger.LogInformation("API UploadAvatar called for User: {UserId}, FileName: {FileName}", userId, file.FileName);
             using var stream = file.OpenReadStream();
             var profile = await _profileService.UploadAvatarAsync(userId, stream, file.FileName);
             profile.NewToken = await GenerateNewTokenAsync(userId);

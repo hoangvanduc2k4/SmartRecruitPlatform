@@ -10,7 +10,7 @@ namespace SmartRecruit.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class NotificationsController : ControllerBase
+    public class NotificationsController : BaseController
     {
         private readonly INotificationService _notificationService;
         private readonly ILogger<NotificationsController> _logger;
@@ -21,20 +21,12 @@ namespace SmartRecruit.API.Controllers
             _logger = logger;
         }
 
-        private long GetUserIdFromClaims()
-        {
-            var userIdClaim = User.FindFirst("id")?.Value;
-            if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
-            {
-                throw new UnauthorizedAccessException("Invalid token user ID.");
-            }
-            return userId;
-        }
+
 
         [HttpGet]
         public async Task<IActionResult> GetNotifications([FromQuery] NotificationSearchRequest request)
         {
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
             _logger.LogInformation("Fetching notifications for User: {UserId}", userId);
             var result = await _notificationService.GetNotificationsAsync(userId, request);
             return Ok(result.WrapPaged("Notifications retrieved successfully"));
@@ -43,7 +35,8 @@ namespace SmartRecruit.API.Controllers
         [HttpGet("unread-count")]
         public async Task<IActionResult> GetUnreadCount()
         {
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
+            _logger.LogInformation("API GetUnreadCount called for User: {UserId}", userId);
             var count = await _notificationService.GetUnreadCountAsync(userId);
             return Ok(count.Wrap("Unread count retrieved successfully"));
         }
@@ -51,7 +44,8 @@ namespace SmartRecruit.API.Controllers
         [HttpPatch("{id}/read")]
         public async Task<IActionResult> MarkAsRead(long id)
         {
-            var userId = GetUserIdFromClaims();
+            var userId = CurrentUserId;
+            _logger.LogInformation("API MarkAsRead called for User: {UserId}, NotificationId: {NotificationId}", userId, id);
             var success = await _notificationService.MarkAsReadAsync(userId, id);
             if (!success)
             {
