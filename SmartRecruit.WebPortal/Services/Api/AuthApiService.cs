@@ -1,4 +1,4 @@
-﻿using WebPortal.Models.Api;
+using WebPortal.Models.Api;
 
 namespace WebPortal.Services.Api
 {
@@ -49,24 +49,31 @@ namespace WebPortal.Services.Api
             else
             {
                 var content = await response.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
-            }
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
+                }
+                
+                string? errorMessage = null;
                 try
                 {
                     var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     var apiResponse = System.Text.Json.JsonSerializer.Deserialize<ApiResponse>(content, options);
                     if (apiResponse != null && !string.IsNullOrEmpty(apiResponse.Message))
                     {
-                        throw new Exception(apiResponse.Message);
+                        errorMessage = apiResponse.Message;
                     }
                 }
-                catch 
+                catch (System.Text.Json.JsonException)
                 {
-                    // Fallback to exactly what the API sent so we can see the format
-                    throw new Exception("API Error Response: " + content);
+                    // Ignore JSON parse errors, fallback to raw content below
                 }
+
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    throw new Exception(errorMessage);
+                }
+                
                 throw new Exception("API Error Response: " + content);
             }
             return null;
@@ -114,15 +121,21 @@ namespace WebPortal.Services.Api
             }
             else
             {
+                string? errorMessage = null;
                 try
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse>();
                     if (apiResponse != null && !string.IsNullOrEmpty(apiResponse.Message))
                     {
-                        throw new Exception(apiResponse.Message);
+                        errorMessage = apiResponse.Message;
                     }
                 }
-                catch { /* Ignore parsing errors */ }
+                catch (System.Text.Json.JsonException) { /* Ignore parsing errors */ }
+                
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                     throw new Exception(errorMessage);
+                }
             }
             return false;
         }
@@ -244,6 +257,7 @@ namespace WebPortal.Services.Api
             {
                 throw new Exception($"API Error Response: {(int)response.StatusCode} {response.ReasonPhrase}");
             }
+            string? errorMessage = null;
             try
             {
                 using var document = System.Text.Json.JsonDocument.Parse(content);
@@ -256,41 +270,39 @@ namespace WebPortal.Services.Api
                     {
                         if (property.Value.ValueKind == System.Text.Json.JsonValueKind.Array && property.Value.GetArrayLength() > 0)
                         {
-                            throw new Exception(property.Value[0].GetString() ?? "Validation error occurred.");
+                            errorMessage = property.Value[0].GetString() ?? "Validation error occurred.";
+                            break;
                         }
                     }
                 }
 
                 // 2. Check for our custom ApiResponse Wrapper (List of strings)
-                if (root.TryGetProperty("errors", out var customErrorsElement) && customErrorsElement.ValueKind == System.Text.Json.JsonValueKind.Array && customErrorsElement.GetArrayLength() > 0)
+                if (string.IsNullOrEmpty(errorMessage) && root.TryGetProperty("errors", out var customErrorsElement) && customErrorsElement.ValueKind == System.Text.Json.JsonValueKind.Array && customErrorsElement.GetArrayLength() > 0)
                 {
-                    throw new Exception(customErrorsElement[0].GetString() ?? "An error occurred.");
+                    errorMessage = customErrorsElement[0].GetString() ?? "An error occurred.";
                 }
 
                 // 3. Check for the standard "Message" property in our wrapper
-                if (root.TryGetProperty("message", out var messageElement) && messageElement.ValueKind == System.Text.Json.JsonValueKind.String)
+                if (string.IsNullOrEmpty(errorMessage) && root.TryGetProperty("message", out var messageElement) && messageElement.ValueKind == System.Text.Json.JsonValueKind.String)
                 {
                     var msg = messageElement.GetString();
                     if (!string.IsNullOrEmpty(msg))
                     {
-                        throw new Exception(msg);
+                        errorMessage = msg;
                     }
                 }
             }
             catch (System.Text.Json.JsonException)
             {
-                throw new Exception("API Error Response: " + content);
+                // Fallback to exactly what the API sent so we can see the format if it's not JSON
             }
-            catch (Exception ex) when (ex.Message != null && !ex.Message.StartsWith("API Error") && !ex.Message.StartsWith("The JSON value"))
+
+            if (!string.IsNullOrEmpty(errorMessage))
             {
-                throw; // Rethrow parsed exceptions securely extracted from JSON
+                throw new Exception(errorMessage);
             }
-            catch 
-            {
-                throw new Exception("API Error Response: " + content);
-            }
+
             throw new Exception("API Error Response: " + content);
         }
     }
 }
-
