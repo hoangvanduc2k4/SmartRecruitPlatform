@@ -4,12 +4,13 @@ using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 using System.Text;
 using System.Text.Json;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/payment")]
-    public class PaymentController : ControllerBase
+    public class PaymentController : BaseController
     {
         private readonly IPaymentService _paymentService;
         private readonly ILogger<PaymentController> _logger;

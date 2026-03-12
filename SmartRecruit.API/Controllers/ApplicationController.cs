@@ -3,12 +3,13 @@ using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/applications")]
-    public class ApplicationController : ControllerBase
+    public class ApplicationController : BaseController
     {
         private readonly IApplicationService _applicationService;
         private readonly ILogger<ApplicationController> _logger;

@@ -17,5 +17,31 @@ namespace SmartRecruit.API.Controllers
                 return userId;
             }
         }
+
+        protected SmartRecruit.Domain.Enums.UserRole CurrentUserRole
+        {
+            get
+            {
+                var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (Enum.TryParse<SmartRecruit.Domain.Enums.UserRole>(roleClaim, true, out var role))
+                {
+                    return role;
+                }
+                throw new UnauthorizedAccessException("Role claim is missing or invalid.");
+            }
+        }
+
+        protected string CurrentUserEmail
+        {
+            get
+            {
+                var emailClaim = User.FindFirst(ClaimTypes.Email)?.Value;
+                if (string.IsNullOrEmpty(emailClaim))
+                {
+                    throw new UnauthorizedAccessException("Email claim is missing.");
+                }
+                return emailClaim;
+            }
+        }
     }
 }

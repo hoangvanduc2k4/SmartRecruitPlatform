@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.Interfaces.Services;
 using System.IO;
 using System.Threading.Tasks;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CloudinaryTestController : ControllerBase
+    public class CloudinaryTestController : BaseController
     {
         private readonly ICloudinaryService _cloudinaryService;
 
