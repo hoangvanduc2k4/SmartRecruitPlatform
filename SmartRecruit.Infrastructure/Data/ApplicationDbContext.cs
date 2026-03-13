@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Infrastructure.Data.Seeders;
 
@@ -33,6 +33,10 @@ namespace SmartRecruit.Infrastructure.Data
             modelBuilder.Entity<Job>().HasQueryFilter(j => !j.IsDeleted);
             modelBuilder.Entity<Applications>().HasQueryFilter(a => !a.IsDeleted);
             modelBuilder.Entity<Report>().HasQueryFilter(r => !r.IsDeleted);
+            modelBuilder.Entity<SavedJob>().HasQueryFilter(sj => !sj.IsDeleted);
+            modelBuilder.Entity<Wallet>().HasQueryFilter(w => !w.IsDeleted);
+            modelBuilder.Entity<Transaction>().HasQueryFilter(t => !t.IsDeleted);
+            modelBuilder.Entity<Notification>().HasQueryFilter(n => !n.IsDeleted);
 
             // --- 2. Relationships & Cascade Fixes ---
             modelBuilder.Entity<Job>()
@@ -96,13 +100,17 @@ namespace SmartRecruit.Infrastructure.Data
             modelBuilder.Entity<Applications>().Property(a => a.SkillMatch).HasPrecision(5, 2);
             modelBuilder.Entity<CandidateProfile>().Property(cp => cp.ExpectedSalary).HasPrecision(18, 2);
 
-            // Unique Application constraint
+            // Unique Application constraint (Filtered for soft-delete)
             modelBuilder.Entity<Applications>()
-                .HasIndex(a => new { a.JobId, a.CandidateId }).IsUnique();
+                .HasIndex(a => new { a.JobId, a.CandidateId })
+                .HasFilter("[IsDeleted] = 0")
+                .IsUnique();
 
-            // Unique SavedJob constraint
+            // Unique SavedJob constraint (Filtered for soft-delete)
             modelBuilder.Entity<SavedJob>()
-                .HasIndex(sj => new { sj.UserId, sj.JobId }).IsUnique();
+                .HasIndex(sj => new { sj.UserId, sj.JobId })
+                .HasFilter("[IsDeleted] = 0")
+                .IsUnique();
 
             modelBuilder.SeedSmartRecruitData();
         }

@@ -29,8 +29,12 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
 
+        [BindProperty]
+        public Job EditJob { get; set; } = new Job();
+
         public UserDto? CurrentUserDto { get; set; }
         public bool IsSaved { get; set; }
+        public bool IsOwner { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
@@ -63,6 +67,12 @@ namespace WebPortal.Pages
                         IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
                     }
 
+                    // Only the recruiter who owns this job can edit it
+                    if (currentUserId.HasValue)
+                    {
+                        IsOwner = (CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
+                    }
+
                     // Fetch applications for this job
                     var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
                     Applications = (List<Application>)pagedApps.Data;
@@ -88,7 +98,15 @@ namespace WebPortal.Pages
 
             if (long.TryParse(Id, out var longId))
             {
-                await _jobApiService.ToggleSaveJobAsync(longId, currentUserId.Value);
+                try
+                {
+                    var result = await _jobApiService.ToggleSaveJobAsync(longId, currentUserId.Value);
+                    System.Console.WriteLine($"[JobDetail] ToggleSaveAsync result: {result}");
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine($"[JobDetail] Error in ToggleSaveAsync: {ex.Message}");
+                }
             }
             return RedirectToPage(new { Id = Id, Tab = Tab });
         }
@@ -145,6 +163,48 @@ namespace WebPortal.Pages
                 await _applicationApiService.ApplyAsync(longId, currentUserId.Value);
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
+        }
+
+        public async Task<IActionResult> OnPostUpdateAsync()
+        {
+            var currentUserId = CurrentUserId;
+
+            if (!currentUserId.HasValue)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            // Ensure Id is populated from the bound EditJob in case it's missing from the query string
+            if (EditJob != null && EditJob.Id > 0)
+            {
+                Id = EditJob.Id.ToString();
+            }
+
+            if (long.TryParse(Id, out var longId))
+            {
+                try
+                {
+                    System.Console.WriteLine($"[JobDetail] Updating job {longId} with title: {EditJob.Title}");
+                    var success = await _jobApiService.UpdateJobAsync(Id, EditJob);
+                    System.Console.WriteLine($"[JobDetail] Update job result: {success}");
+                    
+                    if (success)
+                    {
+                        // Refresh job data after update
+                        Job = await _jobApiService.GetJobByIdAsync(Id);
+                        System.Console.WriteLine($"[JobDetail] Job refreshed after update");
+                    }
+                    else
+                    {
+                        System.Console.WriteLine($"[JobDetail] Failed to update job");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine($"[JobDetail] Exception in OnPostUpdateAsync: {ex}");
+                }
+            }
+            return RedirectToPage(new { Id = Id, Tab = Tab });
         }
     }
 }

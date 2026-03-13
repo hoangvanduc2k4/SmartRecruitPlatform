@@ -49,17 +49,42 @@ namespace SmartRecruit.Controllers
         [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> CreateJob([FromBody] JobCreateRequest request)
         {
+            var jobRequest = request;
+            if (CurrentUserRole == SmartRecruit.Domain.Enums.UserRole.RECRUITER || request.RecruiterId == 0)
+            {
+                jobRequest = request with { RecruiterId = CurrentUserId };
+            }
+
             // Background moderation will handle the check
-            var job = await _jobService.CreateJobAsync(request);
+            var job = await _jobService.CreateJobAsync(jobRequest);
             return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created successfully. Moderation is pending."));
+        }
+
+        [HttpGet("my-jobs")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> GetMyJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var jobs = await _jobService.GetJobsByRecruiterAsync(CurrentUserId, page, pageSize);
+            return Ok(jobs.WrapPaged());
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> UpdateJob(long id, [FromBody] JobUpdateRequest request)
         {
-            var job = await _jobService.UpdateJobAsync(id, request);
-            return Ok(job.Wrap("Job updated successfully"));
+            try
+            {
+                var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
+                return Ok(job.Wrap("Job updated successfully"));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
         }
 
         [HttpDelete("{id}")]

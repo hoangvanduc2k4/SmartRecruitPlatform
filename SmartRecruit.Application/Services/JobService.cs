@@ -146,10 +146,15 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request)
+        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole currentUserRole)
         {
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Job not found");
+
+            if (currentUserRole != UserRole.ADMIN && job.RecruiterId != currentUserId)
+            {
+                throw new UnauthorizedAccessException("You don't have permission to edit this job.");
+            }
 
             // Update fields
             job.Title = request.Title;
@@ -161,9 +166,13 @@ namespace SmartRecruit.Application.Services
             job.SalaryMin = request.SalaryMin;
             job.SalaryMax = request.SalaryMax;
             job.JobType = request.JobType;
-            job.JobType = request.JobType;
             job.Location = request.Location;
-            job.CategoryId = request.CategoryId;
+
+            // Preserve existing category if client sends 0 (WebPortal doesn't include CategoryId in JobResponse)
+            if (request.CategoryId > 0)
+            {
+                job.CategoryId = request.CategoryId;
+            }
             // job.UpdatedTime = DateTime.UtcNow; 
 
             // Trigger re-moderation on update
