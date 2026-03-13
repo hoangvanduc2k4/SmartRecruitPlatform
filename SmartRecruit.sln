@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRecruit.Domain", "SmartRecruit.Domain\SmartRecruit.Domain.csproj", "{0D71020A-E9D6-4E7D-9E55-E0C2D71FEE35}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRecruit.API", "SmartRecruit.API\SmartRecruit.API.csproj", "{D2271360-CFF9-4EB0-8D59-FADC06CEE6A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRecruit.WebPortal", "SmartRecruit.WebPortal\SmartRecruit.WebPortal.csproj", "{007FD435-9E0D-4E43-ADBF-E2854460C5BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRecruit.Tests.Unit", "SmartRecruit.Tests.Unit\SmartRecruit.Tests.Unit.csproj", "{1901CDA7-ED14-4C11-9EED-C2FF3A04A25C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRecruit.Tests.Integration", "SmartRecruit.Tests.Integration\SmartRecruit.Tests.Integration.csproj", "{6A00E7DE-E27C-4466-9953-6A67299BFD53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{007FD435-9E0D-4E43-ADBF-E2854460C5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{007FD435-9E0D-4E43-ADBF-E2854460C5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{007FD435-9E0D-4E43-ADBF-E2854460C5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1901CDA7-ED14-4C11-9EED-C2FF3A04A25C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1901CDA7-ED14-4C11-9EED-C2FF3A04A25C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1901CDA7-ED14-4C11-9EED-C2FF3A04A25C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1901CDA7-ED14-4C11-9EED-C2FF3A04A25C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A00E7DE-E27C-4466-9953-6A67299BFD53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A00E7DE-E27C-4466-9953-6A67299BFD53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A00E7DE-E27C-4466-9953-6A67299BFD53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A00E7DE-E27C-4466-9953-6A67299BFD53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

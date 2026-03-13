@@ -103,26 +103,29 @@ namespace SmartRecruit.API
             });
 
 
-            // Add Hangfire services.
-            builder.Services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(builder.Configuration.GetConnectionString("MyCnn"), new Hangfire.SqlServer.SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
-                    PrepareSchemaIfNecessary = false
-                }));
-
-            // Add the Hangfire server with limited workers
-            builder.Services.AddHangfireServer(options =>
+            if (!builder.Environment.IsEnvironment("Testing"))
             {
-                options.WorkerCount = 5;
-            });
+                // Add Hangfire services.
+                builder.Services.AddHangfire(configuration => configuration
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseSqlServerStorage(builder.Configuration.GetConnectionString("MyCnn"), new Hangfire.SqlServer.SqlServerStorageOptions
+                    {
+                        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                        QueuePollInterval = TimeSpan.Zero,
+                        UseRecommendedIsolationLevel = true,
+                        DisableGlobalLocks = true,
+                        PrepareSchemaIfNecessary = false
+                    }));
+
+                // Add the Hangfire server with limited workers
+                builder.Services.AddHangfireServer(options =>
+                {
+                    options.WorkerCount = 5;
+                });
+            }
 
             var app = builder.Build();
 
@@ -143,14 +146,17 @@ namespace SmartRecruit.API
             app.UseAuthorization();
 
 
-            // Hangfire Dashboard
-            app.UseHangfireDashboard();
+            // Add Hangfire services only if not in Testing environment
+            if (!app.Environment.IsEnvironment("Testing"))
+            {
+                app.UseHangfireDashboard();
 
-            RecurringJob.AddOrUpdate<TokenCleanupJob>(
-                "token-cleanup-daily",
-                job => job.RunAsync(),
-                Cron.Daily
-            );
+                RecurringJob.AddOrUpdate<TokenCleanupJob>(
+                    "token-cleanup-daily",
+                    job => job.RunAsync(),
+                    Cron.Daily
+                );
+            }
 
             app.MapControllers();
 
