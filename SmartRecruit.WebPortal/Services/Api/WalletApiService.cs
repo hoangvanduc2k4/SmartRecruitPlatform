@@ -34,7 +34,9 @@ namespace WebPortal.Services.Api
             var response = await _httpClient.GetAsync("wallet");
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<WalletResponse>();
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var apiResponse = await response.Content.ReadFromJsonAsync<WebPortal.Models.Api.ApiResponse<WalletResponse>>(options);
+                return apiResponse?.Data;
             }
             return null;
         }

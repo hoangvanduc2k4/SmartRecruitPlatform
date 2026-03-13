@@ -62,6 +62,21 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
+            // 1. Wallet & Balance Check
+            var wallet = await _walletRepository.GetWalletByUserIdAsync(request.RecruiterId);
+            if (wallet == null) throw new KeyNotFoundException("Wallet not found for recruiter.");
+
+            const decimal jobPostCost = 50000;
+            if (wallet.Balance < jobPostCost)
+            {
+                throw new InvalidOperationException("Insufficient balance to post a job.");
+            }
+
+            // 2. Process Payment
+            wallet.Balance -= jobPostCost;
+            _walletRepository.Update(wallet);
+
+            // 3. Create Job
             var job = new Job
             {
                 Title = request.Title,
@@ -81,11 +96,26 @@ namespace SmartRecruit.Application.Services
             };
 
             await _jobRepository.AddAsync(job);
+
+            // 4. Create Transaction
+            var transaction = new Transaction
+            {
+                UserId = request.RecruiterId,
+                WalletId = wallet.Id,
+                Amount = jobPostCost,
+                Type = TransactionType.JOB_POST,
+                Status = TransactionStatus.SUCCESS,
+                Description = $"Post job: {job.Title}",
+                CreatedAt = DateTime.UtcNow
+            };
+            await _walletRepository.AddTransactionAsync(transaction);
+
+            // 5. Complete Unit of Work
             await _unitOfWork.CompleteAsync();
 
             // Enqueue background moderation
             _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
-            _logger.LogInformation("CreateJob use-case success: Job {JobId} created and enqueued for AI moderation", job.Id);
+            _logger.LogInformation("CreateJob use-case success: Job {JobId} created, 50,000 VND deducted, and enqueued for AI moderation", job.Id);
 
             // Refresh job to get Category Name
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);

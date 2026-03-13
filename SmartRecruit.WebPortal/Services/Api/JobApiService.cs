@@ -94,7 +94,9 @@ namespace WebPortal.Services.Api
             var response = await _httpClient.PostAsJsonAsync("jobs", job);
             if (response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>();
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
                 return apiResponse?.Data;
             }
             return null;
