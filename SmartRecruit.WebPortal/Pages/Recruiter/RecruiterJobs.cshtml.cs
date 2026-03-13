@@ -19,6 +19,7 @@ namespace WebPortal.Pages
 
         public IList<Job> Jobs { get; set; } = new List<Job>();
         public IList<Application> Applications { get; set; } = new List<Application>();
+        public RecruiterStatsResponse Stats { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
@@ -32,6 +33,7 @@ namespace WebPortal.Pages
             var recruiterId = CurrentUserId;
             if (recruiterId.HasValue)
             {
+                Stats = await _jobApiService.GetRecruiterStatsAsync() ?? new();
                 var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize);
                 if (response.Success && response.Data != null)
                 {

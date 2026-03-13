@@ -185,6 +185,14 @@ namespace SmartRecruit.Controllers
             var success = await _jobService.AppealJobAsync(id, message);
             return Ok(new { Success = success }.Wrap("Appeal submitted successfully"));
         }
+
+        [HttpGet("stats/recruiter")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> GetRecruiterStats()
+        {
+            var stats = await _jobService.GetRecruiterStatsAsync(CurrentUserId);
+            return Ok(stats.Wrap());
+        }
     }
 }
 

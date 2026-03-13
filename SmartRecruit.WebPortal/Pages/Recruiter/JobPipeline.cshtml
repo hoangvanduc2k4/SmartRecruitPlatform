@@ -12,7 +12,22 @@
     };
 }
 
-<div class="space-y-10">
+<div class="space-y-8 animate-in fade-in duration-700 pb-32">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+            <a href="/RecruiterJobs" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm">
+                <i class="fas fa-arrow-left"></i> Quay lại danh sách
+            </a>
+            <a asp-page="/Jobs/JobDetail" asp-route-Id="@Model.Job?.Id" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-[11px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-100 transition-all shadow-sm">
+                <i class="fas fa-info-circle"></i> Chi tiết Job
+            </a>
+        </div>
+        <div>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Mission Pipeline</h2>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Drag and drop talent metrics through the deployment phases</p>
+        </div>
+    </div>
+
     <div class="flex gap-8 overflow-x-auto pb-16 snap-x custom-scrollbar min-h-[700px] items-start">
         @foreach (var col in statuses)
         {

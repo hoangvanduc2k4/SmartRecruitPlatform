@@ -10,5 +10,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task UpdateVisibilityAsync(long id, bool isVisible);
         Task<IEnumerable<string>> GetLocationsAsync();
         Task<PagedList<Job>> GetAppealedJobsAsync(int page, int pageSize);
+        Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
     }
 }
