@@ -68,14 +68,15 @@ else
                             <input type="hidden" name="Id" value="@Model.Job.Id" />
                             <input type="hidden" name="EditJob.Id" value="@Model.Job.Id" />
                             <input type="hidden" name="EditJob.Company" value="@Model.Job.Company" />
-                            <input type="hidden" name="EditJob.Benefits" value="@Model.Job.Benefits" />
                             <input type="hidden" name="EditJob.SkillsRequired" value="@Model.Job.SkillsRequired" />
                             <input type="hidden" name="EditJob.JobType" value="@((int)Model.Job.JobType)" />
                             <input type="hidden" name="EditJob.CategoryId" value="@Model.Job.CategoryId" />
+
                             <div>
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Title</label>
                                 <input type="text" name="EditJob.Title" value="@Model.Job.Title" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
                             </div>
+
                             <div class="grid grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Location</label>
@@ -92,6 +93,12 @@ else
                                     </div>
                                 </div>
                             </div>
+
+                            <div>
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Benefits</label>
+                                <textarea name="EditJob.Benefits" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" @(!Model.IsOwner ? "disabled" : "")>@Model.Job.Benefits</textarea>
+                            </div>
+
                             <div>
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Core Requirements</label>
                                 <textarea name="EditJob.Requirement" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" @(!Model.IsOwner ? "disabled" : "")>@Model.Job.Requirement</textarea>

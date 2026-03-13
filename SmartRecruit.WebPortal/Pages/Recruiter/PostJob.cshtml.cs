@@ -67,6 +67,7 @@ namespace WebPortal.Pages
                 Title = JobInput.Title ?? "",
                 Description = JobInput.Description ?? "",
                 Requirement = JobInput.Requirement ?? "",
+                Benefits = JobInput.Benefits ?? "",
                 SkillsRequired = SkillsInput ?? "",
                 SalaryMin = JobInput.SalaryMin,
                 SalaryMax = JobInput.SalaryMax,

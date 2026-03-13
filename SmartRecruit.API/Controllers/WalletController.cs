@@ -8,7 +8,7 @@ using SmartRecruit.API.Controllers;
 namespace SmartRecruit.Controllers
 {
     [ApiController]
-    [Route("api/wallets")]
+    [Route("api/wallet")]
     public class WalletController : BaseController
     {
         private readonly IWalletService _walletService;
@@ -21,7 +21,18 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
-        /// Xem số dư Wallet của một User
+        /// Xem số dư Wallet của chính người dùng hiện tại
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetMyWallet()
+        {
+            _logger.LogInformation("API GetMyWallet called for UserId: {UserId}", CurrentUserId);
+            var wallet = await _walletService.GetWalletByUserIdAsync(CurrentUserId);
+            return Ok(wallet.Wrap());
+        }
+
+        /// <summary>
+        /// Xem số dư Wallet của một User (Admin only hoặc internal)
         /// </summary>
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetWalletByUserId(long userId)
