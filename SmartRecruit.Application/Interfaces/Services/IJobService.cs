@@ -11,7 +11,7 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
         Task<JobResponse> GetJobByIdAsync(long id);
         Task<JobResponse> CreateJobAsync(JobCreateRequest request);
-        Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request);
+        Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, SmartRecruit.Domain.Enums.UserRole currentUserRole);
         Task<bool> DeleteJobAsync(long id);
         Task<bool> ToggleVisibilityAsync(long id);
         Task<bool> BoostJobAsync(long jobId, long userId);

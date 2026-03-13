@@ -103,8 +103,29 @@ namespace WebPortal.Services.Api
         public async Task<bool> UpdateJobAsync(string id, Job job)
         {
             if (!long.TryParse(id, out var longId)) return false;
-            var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
-            return response.IsSuccessStatusCode;
+            
+            try
+            {
+                System.Console.WriteLine($"[JobApiService] Calling UpdateJob for jobId={longId}");
+                System.Console.WriteLine($"[JobApiService] Job data: Title={job.Title}, Location={job.Location}");
+                
+                var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
+                
+                System.Console.WriteLine($"[JobApiService] UpdateJob response: {response.StatusCode}");
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    System.Console.WriteLine($"[JobApiService] UpdateJob error content: {errorContent}");
+                }
+                
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Exception in UpdateJobAsync: {ex}");
+                return false;
+            }
         }
 
         public async Task<bool> DeleteJobAsync(string id)
@@ -168,7 +189,7 @@ namespace WebPortal.Services.Api
         {
             try
             {
-                var response = await _httpClient.GetAsync($"jobs/{jobId}/is-saved?userId={userId}");
+                var response = await _httpClient.GetAsync($"jobs/{jobId}/is-saved");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();
@@ -189,19 +210,36 @@ namespace WebPortal.Services.Api
         {
             try
             {
-                var response = await _httpClient.PostAsync($"jobs/{jobId}/save?userId={userId}", null);
+                System.Console.WriteLine($"[JobApiService] Calling ToggleSaveJob for jobId={jobId}, userId={userId}");
+                var response = await _httpClient.PostAsync($"jobs/{jobId}/save", null);
+                System.Console.WriteLine($"[JobApiService] ToggleSaveJob response: {response.StatusCode}");
+                
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadFromJsonAsync<ApiResponse<JsonElement>>();
-                    if (result != null && result.Data.TryGetProperty("isSaved", out var isSavedProp))
+                    var contentStr = await response.Content.ReadAsStringAsync();
+                    System.Console.WriteLine($"[JobApiService] ToggleSaveJob response content: {contentStr}");
+                    
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var result = JsonSerializer.Deserialize<ApiResponse<JsonElement>>(contentStr, options);
+                    
+                    if (result != null && result.Success)
                     {
-                        return isSavedProp.GetBoolean();
+                        if (result.Data.TryGetProperty("isSaved", out var isSavedProp))
+                        {
+                            return isSavedProp.GetBoolean();
+                        }
                     }
+                    return true; // If successful, assume it worked
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    System.Console.WriteLine($"[JobApiService] ToggleSaveJob error: {response.StatusCode} - {errorContent}");
                 }
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine($"[JobApiService] Error toggling save for job {jobId}: {ex.Message}");
+                System.Console.WriteLine($"[JobApiService] Exception in ToggleSaveJobAsync: {ex}");
             }
             return false;
         }
@@ -210,7 +248,7 @@ namespace WebPortal.Services.Api
         {
             try
             {
-                var response = await _httpClient.GetAsync($"jobs/saved?userId={userId}&page={page}&pageSize={pageSize}");
+                var response = await _httpClient.GetAsync($"jobs/saved?page={page}&pageSize={pageSize}");
                 if (response.IsSuccessStatusCode)
                 {
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };

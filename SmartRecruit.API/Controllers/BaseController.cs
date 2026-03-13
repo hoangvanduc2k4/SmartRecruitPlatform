@@ -9,7 +9,7 @@ namespace SmartRecruit.API.Controllers
         {
             get
             {
-                var userIdClaim = User.FindFirst("id")?.Value;
+                var userIdClaim = User.FindFirst("id")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out var userId))
                 {
                     throw new UnauthorizedAccessException("Invalid token user ID.");

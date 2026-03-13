@@ -20,28 +20,34 @@ namespace SmartRecruit.Application.Services
 
         public async Task<bool> ToggleSaveJobAsync(long jobId, long userId)
         {
+            // First, check if job exists
+            var job = await _unitOfWork.Jobs.GetByIdAsync(jobId);
+            if (job == null) 
+                throw new KeyNotFoundException("Job not found");
+
+            // Try to find existing saved job
             var existing = await _unitOfWork.SavedJobs.FindAsync(sj => sj.JobId == jobId && sj.UserId == userId);
 
             if (existing != null)
             {
+                // Job is already saved, so we unsave it (delete)
                 _unitOfWork.SavedJobs.Delete(existing);
                 await _unitOfWork.CompleteAsync();
                 return false; // Unsaved
             }
-
-            // Verify job exists
-            var job = await _unitOfWork.Jobs.GetByIdAsync(jobId);
-            if (job == null) throw new KeyNotFoundException("Job not found");
-
-            var savedJob = new SavedJob
+            else
             {
-                JobId = jobId,
-                UserId = userId
-            };
+                // Job is not saved, so we save it (create)
+                var savedJob = new SavedJob
+                {
+                    JobId = jobId,
+                    UserId = userId
+                };
 
-            await _unitOfWork.SavedJobs.AddAsync(savedJob);
-            await _unitOfWork.CompleteAsync();
-            return true; // Saved
+                await _unitOfWork.SavedJobs.AddAsync(savedJob);
+                await _unitOfWork.CompleteAsync();
+                return true; // Saved
+            }
         }
 
         public async Task<bool> IsJobSavedAsync(long jobId, long userId)

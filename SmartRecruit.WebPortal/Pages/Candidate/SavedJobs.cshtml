@@ -37,10 +37,13 @@
             {
                 <div class="group bg-white border border-slate-200/60 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-indigo-100/50 transition-all duration-500 relative overflow-hidden flex flex-col justify-between h-[420px]">
                     <div class="absolute top-0 right-0 p-8">
-                        <form method="post" asp-page-handler="Unsave">
+                        <form method="post" asp-page-handler="Unsave" class="inline-flex m-0">
                             <input type="hidden" name="jobId" value="@job.Id" />
-                            <button type="submit" class="w-12 h-12 bg-pink-50 text-pink-500 rounded-2xl flex items-center justify-center border border-pink-100 shadow-sm hover:bg-pink-100 transition-colors">
-                                <i class="fas fa-heart text-xl"></i>
+                            <button type="submit"
+                                    title="Remove from Saved Jobs"
+                                    class="h-10 px-4 bg-white text-slate-500 rounded-2xl flex items-center justify-center gap-2 border border-slate-200 text-[10px] font-black uppercase tracking-widest hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-colors">
+                                <i class="fas fa-heart-broken text-xs"></i>
+                                <span>Unsave</span>
                             </button>
                         </form>
                     </div>
