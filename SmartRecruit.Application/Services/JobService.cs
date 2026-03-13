@@ -57,6 +57,12 @@ namespace SmartRecruit.Application.Services
         {
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Job not found");
+
+            // Increment ViewCount
+            job.ViewCount++;
+            _jobRepository.Update(job);
+            await _unitOfWork.CompleteAsync();
+
             return _mapper.Map<JobResponse>(job);
         }
 
@@ -367,6 +373,11 @@ namespace SmartRecruit.Application.Services
 
             _jobRepository.Update(job);
             return await _unitOfWork.CompleteAsync() > 0;
+        }
+
+        public async Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId)
+        {
+            return await _jobRepository.GetRecruiterStatsAsync(recruiterId);
         }
 
         private string NormalizeString(string text)

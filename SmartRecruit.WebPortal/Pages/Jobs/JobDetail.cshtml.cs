@@ -42,9 +42,11 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
         public int TotalApplicationCount { get; set; }
+        public IEnumerable<Category> Categories { get; set; } = new List<Category>();
 
         public async Task<IActionResult> OnGetAsync()
         {
+            Categories = await _jobApiService.GetCategoriesAsync();
             // Populate basic user info from base properties for the view
             if (IsAuthenticated)
             {

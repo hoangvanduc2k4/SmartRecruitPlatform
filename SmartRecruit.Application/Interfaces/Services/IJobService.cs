@@ -20,5 +20,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> AppealJobAsync(long jobId, string message);
         Task<PagedList<AppealResponse>> GetAppealedJobsAsync(int page, int pageSize);
         Task<bool> OverrideAIAsync(long jobId);
+        Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
     }
 }

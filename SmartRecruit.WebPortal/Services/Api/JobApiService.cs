@@ -20,6 +20,7 @@ namespace WebPortal.Services.Api
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
         Task<bool> AppealJobAsync(long jobId, string message);
+        Task<RecruiterStatsResponse?> GetRecruiterStatsAsync();
     }
 
     public class JobApiService : IJobApiService
@@ -277,6 +278,17 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error appealing job {jobId}: {ex.Message}");
             }
             return false;
+        }
+
+        public async Task<RecruiterStatsResponse?> GetRecruiterStatsAsync()
+        {
+            var response = await _httpClient.GetAsync("jobs/stats/recruiter");
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<RecruiterStatsResponse>>();
+                return apiResponse?.Data;
+            }
+            return null;
         }
     }
 }

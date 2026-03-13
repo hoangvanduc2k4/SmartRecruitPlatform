@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Domain.Entities;
-using SmartRecruit.Infrastructure.Data;
-using Microsoft.Extensions.Logging;
 using SmartRecruit.Domain.Enums;
+using SmartRecruit.Infrastructure.Data;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
@@ -108,7 +108,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 1. Boosted jobs first: we sort by BoostExpiryTime DESC.
             // If BoostExpiryTime is null or in the past, they will naturally be sorted after currently boosted jobs if we use a default value for nulls,
             // or we can sort by HasBoost first, then ExpiryTime.
-            
+
             // To ensure "Boosted jobs appear on top, ordered by most recently boosted (which means latest expiry time)",
             // we first order by whether they are currently boosted:
             orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
@@ -191,6 +191,26 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .OrderByDescending(j => j.CreatedAt);
 
             return await PagedList<Job>.CreateAsync(query, page, pageSize);
+        }
+        public async Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId)
+        {
+            var jobStats = await _context.Set<Job>()
+                .Where(j => j.RecruiterId == recruiterId && !j.IsDeleted)
+                .Select(j => new
+                {
+                    Views = j.ViewCount,
+                    Saves = j.SavedJobs.Count(),
+                    Applications = j.Applications.Count()
+                })
+                .ToListAsync();
+
+            int totalViews = jobStats.Sum(s => s.Views);
+            int totalSaves = jobStats.Sum(s => s.Saves);
+            int totalApplications = jobStats.Sum(s => s.Applications);
+
+            double ratio = totalSaves > 0 ? (double)totalApplications / totalSaves : 0;
+
+            return new RecruiterStatsResponse(totalViews, totalSaves, totalApplications, ratio);
         }
     }
 }
