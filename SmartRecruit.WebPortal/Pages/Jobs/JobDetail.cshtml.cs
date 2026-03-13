@@ -7,20 +7,17 @@ using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
-    public class JobDetailModel : PageModel
+    public class JobDetailModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
-        private readonly ITokenService _tokenService;
 
         public JobDetailModel(
             IJobApiService jobApiService,
-            IApplicationApiService applicationApiService,
-            ITokenService tokenService)
+            IApplicationApiService applicationApiService)
         {
             _jobApiService = jobApiService;
             _applicationApiService = applicationApiService;
-            _tokenService = tokenService;
         }
 
         public Job? Job { get; set; }
@@ -32,7 +29,7 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
 
-        public UserDto? CurrentUser { get; set; }
+        public UserDto? CurrentUserDto { get; set; }
         public bool IsSaved { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -41,43 +38,16 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
         public int TotalApplicationCount { get; set; }
-        private long? GetCurrentUserId()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
-            {
-                return userId;
-            }
-            return null;
-        }
-
-        private UserRole? GetCurrentUserRole()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var roleClaim = principal.FindFirst("role")?.Value ?? principal.FindFirst(ClaimTypes.Role)?.Value;
-            if (Enum.TryParse<UserRole>(roleClaim, out var role))
-            {
-                return role;
-            }
-            return null;
-        }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Populate basic user info from claims for the view
-            var role = GetCurrentUserRole();
-            if (role.HasValue)
+            // Populate basic user info from base properties for the view
+            if (IsAuthenticated)
             {
-                CurrentUser = new UserDto
+                CurrentUserDto = new UserDto
                 {
-                    Id = GetCurrentUserId()?.ToString() ?? "",
-                    Role = role.Value
+                    Id = CurrentUserId?.ToString() ?? "",
+                    Role = CurrentUserRole ?? UserRole.CANDIDATE
                 };
             }
 
@@ -86,7 +56,7 @@ namespace WebPortal.Pages
                 Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
                 if (Job != null)
                 {
-                    var currentUserId = GetCurrentUserId();
+                    var currentUserId = CurrentUserId;
                     // Check if job is saved
                     if (currentUserId.HasValue)
                     {
@@ -109,7 +79,7 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostToggleSaveAsync()
         {
-            var currentUserId = GetCurrentUserId();
+            var currentUserId = CurrentUserId;
 
             if (!currentUserId.HasValue)
             {
@@ -157,7 +127,7 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostBoostAsync()
         {
-            var currentUserId = GetCurrentUserId();
+            var currentUserId = CurrentUserId;
 
             if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
             {
@@ -168,7 +138,7 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostApplyAsync()
         {
-            var currentUserId = GetCurrentUserId();
+            var currentUserId = CurrentUserId;
 
             if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
             {

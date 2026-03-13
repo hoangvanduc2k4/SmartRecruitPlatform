@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models.Api;
 using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
-    public class ProfileModel : PageModel
+    public class ProfileModel : BasePageModel
     {
         private readonly IAuthApiService _authApiService;
 
@@ -14,9 +14,6 @@ namespace WebPortal.Pages
             _authApiService = authApiService;
         }
 
-        public UserProfileResponse? CurrentUser { get; set; }
-        public string? ErrorMessage { get; set; }
-        public string? SuccessMessage { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS (Candidate), COMPANY (Recruiter), SECURITY
