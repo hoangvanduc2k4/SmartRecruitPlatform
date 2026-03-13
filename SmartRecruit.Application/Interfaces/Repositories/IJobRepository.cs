@@ -11,5 +11,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task<IEnumerable<string>> GetLocationsAsync();
         Task<PagedList<Job>> GetAppealedJobsAsync(int page, int pageSize);
         Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
+        Task<IEnumerable<Job>> GetRecommendedJobsAsync(long userId, int limit = 10);
     }
 }

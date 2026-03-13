@@ -380,6 +380,12 @@ namespace SmartRecruit.Application.Services
             return await _jobRepository.GetRecruiterStatsAsync(recruiterId);
         }
 
+        public async Task<IEnumerable<JobResponse>> GetRecommendedJobsAsync(long userId)
+        {
+            var recommendedJobs = await _jobRepository.GetRecommendedJobsAsync(userId);
+            return _mapper.Map<IEnumerable<JobResponse>>(recommendedJobs);
+        }
+
         private string NormalizeString(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return string.Empty;
