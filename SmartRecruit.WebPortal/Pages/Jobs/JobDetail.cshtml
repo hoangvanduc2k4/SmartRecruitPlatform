@@ -67,21 +67,50 @@ else
                         <form class="space-y-6" id="jobEditForm" method="post" asp-page-handler="Update">
                             <input type="hidden" name="Id" value="@Model.Job.Id" />
                             <input type="hidden" name="EditJob.Id" value="@Model.Job.Id" />
-                            <input type="hidden" name="EditJob.Company" value="@Model.Job.Company" />
-                            <input type="hidden" name="EditJob.SkillsRequired" value="@Model.Job.SkillsRequired" />
-                            <input type="hidden" name="EditJob.JobType" value="@((int)Model.Job.JobType)" />
-                            <input type="hidden" name="EditJob.CategoryId" value="@Model.Job.CategoryId" />
 
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Title</label>
-                                <input type="text" name="EditJob.Title" value="@Model.Job.Title" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Title</label>
+                                    <input type="text" name="EditJob.Title" value="@Model.Job.Title" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Company Name</label>
+                                    <input type="text" name="EditJob.Company" value="@Model.Job.Company" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Type</label>
+                                    <select name="EditJob.JobType" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "")>
+                                        <option value="0" selected="@(Model.Job.JobType == JobType.FULL_TIME)">Full Time</option>
+                                        <option value="1" selected="@(Model.Job.JobType == JobType.PART_TIME)">Part Time</option>
+                                        <option value="2" selected="@(Model.Job.JobType == JobType.REMOTE)">Remote</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Required Skills (comma separated)</label>
+                                    <input type="text" name="EditJob.SkillsRequired" value="@Model.Job.SkillsRequired" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Location</label>
                                     <input type="text" name="EditJob.Location" value="@Model.Job.Location" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
                                 </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Category</label>
+                                    <select name="EditJob.CategoryId" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "")>
+                                        @foreach (var cat in Model.Categories)
+                                        {
+                                            <option value="@cat.Id" selected="@(Model.Job.CategoryId == cat.Id)">@cat.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Salary Min</label>
