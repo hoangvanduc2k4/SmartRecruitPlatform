@@ -212,5 +212,82 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             return new RecruiterStatsResponse(totalViews, totalSaves, totalApplications, ratio);
         }
+        public async Task<IEnumerable<Job>> GetRecommendedJobsAsync(long userId, int limit = 10)
+        {
+            _logger.LogTrace("Generating rule-based recommendations for User {UserId}", userId);
+
+            // 1. Get Candidate Profile Skills
+            var profile = await _context.Set<CandidateProfile>()
+                .FirstOrDefaultAsync(p => p.UserId == userId);
+            
+            var userSkills = profile?.Skills?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) 
+                             ?? Array.Empty<string>();
+
+            // 2. Get Past Application History (Categories and Skills from jobs applied to)
+            var appliedJobIds = await _context.Set<Applications>()
+                .Where(a => a.CandidateId == userId)
+                .Select(a => a.JobId)
+                .ToListAsync();
+
+            var appliedJobs = await _context.Set<Job>()
+                .Where(j => appliedJobIds.Contains(j.Id))
+                .Select(j => new { j.CategoryId, j.SkillsRequired })
+                .ToListAsync();
+
+            var preferredCategoryIds = appliedJobs.Select(j => j.CategoryId).Distinct().ToList();
+            var skillsFromPastJobs = appliedJobs
+                .SelectMany(j => j.SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                .Distinct()
+                .ToList();
+
+            // Combine all relevant skills
+            var allRelevantSkills = userSkills.Concat(skillsFromPastJobs).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+            // 3. Fetch potentially matching jobs 
+            // - Exclude already applied jobs
+            // - Only APPROVED and NOT deleted/blocked/hidden
+            var candidateJobs = await _context.Set<Job>()
+                .Include(j => j.Category)
+                .Where(j => !j.IsDeleted && j.Status == JobStatus.APPROVED && !appliedJobIds.Contains(j.Id))
+                .ToListAsync();
+
+            // 4. Score jobs based on rules
+            var scoredJobs = candidateJobs.Select(j =>
+            {
+                int score = 0;
+
+                // Rule 1: Category Match (+10 points)
+                if (preferredCategoryIds.Contains(j.CategoryId))
+                {
+                    score += 10;
+                }
+
+                // Rule 2: Skill Match (+5 points per skill found in Job requirements)
+                var jobSkills = j.SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                foreach (var skill in allRelevantSkills)
+                {
+                    if (jobSkills.Any(s => s.Contains(skill, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        score += 5;
+                    }
+                }
+
+                // Rule 3: Boost Priority (+2 points if currently boosted, purely as a tie-breaker/nudge)
+                if (j.BoostExpiryTime.HasValue && j.BoostExpiryTime.Value > DateTime.UtcNow)
+                {
+                    score += 2;
+                }
+
+                return new { Job = j, Score = score };
+            })
+            .Where(x => x.Score > 0) // Only recommend if there's at least some match
+            .OrderByDescending(x => x.Score)
+            .ThenByDescending(x => x.Job.BoostExpiryTime) // Boosted jobs still merit higher showing for same score
+            .Take(limit)
+            .Select(x => x.Job)
+            .ToList();
+
+            return scoredJobs;
+        }
     }
 }

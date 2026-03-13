@@ -193,6 +193,14 @@ namespace SmartRecruit.Controllers
             var stats = await _jobService.GetRecruiterStatsAsync(CurrentUserId);
             return Ok(stats.Wrap());
         }
+
+        [HttpGet("recommendations")]
+        [Authorize]
+        public async Task<IActionResult> GetRecommendations()
+        {
+            var recommendations = await _jobService.GetRecommendedJobsAsync(CurrentUserId);
+            return Ok(recommendations.Wrap("Your personalized job recommendations based on your profile and history."));
+        }
     }
 }
 
