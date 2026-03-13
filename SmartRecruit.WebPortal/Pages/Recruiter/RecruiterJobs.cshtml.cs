@@ -6,17 +6,15 @@ using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
-    public class RecruiterJobsModel : PageModel
+    public class RecruiterJobsModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
-        private readonly ITokenService _tokenService;
 
-        public RecruiterJobsModel(IJobApiService jobApiService, IApplicationApiService applicationApiService, ITokenService tokenService)
+        public RecruiterJobsModel(IJobApiService jobApiService, IApplicationApiService applicationApiService)
         {
             _jobApiService = jobApiService;
             _applicationApiService = applicationApiService;
-            _tokenService = tokenService;
         }
 
         public IList<Job> Jobs { get; set; } = new List<Job>();
@@ -28,23 +26,10 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
 
-        private long? GetCurrentUserId()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
-            {
-                return userId;
-            }
-            return null;
-        }
 
         public async Task OnGetAsync()
         {
-            var recruiterId = GetCurrentUserId();
+            var recruiterId = CurrentUserId;
             if (recruiterId.HasValue)
             {
                 var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize);

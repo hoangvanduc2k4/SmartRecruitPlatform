@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Constants;
 
 namespace SmartRecruit.Application.Services
 {
@@ -12,19 +13,32 @@ namespace SmartRecruit.Application.Services
         private readonly ILogger<ProfileService> _logger;
         private readonly ICloudinaryService _cloudinaryService;
         private readonly ICvService _cvService;
+        private readonly ITokenService _tokenService;
 
-        public ProfileService(IUnitOfWork unitOfWork, ILogger<ProfileService> logger, ICloudinaryService cloudinaryService, ICvService cvService)
+        public ProfileService(
+            IUnitOfWork unitOfWork, 
+            ILogger<ProfileService> logger, 
+            ICloudinaryService cloudinaryService, 
+            ICvService cvService,
+            ITokenService tokenService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _cloudinaryService = cloudinaryService;
             _cvService = cvService;
+            _tokenService = tokenService;
+        }
+
+        private async Task<string> GenerateNewTokenAsync(long userId)
+        {
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null) return string.Empty;
+            return _tokenService.GenerateJwtToken(user);
         }
 
         public async Task<UserProfileResponse> GetCurrentUserProfileAsync(long userId)
         {
-            // Note: Since IGenericRepository might not support eager loading multiple includes easily,
-            // we will fetch the user and then explicitly fetch candidate/company profile if needed.
+            _logger.LogInformation("GetCurrentUserProfile use-case: Fetching profile for User {UserId}", userId);
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
             {
@@ -136,8 +150,13 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
             _logger.LogInformation("Profile updated successfully for user {UserId}", userId);
 
-            // Fetch and return the updated profile
-            return await GetCurrentUserProfileAsync(userId);
+            // Fetch updated profile
+            var response = await GetCurrentUserProfileAsync(userId);
+            
+            // Inject new token after profile update (in case FullName changed and is in claims)
+            response.NewToken = await GenerateNewTokenAsync(userId);
+            
+            return response;
         }
 
         public async Task<UserProfileResponse> UploadCvAsync(long userId, Stream fileStream, string fileName)
@@ -153,21 +172,33 @@ namespace SmartRecruit.Application.Services
                 throw new InvalidOperationException("Only candidates can upload CVs.");
             }
 
+            // Validation: Size
+            if (fileStream.Length == 0)
+            {
+                throw new ArgumentException("Uploaded CV file is empty.");
+            }
+            if (fileStream.Length > Policies.MaxCvFileSize)
+            {
+                throw new ArgumentException($"CV file size must be <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
+            }
+
+            // Validation: Extension
+            var ext = Path.GetExtension(fileName).ToLowerInvariant();
+            if (ext != ".pdf")
+            {
+                throw new ArgumentException("Only PDF format is supported for CV upload.");
+            }
+
             var candidateProfile = await _unitOfWork.CandidateProfiles.FindAsync(c => c.UserId == userId);
             string? oldUrl = candidateProfile?.CVUrl;
 
-            // Read entire stream to buffer to ensure multiple services can consume it without interference
+            // Buffer stream
             byte[] fileBytes;
             using (var ms = new MemoryStream())
             {
                 if (fileStream.CanSeek) fileStream.Position = 0;
                 await fileStream.CopyToAsync(ms);
                 fileBytes = ms.ToArray();
-            }
-
-            if (fileBytes.Length == 0)
-            {
-                throw new InvalidOperationException("Uploaded CV file is empty.");
             }
 
             _logger.LogInformation("CV data buffered for user {UserId}, size: {Size} bytes", userId, fileBytes.Length);
@@ -209,6 +240,7 @@ namespace SmartRecruit.Application.Services
 
             return await GetCurrentUserProfileAsync(userId);
         }
+
         public async Task<UserProfileResponse> UploadAvatarAsync(long userId, Stream fileStream, string fileName)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
@@ -217,9 +249,22 @@ namespace SmartRecruit.Application.Services
                 throw new KeyNotFoundException("User not found.");
             }
 
+            // Validation: Size
             if (fileStream == null || fileStream.Length == 0)
             {
-                throw new InvalidOperationException("Uploaded avatar file is empty.");
+                throw new ArgumentException("Uploaded avatar file is empty.");
+            }
+            if (fileStream.Length > Policies.MaxAvatarFileSize)
+            {
+                throw new ArgumentException($"Avatar file size must be <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
+            }
+
+            // Validation: Extension
+            var ext = Path.GetExtension(fileName).ToLowerInvariant();
+            var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            if (!allowed.Contains(ext))
+            {
+                throw new ArgumentException("Only JPG, PNG, or WEBP images are supported for avatar upload.");
             }
 
             if (fileStream.CanSeek) fileStream.Position = 0;
@@ -232,7 +277,11 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("Avatar uploaded for user {UserId}", userId);
-            return await GetCurrentUserProfileAsync(userId);
+            
+            var response = await GetCurrentUserProfileAsync(userId);
+            response.NewToken = await GenerateNewTokenAsync(userId);
+            
+            return response;
         }
 
         private static bool IsCloudinaryAvatarUrl(string? url)

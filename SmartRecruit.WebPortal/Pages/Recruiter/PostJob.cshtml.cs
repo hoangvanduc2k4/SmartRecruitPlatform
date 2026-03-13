@@ -6,17 +6,15 @@ using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
-    public class PostJobModel : PageModel
+    public class PostJobModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
         private readonly IWalletApiService _walletApiService;
-        private readonly ITokenService _tokenService;
 
-        public PostJobModel(IJobApiService jobApiService, IWalletApiService walletApiService, ITokenService tokenService)
+        public PostJobModel(IJobApiService jobApiService, IWalletApiService walletApiService)
         {
             _jobApiService = jobApiService;
             _walletApiService = walletApiService;
-            _tokenService = tokenService;
         }
 
         [BindProperty]
@@ -34,19 +32,6 @@ namespace WebPortal.Pages
         public decimal WalletBalance { get; set; }
         public int PageSize { get; set; } = 5;
 
-        private long? GetCurrentUserId()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
-            {
-                return userId;
-            }
-            return null;
-        }
 
         public async Task OnGetAsync()
         {
@@ -60,7 +45,7 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var recruiterId = GetCurrentUserId();
+            var recruiterId = CurrentUserId;
             if (!recruiterId.HasValue)
             {
                 return RedirectToPage("/Account/Login");

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -40,6 +40,7 @@ namespace SmartRecruit.Infrastructure
             });
 
             services.AddHttpClient<IGeminiService, GeminiService>();
+            services.AddScoped<ICvService, CvService>();
             return services;
         }
     }

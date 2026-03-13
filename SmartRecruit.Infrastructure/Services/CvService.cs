@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UglyToad.PdfPig;
 
-namespace SmartRecruit.Application.Services
+namespace SmartRecruit.Infrastructure.Services
 {
     public class CvService : ICvService
     {
@@ -49,8 +49,6 @@ namespace SmartRecruit.Application.Services
                 var cleanText = Regex.Replace(rawText, @"[\x00-\x08\x0B\x0C\x0E-\x1F]", "");
 
                 cleanText = cleanText.Replace("\uFFFD", " ");
-
-                //_logger.LogInformation("\n========== CV TEXT START ==========\n{CvText}\n========== CV TEXT END ==========\n", cleanText);
 
                 return Task.FromResult(cleanText);
             }

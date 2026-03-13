@@ -7,15 +7,13 @@ using WebPortal.Services.Api;
 
 namespace WebPortal.Pages.Candidate
 {
-    public class SavedJobsModel : PageModel
+    public class SavedJobsModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
-        private readonly ITokenService _tokenService;
 
-        public SavedJobsModel(IJobApiService jobApiService, ITokenService tokenService)
+        public SavedJobsModel(IJobApiService jobApiService)
         {
             _jobApiService = jobApiService;
-            _tokenService = tokenService;
         }
 
         public List<Job> SavedJobs { get; set; } = new List<Job>();
@@ -26,47 +24,18 @@ namespace WebPortal.Pages.Candidate
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 10;
 
-        private long? GetCurrentUserId()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var idClaim = principal.FindFirst("id")?.Value ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (!string.IsNullOrEmpty(idClaim) && long.TryParse(idClaim, out var userId))
-            {
-                return userId;
-            }
-            return null;
-        }
-
-        private UserRole? GetCurrentUserRole()
-        {
-            var principal = _tokenService.GetUserPrincipal();
-            if (principal == null) return null;
-
-            var roleClaim = principal.FindFirst("role")?.Value ?? principal.FindFirst(ClaimTypes.Role)?.Value;
-            if (Enum.TryParse<UserRole>(roleClaim, out var role))
-            {
-                return role;
-            }
-            return null;
-        }
 
         public async Task OnGetAsync()
         {
-            var userId = GetCurrentUserId();
-            var role = GetCurrentUserRole();
-
-            if (userId.HasValue && role.HasValue)
+            if (IsAuthenticated)
             {
                 CurrentUser = new UserDto
                 {
-                    Id = userId.Value.ToString(),
-                    Role = role.Value
+                    Id = CurrentUserId.Value.ToString(),
+                    Role = CurrentUserRole.Value
                 };
 
-                var response = await _jobApiService.GetSavedJobsAsync(userId.Value, CurrentPage, PageSize);
+                var response = await _jobApiService.GetSavedJobsAsync(CurrentUserId.Value, CurrentPage, PageSize);
                 if (response.Success)
                 {
                     SavedJobs = response.Data?.ToList() ?? new List<Job>();
@@ -77,10 +46,9 @@ namespace WebPortal.Pages.Candidate
 
         public async Task<IActionResult> OnPostUnsaveAsync(long jobId)
         {
-            var userId = GetCurrentUserId();
-            if (userId.HasValue)
+            if (CurrentUserId.HasValue)
             {
-                await _jobApiService.ToggleSaveJobAsync(jobId, userId.Value);
+                await _jobApiService.ToggleSaveJobAsync(jobId, CurrentUserId.Value);
             }
             return RedirectToPage();
         }

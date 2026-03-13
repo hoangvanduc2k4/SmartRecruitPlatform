@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using SmartRecruit.Application.Interfaces.Repositories;
 using UglyToad.PdfPig;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GeminiTestController : ControllerBase
+    public class GeminiTestController : BaseController
     {
         private readonly IGeminiService _geminiService;
         private readonly IJobRepository _jobRepository;

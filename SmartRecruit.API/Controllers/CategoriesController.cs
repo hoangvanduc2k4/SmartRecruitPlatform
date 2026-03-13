@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : BaseController
     {
         private readonly ICategoryService _categoryService;
 

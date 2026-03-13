@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/jobs")]
-    public class JobController : ControllerBase
+    public class JobController : BaseController
     {
         private readonly IJobService _jobService;
         private readonly ISavedJobService _savedJobService;
@@ -44,6 +46,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> CreateJob([FromBody] JobCreateRequest request)
         {
             // Background moderation will handle the check
@@ -52,6 +55,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> UpdateJob(long id, [FromBody] JobUpdateRequest request)
         {
             var job = await _jobService.UpdateJobAsync(id, request);
@@ -59,6 +63,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> DeleteJob(long id)
         {
             await _jobService.DeleteJobAsync(id);
@@ -66,6 +71,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpPatch("{id}/visibility")]
+        [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> ToggleVisibility(long id)
         {
             var isVisible = await _jobService.ToggleVisibilityAsync(id);
@@ -74,11 +80,12 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpPost("{id}/boost")]
-        public async Task<IActionResult> BoostJob(long id, [FromBody] BoostJobRequest request)
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> BoostJob(long id)
         {
             try
             {
-                var success = await _jobService.BoostJobAsync(id, request.UserId);
+                var success = await _jobService.BoostJobAsync(id, CurrentUserId);
                 if (success)
                 {
                     return Ok(new { }.Wrap("Job boosted successfully! It will now appear at the top of the listings."));
@@ -112,11 +119,12 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpPost("{id}/save")]
-        public async Task<IActionResult> ToggleSaveJob(long id, [FromQuery] long userId)
+        [Authorize]
+        public async Task<IActionResult> ToggleSaveJob(long id)
         {
             try
             {
-                var isSaved = await _savedJobService.ToggleSaveJobAsync(id, userId);
+                var isSaved = await _savedJobService.ToggleSaveJobAsync(id, CurrentUserId);
                 var message = isSaved ? "Job saved successfully" : "Job unsaved successfully";
                 return Ok(new { IsSaved = isSaved }.Wrap(message));
             }
@@ -131,16 +139,18 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("{id}/is-saved")]
-        public async Task<IActionResult> IsJobSaved(long id, [FromQuery] long userId)
+        [Authorize]
+        public async Task<IActionResult> IsJobSaved(long id)
         {
-            var isSaved = await _savedJobService.IsJobSavedAsync(id, userId);
+            var isSaved = await _savedJobService.IsJobSavedAsync(id, CurrentUserId);
             return Ok(new { IsSaved = isSaved }.Wrap());
         }
 
         [HttpGet("saved")]
-        public async Task<IActionResult> GetSavedJobs([FromQuery] long userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        [Authorize]
+        public async Task<IActionResult> GetSavedJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var jobs = await _savedJobService.GetSavedJobsAsync(userId, page, pageSize);
+            var jobs = await _savedJobService.GetSavedJobsAsync(CurrentUserId, page, pageSize);
             return Ok(jobs.WrapPaged());
         }
 

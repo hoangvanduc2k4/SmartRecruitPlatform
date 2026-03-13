@@ -25,6 +25,10 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+// 1. Silent Token Refresh Middleware runs FIRST to restore session state if needed
+app.UseMiddleware<SmartRecruitWeb.Middlewares.TokenRefreshMiddleware>();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();

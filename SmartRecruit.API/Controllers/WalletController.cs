@@ -3,12 +3,13 @@ using SmartRecruit.Application.DTO.Wallet;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
+using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/wallets")]
-    public class WalletController : ControllerBase
+    public class WalletController : BaseController
     {
         private readonly IWalletService _walletService;
         private readonly ILogger<WalletController> _logger;

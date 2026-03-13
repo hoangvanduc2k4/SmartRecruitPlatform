@@ -11,7 +11,7 @@ namespace SmartRecruit.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "ADMIN")]
-    public class AdminController : ControllerBase
+    public class AdminController : BaseController
     {
         private readonly IAILogService _aiLogService;
         private readonly IUserService _userService;
