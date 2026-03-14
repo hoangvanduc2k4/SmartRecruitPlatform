@@ -41,6 +41,7 @@ namespace SmartRecruit.Infrastructure
 
             services.AddHttpClient<IGeminiService, GeminiService>();
             services.AddScoped<ICvService, CvService>();
+            services.AddScoped<INotificationHubService, NotificationHubService>();
             return services;
         }
     }

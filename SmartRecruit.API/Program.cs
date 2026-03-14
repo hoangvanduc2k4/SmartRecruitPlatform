@@ -50,6 +50,7 @@ namespace SmartRecruit.API
             });
 
             builder.Services.AddControllers();
+            builder.Services.AddSignalR();
             
             // JWT Authentication
             builder.Services.AddAuthentication(options =>
@@ -153,6 +154,7 @@ namespace SmartRecruit.API
             );
 
             app.MapControllers();
+            app.MapHub<SmartRecruit.Infrastructure.Hubs.NotificationHub>("/notificationHub");
 
             app.Run();
         }
