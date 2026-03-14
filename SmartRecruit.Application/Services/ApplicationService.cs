@@ -95,6 +95,34 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient.Enqueue<IApplicationService>(x => x.ScoreApplicationAsync(application.Id));
             _logger.LogInformation("ApplyJob use-case success: Application {ApplicationId} created and enqueued for AI scoring", application.Id);
 
+            // 4. Real-time Notification for Recruiter
+            try
+            {
+                var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(application.Id);
+                if (appWithDetails != null && appWithDetails.Job != null)
+                {
+                    string candidateName = appWithDetails.Candidate?.FullName ?? "A candidate";
+                    await _notificationService.SendNotificationAsync(
+                        appWithDetails.Job.RecruiterId,
+                        "New Application",
+                        $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
+                        NotificationType.APPLICATION,
+                        $"/Recruiter/JobApplications?jobId={appWithDetails.JobId}");
+
+                    // 4b. Real-time Notification for Candidate (Confirmation)
+                    await _notificationService.SendNotificationAsync(
+                        request.CandidateId,
+                        "Application Submitted",
+                        $"You have successfully applied for: {appWithDetails.Job.Title}. Good luck!",
+                        NotificationType.APPLICATION,
+                        "/JobApplications");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send 'New Application' notification for ApplicationId {ApplicationId}", application.Id);
+            }
+
             return true; // Chỉ cần trả về thành công
         }
 
