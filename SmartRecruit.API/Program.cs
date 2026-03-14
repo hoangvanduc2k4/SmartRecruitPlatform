@@ -39,13 +39,15 @@ namespace SmartRecruit.API
             builder.Services.AddApplicationDI();
             builder.Services.AddInfrastructureDI(builder.Configuration);
 
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                            .AllowAnyMethod()
-                           .AllowAnyHeader();
+                           .AllowAnyHeader()
+                           .AllowCredentials();
                 });
             });
 

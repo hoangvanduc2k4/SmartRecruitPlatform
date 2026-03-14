@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Hangfire;
 using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Helpers;
@@ -17,6 +17,7 @@ namespace SmartRecruit.Application.Services
         private readonly IMapper _mapper;
         private readonly IGeminiService _geminiService;
         private readonly IBackgroundJobClient _backgroundJobClient;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<ApplicationService> _logger;
 
         public ApplicationService(
@@ -25,6 +26,7 @@ namespace SmartRecruit.Application.Services
             IMapper mapper,
             IGeminiService geminiService,
             IBackgroundJobClient backgroundJobClient,
+            INotificationService notificationService,
             ILogger<ApplicationService> logger)
         {
             _applicationRepository = applicationRepository;
@@ -32,6 +34,7 @@ namespace SmartRecruit.Application.Services
             _mapper = mapper;
             _geminiService = geminiService;
             _backgroundJobClient = backgroundJobClient;
+            _notificationService = notificationService;
             _logger = logger;
         }
 
@@ -194,7 +197,38 @@ namespace SmartRecruit.Application.Services
 
             _applicationRepository.Update(application);
             var result = await _unitOfWork.CompleteAsync() > 0;
-            if (result) _logger.LogInformation("UpdateStatus use-case successful for ApplicationId {ApplicationId} to {Status}", id, newStatus);
+            if (result)
+            {
+                _logger.LogInformation("UpdateStatus use-case successful for ApplicationId {ApplicationId} to {Status}", id, newStatus);
+                
+                // Real-time Notification
+                try
+                {
+                    var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(id);
+                    if (appWithDetails != null)
+                    {
+                        string jobTitle = appWithDetails.Job?.Title ?? "your application";
+                        string statusText = newStatus.ToString().Replace("_", " ").ToLower();
+                        string message = $"Your application for '{jobTitle}' has been updated to: {statusText}.";
+                        
+                        if (newStatus == ApplicationStatus.INTERVIEWING)
+                            message = $"Congratulations! You've been invited for an interview for '{jobTitle}'. Check your email for details.";
+                        else if (newStatus == ApplicationStatus.OFFERED)
+                            message = $"Great news! You received a job offer for '{jobTitle}'. Congratulations!";
+
+                        await _notificationService.SendNotificationAsync(
+                            appWithDetails.CandidateId,
+                            "Application Update",
+                            message,
+                            NotificationType.APPLICATION,
+                            $"/JobApplications"); // Candidate views their apps here
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send notification for application {ApplicationId}", id);
+                }
+            }
             return result;
         }
 

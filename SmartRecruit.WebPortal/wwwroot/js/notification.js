@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         div.onclick = () => {
-            if (!notification.isRead) markAsRead(notification.id, div);
+            if (!notification.isRead) markAsRead(notification.id, div, notification);
             if (notification.redirectUrl) window.location.href = notification.redirectUrl;
         };
 
@@ -95,15 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateBadge() {
         if (unreadCount > 0) {
+            notifBadge.innerText = unreadCount > 99 ? '99+' : unreadCount;
             notifBadge.classList.remove('hidden');
         } else {
             notifBadge.classList.add('hidden');
         }
     }
 
-    async function markAsRead(id, element) {
+    async function markAsRead(id, element, notificationObj) {
+        // Guard: If already processed as read in this session, skip
+        if (element.classList.contains('opacity-60')) return;
+
         try {
-            const apiUrl = window.appConfig.notificationHubUrl.replace('/notificationHub', `/api/Notifications/${id}/read`);
+            const apiUrl = `${window.appConfig.apiBaseUrl}Notifications/${id}/read`;
             const response = await fetch(apiUrl, {
                 method: 'PATCH',
                 headers: {
@@ -112,31 +116,25 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (response.ok) {
+                // Decrement counter only once
                 unreadCount = Math.max(0, unreadCount - 1);
                 updateBadge();
+                
+                // Update local state to prevent multiple triggers
+                if (notificationObj) notificationObj.isRead = true;
+
+                // Update UI classes to "Read" state
                 element.classList.remove('bg-slate-50', 'border-indigo-100', 'shadow-sm', 'mb-2');
                 element.classList.add('bg-white', 'border-slate-100', 'opacity-60');
-                element.querySelector('p').classList.replace('text-slate-900', 'text-slate-600');
+                const titleEl = element.querySelector('p');
+                if (titleEl) titleEl.classList.replace('text-slate-900', 'text-slate-600');
             }
         } catch (error) {
             console.error("Mark as read failed", error);
         }
     }
 
-    // Global function for the clear button
-    window.clearAllNotifications = function() {
-        // Here we could implement a MarkAllAsRead API call.
-        // For now, clear UI and reset counter
-        const items = document.querySelectorAll('[id^="notif-"]');
-        items.forEach(item => {
-            if (item.classList.contains('bg-slate-50')) {
-                const id = item.id.replace('notif-', '');
-                markAsRead(id, item);
-            }
-            item.style.display = 'none';
-        });
-        emptyNotif.style.display = 'block';
-    }
+
 
     // Utility
     function timeAgo(dateString) {
