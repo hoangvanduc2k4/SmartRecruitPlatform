@@ -23,9 +23,19 @@ namespace SmartRecruit.Application.Services
         private readonly IWalletRepository _walletRepository;
         private readonly IAILogRepository _aiLogRepository;
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<JobService> _logger;
 
-        public JobService(IJobRepository jobRepository, IUnitOfWork unitOfWork, IMapper mapper, IGeminiService geminiService, IWalletRepository walletRepository, IAILogRepository aiLogRepository, Hangfire.IBackgroundJobClient backgroundJobClient, ILogger<JobService> logger)
+        public JobService(
+            IJobRepository jobRepository, 
+            IUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            IGeminiService geminiService, 
+            IWalletRepository walletRepository, 
+            IAILogRepository aiLogRepository, 
+            Hangfire.IBackgroundJobClient backgroundJobClient, 
+            INotificationService notificationService,
+            ILogger<JobService> logger)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
@@ -34,6 +44,7 @@ namespace SmartRecruit.Application.Services
             _walletRepository = walletRepository;
             _aiLogRepository = aiLogRepository;
             _backgroundJobClient = backgroundJobClient;
+            _notificationService = notificationService;
             _logger = logger;
         }
 
@@ -119,6 +130,21 @@ namespace SmartRecruit.Application.Services
             // 5. Complete Unit of Work
             await _unitOfWork.CompleteAsync();
 
+            // 6. Push Notification for Payment Transparency
+            try
+            {
+                await _notificationService.SendNotificationAsync(
+                    request.RecruiterId,
+                    "Transaction Success",
+                    $"Successfully paid {jobPostCost:N0} VNĐ for posting job: {job.Title}.",
+                    NotificationType.PAYMENT,
+                    "/Account/Wallet");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send job post fee notification for User {UserId}", request.RecruiterId);
+            }
+
             // Enqueue background moderation
             _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
             _logger.LogInformation("CreateJob use-case success: Job {JobId} created, 50,000 VND deducted, and enqueued for AI moderation", job.Id);
@@ -155,12 +181,42 @@ namespace SmartRecruit.Application.Services
                     job.Status = JobStatus.APPROVED;
                     job.ModerationNote = "Approved by AI.";
                     _logger.LogInformation("ModerateJob use-case: Job {JobId} APPROVED by AI", jobId);
+
+                    // Real-time Notification for AI Approval
+                    try
+                    {
+                        await _notificationService.SendNotificationAsync(
+                            job.RecruiterId,
+                            "Job Approved",
+                            $"Your job posting '{job.Title}' has been approved by AI and is now public.",
+                            NotificationType.JOB,
+                            $"/Job/{job.Id}");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to send AI approval notification for JobId {JobId}", jobId);
+                    }
                 }
                 else
                 {
                     job.Status = JobStatus.BLOCKED;
                     job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
                     _logger.LogWarning("ModerateJob use-case: Job {JobId} BLOCKED by AI. Reason: {Violations}", jobId, job.ModerationNote);
+
+                    // Real-time Notification for AI Blocking
+                    try
+                    {
+                        await _notificationService.SendNotificationAsync(
+                            job.RecruiterId,
+                            "Job Blocked",
+                            $"Your job posting '{job.Title}' was blocked due to: {screeningResult.ViolationType}. You can appeal this decision.",
+                            NotificationType.JOB,
+                            "/Recruiter/MyJobs");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to send AI blocking notification for JobId {JobId}", jobId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -297,7 +353,25 @@ namespace SmartRecruit.Application.Services
 
             // 6. Complete Unit of Work
             var result = await _unitOfWork.CompleteAsync() > 0;
-            if (result) _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+            if (result)
+            {
+                _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+                
+                // Push Notification for Payment Transparency
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        userId,
+                        "Transaction Success",
+                        $"Successfully paid {boostCost:N0} VNĐ to boost job: {job.Title}.",
+                        NotificationType.PAYMENT,
+                        "/Account/Wallet");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send job boost fee notification for User {UserId}", userId);
+                }
+            }
             return result;
         }
 
@@ -372,7 +446,25 @@ namespace SmartRecruit.Application.Services
             job.ModerationNote = $"Directly approved by Admin on {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}";
 
             _jobRepository.Update(job);
-            return await _unitOfWork.CompleteAsync() > 0;
+            var result = await _unitOfWork.CompleteAsync() > 0;
+            if (result)
+            {
+                // Real-time Notification for Admin Override
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        job.RecruiterId,
+                        "Job Approved by Admin",
+                        $"Good news! Your appeal for '{job.Title}' was successful. The job is now live.",
+                        NotificationType.JOB,
+                        $"/Job/{job.Id}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send admin override notification for JobId {JobId}", jobId);
+                }
+            }
+            return result;
         }
 
         public async Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId)
