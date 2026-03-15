@@ -38,6 +38,15 @@ namespace SmartRecruit.API.Controllers
             return Ok(updatedProfile.Wrap("Profile updated successfully"));
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProfileById(long id)
+        {
+            var userId = id;
+            _logger.LogInformation("API GetProfile called for User: {UserId}", userId);
+            var profile = await _profileService.GetCurrentUserProfileAsync(userId);
+            return Ok(profile.Wrap("Profile retrieved successfully"));
+        }
+
         [HttpPost("upload-cv")]
         public async Task<IActionResult> UploadCv(IFormFile file)
         {

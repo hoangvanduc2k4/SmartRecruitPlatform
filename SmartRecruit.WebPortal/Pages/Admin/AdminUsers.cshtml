@@ -38,13 +38,13 @@
                 {
                     <tr class="hover:bg-slate-50/80 transition-all group @(!u.IsActive ? "opacity-60 grayscale" : "")">
                         <td class="px-10 py-8">
-                            <div class="flex items-center gap-4">
-                                <img src="@(string.IsNullOrEmpty(u.AvatarUrl) ? $"https://i.pravatar.cc/150?u={u.Id}" : u.AvatarUrl)" class="w-12 h-12 rounded-2xl object-cover shadow-sm transition-all" alt="" />
+                            <a href="/Profile?userId=@u.Id" class="flex items-center gap-4 group/profile">
+                                <img src="@(string.IsNullOrEmpty(u.AvatarUrl) ? $"https://i.pravatar.cc/150?u={u.Id}" : u.AvatarUrl)" class="w-12 h-12 rounded-2xl object-cover shadow-sm transition-all group-hover/profile:shadow-md group-hover/profile:scale-105" alt="" />
                                 <div>
-                                    <p class="font-black text-slate-900 text-base group-hover:text-indigo-600 transition-colors">@u.FullName</p>
+                                    <p class="font-black text-slate-900 text-base group-hover/profile:text-indigo-600 transition-colors">@u.FullName</p>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">@u.Email</p>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td class="px-8 py-8">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(u.Role == "RECRUITER" ? "bg-indigo-100 text-indigo-800" : u.Role == "ADMIN" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@u.Role</span>
