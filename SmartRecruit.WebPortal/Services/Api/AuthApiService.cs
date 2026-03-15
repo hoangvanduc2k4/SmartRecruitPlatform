@@ -96,6 +96,24 @@ namespace WebPortal.Services.Api
                     }
                 }
             }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    try
+                    {
+                        var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                        var apiResponse = System.Text.Json.JsonSerializer.Deserialize<ApiResponse>(content, options);
+                        if (apiResponse != null && !string.IsNullOrEmpty(apiResponse.Message))
+                        {
+                            throw new Exception(apiResponse.Message);
+                        }
+                    }
+                    catch (System.Text.Json.JsonException) { }
+                }
+                throw new Exception($"Google login failed: {response.StatusCode}");
+            }
             return null;
         }
 

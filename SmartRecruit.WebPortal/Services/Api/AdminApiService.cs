@@ -1,12 +1,15 @@
 using WebPortal.Models;
 using WebPortal.Models.Api;
+using WebPortal.Models.Api.Admin;
+using System.Net.Http.Json;
+using Microsoft.Extensions.Logging;
 
 namespace WebPortal.Services.Api
 {
     public interface IAdminApiService
     {
-        Task<List<UserDto>> GetUsersAsync();
-        Task<bool> UpdateUserStatusAsync(string userId, bool isActive, string? lockReason = null);
+        Task<PagedResponse<AdminUserResponse>> GetUsersAsync(UserSearchRequest request);
+        Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request);
         Task<List<object>> GetAiLogsAsync(); // Replace object with proper AI Log DTO if exists
         Task<bool> OverrideAiDecisionAsync(string jobId);
         Task<List<Report>> GetReportsAsync();
@@ -33,26 +36,56 @@ namespace WebPortal.Services.Api
     public class AdminApiService : IAdminApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger<AdminApiService> _logger;
 
-        public AdminApiService(HttpClient httpClient)
+        public AdminApiService(HttpClient httpClient, ILogger<AdminApiService> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
 
-        public async Task<List<UserDto>> GetUsersAsync()
+        public async Task<PagedResponse<AdminUserResponse>> GetUsersAsync(UserSearchRequest request)
         {
-            var response = await _httpClient.GetAsync("admin/users");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<List<UserDto>>() ?? new List<UserDto>();
-            }
-            return new List<UserDto>();
+            var query = new List<string>();
+            if (!string.IsNullOrEmpty(request.SearchHeader)) query.Add($"SearchHeader={Uri.EscapeDataString(request.SearchHeader)}");
+            if (!string.IsNullOrEmpty(request.Role)) query.Add($"Role={Uri.EscapeDataString(request.Role)}");
+            if (request.IsActive.HasValue) query.Add($"IsActive={request.IsActive.Value.ToString().ToLower()}");
+            query.Add($"Page={request.Page}");
+            query.Add($"PageSize={request.PageSize}");
+
+            var queryString = string.Join("&", query);
+            var response = await _httpClient.GetAsync($"admin/users?{queryString}");
+            return await HandlePagedResponseAsync<AdminUserResponse>(response);
         }
 
-        public async Task<bool> UpdateUserStatusAsync(string userId, bool isActive, string? lockReason = null)
+        public async Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request)
         {
-            var response = await _httpClient.PatchAsJsonAsync($"admin/users/{userId}/status", new { IsActive = isActive, LockReason = lockReason });
+            var response = await _httpClient.PatchAsJsonAsync($"admin/users/{userId}/status", request);
             return response.IsSuccessStatusCode;
+        }
+
+        private async Task<T?> HandleResponseAsync<T>(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError("API Error: {StatusCode}", response.StatusCode);
+                return default;
+            }
+
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<T>>();
+            return apiResponse != null && apiResponse.Success ? apiResponse.Data : default;
+        }
+
+        private async Task<PagedResponse<T>> HandlePagedResponseAsync<T>(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError("API Error: {StatusCode}", response.StatusCode);
+                return new PagedResponse<T> { Success = false, Message = "Failed to fetch data" };
+            }
+
+            var pagedResponse = await response.Content.ReadFromJsonAsync<PagedResponse<T>>();
+            return pagedResponse ?? new PagedResponse<T> { Success = false, Message = "Invalid response format" };
         }
 
         public async Task<List<object>> GetAiLogsAsync()

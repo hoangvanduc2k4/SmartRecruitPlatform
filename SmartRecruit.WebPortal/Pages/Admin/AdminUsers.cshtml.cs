@@ -1,11 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
+using WebPortal.Models.Api.Admin;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class AdminUsersModel : PageModel
     {
+        private readonly IAdminApiService _adminApiService;
+
+        public AdminUsersModel(IAdminApiService adminApiService)
+        {
+            _adminApiService = adminApiService;
+        }
+
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; } = "";
 
@@ -13,43 +22,39 @@ namespace WebPortal.Pages
         public int CurrentPage { get; set; } = 1;
 
         public int TotalPages { get; set; }
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 10;
         public int TotalUsers { get; set; }
 
-        public class UserViewModel
+        public System.Collections.Generic.IList<AdminUserResponse> Users { get; set; } = new System.Collections.Generic.List<AdminUserResponse>();
+
+        public async Task OnGetAsync()
         {
-            public required string Id { get; set; }
-            public required string Name { get; set; }
-            public required string Email { get; set; }
-            public UserRole Role { get; set; }
-            public bool IsLocked { get; set; }
-            public decimal Balance { get; set; }
+            var request = new UserSearchRequest
+            {
+                SearchHeader = SearchTerm,
+                Page = CurrentPage,
+                PageSize = PageSize
+            };
+
+            var pagedResponse = await _adminApiService.GetUsersAsync(request);
+            if (pagedResponse.Success)
+            {
+                Users = pagedResponse.Data?.ToList() ?? new List<AdminUserResponse>();
+                TotalUsers = pagedResponse.TotalCount;
+                TotalPages = pagedResponse.TotalPages;
+            }
         }
 
-        public System.Collections.Generic.IList<UserViewModel> Users { get; set; } = new System.Collections.Generic.List<UserViewModel>();
-
-        public void OnGet()
+        public async Task<IActionResult> OnPostToggleStatusAsync(long userId, bool isActive, string? lockReason)
         {
-            var allUsers = new[] {
-                new UserViewModel { Id = "1", Name = "Alice Developer", Email = "alice@dev.com", Role = UserRole.CANDIDATE, IsLocked = false, Balance = 0m },
-                new UserViewModel { Id = "2", Name = "John Recruiter", Email = "hr@tech.com", Role = UserRole.RECRUITER, IsLocked = false, Balance = 2500000m },
-                new UserViewModel { Id = "3", Name = "Spam Bot #1", Email = "scam@bot.com", Role =UserRole.RECRUITER, IsLocked = true, Balance = 50000m },
-                new UserViewModel { Id = "4", Name = "System Admin", Email = "admin@smartrecruit.com", Role =UserRole.ADMIN, IsLocked = false, Balance = 0m },
-                new UserViewModel { Id = "5", Name = "Bob Backend", Email = "bob@backend.io", Role = UserRole.CANDIDATE, IsLocked = false, Balance = 0m },
-                new UserViewModel { Id = "6", Name = "Charlie HR", Email = "charlie@enterprise.net", Role =UserRole.RECRUITER, IsLocked = false, Balance = 1000000m },
-                new UserViewModel { Id = "7", Name = "Dave Spam", Email = "dave@spam.net", Role =UserRole.CANDIDATE, IsLocked = true, Balance = 0m }
-            }.AsQueryable();
-
-            if (!string.IsNullOrEmpty(SearchTerm))
+            var request = new UpdateUserStatusRequest
             {
-                allUsers = allUsers.Where(u => u.Name.Contains(SearchTerm, System.StringComparison.OrdinalIgnoreCase) || u.Email.Contains(SearchTerm, System.StringComparison.OrdinalIgnoreCase));
-            }
+                IsActive = !isActive, // Toggle the actual status
+                LockReason = lockReason
+            };
 
-            TotalUsers = allUsers.Count();
-            TotalPages = (int)System.Math.Ceiling(TotalUsers / (double)PageSize);
-            if (CurrentPage < 1) CurrentPage = 1;
-
-            Users = allUsers.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            var success = await _adminApiService.UpdateUserStatusAsync(userId, request);
+            return new JsonResult(new { success });
         }
     }
 }

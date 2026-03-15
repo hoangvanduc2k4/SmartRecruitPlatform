@@ -219,16 +219,24 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostGoogleCallbackAsync([FromForm(Name = "id_token")] string? idToken)
         {
-            if (!string.IsNullOrEmpty(idToken))
+            if (string.IsNullOrEmpty(idToken))
+            {
+                return new JsonResult(new { success = false, message = "Google identity token missing." });
+            }
+
+            try
             {
                 var response = await _authApiService.GoogleLoginAsync(idToken);
                 if (response != null && !string.IsNullOrEmpty(response.Token))
                 {
-                    return RedirectToPage("/Index");
+                    return new JsonResult(new { success = true, redirectUrl = "/Index" });
                 }
+                return new JsonResult(new { success = false, message = "Login failed. Profile could not be established." });
             }
-            ModelState.AddModelError(string.Empty, "Google login failed or was cancelled.");
-            return Page();
+            catch (Exception ex)
+            {
+                return new JsonResult(new { success = false, message = ex.Message });
+            }
         }
 
         public IActionResult OnPostQuickLogin(string userRole)
