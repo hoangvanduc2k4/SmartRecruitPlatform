@@ -8,6 +8,9 @@ namespace WebPortal.Services.Api
     {
         Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10);
         Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
+        Task<Job?> GetJobForEditAsync(string id);
+        Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job);
+        Task<ApiResponse<Job>> PublishJobAsync(string id);
         Task<Job?> GetJobByIdAsync(string id);
         Task<Job?> CreateJobAsync(Job job);
         Task<bool> UpdateJobAsync(string id, Job job);
@@ -109,19 +112,7 @@ namespace WebPortal.Services.Api
             
             try
             {
-                System.Console.WriteLine($"[JobApiService] Calling UpdateJob for jobId={longId}");
-                System.Console.WriteLine($"[JobApiService] Job data: Title={job.Title}, Location={job.Location}");
-                
                 var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
-                
-                System.Console.WriteLine($"[JobApiService] UpdateJob response: {response.StatusCode}");
-                
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    System.Console.WriteLine($"[JobApiService] UpdateJob error content: {errorContent}");
-                }
-                
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -129,6 +120,56 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Exception in UpdateJobAsync: {ex}");
                 return false;
             }
+        }
+
+        public async Task<Job?> GetJobForEditAsync(string id)
+        {
+            if (!long.TryParse(id, out var longId)) return null;
+            var response = await _httpClient.GetAsync($"jobs/{longId}/edit");
+            if (response.IsSuccessStatusCode)
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
+                return apiResponse?.Data;
+            }
+            return null;
+        }
+
+        public async Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job)
+        {
+            if (!long.TryParse(id, out var longId)) return new ApiResponse<Job> { Success = false, Message = "Invalid ID" };
+            
+            var draftRequest = new
+            {
+                Title = job.Title ?? string.Empty,
+                Company = job.Company ?? string.Empty,
+                Benefits = job.Benefits ?? string.Empty,
+                Description = job.Description ?? string.Empty,
+                Requirement = job.Requirement ?? string.Empty,
+                SkillsRequired = job.SkillsRequired ?? string.Empty,
+                SalaryMin = job.SalaryMin,
+                SalaryMax = job.SalaryMax,
+                JobType = (int)job.JobType,
+                Location = job.Location ?? string.Empty,
+                CategoryId = job.CategoryId
+            };
+
+            var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}/draft", draftRequest);
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+            
+            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) 
+                   ?? new ApiResponse<Job> { Success = false, Message = "Failed to communicate with API" };
+        }
+
+        public async Task<ApiResponse<Job>> PublishJobAsync(string id)
+        {
+            if (!long.TryParse(id, out var longId)) return new ApiResponse<Job> { Success = false, Message = "Invalid ID" };
+            var response = await _httpClient.PostAsync($"jobs/{longId}/publish", null);
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) ?? new ApiResponse<Job> { Success = false, Message = "Unknown error" };
         }
 
         public async Task<bool> DeleteJobAsync(string id)

@@ -59,11 +59,22 @@ namespace WebPortal.Pages
 
             if (long.TryParse(Id, out var longId))
             {
+                // First get the basic job to check ownership
                 Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
                 if (Job != null)
                 {
                     var currentUserId = CurrentUserId;
-                    // Check if job is saved
+                    
+                    // Ownership check
+                    IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
+
+                    // If owner, reload with draft changes if they exist
+                    if (IsOwner)
+                    {
+                        var editJob = await _jobApiService.GetJobForEditAsync(longId.ToString());
+                        if (editJob != null) Job = editJob;
+                    }
+
                     if (currentUserId.HasValue)
                     {
                         IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
@@ -171,12 +182,11 @@ namespace WebPortal.Pages
         {
             var currentUserId = CurrentUserId;
 
-            if (!currentUserId.HasValue)
+            if (!currentUserId.HasValue || (CurrentUserRole != UserRole.RECRUITER && CurrentUserRole != UserRole.ADMIN))
             {
                 return RedirectToPage("/Account/Login");
             }
 
-            // Ensure Id is populated from the bound EditJob in case it's missing from the query string
             if (EditJob != null && EditJob.Id > 0)
             {
                 Id = EditJob.Id.ToString();
@@ -186,20 +196,10 @@ namespace WebPortal.Pages
             {
                 try
                 {
-                    System.Console.WriteLine($"[JobDetail] Updating job {longId} with title: {EditJob.Title}");
-                    var success = await _jobApiService.UpdateJobAsync(Id, EditJob);
-                    System.Console.WriteLine($"[JobDetail] Update job result: {success}");
-                    
-                    if (success)
-                    {
-                        // Refresh job data after update
-                        Job = await _jobApiService.GetJobByIdAsync(Id);
-                        System.Console.WriteLine($"[JobDetail] Job refreshed after update");
-                    }
-                    else
-                    {
-                        System.Console.WriteLine($"[JobDetail] Failed to update job");
-                    }
+                    // This will now handle draft logic in the backend
+                    var response = await _jobApiService.SaveDraftAsync(Id, EditJob);
+                    if (response.Success) TempData["Message"] = response.Message;
+                    else TempData["Error"] = response.Message;
                 }
                 catch (Exception ex)
                 {
@@ -207,6 +207,24 @@ namespace WebPortal.Pages
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = Tab });
+        }
+
+        public async Task<IActionResult> OnPostPublishAsync()
+        {
+            if (long.TryParse(Id, out var longId))
+            {
+                try
+                {
+                    var response = await _jobApiService.PublishJobAsync(Id);
+                    if (response.Success) TempData["Message"] = response.Message;
+                    else TempData["Error"] = response.Message;
+                }
+                catch (Exception ex)
+                {
+                     TempData["Error"] = $"Publishing failed: {ex.Message}";
+                }
+            }
+            return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }
     }
 }

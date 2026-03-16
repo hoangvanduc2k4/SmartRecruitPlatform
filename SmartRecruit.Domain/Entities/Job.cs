@@ -1,4 +1,4 @@
-﻿using SmartRecruit.Domain.Commons;
+using SmartRecruit.Domain.Commons;
 using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Domain.Entities
@@ -24,6 +24,7 @@ namespace SmartRecruit.Domain.Entities
         public string? ModerationNote { get; set; }
         public bool IsAppealed { get; set; } = false;
         public string? AppealMessage { get; set; }
+        public string? DraftChanges { get; set; }
         public virtual User Recruiter { get; set; } = null!;
         public virtual ICollection<Applications> Applications { get; set; } = new List<Applications>();
         public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();

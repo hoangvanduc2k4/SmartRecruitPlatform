@@ -12,7 +12,8 @@ namespace WebPortal.Models
         CHECKING = 0,
         APPROVED = 1,
         BLOCKED = 2,
-        HIDDEN = 3
+        HIDDEN = 3,
+        DRAFT = 4
     }
 
     public enum JobType
