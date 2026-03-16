@@ -55,9 +55,8 @@ namespace SmartRecruit.Controllers
                 jobRequest = request with { RecruiterId = CurrentUserId };
             }
 
-            // Background moderation will handle the check
             var job = await _jobService.CreateJobAsync(jobRequest);
-            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created successfully. Moderation is pending."));
+            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created as draft. Please review and Publish to make it live."));
         }
 
         [HttpGet("my-jobs")]
@@ -74,8 +73,9 @@ namespace SmartRecruit.Controllers
         {
             try
             {
+                // Note: In new flow, this will update draft if live, or main if not live
                 var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
-                return Ok(job.Wrap("Job updated successfully"));
+                return Ok(job.Wrap("Changes saved. If job is live, changes are pending publish."));
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -85,6 +85,60 @@ namespace SmartRecruit.Controllers
             {
                 return NotFound(new { }.Wrap(ex.Message));
             }
+        }
+
+        [HttpGet("{id}/edit")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> GetJobForEdit(long id)
+        {
+            try
+            {
+                var job = await _jobService.GetJobForEditAsync(id, CurrentUserId);
+                return Ok(job.Wrap());
+            }
+            catch (UnauthorizedAccessException) { return Forbid(); }
+            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
+        }
+
+        [HttpPut("{id}/draft")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> SaveDraft(long id, [FromBody] JobDraftRequest request)
+        {
+            try
+            {
+                var job = await _jobService.SaveDraftAsync(id, request, CurrentUserId);
+                return Ok(job.Wrap("Draft saved successfully"));
+            }
+            catch (UnauthorizedAccessException) { return Forbid(); }
+            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
+        }
+
+        [HttpPost("{id}/publish")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> PublishJob(long id)
+        {
+            try
+            {
+                var job = await _jobService.PublishJobAsync(id, CurrentUserId);
+                string message;
+                if (job.Status == SmartRecruit.Domain.Enums.JobStatus.CHECKING)
+                {
+                    message = "Job is being processed by AI screening. You will be notified once it's live.";
+                }
+                else if (job.Status == SmartRecruit.Domain.Enums.JobStatus.APPROVED)
+                {
+                    message = "Job published successfully and is now live!";
+                }
+                else
+                {
+                    message = "Job was blocked or requires further review.";
+                }
+                return Ok(job.Wrap(message));
+            }
+            catch (UnauthorizedAccessException) { return Forbid(); }
+            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
+            catch (InvalidOperationException ex) { return BadRequest(new { }.Wrap(ex.Message)); }
+            catch (Exception ex) { return StatusCode(500, new { }.Wrap(ex.Message)); }
         }
 
         [HttpDelete("{id}")]

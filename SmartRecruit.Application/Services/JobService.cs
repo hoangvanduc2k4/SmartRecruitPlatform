@@ -79,21 +79,7 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
-            // 1. Wallet & Balance Check
-            var wallet = await _walletRepository.GetWalletByUserIdAsync(request.RecruiterId);
-            if (wallet == null) throw new KeyNotFoundException("Wallet not found for recruiter.");
-
-            const decimal jobPostCost = 50000;
-            if (wallet.Balance < jobPostCost)
-            {
-                throw new InvalidOperationException("Insufficient balance to post a job.");
-            }
-
-            // 2. Process Payment
-            wallet.Balance -= jobPostCost;
-            _walletRepository.Update(wallet);
-
-            // 3. Create Job
+            // 1. Create Job with DRAFT status - No charging, no AI
             var job = new Job
             {
                 Title = request.Title,
@@ -109,47 +95,14 @@ namespace SmartRecruit.Application.Services
                 CategoryId = request.CategoryId,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
-                Status = JobStatus.CHECKING // Initial status
+                Status = JobStatus.DRAFT 
             };
 
             await _jobRepository.AddAsync(job);
-
-            // 4. Create Transaction
-            var transaction = new Transaction
-            {
-                UserId = request.RecruiterId,
-                WalletId = wallet.Id,
-                Amount = jobPostCost,
-                Type = TransactionType.JOB_POST,
-                Status = TransactionStatus.SUCCESS,
-                Description = $"Post job: {job.Title}",
-                CreatedAt = DateTime.UtcNow
-            };
-            await _walletRepository.AddTransactionAsync(transaction);
-
-            // 5. Complete Unit of Work
             await _unitOfWork.CompleteAsync();
 
-            // 6. Push Notification for Payment Transparency
-            try
-            {
-                await _notificationService.SendNotificationAsync(
-                    request.RecruiterId,
-                    "Transaction Success",
-                    $"Successfully paid {jobPostCost:N0} VNĐ for posting job: {job.Title}.",
-                    NotificationType.PAYMENT,
-                    "/Account/Wallet");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Failed to send job post fee notification for User {UserId}", request.RecruiterId);
-            }
+            _logger.LogInformation("CreateJob usage: Job {JobId} created as DRAFT. No fees deducted, no AI screening triggered.", job.Id);
 
-            // Enqueue background moderation
-            _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
-            _logger.LogInformation("CreateJob use-case success: Job {JobId} created, 50,000 VND deducted, and enqueued for AI moderation", job.Id);
-
-            // Refresh job to get Category Name
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);
             return _mapper.Map<JobResponse>(createdJob!);
         }
@@ -248,40 +201,244 @@ namespace SmartRecruit.Application.Services
                 throw new UnauthorizedAccessException("You don't have permission to edit this job.");
             }
 
-            // Update fields
-            job.Title = request.Title;
-            job.Company = request.Company;
-            job.Benefits = request.Benefits;
-            job.Description = request.Description;
-            job.Requirement = request.Requirement;
-            job.SkillsRequired = request.SkillsRequired;
-            job.SalaryMin = request.SalaryMin;
-            job.SalaryMax = request.SalaryMax;
-            job.JobType = request.JobType;
-            job.Location = request.Location;
-
-            // Preserve existing category if client sends 0 (WebPortal doesn't include CategoryId in JobResponse)
-            if (request.CategoryId > 0)
+            // For backward compatibility, this updates the draft if it's a DRAFT/CHECKING job, 
+            // or redirects to DraftChanges if it's already APPROVED.
+            var draftReq = new JobDraftRequest
             {
-                job.CategoryId = request.CategoryId;
-            }
-            // job.UpdatedTime = DateTime.UtcNow; 
+                Title = request.Title,
+                Company = request.Company,
+                Benefits = request.Benefits,
+                Description = request.Description,
+                Requirement = request.Requirement,
+                SkillsRequired = request.SkillsRequired,
+                SalaryMin = request.SalaryMin,
+                SalaryMax = request.SalaryMax,
+                JobType = request.JobType,
+                Location = request.Location,
+                CategoryId = request.CategoryId
+            };
 
-            // Trigger re-moderation on update
-            job.Status = JobStatus.CHECKING;
-            job.IsAppealed = false;
-            job.AppealMessage = null;
+            return await SaveDraftAsync(id, draftReq, currentUserId);
+        }
+
+        public async Task<JobResponse> GetJobForEditAsync(long id, long userId)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
+
+            if (!string.IsNullOrEmpty(job.DraftChanges))
+            {
+                try
+                {
+                    var draft = System.Text.Json.JsonSerializer.Deserialize<JobDraftRequest>(job.DraftChanges);
+                    if (draft != null)
+                    {
+                        var response = _mapper.Map<JobResponse>(job);
+                        // Merge draft values into response for the UI to show current changes
+                        return response with
+                        {
+                            Title = draft.Title,
+                            Company = draft.Company,
+                            Benefits = draft.Benefits,
+                            Description = draft.Description,
+                            Requirement = draft.Requirement,
+                            SkillsRequired = draft.SkillsRequired,
+                            SalaryMin = draft.SalaryMin,
+                            SalaryMax = draft.SalaryMax,
+                            JobType = draft.JobType.ToString(),
+                            Location = draft.Location,
+                            CategoryId = draft.CategoryId
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error deserializing DraftChanges for Job {JobId}", id);
+                }
+            }
+
+            return _mapper.Map<JobResponse>(job);
+        }
+
+        public async Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
+
+            if (job.Status == JobStatus.DRAFT || job.Status == JobStatus.CHECKING || job.Status == JobStatus.BLOCKED)
+            {
+                // Update main fields directly if not yet live or blocked
+                job.Title = request.Title;
+                job.Company = request.Company;
+                job.Benefits = request.Benefits;
+                job.Description = request.Description;
+                job.Requirement = request.Requirement;
+                job.SkillsRequired = request.SkillsRequired;
+                job.SalaryMin = request.SalaryMin;
+                job.SalaryMax = request.SalaryMax;
+                job.JobType = request.JobType;
+                job.Location = request.Location;
+                job.CategoryId = request.CategoryId;
+                job.DraftChanges = null; // Clear any existing draft since we're updating main
+            }
+            else if (job.Status == JobStatus.APPROVED)
+            {
+                // Save to JSON for live jobs
+                job.DraftChanges = System.Text.Json.JsonSerializer.Serialize(request);
+            }
 
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
 
-            // Enqueue background moderation
-            _backgroundJobClient.Enqueue<IJobService>(x => x.ModerateJobAsync(job.Id));
-            _logger.LogInformation("UpdateJob use-case success: Job {JobId} updated and re-enqueued for AI moderation", job.Id);
+            return _mapper.Map<JobResponse>(job);
+        }
 
-            // Refresh job to get Category Name
-            var updatedJob = await _jobRepository.GetByIdAsync(job.Id);
-            return _mapper.Map<JobResponse>(updatedJob!);
+        public async Task<JobResponse> PublishJobAsync(long id, long userId)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
+
+            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            if (wallet == null) throw new KeyNotFoundException("Wallet not found.");
+
+            // 1. Determine Cost
+            decimal cost = (job.Status == JobStatus.APPROVED) ? 25000 : 50000;
+            if (wallet.Balance < cost) throw new InvalidOperationException("Insufficient balance to publish.");
+
+            // 2. Charge Wallet
+            wallet.Balance -= cost;
+            _walletRepository.Update(wallet);
+
+            // 3. Create Transaction Record
+            var transaction = new Transaction
+            {
+                UserId = userId,
+                WalletId = wallet.Id,
+                Amount = cost,
+                Type = TransactionType.JOB_POST,
+                Status = TransactionStatus.SUCCESS,
+                Description = $"Publish job: {job.Title}",
+                CreatedAt = DateTime.UtcNow
+            };
+            await _walletRepository.AddTransactionAsync(transaction);
+
+            // 4. Update Status and Enqueue Background Job
+            job.Status = JobStatus.CHECKING;
+            _jobRepository.Update(job);
+            await _unitOfWork.CompleteAsync();
+
+            // Enqueue the background processing
+            BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+
+            return _mapper.Map<JobResponse>(job);
+        }
+
+        public async Task ProcessJobPublishingAsync(long jobId, long userId)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) return;
+
+            // 1. Content to Screen
+            string title = job.Title, desc = job.Description, req = job.Requirement, skills = job.SkillsRequired;
+            JobDraftRequest? draft = null;
+            if (!string.IsNullOrEmpty(job.DraftChanges))
+            {
+                draft = System.Text.Json.JsonSerializer.Deserialize<JobDraftRequest>(job.DraftChanges);
+                if (draft != null)
+                {
+                    title = draft.Title;
+                    desc = draft.Description;
+                    req = draft.Requirement;
+                    skills = draft.SkillsRequired;
+                }
+            }
+
+            // 2. AI Screening
+            try
+            {
+                var combinedContent = $"{desc}\nRequirements: {req}\nSkills: {skills}";
+                var screeningResult = await _geminiService.CheckJobContentAsync(title, combinedContent);
+
+                // Logging AI Decision
+                var aiLog = new AILog
+                {
+                    JobId = job.Id,
+                    AIType = AIType.SCREENING,
+                    InputText = $"Title: {title}\nContent: {combinedContent}",
+                    OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
+                    Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
+                    Reason = screeningResult.IsSafe ? "Safe" : screeningResult.Analysis,
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _aiLogRepository.AddAsync(aiLog);
+
+                if (screeningResult.IsSafe)
+                {
+                    // Merge draft changes if they exist
+                    if (draft != null)
+                    {
+                        job.Title = draft.Title;
+                        job.Company = draft.Company;
+                        job.Benefits = draft.Benefits;
+                        job.Description = draft.Description;
+                        job.Requirement = draft.Requirement;
+                        job.SkillsRequired = draft.SkillsRequired;
+                        job.SalaryMin = draft.SalaryMin;
+                        job.SalaryMax = draft.SalaryMax;
+                        job.JobType = draft.JobType;
+                        job.Location = draft.Location;
+                        job.CategoryId = draft.CategoryId;
+                        job.DraftChanges = null;
+                    }
+                    job.Status = JobStatus.APPROVED;
+                    job.ModerationNote = "Approved by AI screening.";
+                }
+                else
+                {
+                    // If blocked, previous version (if approved) stays live.
+                    // If it was DRAFT/CHECKING, it moves to BLOCKED.
+                    if (job.Status != JobStatus.APPROVED)
+                    {
+                        job.Status = JobStatus.BLOCKED;
+                    }
+                    job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
+                    job.DraftChanges = null; // Clear failing draft changes
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("overloaded"))
+                {
+                    _logger.LogWarning(ex, "Transient error in ProcessJobPublishingAsync for JobId {JobId}, retrying...", jobId);
+                    throw; // Re-throw for Hangfire retry
+                }
+
+                _logger.LogError(ex, "Permanent error in ProcessJobPublishingAsync for JobId {JobId}", jobId);
+                
+                if (job.Status == JobStatus.CHECKING)
+                {
+                    job.Status = JobStatus.DRAFT;
+                }
+                job.ModerationNote = $"AI Screening failed: {ex.Message}. Please try again.";
+            }
+
+            _jobRepository.Update(job);
+            await _unitOfWork.CompleteAsync();
+
+            // 3. Notify Recruiter
+            try
+            {
+                await _notificationService.SendNotificationAsync(
+                    userId,
+                    job.Status == JobStatus.APPROVED ? "Phát hành Job thành công" : "Job bị từ chối",
+                    job.Status == JobStatus.APPROVED ? $"Công việc '{job.Title}' đã được duyệt và đăng tải." : $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.",
+                    NotificationType.JOB,
+                    $"/JobDetail?Id={job.Id}");
+            }
+            catch { /* Ignore notification failures */ }
         }
 
         public async Task<bool> DeleteJobAsync(long id)
