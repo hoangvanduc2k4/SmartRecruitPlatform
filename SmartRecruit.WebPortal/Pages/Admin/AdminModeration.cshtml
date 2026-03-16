@@ -4,92 +4,95 @@
     ViewData["Title"] = "Moderation Terminal";
 }
 
-<div class="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
-    <!-- HEADER SECTION -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-slate-100 pb-10">
-        <div class="space-y-3">
+<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
+    <!-- HEADER SECTION: COMPACT -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-100 pb-8">
+        <div class="space-y-1">
             <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">System Oversight Mode</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">System Oversight Mode</span>
             </div>
-            <h2 class="text-6xl font-black text-slate-900 tracking-tight uppercase leading-none">Moderation<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Terminal</span></h2>
-            <p class="text-slate-500 font-medium max-w-xl">Reviewing AI-triggered blocks and recruiter mission appeals. Authorized personnel only.</p>
+            <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Moderation <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Terminal</span></h2>
+            <p class="text-xs text-slate-500 font-medium">Reviewing AI-triggered blocks and recruiter mission appeals.</p>
         </div>
-        <div class="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl border border-slate-100">
-            <div class="px-6 py-3 bg-white rounded-xl shadow-sm border border-slate-200">
-                <span class="block text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Queue Status</span>
-                <span class="text-lg font-black text-slate-900 uppercase">@Model.Appeals.Count Active</span>
+        <div class="flex items-center gap-3 bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+            <div class="px-4 py-2 bg-white rounded-lg shadow-sm border border-slate-200">
+                <span class="text-[10px] font-black text-slate-900 uppercase">@Model.Appeals.Count Active Signals</span>
             </div>
         </div>
     </div>
 
-    <!-- APPEALS GRID -->
-    <div class="grid grid-cols-1 gap-6">
+    <!-- APPEALS GRID: COMPACT CARDS -->
+    <div class="grid grid-cols-1 gap-4">
         @if (Model.Appeals == null || !Model.Appeals.Any())
         {
-            <div class="py-40 text-center bg-white rounded-[3rem] border border-slate-100 shadow-sm">
-                <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-slate-100">
-                    <i class="fas fa-shield-check text-3xl text-slate-200"></i>
+            <div class="py-32 text-center bg-white rounded-[2rem] border border-slate-100 shadow-sm">
+                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-100">
+                    <i class="fas fa-shield-check text-xl text-slate-200"></i>
                 </div>
-                <p class="text-[11px] font-black uppercase tracking-[0.5em] text-slate-300">No signals detected in the moderation frequency</p>
+                <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">No signals detected in the moderation frequency</p>
             </div>
         }
         else
         {
             @foreach (var appeal in Model.Appeals)
             {
-                <div class="group bg-white rounded-[2rem] border border-slate-200 hover:border-amber-200 transition-all duration-500 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-amber-500/5">
+                <div class="group bg-white rounded-3xl border border-slate-200 hover:border-amber-200 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/5">
                     <div class="flex flex-col xl:flex-row">
-                        <!-- Left Content: Job Info -->
-                        <div class="flex-1 p-8 lg:p-12 space-y-8 border-r border-slate-50">
+                        <!-- Left Content: Job Info (Optimized Padding) -->
+                        <div class="flex-1 p-6 lg:p-8 space-y-6 border-r border-slate-50">
                             <div class="flex items-start justify-between">
-                                <div class="space-y-3">
-                                    <div class="flex items-center gap-3">
-                                        <span class="px-2.5 py-1 rounded-md bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest">Job ID: @appeal.JobId</span>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest">ID: @appeal.JobId</span>
                                     </div>
-                                    <h3 class="text-4xl font-black text-slate-900 tracking-tighter group-hover:text-amber-600 transition-colors">@appeal.JobTitle</h3>
-                                    <div class="flex items-center gap-4 text-slate-400 font-bold text-[11px] uppercase tracking-widest">
-                                        <a href="/Profile?userId=@appeal.RecruiterId" target="_blank" class="flex items-center gap-2 hover:text-indigo-600 transition-colors">
-                                        <i class="fas fa-user-circle text-indigo-500"></i> @appeal.RecruiterName
+                                    <a href="/JobDetail/?id=@appeal.JobId" target="_blank">
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-amber-600 transition-colors">@appeal.JobTitle</h3>
                                     </a>
+                                    <div class="flex items-center gap-3 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+                                        <a href="/Profile?userId=@appeal.RecruiterId" target="_blank" class="flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
+                                            <i class="fas fa-user-circle text-indigo-500"></i> @appeal.RecruiterName
+                                        </a>
                                         <span class="w-1 h-1 rounded-full bg-slate-200"></span>
+                                        <span class="text-slate-500">@appeal.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-xs font-bold text-slate-900">@appeal.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
                                 </div>
                             </div>
 
-                            <!-- Comparison View -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="p-6 rounded-2xl bg-red-50/30 border border-red-100/50 space-y-4">
-                                    <div class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-red-600">
-                                        <i class="fas fa-robot text-xs"></i> AI Diagnostic Record
+                            <!-- Comparison View: Tighter Layout -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="p-4 rounded-xl bg-red-50/20 border border-red-100/30 space-y-2">
+                                    <div class="flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-red-500">
+                                        <i class="fas fa-robot text-[10px]"></i> AI Diagnostic
                                     </div>
-                                    <p class="text-sm leading-relaxed text-slate-700 font-medium italic">"@appeal.AILogReason"</p>
+                                    <p class="text-xs leading-relaxed text-slate-600 font-medium italic">"@appeal.AILogReason"</p>
                                 </div>
-                                <div class="p-6 rounded-2xl bg-indigo-50/30 border border-indigo-100/50 space-y-4">
-                                    <div class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-indigo-600">
-                                        <i class="fas fa-comment-alt-nodes text-xs"></i> Recruiter Justification
+                                <div class="p-4 rounded-xl bg-indigo-50/20 border border-indigo-100/30 space-y-2">
+                                    <div class="flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-indigo-500">
+                                        <i class="fas fa-comment-alt-nodes text-[10px]"></i> Recruiter Justification
                                     </div>
-                                    <p class="text-sm leading-relaxed text-slate-700 font-medium italic">"@appeal.AppealMessage"</p>
+                                    <p class="text-xs leading-relaxed text-slate-600 font-medium italic">"@appeal.AppealMessage"</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right Panel: Actions -->
-                        <div class="w-full xl:w-96 bg-slate-50/50 p-8 lg:p-12 flex flex-col justify-center gap-4">
+                        <!-- Right Panel: Actions (Enhanced Visibility) -->
+                        <div class="w-full xl:w-80 bg-slate-50/50 p-6 lg:p-10 flex flex-col justify-center gap-4 border-l border-slate-100">
                             <form method="post" asp-page-handler="Approve" asp-route-jobId="@appeal.JobId" onsubmit="return confirm('Execute AI Override: Authorize this recruitment mission?')">
-                                <button type="submit" class="w-full h-16 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[11px] hover:bg-amber-600 transition-all duration-300 shadow-xl shadow-slate-900/10 flex items-center justify-center gap-3">
-                                    <i class="fas fa-shield-check text-base"></i> Override & Approve
+                                <button type="submit" class="w-full h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-500 text-white font-black uppercase tracking-widest text-xs hover:from-amber-700 hover:to-amber-600 transition-all shadow-xl shadow-amber-500/20 flex items-center justify-center gap-3 active:scale-[0.98]">
+                                    <i class="fas fa-shield-check text-lg"></i> OVERRIDE & APPROVE
                                 </button>
                             </form>
-                            <button class="w-full h-16 rounded-2xl bg-white border border-slate-200 text-slate-400 font-black uppercase tracking-widest text-[11px] hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all duration-300 flex items-center justify-center gap-3">
-                                <i class="fas fa-ban text-base"></i> Uphold Restriction
+                            
+                            <button class="w-full h-14 rounded-2xl bg-white border-2 border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:border-red-500 hover:text-red-500 hover:bg-red-50/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+                                <i class="fas fa-ban text-base"></i> UPHOLD RESTRICTION
                             </button>
-                            <a href="/JobDetail/?id=@appeal.JobId" target="_blank" class="text-center text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-indigo-600 transition-colors py-2">
-                                <i class="fas fa-external-link-alt mr-2"></i> Inspect Original File
-                            </a>
+
+                            <div class="pt-2">
+                                <a href="/JobDetail/?id=@appeal.JobId" target="_blank" class="w-full h-12 rounded-xl bg-slate-100/80 text-slate-500 font-bold uppercase tracking-widest text-[9px] hover:bg-indigo-100 hover:text-indigo-600 transition-all flex items-center justify-center gap-2 border border-slate-200/50">
+                                    <i class="fas fa-file-invoice mr-1"></i> INSPECT JOB DETAILS
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,6 +103,8 @@
 
     @if (Model.TotalPages > 1)
     {
-        <!-- Pagination logic here -->
+        <div class="mt-12">
+            <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, "/Admin/Moderation?CurrentPage={0}")' />
+        </div>
     }
 </div>

@@ -38,7 +38,7 @@
                 {
                     <tr class="hover:bg-slate-50/80 transition-all group @(!u.IsActive ? "opacity-60 grayscale" : "")">
                         <td class="px-10 py-8">
-                            <a href="/Profile?userId=@u.Id" class="flex items-center gap-4 group/profile">
+                            <a href="/Profile?userId=@u.Id" target="_blank" class="flex items-center gap-4 group/profile">
                                 <img src="@(string.IsNullOrEmpty(u.AvatarUrl) ? $"https://i.pravatar.cc/150?u={u.Id}" : u.AvatarUrl)" class="w-12 h-12 rounded-2xl object-cover shadow-sm transition-all group-hover/profile:shadow-md group-hover/profile:scale-105" alt="" />
                                 <div>
                                     <p class="font-black text-slate-900 text-base group-hover/profile:text-indigo-600 transition-colors">@u.FullName</p>
