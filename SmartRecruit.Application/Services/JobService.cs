@@ -143,7 +143,7 @@ namespace SmartRecruit.Application.Services
                             "Job Approved",
                             $"Your job posting '{job.Title}' has been approved by AI and is now public.",
                             NotificationType.JOB,
-                            $"/Job/{job.Id}");
+                            $"/JobDetail?Id={job.Id}");
                     }
                     catch (Exception ex)
                     {
@@ -164,7 +164,7 @@ namespace SmartRecruit.Application.Services
                             "Job Blocked",
                             $"Your job posting '{job.Title}' was blocked due to: {screeningResult.ViolationType}. You can appeal this decision.",
                             NotificationType.JOB,
-                            "/Recruiter/MyJobs");
+                            $"/JobDetail?Id={job.Id}");
                     }
                     catch (Exception ex)
                     {
@@ -330,6 +330,18 @@ namespace SmartRecruit.Application.Services
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
 
+            // 5. Notify Transaction Success
+            try
+            {
+                await _notificationService.SendNotificationAsync(
+                    userId,
+                    "Transaction Success",
+                    $"Successfully paid {cost:N0} VNĐ to publish job: {job.Title}.",
+                    NotificationType.PAYMENT,
+                    "/Wallet");
+            }
+            catch { /* Ignore notification failures */ }
+
             // Enqueue the background processing
             BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
 
@@ -436,7 +448,7 @@ namespace SmartRecruit.Application.Services
                     job.Status == JobStatus.APPROVED ? "Phát hành Job thành công" : "Job bị từ chối",
                     job.Status == JobStatus.APPROVED ? $"Công việc '{job.Title}' đã được duyệt và đăng tải." : $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.",
                     NotificationType.JOB,
-                    $"/JobDetail?Id={job.Id}");
+                    $"/JobDetail?id={job.Id}");
             }
             catch { /* Ignore notification failures */ }
         }
@@ -522,7 +534,7 @@ namespace SmartRecruit.Application.Services
                         "Transaction Success",
                         $"Successfully paid {boostCost:N0} VNĐ to boost job: {job.Title}.",
                         NotificationType.PAYMENT,
-                        "/Account/Wallet");
+                        "/Wallet");
                 }
                 catch (Exception ex)
                 {
@@ -552,6 +564,11 @@ namespace SmartRecruit.Application.Services
             return uniqueLocations.Values
                 .OrderBy(x => x, StringComparer.CurrentCultureIgnoreCase)
                 .ToList();
+        }
+
+        public async Task<IEnumerable<string>> GetTopLocationsAsync(int count)
+        {
+            return await _jobRepository.GetTopLocationsAsync(count);
         }
 
         public async Task<bool> AppealJobAsync(long jobId, string message)
@@ -614,7 +631,7 @@ namespace SmartRecruit.Application.Services
                         "Job Approved by Admin",
                         $"Good news! Your appeal for '{job.Title}' was successful. The job is now live.",
                         NotificationType.JOB,
-                        $"/Job/{job.Id}");
+                        $"/JobDetail?id={job.Id}");
                 }
                 catch (Exception ex)
                 {

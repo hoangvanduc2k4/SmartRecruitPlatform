@@ -19,6 +19,7 @@ namespace WebPortal.Services.Api
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<IEnumerable<string>> GetLocationsAsync();
+        Task<IEnumerable<string>> GetTopLocationsAsync();
         Task<bool> IsJobSavedAsync(long jobId, long userId);
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
@@ -230,6 +231,25 @@ namespace WebPortal.Services.Api
             }
             return new List<string>();
         }
+        public async Task<IEnumerable<string>> GetTopLocationsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("jobs/top-locations?count=5");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<string>>>(options);
+                    return apiResponse?.Data ?? new List<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching top locations: {ex.Message}");
+            }
+            return new List<string>();
+        }
+
         public async Task<bool> IsJobSavedAsync(long jobId, long userId)
         {
             try

@@ -21,6 +21,7 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task ProcessJobPublishingAsync(long jobId, long userId);
         Task ModerateJobAsync(long jobId);
         Task<IEnumerable<string>> GetLocationsAsync();
+        Task<IEnumerable<string>> GetTopLocationsAsync(int count);
         Task<bool> AppealJobAsync(long jobId, string message);
         Task<PagedList<AppealResponse>> GetAppealedJobsAsync(int page, int pageSize);
         Task<bool> OverrideAIAsync(long jobId);

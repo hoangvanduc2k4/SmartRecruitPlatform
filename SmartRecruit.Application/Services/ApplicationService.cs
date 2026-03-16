@@ -116,7 +116,7 @@ namespace SmartRecruit.Application.Services
                         "New Application",
                         $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
                         NotificationType.APPLICATION,
-                        $"/JobApplications?id={appWithDetails.JobId}");
+                        $"/CandidatePreview/{application.Id}");
 
                     // 4b. Real-time Notification for Candidate (Confirmation)
                     await _notificationService.SendNotificationAsync(
