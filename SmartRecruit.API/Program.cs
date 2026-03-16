@@ -49,7 +49,11 @@ namespace SmartRecruit.API
                 });
             });
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                });
             
             // JWT Authentication
             builder.Services.AddAuthentication(options =>
@@ -115,7 +119,7 @@ namespace SmartRecruit.API
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
-                    PrepareSchemaIfNecessary = false
+                    PrepareSchemaIfNecessary = true
                 }));
 
             // Add the Hangfire server with limited workers
@@ -146,7 +150,7 @@ namespace SmartRecruit.API
             // Hangfire Dashboard
             app.UseHangfireDashboard();
 
-            RecurringJob.AddOrUpdate<TokenCleanupJob>(
+                RecurringJob.AddOrUpdate<TokenCleanupJob>(
                 "token-cleanup-daily",
                 job => job.RunAsync(),
                 Cron.Daily

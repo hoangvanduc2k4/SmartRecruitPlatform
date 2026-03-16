@@ -57,11 +57,12 @@ namespace SmartRecruit.Controllers
         /// Lấy danh sách Transaction của một User cụ thể
         /// </summary>
         [HttpGet("user/{userId}/transactions")]
-        public async Task<IActionResult> GetTransactionsByUser(long userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetTransactionsByUser(long userId, [FromQuery] TransactionSearchRequest request)
         {
-            _logger.LogInformation("API GetTransactionsByUser called for UserId: {UserId}, Page: {Page}, PageSize: {PageSize}", userId, page, pageSize);
-            var request = new TransactionSearchRequest(userId, null, null, null, page, pageSize);
-            var transactions = await _walletService.GetTransactionsAsync(request);
+            _logger.LogInformation("API GetTransactionsByUser called for UserId: {UserId}, Page: {Page}, PageSize: {PageSize}", userId, request.Page, request.PageSize);
+            // Overwrite UserId in request with the one from route
+            var searchRequest = request with { UserId = userId };
+            var transactions = await _walletService.GetTransactionsAsync(searchRequest);
             return Ok(transactions.WrapPaged());
         }
     }

@@ -1,4 +1,4 @@
-﻿@using WebPortal.Services.Api
+@using WebPortal.Services.Api
 @using System.Security.Claims
 @inject ITokenService TokenService
 <!DOCTYPE html>
@@ -33,13 +33,14 @@
                 
                 @if (userRole == "RECRUITER")
                 {
-                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Recruitment Hub</a>
+                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Job Hub</a>
+                    <a href="/Recruiter/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Candidate List</a>
                     <a href="/Wallet" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Ví Nexus</a>
                 }
 
                 @if (userRole == "CANDIDATE")
                 {
-                    <a href="/Dashboard" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">My Applications</a>
+                    <a href="/Candidate/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">My Applied Jobs</a>
                     <a href="/SavedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Saved Jobs</a>
                 }
 

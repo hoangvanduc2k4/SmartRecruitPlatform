@@ -35,10 +35,10 @@ namespace SmartRecruit.Controllers
         /// Lấy danh sách các công việc ứng viên đã nộp
         /// </summary>
         [HttpGet("candidate/{candidateId}")]
-        public async Task<IActionResult> GetByCandidate(long candidateId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetByCandidate(long candidateId, [FromQuery] GetApplicationsByCandidateRequest request)
         {
-            _logger.LogInformation("API GetByCandidate called for CandidateId: {CandidateId}, Page: {Page}, PageSize: {PageSize}", candidateId, page, pageSize);
-            var applications = await _applicationService.GetApplicationsByCandidateAsync(candidateId, page, pageSize);
+            _logger.LogInformation("API GetByCandidate called for CandidateId: {CandidateId}, Page: {Page}, PageSize: {PageSize}", candidateId, request.Page, request.PageSize);
+            var applications = await _applicationService.GetApplicationsByCandidateAsync(candidateId, request.Page, request.PageSize);
             return Ok(applications.WrapPaged());
         }
 
@@ -46,10 +46,10 @@ namespace SmartRecruit.Controllers
         /// HR xem danh sách ứng viên của một Job (Kèm AI Ranking)
         /// </summary>
         [HttpGet("job/{jobId}")]
-        public async Task<IActionResult> GetByJob(long jobId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] bool sortByScore = false)
+        public async Task<IActionResult> GetByJob(long jobId, [FromQuery] GetApplicationsByJobRequest request)
         {
-            _logger.LogInformation("API GetByJob called for JobId: {JobId}, Page: {Page}, PageSize: {PageSize}, SortByScore: {SortByScore}", jobId, page, pageSize, sortByScore);
-            var applications = await _applicationService.GetApplicationsByJobAsync(jobId, page, pageSize, sortByScore);
+            _logger.LogInformation("API GetByJob called for JobId: {JobId}, Page: {Page}, PageSize: {PageSize}, SortByScore: {SortByScore}", jobId, request.Page, request.PageSize, request.SortByScore);
+            var applications = await _applicationService.GetApplicationsByJobAsync(jobId, request.Page, request.PageSize, request.SortByScore);
             return Ok(applications.WrapPaged());
         }
 

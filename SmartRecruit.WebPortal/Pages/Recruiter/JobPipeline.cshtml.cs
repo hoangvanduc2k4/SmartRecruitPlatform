@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
 using WebPortal.Services.Api;
 
-namespace WebPortal.Pages
+namespace WebPortal.Pages.Recruiter
 {
-    public class JobPipelineModel : PageModel
+    public class JobPipelineModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
@@ -21,11 +21,13 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
+            if (!IsRecruiter) return RedirectToPage("/Index");
+
             Job = await _jobApiService.GetJobByIdAsync(id.ToString());
             if (Job != null)
             {
                 var response = await _applicationApiService.GetApplicationsByJobAsync(id, 1, 100);
-                if (response.Success && response.Data != null)
+                if (response.Data != null)
                 {
                     Applications = response.Data.ToList();
                 }
@@ -37,25 +39,40 @@ namespace WebPortal.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostUpdateStatusAsync(long id, string status)
+        public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, string status, long jobId, DateTime? interviewDate, string? rejectionReason)
         {
+            if (!IsRecruiter) return RedirectToPage("/Index");
+
+            Console.WriteLine($"[JobPipeline] Updating Status - AppId: {applicationId}, Status: {status}, JobId: {jobId}, Date: {interviewDate}, Reason: {rejectionReason}");
+
+            if (!ModelState.IsValid)
+            {
+                var errors = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                ErrorMessage = $"Binding error: {errors}";
+                return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
+            }
+
             if (System.Enum.TryParse<ApplicationStatus>(status, out var nextStatus))
             {
-                var request = new UpdateApplicationStatusRequest { Status = nextStatus };
-                if (nextStatus == ApplicationStatus.INTERVIEWING)
+                var request = new UpdateApplicationStatusRequest 
+                { 
+                    Status = nextStatus,
+                    InterviewDate = interviewDate,
+                    RejectionReason = rejectionReason
+                };
+                
+                var result = await _applicationApiService.UpdateStatusAsync(applicationId, request);
+                if (result.Success)
                 {
-                    request.InterviewDate = DateTime.Now.AddDays(3);
+                    SuccessMessage = "Status updated successfully.";
                 }
-                
-                await _applicationApiService.UpdateStatusAsync(id, request);
-                
-                // We need the JobId to redirect back to the pipeline
-                // Since we don't have the Application object easily, we'll try to get it if needed, 
-                // but usually the UI passes the jobId too. 
-                // For now, let's assume we redirect back to RecruiterJobs or the user can refresh.
-                // Better: find the app to get jobId.
+                else
+                {
+                    ErrorMessage = $"Failed: {result.Message}";
+                }
             }
-            return RedirectToPage("/Recruiter/RecruiterJobs");
+            
+            return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
         }
     }
 }
