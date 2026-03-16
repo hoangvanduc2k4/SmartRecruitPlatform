@@ -48,7 +48,7 @@ namespace WebPortal.Pages
         public async Task OnGetAsync()
         {
             Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
-            var locations = await _jobApiService.GetLocationsAsync();
+            var locations = await _jobApiService.GetTopLocationsAsync();
             AvailableLocations = new List<string> { "ALL" };
             AvailableLocations.AddRange(locations);
 

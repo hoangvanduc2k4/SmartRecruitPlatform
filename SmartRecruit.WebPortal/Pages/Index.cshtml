@@ -125,11 +125,11 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex overflow-x-auto pb-10 gap-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4">
                 @foreach (var job in Model.RecommendedJobs)
                 {
-                    <a href="/Jobs/JobDetail?id=@job.Id" class="group">
-                        <div class="h-full bg-white rounded-3xl border border-slate-100 p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 hover:border-indigo-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <a href="/JobDetail?id=@job.Id" class="group flex-shrink-0 w-[280px] snap-start">
+                        <div class="h-full bg-white rounded-3xl border border-slate-100 p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 hover:border-indigo-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative">
                             <div>
                                 <div class="flex justify-between items-start mb-6">
                                     <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xl text-indigo-600 shadow-inner group-hover:bg-indigo-600 group-hover:text-white transition-colors">
@@ -158,13 +158,13 @@
                                     </div>
                                 }
 
-                                <h3 class="text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors mb-1">@job.Title</h3>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">@job.Company</p>
+                                <h3 class="text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors mb-1 truncate">@job.Title</h3>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 truncate">@job.Company</p>
                                 
                                 <div class="flex flex-wrap gap-2 mb-6">
                                     @if (!string.IsNullOrEmpty(job.SkillsRequired))
                                     {
-                                        var skills = job.SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(3);
+                                        var skills = job.SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(2);
                                         foreach(var skill in skills)
                                         {
                                             <span class="px-2 py-1 bg-slate-50 rounded-lg text-[10px] font-bold text-slate-500 border border-slate-100">@skill.Trim()</span>
@@ -177,7 +177,7 @@
                                 <span class="text-sm font-black text-slate-700">
                                     $@((job.SalaryMax / 1000).ToString("N0"))k <span class="text-[10px] font-medium text-slate-400">/ yr</span>
                                 </span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[100px]">
                                     <i class="fas fa-map-marker-alt mr-1"></i> @job.Location
                                 </span>
                             </div>
@@ -269,6 +269,13 @@
 </div>
 
 <style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
     @@keyframes shimmer {
         100% { transform: translateX(200%) skewX(-12deg); }
     }
