@@ -14,15 +14,10 @@ namespace WebPortal.Services.Api
         Task<bool> OverrideAiDecisionAsync(long jobId);
         Task<List<Report>> GetReportsAsync();
         Task<FinanceStatsResponse?> GetFinanceStatsAsync();
-        Task<List<Transaction>> GetGlobalTransactionsAsync();
+        Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10);
         Task<List<Notification>> GetNotificationsAsync();
     }
 
-    public class FinanceStatsResponse
-    {
-        public decimal TotalRevenue { get; set; }
-        public decimal TotalSpent { get; set; }
-    }
 
     public class Report
     {
@@ -123,21 +118,13 @@ namespace WebPortal.Services.Api
         public async Task<FinanceStatsResponse?> GetFinanceStatsAsync()
         {
             var response = await _httpClient.GetAsync("admin/finance/stats");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<FinanceStatsResponse>();
-            }
-            return null;
+            return await HandleResponseAsync<FinanceStatsResponse>(response);
         }
 
-        public async Task<List<Transaction>> GetGlobalTransactionsAsync()
+        public async Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync("admin/finance/logs");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<List<Transaction>>() ?? new List<Transaction>();
-            }
-            return new List<Transaction>();
+            var response = await _httpClient.GetAsync($"admin/finance/logs?page={page}&pageSize={pageSize}");
+            return await HandlePagedResponseAsync<TransactionResponse>(response) ?? new PagedResponse<TransactionResponse>();
         }
 
         public async Task<List<Notification>> GetNotificationsAsync()

@@ -1,0 +1,234 @@
+@page "/Admin/Finance"
+@model WebPortal.Pages.Admin.AdminFinanceModel
+@{
+    ViewData["Title"] = "Financial Terminal | System HQ";
+    ViewData["FullWidth"] = true;
+}
+
+<div class="min-h-screen bg-slate-50/50 pb-20 animate-in fade-in duration-700">
+    <div class="max-w-[1600px] mx-auto px-10 pt-10 space-y-10">
+        
+        <!-- HEADER SECTION: ALIGNED WITH TERMINAL STANDARDS -->
+        <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="px-3 py-1 bg-slate-900 rounded-lg text-white font-black text-[10px] tracking-widest uppercase shadow-sm">Identity Protocol</div>
+                    <span class="text-slate-300 font-bold">/</span>
+                    <span class="text-slate-400 font-bold text-[10px] uppercase tracking-widest">Economic Oversight</span>
+                </div>
+                <h1 class="text-5xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">Financial <span class="text-indigo-600">Terminal</span></h1>
+            </div>
+
+            <div class="flex items-center p-1.5 bg-white rounded-2xl shadow-sm border border-slate-200">
+                <a href="?Tab=OVERVIEW" class="px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all @(Model.Tab == "OVERVIEW" ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-900")">Overview</a>
+                <a href="?Tab=LEDGER" class="px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all @(Model.Tab == "LEDGER" ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-900")">Logs</a>
+            </div>
+        </div>
+
+        @if (Model.Tab == "OVERVIEW")
+        {
+            <!-- OVERVIEW TAB -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                
+                <!-- MAIN REVENUE CARD -->
+                <div class="xl:col-span-2 group relative bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 overflow-hidden">
+                    <div class="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fas fa-chart-mixed text-9xl text-indigo-600"></i>
+                    </div>
+                    
+                    <div class="relative space-y-10">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Total Recognized Revenue</span>
+                            <div class="flex items-baseline gap-4">
+                                <span class="text-6xl font-black text-slate-900 tracking-tighter tabular-nums">@Model.Stats.TotalRecognizedRevenue.ToString("N0")</span>
+                                <span class="text-indigo-600 font-black text-xl uppercase italic tracking-widest">VND</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-slate-100">
+                            <div class="space-y-1.5">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Job Posts</p>
+                                <p class="text-2xl font-black text-slate-900 tabular-nums">@Model.Stats.JobPostRevenue.ToString("N0")</p>
+                                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
+                                    <div class="h-full bg-indigo-500" style="width: @(Model.Stats.TotalRecognizedRevenue > 0 ? (Model.Stats.JobPostRevenue / Model.Stats.TotalRecognizedRevenue * 100) : 0)%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Boosts</p>
+                                <p class="text-2xl font-black text-slate-900 tabular-nums">@Model.Stats.BoostRevenue.ToString("N0")</p>
+                                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
+                                    <div class="h-full bg-emerald-500" style="width: @(Model.Stats.TotalRecognizedRevenue > 0 ? (Model.Stats.BoostRevenue / Model.Stats.TotalRecognizedRevenue * 100) : 0)%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">VIP</p>
+                                <p class="text-2xl font-black text-slate-900 tabular-nums">@Model.Stats.VipRevenue.ToString("N0")</p>
+                                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
+                                    <div class="h-full bg-amber-500" style="width: @(Model.Stats.TotalRecognizedRevenue > 0 ? (Model.Stats.VipRevenue / Model.Stats.TotalRecognizedRevenue * 100) : 0)%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Others</p>
+                                <p class="text-2xl font-black text-slate-900 tabular-nums">@Model.Stats.OtherRevenue.ToString("N0")</p>
+                                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
+                                    <div class="h-full bg-slate-400" style="width: @(Model.Stats.TotalRecognizedRevenue > 0 ? (Model.Stats.OtherRevenue / Model.Stats.TotalRecognizedRevenue * 100) : 0)%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECONDARY METRICS -->
+                <div class="flex flex-col gap-8">
+                    <div class="flex-1 bg-emerald-600 p-10 rounded-[2.5rem] text-white shadow-xl shadow-emerald-200">
+                        <span class="text-[10px] font-black uppercase tracking-[0.3em] opacity-60">System Inflow</span>
+                        <div class="mt-6 space-y-1">
+                            <p class="text-4xl font-black tabular-nums">@Model.Stats.TotalCashInflow.ToString("N0") VND</p>
+                            <p class="text-[10px] font-black opacity-60 uppercase tracking-widest italic">Total Deposits</p>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                        <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Circulating Liability</span>
+                        <div class="mt-6 space-y-1">
+                            <p class="text-4xl font-black text-slate-900 tabular-nums">@Model.Stats.SystemCirculatingBalance.ToString("N0") VND</p>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">User Wallets</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COUNTERS GRID -->
+                <div class="xl:col-span-3 grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 flex items-center justify-between group hover:border-slate-300 transition-colors">
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total</p>
+                            <p class="text-3xl font-black text-slate-900 mt-1">@Model.Stats.TotalTransactions</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 flex items-center justify-between group hover:border-emerald-200 transition-colors">
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-emerald-600">Success</p>
+                            <p class="text-3xl font-black text-emerald-600 mt-1">@Model.Stats.SuccessTransactions</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 flex items-center justify-between group hover:border-amber-200 transition-colors">
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-amber-600">Pending</p>
+                            <p class="text-3xl font-black text-amber-600 mt-1">@Model.Stats.PendingTransactions</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 flex items-center justify-between group hover:border-red-200 transition-colors">
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-red-600">Failed</p>
+                            <p class="text-3xl font-black text-red-600 mt-1">@Model.Stats.FailedTransactions</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
+                            <i class="fas fa-circle-xmark"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- LEDGER TAB -->
+            <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden animate-in slide-in-from-right-4 duration-700">
+                <div class="px-10 py-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div class="space-y-1">
+                        <h3 class="text-2xl font-black text-slate-900 tracking-tight uppercase italic">Global Ledger</h3>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Terminal Audit Protocol active
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl">Page @Model.PageNumber of @Model.TotalPages</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50/80 border-b border-slate-200">
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Code</th>
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Stakeholder</th>
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Description</th>
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Status</th>
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Amount (VND)</th>
+                                <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            @foreach (var tx in Model.RecentTransactions)
+                            {
+                                <tr class="group hover:bg-slate-50/80 transition-all duration-300">
+                                    <td class="px-10 py-8">
+                                        <div class="space-y-1">
+                                            <span class="font-mono text-xs font-black text-slate-900">#@(tx.OrderCode?.ToString() ?? tx.Id.ToString("D8"))</span>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase">Ref: @(tx.ReferenceId?.ToString() ?? "N/A")</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-10 py-8">
+                                        <a href="/Profile?userId=@tx.UserId" target="_blank" class="flex items-center gap-4 group/user">
+                                            <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover/user:bg-indigo-600 group-hover/user:text-white transition-all border border-slate-100 shadow-sm">
+                                                <i class="fas fa-user-tie text-xs"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-base font-black text-slate-900 group-hover/user:text-indigo-600 transition-colors block">@tx.UserName</span>
+                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">UID: @tx.UserId</p>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="px-10 py-8 text-sm">
+                                        <div class="space-y-1">
+                                            <p class="font-black text-slate-600">@tx.Description</p>
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">TYPE: @tx.Type</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-10 py-8 text-center">
+                                        @{
+                                            var badgeStyle = tx.Status switch {
+                                                "SUCCESS" => "bg-emerald-100 text-emerald-800",
+                                                "PENDING" => "bg-amber-100 text-amber-800",
+                                                "FAILED" => "bg-red-100 text-red-800",
+                                                _ => "bg-slate-100 text-slate-800"
+                                            };
+                                        }
+                                        <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @badgeStyle">@tx.Status</span>
+                                    </td>
+                                    <td class="px-10 py-8 text-right">
+                                        <p class="text-xl font-black tabular-nums @(tx.Type == "TOPUP" ? "text-emerald-600" : "text-slate-900")">
+                                            @(tx.Type == "TOPUP" ? "+" : "-")@tx.Amount.ToString("N0")
+                                        </p>
+                                    </td>
+                                    <td class="px-10 py-8 text-right">
+                                        <p class="text-base font-black text-slate-900 tabular-nums">@tx.CreatedAt.ToString("HH:mm")</p>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase">@tx.CreatedAt.ToString("dd MMM yyyy")</p>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINATION FOOTER -->
+                <div class="px-10 py-10 border-t border-slate-50 bg-slate-50/20">
+                    @await Html.PartialAsync("_Pagination", (Model.PageNumber, Model.TotalPages, "/Admin/Finance?Tab=LEDGER&PageNumber={0}"))
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8fafc; }
+</style>
