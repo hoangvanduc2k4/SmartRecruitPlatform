@@ -6,7 +6,7 @@ using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
-    public class JobsModel : PageModel
+    public class JobsModel : BasePageModel
     {
         private readonly IJobApiService _jobApiService;
 
@@ -43,11 +43,12 @@ namespace WebPortal.Pages
 
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 6;
+        public HashSet<long> SavedJobIds { get; set; } = new HashSet<long>();
 
         public async Task OnGetAsync()
         {
             Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
-            var locations = await _jobApiService.GetLocationsAsync();
+            var locations = await _jobApiService.GetTopLocationsAsync();
             AvailableLocations = new List<string> { "ALL" };
             AvailableLocations.AddRange(locations);
 
@@ -82,6 +83,33 @@ namespace WebPortal.Pages
                 Jobs = new List<Job>();
                 TotalPages = 0;
             }
+
+            // Fetch saved job IDs for the current user
+            if (IsAuthenticated && IsCandidate && CurrentUserId.HasValue)
+            {
+                try
+                {
+                    var savedJobs = await _jobApiService.GetSavedJobsAsync(CurrentUserId.Value, 1, 100);
+                    if (savedJobs.Success && savedJobs.Data != null)
+                    {
+                        SavedJobIds = new HashSet<long>(savedJobs.Data.Select(j => j.Id));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log error but don't break the page
+                    System.Console.WriteLine($"[JobsModel] Error fetching saved jobs: {ex.Message}");
+                }
+            }
+        }
+
+        public async Task<IActionResult> OnPostToggleSaveAsync(long jobId)
+        {
+            var currentUserId = CurrentUserId;
+            if (!currentUserId.HasValue) return RedirectToPage("/Account/Login");
+
+            await _jobApiService.ToggleSaveJobAsync(jobId, currentUserId.Value);
+            return RedirectToPage(new { SearchTerm, LocationFilter, CategoryFilter, TypeFilter, MinSalary, MaxSalary, CurrentPage });
         }
     }
 }

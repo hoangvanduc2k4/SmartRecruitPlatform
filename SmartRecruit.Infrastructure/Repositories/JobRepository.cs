@@ -58,11 +58,12 @@ namespace SmartRecruit.Infrastructure.Repositories
             {
                 var keyword = request.Keyword.Trim();
                 query = query.Where(x =>
-                    x.Title.Contains(keyword) ||
-                    x.Company.Contains(keyword) ||
-                    x.Description.Contains(keyword) ||
-                    x.Requirement.Contains(keyword) ||
-                    x.SkillsRequired.Contains(keyword));
+                    EF.Functions.Collate(x.Title, "Vietnamese_CI_AI").Contains(keyword) ||
+                    EF.Functions.Collate(x.Company, "Vietnamese_CI_AI").Contains(keyword) ||
+                    EF.Functions.Collate(x.Description, "Vietnamese_CI_AI").Contains(keyword) ||
+                    EF.Functions.Collate(x.Requirement, "Vietnamese_CI_AI").Contains(keyword) ||
+                    EF.Functions.Collate(x.SkillsRequired, "Vietnamese_CI_AI").Contains(keyword) ||
+                    EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(keyword));
             }
 
             // 4. Salary Range
@@ -79,7 +80,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 5. Specific Filters
             if (!string.IsNullOrEmpty(request.Location))
             {
-                query = query.Where(x => x.Location.Contains(request.Location));
+                query = query.Where(x => EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(request.Location));
             }
 
             if (request.CategoryId.HasValue)
@@ -186,6 +187,17 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .Where(j => !string.IsNullOrEmpty(j.Location))
                 .Select(j => j.Location)
                 .Distinct()
+                .ToListAsync();
+        }
+        
+        public async Task<IEnumerable<string>> GetTopLocationsAsync(int count)
+        {
+            return await _context.Set<Job>()
+                .Where(j => !string.IsNullOrEmpty(j.Location) && !j.IsDeleted && j.Status == JobStatus.APPROVED)
+                .GroupBy(j => j.Location)
+                .OrderByDescending(g => g.Count())
+                .Take(count)
+                .Select(g => g.Key)
                 .ToListAsync();
         }
 

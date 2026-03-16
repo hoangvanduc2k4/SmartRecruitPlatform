@@ -11,13 +11,16 @@ namespace WebPortal.Pages
     {
         private readonly IJobApiService _jobApiService;
         private readonly IApplicationApiService _applicationApiService;
+        private readonly IAuthApiService _authApiService;
 
         public JobDetailModel(
             IJobApiService jobApiService,
-            IApplicationApiService applicationApiService)
+            IApplicationApiService applicationApiService,
+            IAuthApiService authApiService)
         {
             _jobApiService = jobApiService;
             _applicationApiService = applicationApiService;
+            _authApiService = authApiService;
         }
 
         public Job? Job { get; set; }
@@ -43,6 +46,8 @@ namespace WebPortal.Pages
         public int PageSize { get; set; } = 5;
         public int TotalApplicationCount { get; set; }
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
+        public bool HasCV { get; set; }
+        public Application? MyApplication { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -55,6 +60,13 @@ namespace WebPortal.Pages
                     Id = CurrentUserId?.ToString() ?? "",
                     Role = CurrentUserRole ?? UserRole.CANDIDATE
                 };
+
+                // Fetch full profile for CV check
+                var profile = await _authApiService.GetProfileAsync();
+                if (profile?.CandidateProfile != null)
+                {
+                    HasCV = !string.IsNullOrWhiteSpace(profile.CandidateProfile.CVText);
+                }
             }
 
             if (long.TryParse(Id, out var longId))
@@ -78,6 +90,11 @@ namespace WebPortal.Pages
                     if (currentUserId.HasValue)
                     {
                         IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
+
+                        if (CurrentUserRole == UserRole.CANDIDATE)
+                        {
+                            MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
+                        }
                     }
 
                     // Only the recruiter who owns this job can edit it
@@ -173,7 +190,16 @@ namespace WebPortal.Pages
 
             if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
             {
-                await _applicationApiService.ApplyAsync(longId, currentUserId.Value);
+                try
+                {
+                    var response = await _applicationApiService.ApplyAsync(longId, currentUserId.Value);
+                    if (response.Success) TempData["Message"] = response.Message;
+                    else TempData["Error"] = response.Message;
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = $"Application failed: {ex.Message}";
+                }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }

@@ -71,6 +71,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> ApplyJobAsync(ApplyJobRequest request)
         {
             _logger.LogInformation("Executing ApplyJob use-case for JobId: {JobId} by CandidateId: {CandidateId}", request.JobId, request.CandidateId);
+            
             // 1. Kiểm tra xem đã apply chưa
             bool alreadyApplied = await _applicationRepository.IsAlreadyAppliedAsync(request.JobId, request.CandidateId);
             if (alreadyApplied)
@@ -79,7 +80,15 @@ namespace SmartRecruit.Application.Services
                 throw new InvalidOperationException("You have already applied for this job.");
             }
 
-            // 2. Tạo bản ghi đơn giản
+            // 2. Kiểm tra xem candidate đã có CVText chưa
+            var candidateProfile = await _unitOfWork.CandidateProfiles.FindAsync(c => c.UserId == request.CandidateId);
+            if (candidateProfile == null || string.IsNullOrWhiteSpace(candidateProfile.CVText))
+            {
+                _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has not uploaded a CV", request.CandidateId);
+                throw new InvalidOperationException("Please upload your CV in your profile before applying.");
+            }
+
+            // 3. Tạo bản ghi đơn giản
             var application = new Applications
             {
                 JobId = request.JobId,
@@ -107,7 +116,7 @@ namespace SmartRecruit.Application.Services
                         "New Application",
                         $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
                         NotificationType.APPLICATION,
-                        $"/Recruiter/JobApplications?jobId={appWithDetails.JobId}");
+                        $"/CandidatePreview/{application.Id}");
 
                     // 4b. Real-time Notification for Candidate (Confirmation)
                     await _notificationService.SendNotificationAsync(
@@ -258,6 +267,12 @@ namespace SmartRecruit.Application.Services
                 }
             }
             return result;
+        }
+
+        public async Task<ApplicationResponse?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId)
+        {
+            var application = await _applicationRepository.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
+            return _mapper.Map<ApplicationResponse>(application);
         }
 
         public async Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)

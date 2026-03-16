@@ -197,6 +197,13 @@ namespace SmartRecruit.Controllers
             return Ok(locations.Wrap());
         }
 
+        [HttpGet("top-locations")]
+        public async Task<IActionResult> GetTopLocations([FromQuery] int count = 5)
+        {
+            var locations = await _jobService.GetTopLocationsAsync(count);
+            return Ok(locations.Wrap());
+        }
+
         [HttpPost("{id}/save")]
         [Authorize]
         public async Task<IActionResult> ToggleSaveJob(long id)

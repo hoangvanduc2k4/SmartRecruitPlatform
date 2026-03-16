@@ -188,7 +188,7 @@ namespace SmartRecruit.Infrastructure.Services
                         "Deposit Successful",
                         $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
                         NotificationType.PAYMENT,
-                        "/Account/Wallet");
+                        "/Wallet");
                 }
                 catch (Exception ex)
                 {
@@ -282,7 +282,7 @@ namespace SmartRecruit.Infrastructure.Services
                             "Deposit Successful",
                             $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
                             NotificationType.PAYMENT,
-                            "/Account/Wallet");
+                            "/Wallet");
                     }
                     catch (Exception ex)
                     {

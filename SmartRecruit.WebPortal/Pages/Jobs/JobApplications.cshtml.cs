@@ -35,7 +35,7 @@ namespace WebPortal.Pages
         {
             if (!long.TryParse(Id, out var longId))
             {
-                return RedirectToPage("/JobDetail");
+                return RedirectToPage("/Jobs/JobDetail");
             }
 
             Job = await _jobApiService.GetJobByIdAsync(longId.ToString());

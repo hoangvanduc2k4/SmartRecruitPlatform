@@ -19,11 +19,13 @@ namespace WebPortal.Services.Api
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<IEnumerable<string>> GetLocationsAsync();
+        Task<IEnumerable<string>> GetTopLocationsAsync();
         Task<bool> IsJobSavedAsync(long jobId, long userId);
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
         Task<bool> AppealJobAsync(long jobId, string message);
         Task<RecruiterStatsResponse?> GetRecruiterStatsAsync();
+        Task<IEnumerable<Job>> GetRecommendedJobsAsync();
     }
 
     public class JobApiService : IJobApiService
@@ -229,6 +231,25 @@ namespace WebPortal.Services.Api
             }
             return new List<string>();
         }
+        public async Task<IEnumerable<string>> GetTopLocationsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("jobs/top-locations?count=5");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<string>>>(options);
+                    return apiResponse?.Data ?? new List<string>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching top locations: {ex.Message}");
+            }
+            return new List<string>();
+        }
+
         public async Task<bool> IsJobSavedAsync(long jobId, long userId)
         {
             try
@@ -330,6 +351,26 @@ namespace WebPortal.Services.Api
                 return apiResponse?.Data;
             }
             return null;
+        }
+        
+        public async Task<IEnumerable<Job>> GetRecommendedJobsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("jobs/recommendations");
+                if (response.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<Job>>>(options);
+                    return apiResponse?.Data ?? new List<Job>();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error fetching recommended jobs: {ex.Message}");
+            }
+            return new List<Job>();
         }
     }
 }

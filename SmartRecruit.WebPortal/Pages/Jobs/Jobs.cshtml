@@ -12,17 +12,30 @@
             <h2 class="text-5xl font-black text-slate-900 tracking-tighter">Explore Mission Log</h2>
             <p class="text-slate-500 font-medium">Synthesizing @Model.Jobs.Count potential career matches from the global talent pool.</p>
         </div>
-        <div class="flex gap-3">
-            <form method="get" class="relative group" id="searchForm">
+        <div class="flex-1 max-w-2xl">
+            <form method="get" class="flex flex-col sm:flex-row gap-3" id="searchForm">
                 <!-- Keep other filters in state -->
-                <input type="hidden" name="LocationFilter" value="@Model.LocationFilter" />
                 <input type="hidden" name="CategoryFilter" value="@Model.CategoryFilter" />
                 <input type="hidden" name="TypeFilter" value="@Model.TypeFilter" />
                 <input type="hidden" name="MinSalary" value="@Model.MinSalary" />
                 <input type="hidden" name="MaxSalary" value="@Model.MaxSalary" />
 
-                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors"></i>
-                <input type="text" name="SearchTerm" placeholder="Search roles, tech, or DNA patterns..." class="h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-2xl w-full md:w-80 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" value="@Model.SearchTerm" onchange="document.getElementById('searchForm').submit();" />
+                <div class="relative flex-1 group">
+                    <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors"></i>
+                    <input type="text" name="SearchTerm" placeholder="Search roles, tech, or locations..." class="h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-2xl w-full focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" value="@Model.SearchTerm" />
+                </div>
+
+                <div class="sm:w-48 relative">
+                    <select name="LocationFilter" onchange="document.getElementById('searchForm').submit();" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
+                        @foreach (var loc in Model.AvailableLocations)
+                        {
+                            <option value="@loc" selected="@(Model.LocationFilter == loc)">@loc.ToUpper()</option>
+                        }
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none text-[10px]"></i>
+                </div>
+
+                <button type="submit" class="h-14 px-8 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-600 transition-all shadow-lg active:scale-95">Search</button>
             </form>
         </div>
     </div>
@@ -32,17 +45,8 @@
         <aside class="lg:col-span-3 space-y-8">
             <form method="get" class="p-8 space-y-8 sticky top-28 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg" id="filterForm">
                 <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                <input type="hidden" name="LocationFilter" value="@Model.LocationFilter" />
                 
-                <div class="space-y-4">
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sector Locus</h4>
-                    <select name="LocationFilter" onchange="document.getElementById('filterForm').submit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
-                        @foreach (var loc in Model.AvailableLocations)
-                        {
-                            <option value="@loc" selected="@(Model.LocationFilter == loc)">@loc.ToUpper()</option>
-                        }
-                    </select>
-                </div>
-
                 <div class="space-y-4">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Industry Category</h4>
                     <select name="CategoryFilter" onchange="document.getElementById('filterForm').submit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
@@ -112,6 +116,21 @@
                                         <div class="bg-yellow-400 text-slate-900 text-[9px] font-black uppercase tracking-widest px-4 py-1.5 rounded-b-xl shadow-lg flex items-center gap-2">
                                             <i class="fas fa-fire-flame-curved animate-bounce"></i> Hot Trending
                                         </div>
+                                    </div>
+                                }
+
+                                @if (Model.IsAuthenticated)
+                                {
+                                    bool isSaved = Model.SavedJobIds.Contains(job.Id);
+                                    <div class="absolute top-6 right-6 z-20">
+                                        <form method="post" asp-page-handler="ToggleSave" class="m-0">
+                                            <input type="hidden" name="jobId" value="@job.Id" />
+                                            <button type="submit" 
+                                                    class="w-10 h-10 rounded-xl flex items-center justify-center transition-all 
+                                                           @(isSaved ? "bg-red-50 text-red-500 border border-red-100 shadow-sm" : "bg-slate-50 text-slate-400 border border-slate-100 hover:text-red-500 hover:bg-red-50")">
+                                                <i class="@(isSaved ? "fas" : "far") fa-heart"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 }
 
