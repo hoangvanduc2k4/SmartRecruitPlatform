@@ -1,4 +1,4 @@
-﻿using SmartRecruit.Application.DTO.Application;
+using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Helpers;
 
 namespace SmartRecruit.Application.Interfaces.Services
@@ -12,6 +12,7 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> ApplyJobAsync(ApplyJobRequest request);
         Task ScoreApplicationAsync(long applicationId);
         Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
+        Task<ApplicationResponse?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
         Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
 
     }

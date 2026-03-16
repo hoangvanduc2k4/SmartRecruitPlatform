@@ -12,7 +12,8 @@ namespace WebPortal.Services.Api
         Task<Application?> GetApplicationByIdAsync(long id);
         Task<(bool Success, string? Message)> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
         Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
-        Task<bool> ApplyAsync(long jobId, long candidateId);
+        Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId);
+        Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
     }
 
     public class ApplicationApiService : IApplicationApiService
@@ -132,10 +133,36 @@ namespace WebPortal.Services.Api
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> ApplyAsync(long jobId, long candidateId)
+        public async Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId)
         {
-            var response = await _httpClient.PostAsJsonAsync("applications", new { JobId = jobId, CandidateId = candidateId });
-            return response.IsSuccessStatusCode;
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("applications", new { JobId = jobId, CandidateId = candidateId });
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>(_jsonOptions);
+                return result ?? new ApiResponse<bool> { Success = false, Message = "Unknown error" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool> { Success = false, Message = ex.Message };
+            }
+        }
+
+        public async Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"applications/job/{jobId}/candidate/{candidateId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ApiResponse<Application>>(_jsonOptions);
+                    return result?.Data;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ApplicationApiService] Error fetching application for job {jobId} and candidate {candidateId}: {ex.Message}");
+            }
+            return null;
         }
     }
 }

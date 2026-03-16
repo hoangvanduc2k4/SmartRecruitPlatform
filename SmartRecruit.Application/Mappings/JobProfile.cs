@@ -11,6 +11,7 @@ namespace SmartRecruit.Application.Mappings
             CreateMap<Job, JobResponse>()
                 .ConstructUsing(src => new JobResponse(
                     src.Id,
+                    src.RecruiterId,
                     src.Title,
                     src.Company,
                     src.Benefits,
@@ -18,6 +19,7 @@ namespace SmartRecruit.Application.Mappings
                     src.SalaryMin,
                     src.SalaryMax,
                     src.Location,
+                    src.CategoryId,
                     src.JobType.ToString(),
                     src.CreatedAt,
                     src.Category != null ? src.Category.Name : "Unknown",
@@ -28,7 +30,9 @@ namespace SmartRecruit.Application.Mappings
                     src.ViewCount,
                     src.IsAppealed,
                     src.ModerationNote,
-                    src.AppealMessage
+                    src.AppealMessage,
+                    src.BoostExpiryTime != null && src.BoostExpiryTime > DateTime.UtcNow,
+                    src.DraftChanges
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
         }

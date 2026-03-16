@@ -19,6 +19,7 @@ namespace WebPortal.Models.Api
         public string? Skills { get; set; }
         public int ExperienceYears { get; set; }
         public string? CVUrl { get; set; }
+        public string? CVText { get; set; }
         public decimal? ExpectedSalary { get; set; }
     }
 

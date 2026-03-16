@@ -1,6 +1,7 @@
 @using WebPortal.Services.Api
 @using System.Security.Claims
 @inject ITokenService TokenService
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,31 +72,17 @@
                 }
 
                 <div class="relative group/notif">
-                    <button class="w-11 h-11 rounded-2xl bg-slate-100/50 flex items-center justify-center text-slate-500 hover:bg-slate-200/50 transition-all relative cursor-pointer">
+                    <button id="notif-btn" class="w-11 h-11 rounded-2xl bg-slate-100/50 flex items-center justify-center text-slate-500 hover:bg-slate-200/50 transition-all relative cursor-pointer">
                         <i class="fas fa-bell"></i>
-                        <span class="absolute top-3 right-3 w-2 h-2 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+                        <span id="notif-badge" class="absolute top-1 right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-[#f02849] text-[10px] font-black text-white ring-2 ring-white leading-none transform translate-x-1/4 -translate-y-1/4 hidden">0</span>
                     </button>
                     <!-- Notifications Dropdown -->
                     <div class="absolute right-0 mt-2 w-80 bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 invisible opacity-0 group-hover/notif:visible group-hover/notif:opacity-100 transition-all duration-300 z-50">
                         <div class="flex justify-between items-center mb-5">
                             <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Incoming Data</h4>
-                            <button class="text-[9px] font-bold text-indigo-600 uppercase">Clear All</button>
                         </div>
-                        <div class="space-y-3 max-h-[350px] overflow-y-auto custom-scrollbar pr-1 text-left">
-                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 transition-all cursor-pointer group flex-col text-left">
-                                <div class="flex justify-between items-start mb-1">
-                                    <p class="text-xs font-black text-slate-900 group-hover:text-indigo-600 transition-colors">AI Match Ready</p>
-                                    <span class="text-[8px] font-bold text-slate-300">Just now</span>
-                                </div>
-                                <p class="text-[10px] text-slate-500 leading-relaxed">Bob Backend matches 85% for Senior Dev.</p>
-                            </div>
-                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 transition-all cursor-pointer group flex-col text-left">
-                                <div class="flex justify-between items-start mb-1">
-                                    <p class="text-xs font-black text-slate-900 group-hover:text-indigo-600 transition-colors">Wallet Alert</p>
-                                    <span class="text-[8px] font-bold text-slate-300">2h ago</span>
-                                </div>
-                                <p class="text-[10px] text-slate-500 leading-relaxed">Balance low. Please top up soon.</p>
-                            </div>
+                        <div id="notification-list" class="space-y-3 max-h-[350px] overflow-y-auto custom-scrollbar pr-1 text-left">
+                            <div class="text-center p-4 text-slate-400 text-xs" id="empty-notif" style="display: none;">No new notifications.</div>
                         </div>
                     </div>
                 </div>
@@ -166,6 +153,22 @@
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @if (userRole != "")
+    {
+        var rawApiUrl = Configuration["ApiBaseUrl"] ?? "https://localhost:7001/api/";
+        var hubUrl = rawApiUrl.Replace("/api/", "/notificationHub");
+        <script>
+            window.appConfig = {
+                apiBaseUrl: '@rawApiUrl',
+                notificationHubUrl: '@hubUrl',
+                accessToken: '@TokenService.GetAccessToken()'
+            };
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+        <script src="~/js/notification.js" asp-append-version="true"></script>
+    }
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

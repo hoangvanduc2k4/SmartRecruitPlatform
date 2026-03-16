@@ -20,6 +20,7 @@ namespace SmartRecruit.Infrastructure.Services
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IWalletRepository _walletRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
         private readonly PayOSSettings _settings;
         private readonly PayOSClient _sdkClient;
         private readonly ILogger<PaymentService> _logger;
@@ -30,12 +31,14 @@ namespace SmartRecruit.Infrastructure.Services
             IHttpClientFactory httpClientFactory,
             IWalletRepository walletRepository,
             IUnitOfWork unitOfWork,
+            INotificationService notificationService,
             IOptions<PayOSSettings> settings,
             ILogger<PaymentService> logger)
         {
             _httpClientFactory = httpClientFactory;
             _walletRepository = walletRepository;
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
             _settings = settings.Value;
             _logger = logger;
 
@@ -176,6 +179,21 @@ namespace SmartRecruit.Infrastructure.Services
                 wallet.Balance += transaction.Amount;
                 _walletRepository.Update(wallet);
                 _logger.LogInformation("External system PayOS Transaction {OrderCode} SUCCESS. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
+
+                // Real-time Notification for Payment Success
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        transaction.UserId,
+                        "Deposit Successful",
+                        $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
+                        NotificationType.PAYMENT,
+                        "/Account/Wallet");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send deposit success notification for User {UserId}", transaction.UserId);
+                }
             }
 
             await _unitOfWork.CompleteAsync();
@@ -255,6 +273,21 @@ namespace SmartRecruit.Infrastructure.Services
                     wallet.Balance += transaction.Amount;
                     _walletRepository.Update(wallet);
                     _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} PAID. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
+
+                    // Real-time Notification for Payment Success
+                    try
+                    {
+                        await _notificationService.SendNotificationAsync(
+                            transaction.UserId,
+                            "Deposit Successful",
+                            $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
+                            NotificationType.PAYMENT,
+                            "/Account/Wallet");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to send deposit success notification for User {UserId}", transaction.UserId);
+                    }
                 }
 
                 await _unitOfWork.CompleteAsync();

@@ -66,9 +66,17 @@ namespace SmartRecruit.Infrastructure.Repositories
 
         public async Task<bool> IsAlreadyAppliedAsync(long jobId, long candidateId)
         {
-            _logger.LogTrace("Executing SQL query to check if JobId {JobId} is already applied by CandidateId {CandidateId}", jobId, candidateId);
             return await _context.Set<Applications>()
                 .AnyAsync(a => a.JobId == jobId && a.CandidateId == candidateId);
+        }
+
+        public async Task<Applications?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId)
+        {
+            return await _context.Set<Applications>()
+                .Include(a => a.Candidate)
+                    .ThenInclude(u => u.CandidateProfile)
+                .Include(a => a.Job)
+                .FirstOrDefaultAsync(a => a.JobId == jobId && a.CandidateId == candidateId);
         }
 
         public async Task<Applications?> GetApplicationWithDetailsAsync(long id)

@@ -1,9 +1,10 @@
-﻿using SmartRecruit.Domain.Enums;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Application.DTO.Job
 {
     public record JobResponse(
         long Id,
+        long RecruiterId,
         string Title,
         string Company,
         string Benefits,
@@ -11,6 +12,7 @@ namespace SmartRecruit.Application.DTO.Job
         decimal SalaryMin,
         decimal SalaryMax,
         string Location,
+        long CategoryId,
         string JobType,
         DateTime CreatedTime,
         string Category,
@@ -21,6 +23,8 @@ namespace SmartRecruit.Application.DTO.Job
         int ViewCount,
         bool IsAppealed,
         string? ModerationNote,
-        string? AppealMessage
+        string? AppealMessage,
+        bool IsBoosted,
+        string? DraftChanges
     );
 }

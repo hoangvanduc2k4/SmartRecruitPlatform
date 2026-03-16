@@ -51,16 +51,6 @@ namespace WebPortal.Pages
                 return RedirectToPage("/Account/Login");
             }
 
-            // Wallet check
-            var wallet = await _walletApiService.GetWalletInfoAsync();
-            if (wallet == null || wallet.Balance < 50000)
-            {
-                ModelState.AddModelError(string.Empty, "Insufficient wallet balance. Posting a job costs 50,000 VNĐ.");
-                Categories = await _jobApiService.GetCategoriesAsync();
-                WalletBalance = wallet?.Balance ?? 0;
-                return Page();
-            }
-
             var result = await _jobApiService.CreateJobAsync(new Job
             {
                 RecruiterId = recruiterId.Value,

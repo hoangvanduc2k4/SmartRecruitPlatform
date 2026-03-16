@@ -27,5 +27,6 @@ namespace WebPortal.Models
         public bool IsDeleted { get; set; }
         public bool IsAppealed { get; set; }
         public string? ModerationNote { get; set; }
+        public string? DraftChanges { get; set; }
     }
 }

@@ -39,13 +39,15 @@ namespace SmartRecruit.API
             builder.Services.AddApplicationDI();
             builder.Services.AddInfrastructureDI(builder.Configuration);
 
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                            .AllowAnyMethod()
-                           .AllowAnyHeader();
+                           .AllowAnyHeader()
+                           .AllowCredentials();
                 });
             });
 
@@ -54,6 +56,7 @@ namespace SmartRecruit.API
                 {
                     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 });
+            builder.Services.AddSignalR();
             
             // JWT Authentication
             builder.Services.AddAuthentication(options =>
@@ -157,6 +160,7 @@ namespace SmartRecruit.API
             );
 
             app.MapControllers();
+            app.MapHub<SmartRecruit.Infrastructure.Hubs.NotificationHub>("/notificationHub");
 
             app.Run();
         }
