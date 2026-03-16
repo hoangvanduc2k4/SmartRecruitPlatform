@@ -43,6 +43,12 @@ namespace SmartRecruit.Infrastructure.Repositories
                 query = query.Where(x => x.Status != JobStatus.BLOCKED);
             }
 
+            // Exclude DRAFT status unless it's a specific recruiter's view (Manage Jobs)
+            if (!request.RecruiterId.HasValue)
+            {
+                query = query.Where(x => x.Status != JobStatus.DRAFT);
+            }
+
             // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
             // Often "Public" implies only APPROVED. 
             // However, sticking to the explicit "ShowHidden/ShowBlocked" toggles requested.
