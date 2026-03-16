@@ -1,4 +1,5 @@
-﻿@page
+@page
+@model IndexModel
 @{
     ViewData["Title"] = "Neural Hiring Redefined";
     ViewData["FullWidth"] = true;
@@ -106,6 +107,86 @@
             </div>
         </div>
     </section>
+    
+    <!-- RECOMMENDED JOBS (FOR CANDIDATES) -->
+    @if (Model.RecommendedJobs != null && Model.RecommendedJobs.Any())
+    {
+        <section class="py-20 px-4 max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-widest">
+                        <i class="fas fa-sparkles"></i> Curated matching
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">Recommended For You</h2>
+                    <p class="text-slate-500 font-medium">Neural matching based on your profile and career history.</p>
+                </div>
+                <a href="/Jobs" class="group flex items-center gap-2 font-bold text-sm text-indigo-600 hover:text-indigo-700 transition-colors">
+                    Explore all missions <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach (var job in Model.RecommendedJobs)
+                {
+                    <a href="/Jobs/JobDetail?id=@job.Id" class="group">
+                        <div class="h-full bg-white rounded-3xl border border-slate-100 p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 hover:border-indigo-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-6">
+                                    <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xl text-indigo-600 shadow-inner group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    @if (job.IsBoosted)
+                                    {
+                                        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider bg-orange-100 text-orange-700">
+                                            <i class="fas fa-fire mr-1"></i> Hot
+                                        </span>
+                                    }
+                                </div>
+
+                                @if (Model.IsAuthenticated)
+                                {
+                                    bool isSaved = Model.SavedJobIds.Contains(job.Id);
+                                    <div class="absolute top-6 right-6 z-20">
+                                        <form method="post" asp-page-handler="ToggleSave" class="m-0">
+                                            <input type="hidden" name="jobId" value="@job.Id" />
+                                            <button type="submit" 
+                                                    class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shadow-sm
+                                                           @(isSaved ? "bg-red-50 text-red-500 border border-red-100" : "bg-slate-50 text-slate-400 border border-slate-100 hover:text-red-500 hover:bg-red-50")">
+                                                <i class="@(isSaved ? "fas" : "far") fa-heart"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                }
+
+                                <h3 class="text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors mb-1">@job.Title</h3>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">@job.Company</p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    @if (!string.IsNullOrEmpty(job.SkillsRequired))
+                                    {
+                                        var skills = job.SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries).Take(3);
+                                        foreach(var skill in skills)
+                                        {
+                                            <span class="px-2 py-1 bg-slate-50 rounded-lg text-[10px] font-bold text-slate-500 border border-slate-100">@skill.Trim()</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-slate-50 flex items-center justify-between">
+                                <span class="text-sm font-black text-slate-700">
+                                    $@((job.SalaryMax / 1000).ToString("N0"))k <span class="text-[10px] font-medium text-slate-400">/ yr</span>
+                                </span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                    <i class="fas fa-map-marker-alt mr-1"></i> @job.Location
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
 
     <!-- TRUST STRIP -->
     <section class="py-12 border-y border-slate-200/60 bg-white/50 backdrop-blur-md">

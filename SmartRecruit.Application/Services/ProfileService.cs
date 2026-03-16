@@ -65,6 +65,7 @@ namespace SmartRecruit.Application.Services
                         Skills = candidateProfile.Skills,
                         ExperienceYears = candidateProfile.ExperienceYears,
                         CVUrl = candidateProfile.CVUrl,
+                        CVText = candidateProfile.CVText,
                         ExpectedSalary = candidateProfile.ExpectedSalary
                     };
                 }

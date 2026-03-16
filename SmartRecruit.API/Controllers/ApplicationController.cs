@@ -54,6 +54,18 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
+        /// Lấy chi tiết đơn ứng tuyển của một ứng viên cho một Job cụ thể
+        /// </summary>
+        [HttpGet("job/{jobId}/candidate/{candidateId}")]
+        public async Task<IActionResult> GetByJobAndCandidate(long jobId, long candidateId)
+        {
+            _logger.LogInformation("API GetByJobAndCandidate called for JobId: {JobId}, CandidateId: {CandidateId}", jobId, candidateId);
+            var application = await _applicationService.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
+            if (application == null) return NotFound(new { }.Wrap("Application not found"));
+            return Ok(application.Wrap());
+        }
+
+        /// <summary>
         /// Lấy chi tiết một Applied Job theo ID
         /// </summary>
         [HttpGet("{id}")]
@@ -72,13 +84,20 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
         {
             _logger.LogInformation("API ApplyJob called by CandidateId: {CandidateId} for JobId: {JobId}", request.CandidateId, request.JobId);
-            await _applicationService.ApplyJobAsync(request);
-
-            // Trả về thông báo thành công, không kèm data Score bị null
-            return Ok(new
+            try 
             {
-                message = "Application submitted successfully"
-            });
+                var success = await _applicationService.ApplyJobAsync(request);
+                return Ok(success.Wrap("Application submitted successfully"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error applying for job");
+                return StatusCode(500, new { success = false }.Wrap(ex.Message));
+            }
         }
 
         /// <summary>
