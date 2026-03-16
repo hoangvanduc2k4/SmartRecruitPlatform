@@ -10,8 +10,8 @@ namespace WebPortal.Services.Api
     {
         Task<PagedResponse<AdminUserResponse>> GetUsersAsync(UserSearchRequest request);
         Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request);
-        Task<List<object>> GetAiLogsAsync(); // Replace object with proper AI Log DTO if exists
-        Task<bool> OverrideAiDecisionAsync(string jobId);
+        Task<PagedResponse<AppealedJobResponse>> GetAppealsAsync(int page = 1, int pageSize = 10);
+        Task<bool> OverrideAiDecisionAsync(long jobId);
         Task<List<Report>> GetReportsAsync();
         Task<FinanceStatsResponse?> GetFinanceStatsAsync();
         Task<List<Transaction>> GetGlobalTransactionsAsync();
@@ -98,7 +98,13 @@ namespace WebPortal.Services.Api
             return new List<object>();
         }
 
-        public async Task<bool> OverrideAiDecisionAsync(string jobId)
+        public async Task<PagedResponse<AppealedJobResponse>> GetAppealsAsync(int page = 1, int pageSize = 10)
+        {
+            var response = await _httpClient.GetAsync($"admin/content/appeals?page={page}&pageSize={pageSize}");
+            return await HandlePagedResponseAsync<AppealedJobResponse>(response);
+        }
+
+        public async Task<bool> OverrideAiDecisionAsync(long jobId)
         {
             var response = await _httpClient.PostAsync($"admin/content/jobs/{jobId}/override-ai", null);
             return response.IsSuccessStatusCode;
