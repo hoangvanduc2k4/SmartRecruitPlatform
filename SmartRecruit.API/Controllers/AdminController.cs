@@ -86,6 +86,14 @@ namespace SmartRecruit.API.Controllers
             return Ok(new { Success = success }.Wrap("Job moderation overridden and approved successfully"));
         }
 
+        [HttpPost("content/jobs/{id}/reject-appeal")]
+        public async Task<IActionResult> RejectAppeal(long id)
+        {
+            _logger.LogInformation("API RejectAppeal called for JobId: {JobId}", id);
+            var success = await _jobService.RejectAppealAsync(id);
+            return Ok(new { Success = success }.Wrap("Job appeal rejected successfully"));
+        }
+
         [HttpGet("content/reports")]
         public async Task<IActionResult> GetReports([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {

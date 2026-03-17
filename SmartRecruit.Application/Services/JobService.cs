@@ -641,6 +641,36 @@ namespace SmartRecruit.Application.Services
             return result;
         }
 
+        public async Task<bool> RejectAppealAsync(long jobId)
+        {
+            var job = await _jobRepository.GetByIdAsync(jobId);
+            if (job == null) throw new KeyNotFoundException("Job not found");
+
+            job.IsAppealed = false;
+            job.ModerationNote = $"Appeal Rejected by Admin on {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}";
+
+            _jobRepository.Update(job);
+            var result = await _unitOfWork.CompleteAsync() > 0;
+            if (result)
+            {
+                // Real-time Notification for Appeal Rejection
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        job.RecruiterId,
+                        "Appeal Rejected",
+                        $"Your appeal for '{job.Title}' was reviewed by Admin and the AI decision was upheld.",
+                        NotificationType.JOB,
+                        $"/JobDetail?id={job.Id}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send appeal rejection notification for JobId {JobId}", jobId);
+                }
+            }
+            return result;
+        }
+
         public async Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId)
         {
             return await _jobRepository.GetRecruiterStatsAsync(recruiterId);

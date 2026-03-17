@@ -12,8 +12,8 @@ namespace WebPortal.Services.Api
         Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request);
         Task<PagedResponse<AppealedJobResponse>> GetAppealsAsync(int page = 1, int pageSize = 10);
         Task<bool> OverrideAiDecisionAsync(long jobId);
-        Task<List<Report>> GetReportsAsync();
         Task<FinanceStatsResponse?> GetFinanceStatsAsync();
+        Task<bool> RejectAppealAsync(long jobId);
         Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10);
         Task<List<Notification>> GetNotificationsAsync();
     }
@@ -102,6 +102,12 @@ namespace WebPortal.Services.Api
         public async Task<bool> OverrideAiDecisionAsync(long jobId)
         {
             var response = await _httpClient.PostAsync($"admin/content/jobs/{jobId}/override-ai", null);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> RejectAppealAsync(long jobId)
+        {
+            var response = await _httpClient.PostAsync($"admin/content/jobs/{jobId}/reject-appeal", null);
             return response.IsSuccessStatusCode;
         }
 

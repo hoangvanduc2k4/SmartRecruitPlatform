@@ -84,9 +84,11 @@
                                 </button>
                             </form>
                             
-                            <button class="w-full h-14 rounded-2xl bg-white border-2 border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:border-red-500 hover:text-red-500 hover:bg-red-50/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
-                                <i class="fas fa-ban text-base"></i> UPHOLD RESTRICTION
-                            </button>
+                            <form method="post" asp-page-handler="Reject" asp-route-jobId="@appeal.JobId" onsubmit="return confirm('Uphold Restriction: Confirm that this job appeal is denied and original AI decision stands?')">
+                                <button type="submit" class="w-full h-14 rounded-2xl bg-white border-2 border-slate-200 text-slate-500 font-black uppercase tracking-widest text-[10px] hover:border-red-500 hover:text-red-500 hover:bg-red-50/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+                                    <i class="fas fa-ban text-base"></i> UPHOLD RESTRICTION
+                                </button>
+                            </form>
 
                             <div class="pt-2">
                                 <a href="/JobDetail/?id=@appeal.JobId" target="_blank" class="w-full h-12 rounded-xl bg-slate-100/80 text-slate-500 font-bold uppercase tracking-widest text-[9px] hover:bg-indigo-100 hover:text-indigo-600 transition-all flex items-center justify-center gap-2 border border-slate-200/50">
@@ -108,3 +110,6 @@
         </div>
     }
 </div>
+
+@section Scripts {
+}

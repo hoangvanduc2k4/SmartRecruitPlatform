@@ -36,5 +36,11 @@ namespace WebPortal.Pages.Admin
             var success = await _adminApiService.OverrideAiDecisionAsync(jobId);
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostRejectAsync(long jobId)
+        {
+            var success = await _adminApiService.RejectAppealAsync(jobId);
+            return RedirectToPage();
+        }
     }
 }
