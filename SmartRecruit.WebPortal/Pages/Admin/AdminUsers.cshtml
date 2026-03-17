@@ -29,35 +29,35 @@
                     <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Identity Details</th>
                     <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Sector Role</th>
                     <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">System Status</th>
-                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Wallet Nexus</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created At</th>
                     <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Action Protocol</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-50">
                 @foreach (var u in Model.Users)
                 {
-                    <tr class="hover:bg-slate-50/80 transition-all group @(u.IsLocked ? "opacity-60 grayscale" : "")">
+                    <tr class="hover:bg-slate-50/80 transition-all group @(!u.IsActive ? "opacity-60 grayscale" : "")">
                         <td class="px-10 py-8">
-                            <div class="flex items-center gap-4">
-                                <img src="https://i.pravatar.cc/150?u=@u.Id" class="w-12 h-12 rounded-2xl object-cover shadow-sm transition-all" alt="" />
+                            <a href="/Profile?userId=@u.Id" target="_blank" class="flex items-center gap-4 group/profile">
+                                <img src="@(string.IsNullOrEmpty(u.AvatarUrl) ? $"https://i.pravatar.cc/150?u={u.Id}" : u.AvatarUrl)" class="w-12 h-12 rounded-2xl object-cover shadow-sm transition-all group-hover/profile:shadow-md group-hover/profile:scale-105" alt="" />
                                 <div>
-                                    <p class="font-black text-slate-900 text-base group-hover:text-indigo-600 transition-colors">@u.Name</p>
+                                    <p class="font-black text-slate-900 text-base group-hover/profile:text-indigo-600 transition-colors">@u.FullName</p>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">@u.Email</p>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td class="px-8 py-8">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(u.Role == UserRole.RECRUITER ? "bg-indigo-100 text-indigo-800" : u.Role == UserRole.ADMIN ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@u.Role</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(u.Role == "RECRUITER" ? "bg-indigo-100 text-indigo-800" : u.Role == "ADMIN" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@u.Role</span>
                         </td>
                         <td class="px-8 py-8">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(u.IsLocked ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@(u.IsLocked ? "LOCKED" : "ACTIVE")</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(!u.IsActive ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@(u.IsActive ? "ACTIVE" : "LOCKED")</span>
                         </td>
                         <td class="px-8 py-8">
-                            <span class="text-sm font-black text-slate-900 tabular-nums">@u.Balance.ToString("N0") <span class="text-[9px] opacity-30 uppercase font-black">VND</span></span>
+                            <span class="text-[12px] font-bold text-slate-400">@u.CreatedAt.ToString("MMM dd, yyyy")</span>
                         </td>
                         <td class="px-10 py-8 text-right">
-                            <button onclick="toggleLock(this)" class="h-11 px-6 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-colors @(u.IsLocked ? "bg-green-600 text-white hover:bg-green-700" : "bg-red-50 text-red-600 hover:bg-red-100")">
-                                @if (u.IsLocked)
+                            <button onclick="toggleLock(@u.Id, @u.IsActive.ToString().ToLower())" class="h-11 px-6 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-colors @(!u.IsActive ? "bg-green-600 text-white hover:bg-green-700" : "bg-red-50 text-red-600 hover:bg-red-100")">
+                                @if (!u.IsActive)
                                 {
                                     <><i class="fas fa-unlock mr-2"></i> Unlock</>
                                 }
@@ -76,11 +76,40 @@
     <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, $"?SearchTerm={Model.SearchTerm}&CurrentPage={{0}}")' />
 </div>
 
+@Html.AntiForgeryToken()
+
 @section Scripts {
     <script>
-        function toggleLock(btn) {
-            alert('Mock toggle logic executed!');
-            window.location.reload();
+        async function toggleLock(userId, isActive) {
+            let lockReason = "";
+            
+            if (isActive) {
+                // User is currently ACTIVE -> we want to LOCK
+                lockReason = prompt("Reason for protocol suspension (Account Lock):");
+                if (lockReason === null) return; // User cancelled
+            } else {
+                // User is currently LOCKED -> we want to UNLOCK
+                if (!confirm("Are you sure you want to RESTORE (Unlock) this identity?")) return;
+            }
+
+            try {
+                const response = await fetch(`?handler=ToggleStatus&userId=${userId}&isActive=${isActive}&lockReason=${encodeURIComponent(lockReason || '')}`, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    window.location.reload();
+                } else {
+                    alert('Action protocol failed. Integrity check required.');
+                }
+            } catch (error) {
+                console.error('Error toggling status:', error);
+                alert('A system error occurred.');
+            }
         }
     </script>
 }

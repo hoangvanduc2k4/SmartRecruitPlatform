@@ -178,11 +178,9 @@
 
         async function handleCredentialResponse(response) {
             try {
-                // Prepare form data exactly as traditional form POST
                 const formData = new FormData();
                 formData.append('id_token', response.credential);
 
-                // Add CSRF token for security (ASP.NET Core AntiForgery)
                 const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
                 
                 const fetchOptions = {
@@ -196,19 +194,27 @@
                     };
                 }
 
-                // Send the ID token to our backend via AJAX (Fetch API)
                 const serverResponse = await fetch('/Auth?handler=GoogleCallback', fetchOptions);
+                const result = await serverResponse.json();
 
-                if (serverResponse.ok) {
-                    // If login successful, redirect to Index
-                    window.location.href = '/Index';
+                if (result.success) {
+                    window.location.href = result.redirectUrl || '/Index';
                 } else {
-                    // Handle failure (e.g. reload or show error)
-                    window.location.reload();
+                    // Find or create error container
+                    let errorAlert = document.getElementById('google-error-alert');
+                    if (!errorAlert) {
+                        const form = document.querySelector('form');
+                        errorAlert = document.createElement('div');
+                        errorAlert.id = 'google-error-alert';
+                        errorAlert.className = 'mb-4 p-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative z-10';
+                        form.parentNode.insertBefore(errorAlert, form);
+                    }
+                    errorAlert.innerText = result.message || 'Google login protocol failed.';
+                    errorAlert.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("Google Login Error:", error);
-                window.location.reload();
+                alert('A system error occurred during Google authentication.');
             }
         }
 

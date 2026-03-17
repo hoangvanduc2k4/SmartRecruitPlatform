@@ -15,6 +15,8 @@ namespace WebPortal.Pages
         }
 
 
+        public bool IsOwnProfile { get; set; } = true;
+
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "IDENTITY"; // IDENTITY, SKILLS (Candidate), COMPANY (Recruiter), SECURITY
 
@@ -27,15 +29,24 @@ namespace WebPortal.Pages
         [BindProperty]
         public IFormFile? AvatarFile { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(long? userId)
         {
             try
             {
-                CurrentUser = await _authApiService.GetProfileAsync();
+                // If userId is provided, we are viewing someone else (or ourselves via ID)
+                // If not, we are viewing the current logged-in user
+                CurrentUser = await _authApiService.GetProfileAsync(userId);
+                
                 if (CurrentUser == null)
-                    return RedirectToPage("/Account/Auth");
+                {
+                    if (!userId.HasValue) return RedirectToPage("/Account/Auth");
+                    return NotFound();
+                }
 
-                // Pre-fill update form with current values
+                // Determine if this is the user's own profile
+                IsOwnProfile = !userId.HasValue || userId == CurrentUserId;
+
+                // Pre-fill update form with current values (always, so they can be seen in read-only mode)
                 UpdateInput.FullName = CurrentUser.FullName;
                 if (CurrentUser.CandidateProfile != null)
                 {

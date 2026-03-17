@@ -8,7 +8,7 @@ namespace WebPortal.Services.Api
         Task<LoginResponse?> GoogleLoginAsync(string idToken);
         Task<bool> RegisterAsync(RegisterRequest request);
         Task<bool> LogoutAsync();
-        Task<UserProfileResponse?> GetProfileAsync();
+        Task<UserProfileResponse?> GetProfileAsync(long? userId = null);
         Task<bool> UpdateProfileAsync(UpdateProfileRequest request);
         Task<bool> VerifyEmailAsync(VerifyEmailRequest request);
         Task<bool> ResendVerificationEmailAsync(string email);
@@ -96,6 +96,24 @@ namespace WebPortal.Services.Api
                     }
                 }
             }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    try
+                    {
+                        var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                        var apiResponse = System.Text.Json.JsonSerializer.Deserialize<ApiResponse>(content, options);
+                        if (apiResponse != null && !string.IsNullOrEmpty(apiResponse.Message))
+                        {
+                            throw new Exception(apiResponse.Message);
+                        }
+                    }
+                    catch (System.Text.Json.JsonException) { }
+                }
+                throw new Exception($"Google login failed: {response.StatusCode}");
+            }
             return null;
         }
 
@@ -140,9 +158,10 @@ namespace WebPortal.Services.Api
             return false;
         }
 
-        public async Task<UserProfileResponse?> GetProfileAsync()
+        public async Task<UserProfileResponse?> GetProfileAsync(long? userId = null)
         {
-            var response = await _httpClient.GetAsync("users/profile");
+            var url = userId.HasValue ? $"users/profile/{userId.Value}" : "users/profile";
+            var response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var options = new System.Text.Json.JsonSerializerOptions
