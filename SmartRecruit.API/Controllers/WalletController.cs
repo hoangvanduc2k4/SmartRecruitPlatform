@@ -49,7 +49,15 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> GetTransactions([FromQuery] TransactionSearchRequest request)
         {
             _logger.LogInformation("API GetTransactions called with parameters: {@Request}", request);
-            var transactions = await _walletService.GetTransactionsAsync(request);
+
+            // Security: If not admin, can only see own transactions
+            var finalRequest = request;
+            if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN)
+            {
+                finalRequest = request with { UserId = CurrentUserId };
+            }
+
+            var transactions = await _walletService.GetTransactionsAsync(finalRequest);
             return Ok(transactions.WrapPaged());
         }
 

@@ -1,62 +1,59 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models;
-using WebPortal.Services;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class WalletModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IWalletApiService _walletApiService;
 
-        public WalletModel(IMockDataService mockDataService)
+        public WalletModel(IWalletApiService walletApiService)
         {
-            _mockDataService = mockDataService;
+            _walletApiService = walletApiService;
         }
 
-        public User CurrentUser { get; set; } = new User();
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public WalletData Wallet { get; set; } = new();
+        public List<Transaction> Transactions { get; set; } = new();
+        public decimal TotalAmountPaid { get; set; }
+        public int TotalTransactions { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Simulate logged in user
-            CurrentUser = _mockDataService.Users.FirstOrDefault() ?? new User { WalletBalance = 2500000 };
-
-            Transactions = _mockDataService.Transactions
-                .Where(t => t.UserId == CurrentUser.Id)
-                .OrderByDescending(t => t.CreatedAt)
-                .ToList();
-
-            // Fallback mock transactions if empty
-            if (!Transactions.Any())
+            var walletInfo = await _walletApiService.GetWalletInfoAsync();
+            if (walletInfo != null)
             {
-                Transactions = new List<Transaction>
-                {
-                    new Transaction { Id = 1001, UserId = CurrentUser.Id, Amount = -50000, Type = "SERVICE_FEE", Description = "Job Post: Senior .NET Dev", CreatedAt = System.DateTime.Now.AddDays(-2) },
-                    new Transaction { Id = 1002, UserId = CurrentUser.Id, Amount = 500000, Type = "TOP_UP", Description = "Top Up: PayOS", CreatedAt = System.DateTime.Now.AddDays(-3) },
-                    new Transaction { Id = 1003, UserId = CurrentUser.Id, Amount = -10000, Type = "JOB_BOOST", Description = "Candidate Unlock: Bob Backend", CreatedAt = System.DateTime.Now.AddDays(-4) }
-                };
+                Wallet = walletInfo;
             }
+
+            var transactionsResponse = await _walletApiService.GetTransactionsAsync();
+            if (transactionsResponse?.Data != null)
+            {
+                Transactions = transactionsResponse.Data.ToList();
+                TotalTransactions = transactionsResponse.TotalCount;
+                var paidTypes = new[] { "JOB_POST", "BOOST", "VIP", "OTHER" };
+                TotalAmountPaid = Transactions.Where(t => paidTypes.Contains(t.Type?.ToUpper()) && t.Status?.ToUpper() == "SUCCESS").Sum(t => Math.Abs(t.Amount));
+            }
+
+            return Page();
         }
 
-        public IActionResult OnPostTopUp(int amount)
+        public async Task<IActionResult> OnPostTopUpAsync(decimal amount)
         {
-            // Simulate top-up
-            var user = _mockDataService.Users.FirstOrDefault();
-            if (user != null && amount > 0)
+            if (amount <= 0)
             {
-                user.WalletBalance += amount;
-                _mockDataService.Transactions.Add(new Transaction
-                {
-                    Id = (long)_mockDataService.Transactions.Count + 1,
-                    UserId = user.Id,
-                    Amount = amount,
-                    Type = "TOP_UP",
-                    Description = "Top Up: PayOS",
-                    CreatedAt = System.DateTime.Now
-                });
+                return Page();
             }
-            return RedirectToPage();
+
+            var (checkoutUrl, error) = await _walletApiService.CreateDepositLinkAsync(amount);
+            if (!string.IsNullOrEmpty(checkoutUrl))
+            {
+                return Redirect(checkoutUrl);
+            }
+
+            ModelState.AddModelError("", error ?? "Failed to create payment link. Please try again.");
+            return await OnGetAsync();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Bogus;
+using Bogus;
 using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
@@ -153,7 +153,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 Id = i,
                 UserId = recruiterIds[i % recruiterIds.Count],
                 WalletId = recruiterIds[i % recruiterIds.Count],
-                Amount = 20000,
+                Amount = -20000,
                 Type = TransactionType.BOOST,
                 Status = TransactionStatus.SUCCESS,
                 CreatedAt = createdAt

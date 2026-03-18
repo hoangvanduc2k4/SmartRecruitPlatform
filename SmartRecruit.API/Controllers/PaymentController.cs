@@ -5,7 +5,7 @@ using SmartRecruit.Application.Interfaces.Services;
 using System.Text;
 using System.Text.Json;
 using SmartRecruit.API.Controllers;
-
+using SmartRecruit.Application.Wrappers;
 namespace SmartRecruit.Controllers
 {
     [ApiController]
@@ -27,7 +27,13 @@ namespace SmartRecruit.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreatePaymentLink([FromBody] CreatePaymentRequest request)
         {
-            var result = await _paymentService.CreatePaymentLinkAsync(request);
+            var finalRequest = request with
+            {
+                UserId = CurrentUserId,
+                Description = string.IsNullOrEmpty(request.Description) ? $"Deposit {request.Amount:N0} VNĐ" : request.Description
+            };
+
+            var result = await _paymentService.CreatePaymentLinkAsync(finalRequest);
             return Ok(result.Wrap("Payment link created successfully."));
         }
 
@@ -73,11 +79,8 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> PaymentSuccess([FromQuery] long orderCode)
         {
             _logger.LogInformation("API PaymentSuccess called with orderCode={OrderCode}", orderCode);
-            var confirmed = await _paymentService.ConfirmPaymentByOrderCodeAsync(orderCode);
-            if (confirmed)
-                return Ok(new { message = "Payment confirmed. Wallet has been updated.", orderCode });
-            else
-                return Ok(new { message = "Payment completed but wallet update pending (may have already been processed).", orderCode });
+            await _paymentService.ConfirmPaymentByOrderCodeAsync(orderCode);
+            return Redirect($"https://localhost:7070/Wallet?success=true&orderCode={orderCode}");
         }
 
         /// <summary>
@@ -88,7 +91,21 @@ namespace SmartRecruit.Controllers
         {
             _logger.LogInformation("API PaymentCancel called with orderCode={OrderCode}", orderCode);
             await _paymentService.CancelTransactionAsync(orderCode);
-            return Ok(new { message = "Payment cancelled.", orderCode });
+            return Redirect($"https://localhost:7070/Wallet?cancel=true&orderCode={orderCode}");
+        }
+
+        /// <summary>
+        /// Lấy link thanh toán cho một orderCode hiện có (để thanh toán lại)
+        /// </summary>
+        [HttpGet("{orderCode}/link")]
+        public async Task<IActionResult> GetPaymentLink(long orderCode)
+        {
+            _logger.LogInformation("API GetPaymentLink called for orderCode={OrderCode}", orderCode);
+            var link = await _paymentService.GetPaymentLinkByOrderCodeAsync(orderCode);
+            if (string.IsNullOrEmpty(link))
+                return BadRequest(ApiResponse.Fail("Payment link not found or could not be re-created via PayOS. Check system logs."));
+
+            return Ok(new { paymentUrl = link }.Wrap());
         }
     }
 }
