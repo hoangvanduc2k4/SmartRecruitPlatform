@@ -99,23 +99,23 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             var recognizedRevenue = transactions
                 .Where(t => t.Type != TransactionType.TOPUP)
-                .Sum(t => t.Amount);
+                .Sum(t => Math.Abs(t.Amount));
 
             var jobPostRevenue = transactions
                 .Where(t => t.Type == TransactionType.JOB_POST)
-                .Sum(t => t.Amount);
+                .Sum(t => Math.Abs(t.Amount));
 
             var boostRevenue = transactions
                 .Where(t => t.Type == TransactionType.BOOST)
-                .Sum(t => t.Amount);
+                .Sum(t => Math.Abs(t.Amount));
 
             var vipRevenue = transactions
                 .Where(t => t.Type == TransactionType.VIP)
-                .Sum(t => t.Amount);
+                .Sum(t => Math.Abs(t.Amount));
 
             var otherRevenue = transactions
                 .Where(t => t.Type == TransactionType.OTHER)
-                .Sum(t => t.Amount);
+                .Sum(t => Math.Abs(t.Amount));
 
             var systemCirculatingBalance = await _context.Set<Wallet>().SumAsync(w => w.Balance);
 

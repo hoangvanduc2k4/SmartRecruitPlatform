@@ -122,7 +122,7 @@ namespace SmartRecruit.API
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
-                    PrepareSchemaIfNecessary = false
+                    PrepareSchemaIfNecessary = true
                 }));
 
             // Add the Hangfire server with limited workers
@@ -153,7 +153,7 @@ namespace SmartRecruit.API
             // Hangfire Dashboard
             app.UseHangfireDashboard();
 
-            RecurringJob.AddOrUpdate<TokenCleanupJob>(
+                RecurringJob.AddOrUpdate<TokenCleanupJob>(
                 "token-cleanup-daily",
                 job => job.RunAsync(),
                 Cron.Daily

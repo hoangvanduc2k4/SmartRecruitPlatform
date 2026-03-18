@@ -1,7 +1,7 @@
 @page "/Wallet"
 @model WebPortal.Pages.WalletModel
 @{
-    ViewData["Title"] = "Digital Wallet";
+    ViewData["Title"] = "Wallet - SmartRecruit";
 }
 
 <div class="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-700 pb-32">
@@ -12,7 +12,7 @@
                 <div>
                     <p class="text-indigo-100 text-xs font-bold uppercase tracking-[0.2em] mb-2 drop-shadow-sm">Available Balance</p>
                     <h2 class="text-4xl md:text-5xl font-black mb-2 flex items-baseline gap-2">
-                        @Model.CurrentUser.WalletBalance.ToString("N0")
+                        @Model.Wallet.Balance.ToString("N0")
                         <span class="text-xl font-bold text-indigo-200">VNĐ</span>
                     </h2>
                 </div>
@@ -23,12 +23,12 @@
 
             <div class="flex gap-4 mt-8">
                 <div class="bg-black/20 backdrop-blur-md p-4 rounded-xl flex-1 border border-white/10">
-                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Total Spent</p>
-                    <p class="text-xl font-black">1,240,000</p>
+                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Total amount paid</p>
+                    <p class="text-xl font-black">@Model.TotalAmountPaid.ToString("N0")</p>
                 </div>
                 <div class="bg-black/20 backdrop-blur-md p-4 rounded-xl flex-1 border border-white/10">
-                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Transactions</p>
-                    <p class="text-xl font-black">@Model.Transactions.Count</p>
+                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Total Transactions</p>
+                    <p class="text-xl font-black">@Model.TotalTransactions</p>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <form method="post" asp-page-handler="TopUp" class="space-y-4" id="topupForm">
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Amount (VNĐ)</label>
-                    <input type="number" name="amount" id="topUpAmount" value="100000" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-bold text-indigo-600 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <input type="number" name="amount" id="topUpAmount" value="100000" oninput="handleManualInput(this.value)" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-bold text-indigo-600 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <button type="button" onclick="setTopUp(100000)" class="text-[10px] font-black p-2 rounded-lg border transition-all bg-slate-50 border-slate-200 text-slate-500 hover:border-indigo-300 quick-amt" data-amt="100000">100,000</button>
@@ -56,6 +56,7 @@
                 <p class="text-[10px] text-center text-slate-400 font-medium">
                     <i class="fas fa-lock mr-1"></i> Secure payment via PayOS Gateway
                 </p>
+                <div asp-validation-summary="All" class="text-red-500 text-[10px] font-bold mt-2"></div>
             </form>
         </div>
     </div>
@@ -66,7 +67,7 @@
                 <i class="fas fa-history text-indigo-500"></i>
                 Recent Transactions
             </h3>
-            <button class="text-xs font-bold text-indigo-600 hover:underline">View All</button>
+            <a asp-page="/Account/TransactionList" class="text-xs font-bold text-indigo-600 hover:underline">View All</a>
         </div>
 
         <div class="overflow-hidden bg-white border border-slate-200 rounded-[2rem]">
@@ -78,16 +79,31 @@
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Amount</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
+                        @if (!Model.Transactions.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="px-6 py-12 text-center text-slate-400 font-medium text-sm">
+                                    No transaction data available.
+                                </td>
+                            </tr>
+                        }
                         @foreach (var tx in Model.Transactions)
                         {
                             <tr class="hover:bg-slate-50/80 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs shadow-sm @(tx.Amount > 0 ? "bg-green-100 text-green-600" : "bg-red-50 text-red-500")">
-                                            <i class="fas @(tx.Amount > 0 ? "fa-arrow-down" : "fa-arrow-up")"></i>
+                                        @{
+                                            var deductionTypes = new[] { "JOB_POST", "BOOST", "VIP", "OTHER" };
+                                            var isActuallyDeduction = deductionTypes.Contains(tx.Type?.ToUpper());
+                                            var displayAmount = isActuallyDeduction && tx.Amount > 0 ? -tx.Amount : tx.Amount;
+                                            var isVisualTopUp = displayAmount >= 0;
+                                        }
+                                        <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs shadow-sm @(isVisualTopUp ? "bg-green-100 text-green-600" : "bg-red-50 text-red-500")">
+                                            <i class="fas @(isVisualTopUp ? "fa-arrow-down" : "fa-arrow-up")"></i>
                                         </div>
                                         <span class="text-sm font-bold text-slate-700">@tx.Description</span>
                                     </div>
@@ -96,10 +112,39 @@
                                     @tx.CreatedAt.ToString("MMM dd, yyyy HH:mm")
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">SUCCESS</span>
+                                    @switch (tx.Status?.ToUpper())
+                                    {
+                                        case "SUCCESS":
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">SUCCESS</span>
+                                            break;
+                                        case "FAILED":
+                                        case "CANCELLED":
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">FAILED</span>
+                                            break;
+                                        default:
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">@(string.IsNullOrEmpty(tx.Status) ? "PENDING" : tx.Status)</span>
+                                            break;
+                                    }
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-right @(tx.Amount > 0 ? "text-green-600" : "text-slate-800")">
-                                    @(tx.Amount > 0 ? "+" : "")@tx.Amount.ToString("N0") VNĐ
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-right @(isVisualTopUp ? "text-green-600" : "text-slate-800")">
+                                    @(isVisualTopUp ? "+" : "")@displayAmount.ToString("N0") VNĐ
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if (tx.Status?.ToUpper() == "PENDING" || string.IsNullOrEmpty(tx.Status))
+                                    {
+                                        @if (tx.OrderCode.HasValue && tx.Type == "TOPUP")
+                                        {
+                                            <button onclick="resumePayment(event, @tx.OrderCode)" class="px-4 py-1 bg-indigo-600 text-white text-[10px] font-black rounded-lg hover:bg-indigo-700 transition-all">PAY NOW</button>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-slate-300">-</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <button onclick='showTxDetails(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(tx)))' class="px-4 py-1 bg-slate-100 text-slate-600 text-[10px] font-black rounded-lg hover:bg-slate-200 transition-all">DETAIL</button>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -110,14 +155,43 @@
     </div>
 </div>
 
+<!-- Transaction Detail Modal -->
+<div id="txModal" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-300">
+        <div class="p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-50">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-black text-slate-900 uppercase tracking-wider">Transaction Detail</h3>
+                <button onclick="closeTxModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="txDetailsContent" class="space-y-4">
+                <!-- Content populated by JS -->
+            </div>
+        </div>
+        <div class="p-6 bg-slate-50 flex justify-center">
+            <button onclick="closeTxModal()" class="px-10 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-all">Close</button>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         function setTopUp(amt) {
             document.getElementById('topUpAmount').value = amt;
+            updateQuickButtons(amt);
+        }
+
+        function handleManualInput(val) {
+            updateQuickButtons(parseInt(val));
+        }
+
+        function updateQuickButtons(currentAmt) {
             document.querySelectorAll('.quick-amt').forEach(btn => {
                 btn.classList.remove('bg-indigo-600', 'border-indigo-600', 'text-white', 'shadow-md');
                 btn.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-500');
-                if (parseInt(btn.dataset.amt) === amt) {
+                if (parseInt(btn.dataset.amt) === currentAmt) {
                     btn.classList.remove('bg-slate-50', 'text-slate-500');
                     btn.classList.add('bg-indigo-600', 'border-indigo-600', 'text-white', 'shadow-md');
                 }
@@ -129,6 +203,157 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
         });
+
+        // Handle success/cancel notifications
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success')) {
+                showToast('Success!', 'Your deposit was successful and wallet balance updated.', 'success');
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (urlParams.has('cancel')) {
+                showToast('Cancelled', 'You cancelled the payment process.', 'warning');
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
+        async function resumePayment(event, orderCode) {
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${window.appConfig.apiBaseUrl}payment/${orderCode}/link`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + window.appConfig.accessToken
+                    }
+                });
+                
+                if (response.ok) {
+                    const json = await response.json();
+                    if (json.data && json.data.paymentUrl) {
+                        window.location.href = json.data.paymentUrl;
+                    } else {
+                        showToast('Error', 'Payment link expired or not found.', 'warning');
+                    }
+                } else {
+                    try {
+                        const errorJson = await response.json();
+                        console.error('Payment link API error:', errorJson);
+                        // Case-insensitive check for message
+                        let errMsg = errorJson.message || errorJson.Message || 
+                                    (errorJson.data && (errorJson.data.message || errorJson.data.Message)) || 
+                                    'Payment link expired or creation failed on PayOS.';
+                        showToast('Error', errMsg, 'warning');
+                    } catch (e) {
+                        const text = await response.text();
+                        console.error('Payment link API error (non-json):', text);
+                        showToast('Error', 'Server error. Please check console.', 'warning');
+                    }
+                }
+            } catch (e) {
+                console.error('Fetch error:', e);
+                showToast('Error', 'Connection failed. System offline.', 'warning');
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        }
+
+        function showTxDetails(tx) {
+            const content = document.getElementById('txDetailsContent');
+            const date = new Date(tx.CreatedAt).toLocaleString('en-US', { 
+                month: 'short', day: '2-digit', year: 'numeric', 
+                hour: '2-digit', minute: '2-digit' 
+            });
+            
+            const deductionTypes = ['JOB_POST', 'BOOST', 'VIP', 'OTHER'];
+            const isActuallyDeduction = deductionTypes.includes(tx.Type?.toUpperCase());
+            const displayAmount = (isActuallyDeduction && tx.Amount > 0) ? -tx.Amount : tx.Amount;
+            const isVisualTopUp = displayAmount >= 0;
+
+            const statusColor = tx.Status?.toUpperCase() === 'SUCCESS' ? 'text-green-600 bg-green-50' : 
+                              (tx.Status?.toUpperCase() === 'FAILED' || tx.Status?.toUpperCase() === 'CANCELLED' ? 'text-red-600 bg-red-50' : 'text-amber-600 bg-amber-50');
+
+            content.innerHTML = `
+                <div class="flex flex-col items-center py-4 mb-2">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Amount</p>
+                    <h4 class="text-3xl font-black ${isVisualTopUp ? 'text-green-600' : 'text-slate-900'}">
+                        ${isVisualTopUp ? '+' : ''}${displayAmount.toLocaleString()} VNĐ
+                    </h4>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Type</span>
+                        <span class="text-xs font-black text-slate-700">${tx.Type}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Status</span>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status || 'PENDING'}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Order Code</span>
+                        <span class="text-xs font-bold text-slate-600 font-mono">${tx.OrderCode || 'N/A'}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Date</span>
+                        <span class="text-xs font-bold text-slate-600">${date}</span>
+                    </div>
+                    <div class="p-4 bg-white rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-black text-slate-400 uppercase block mb-2">Description</span>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">${tx.Description || 'No description provided.'}</p>
+                    </div>
+                </div>
+            `;
+            
+            const modal = document.getElementById('txModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTxModal() {
+            const modal = document.getElementById('txModal');
+            modal.classList.add('animate-out', 'fade-out', 'duration-300');
+            modal.querySelector('div').classList.add('animate-out', 'zoom-out-95', 'duration-300');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex', 'animate-out', 'fade-out', 'duration-300');
+                modal.querySelector('div').classList.remove('animate-out', 'zoom-out-95', 'duration-300');
+            }, 300);
+        }
+
+        function showToast(title, msg, type) {
+            const toast = document.createElement('div');
+            // Changed from top-right to center
+            toast.className = `fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] p-8 rounded-[2rem] shadow-[0_20px_70px_-10px_rgba(0,0,0,0.2)] border animate-in zoom-in-95 fade-in duration-500 flex flex-col items-center text-center gap-4 max-w-sm w-full bg-white mx-4 ${
+                type === 'success' ? 'border-green-100' : 'border-yellow-100'
+            }`;
+            
+            const icon = type === 'success' ? 'fa-check-circle text-green-500' : 'fa-exclamation-triangle text-yellow-500';
+            const iconBg = type === 'success' ? 'bg-green-50' : 'bg-yellow-50';
+            
+            toast.innerHTML = `
+                <div class="w-20 h-20 rounded-3xl flex items-center justify-center ${iconBg} mb-2">
+                    <i class="fas ${icon} text-4xl"></i>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="text-lg font-black uppercase tracking-widest text-slate-900">${title}</h4>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed">${msg}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="mt-4 px-8 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 transition-all">Dismiss</button>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Auto hide after 5 seconds
+            const timeout = setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.classList.add('animate-out', 'zoom-out-95', 'fade-out', 'duration-500');
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 5000);
+        }
         
         // init focus
         setTopUp(100000);

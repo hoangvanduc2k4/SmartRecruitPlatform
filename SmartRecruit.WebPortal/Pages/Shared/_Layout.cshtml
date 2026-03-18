@@ -34,13 +34,14 @@
                 
                 @if (userRole == "RECRUITER")
                 {
-                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Recruitment Hub</a>
-                    <a href="/Wallet" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Ví Nexus</a>
+                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Job Hub</a>
+                    <a href="/Recruiter/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Candidate List</a>
+                    <a href="/Wallet" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Wallet</a>
                 }
 
                 @if (userRole == "CANDIDATE")
                 {
-                    <a href="/Dashboard" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">My Applications</a>
+                    <a href="/Candidate/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">My Applied Jobs</a>
                     <a href="/SavedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Saved Jobs</a>
                 }
 
@@ -68,7 +69,7 @@
                 {
                     <a href="/Wallet" class="hidden md:flex items-center gap-3 px-4 py-2 bg-indigo-50 rounded-2xl border border-indigo-100 group hover:bg-indigo-600 transition-all">
                         <i class="fas fa-wallet text-indigo-600 group-hover:text-white"></i>
-                        <span class="text-[11px] font-black text-indigo-900 group-hover:text-white tabular-nums">2,500,000 <span class="text-[9px] opacity-50">VND</span></span>
+                        <span id="header-wallet-balance" class="text-[11px] font-black text-indigo-900 group-hover:text-white tabular-nums">0 <span class="text-[9px] opacity-50">VND</span></span>
                     </a>
                 }
 
@@ -171,5 +172,31 @@
     }
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    @if (userRole == "RECRUITER")
+    {
+        <script>
+            async function updateHeaderBalance() {
+                try {
+                    const response = await fetch(window.appConfig.apiBaseUrl + 'wallet', {
+                        headers: {
+                            'Authorization': 'Bearer ' + window.appConfig.accessToken
+                        }
+                    });
+                    if (response.ok) {
+                        const json = await response.json();
+                        const balance = json.data.balance;
+                        const el = document.getElementById('header-wallet-balance');
+                        if (el) {
+                            el.innerHTML = `${balance.toLocaleString()} <span class="text-[9px] opacity-50">VND</span>`;
+                        }
+                    }
+                } catch (e) {
+                    console.error('Failed to update header balance', e);
+                }
+            }
+            updateHeaderBalance();
+        </script>
+    }
 </body>
 </html>

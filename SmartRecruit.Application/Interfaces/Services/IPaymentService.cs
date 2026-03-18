@@ -25,5 +25,10 @@ namespace SmartRecruit.Application.Interfaces.Services
         /// Nếu PAID → credit wallet. Dùng khi webhook không deliver được (dev/local).
         /// </summary>
         Task<bool> ConfirmPaymentByOrderCodeAsync(long orderCode);
+
+        /// <summary>
+        /// Lấy link thanh toán của một transaction đã tồn tại (nếu còn hiệu lực)
+        /// </summary>
+        Task<string?> GetPaymentLinkByOrderCodeAsync(long orderCode);
     }
 }

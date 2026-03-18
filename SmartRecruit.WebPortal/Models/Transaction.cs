@@ -8,6 +8,8 @@ namespace WebPortal.Models
         public decimal Amount { get; set; }
         public string Description { get; set; } = string.Empty;
         public string Type { get; set; } = "TOPUP"; // TOPUP, SPEND
+        public long? OrderCode { get; set; }
+        public string Status { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
 }
