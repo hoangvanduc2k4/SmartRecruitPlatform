@@ -317,7 +317,7 @@ namespace SmartRecruit.Application.Services
             {
                 UserId = userId,
                 WalletId = wallet.Id,
-                Amount = cost,
+                Amount = -cost,
                 Type = TransactionType.JOB_POST,
                 Status = TransactionStatus.SUCCESS,
                 Description = $"Publish job: {job.Title}",
@@ -512,7 +512,7 @@ namespace SmartRecruit.Application.Services
             {
                 UserId = userId,
                 WalletId = wallet.Id,
-                Amount = boostCost,
+                Amount = -boostCost,
                 Type = TransactionType.BOOST,
                 Status = TransactionStatus.SUCCESS,
                 Description = $"Boost job {job.Id}: {job.Title}",

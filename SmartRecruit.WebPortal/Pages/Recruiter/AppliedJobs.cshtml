@@ -1,0 +1,126 @@
+@page "/Recruiter/AppliedJobs"
+@model WebPortal.Pages.Recruiter.AppliedJobsModel
+@using WebPortal.Models
+@{
+    ViewData["Title"] = "Application Management";
+    ViewData["FullWidth"] = true;
+}
+
+<div class="px-8 md:px-12 py-10 space-y-12 animate-in fade-in duration-700 w-full">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 max-w-[1920px] mx-auto">
+        <div>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Recruiter Control</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-1">Application Hub</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Monitor all incoming talent across your active missions.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <select onchange="window.location.href='?StatusFilter=' + this.value" class="h-14 px-6 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm">
+                <option value="">All Statuses</option>
+                @foreach (ApplicationStatus status in Enum.GetValues(typeof(ApplicationStatus)))
+                {
+                    <option value="@((int)status)" selected="@(Model.StatusFilter == (int)status)">@status</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <!-- Application Feed -->
+    <div class="border border-slate-200/60 shadow-2xl shadow-slate-200/20 bg-white rounded-[2.5rem] max-w-[1920px] mx-auto overflow-hidden">
+        <div>
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-indigo-50/30 border-b border-slate-100">
+                    <tr>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Candidate</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] min-w-[300px]">Job Title</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">Date Applied</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Neural Score</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Current Status</th>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Operation</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @if (!Model.Applications.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="px-10 py-32 text-center text-[10px] font-black uppercase text-slate-300 italic tracking-[0.4em]">
+                                <i class="fas fa-satellite-dish mb-4 text-4xl block opacity-20"></i>
+                                No incoming transmissions detected.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var app in Model.Applications)
+                        {
+                            <tr class="group hover:bg-indigo-50/10 transition-all duration-300">
+                                <td class="px-10 py-8">
+                                    <div class="flex items-center gap-5">
+                                        <div class="relative">
+                                            <img src="https://i.pravatar.cc/150?u=@app.CandidateId" class="w-14 h-14 rounded-2xl object-cover shadow-sm group-hover:scale-105 transition-transform" alt="" />
+                                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors">@app.CandidateName</p>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">@app.CandidateEmail</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-8">
+                                    <div class="flex flex-col gap-1">
+                                        <a href="/Jobs/JobDetail?Id=@app.JobId" class="text-sm font-black text-slate-800 hover:text-indigo-600 transition-colors line-clamp-1">@app.JobTitle</a>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-8 whitespace-nowrap">
+                                    <p class="text-sm font-black text-slate-800">@app.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                                </td>
+                                <td class="px-8 py-8">
+                                    <div class="flex items-center gap-4">
+                                        <div class="relative w-12 h-12 flex items-center justify-center">
+                                            <svg class="w-full h-full transform -rotate-90">
+                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="@(app.MatchScore > 80 ? "text-indigo-600" : app.MatchScore > 50 ? "text-amber-500" : "text-slate-400")" 
+                                                        stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                        stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
+                                            </svg>
+                                            <span class="absolute text-[10px] font-black text-slate-800">@app.MatchScore.ToString("N0")%</span>
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Neural Accuracy</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-8">
+                                    @{
+                                        var statusClass = app.Status switch {
+                                            ApplicationStatus.OFFERED => "bg-green-50 text-green-700 border-green-100",
+                                            ApplicationStatus.REJECTED => "bg-red-50 text-red-700 border-red-100",
+                                            ApplicationStatus.REVIEWING => "bg-indigo-50 text-indigo-700 border-indigo-100",
+                                            _ => "bg-slate-50 text-slate-600 border-slate-100"
+                                        };
+                                    }
+                                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass">
+                                        @app.Status
+                                    </span>
+                                </td>
+                                <td class="px-10 py-8 text-right">
+                                    <div class="flex justify-end items-center gap-3">
+                                        <a href="/Recruiter/JobPipeline?Id=@app.JobId&ApplicationId=@app.Id" class="w-12 h-12 bg-indigo-600 text-white flex items-center justify-center rounded-2xl hover:bg-slate-900 transition-all shadow-lg shadow-indigo-100 hover:shadow-slate-200 active:scale-90">
+                                            <i class="fas fa-brain text-xs"></i>
+                                        </a>
+                                        <a href="/CandidatePreview/@app.Id" class="w-12 h-12 bg-white border border-slate-200 text-slate-600 flex items-center justify-center rounded-2xl hover:bg-slate-50 transition-all shadow-sm active:scale-95">
+                                            <i class="fas fa-user-tie text-xs"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="flex justify-center pb-12">
+        <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, $"?StatusFilter={Model.StatusFilter}&CurrentPage={{0}}")' />
+    </div>
+</div>

@@ -22,7 +22,7 @@ namespace SmartRecruit.Infrastructure.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotificationService _notificationService;
         private readonly PayOSSettings _settings;
-        private readonly PayOSClient _sdkClient;
+        private readonly PayOSClient _sdkClient; // Keep for webhook verification
         private readonly ILogger<PaymentService> _logger;
 
         private const string PayOSApiBase = "https://api-merchant.payos.vn";
@@ -42,7 +42,7 @@ namespace SmartRecruit.Infrastructure.Services
             _settings = settings.Value;
             _logger = logger;
 
-            // SDK client chỉ dùng cho webhook signature verification
+            // SDK client dùng cho webhook signature verification
             _sdkClient = new PayOSClient(new PayOSOptions
             {
                 ClientId = _settings.ClientId,
@@ -53,24 +53,17 @@ namespace SmartRecruit.Infrastructure.Services
 
         public async Task<CreatePaymentResponse> CreatePaymentLinkAsync(CreatePaymentRequest request)
         {
-            _logger.LogInformation("Calling external system PayOS to CreatePaymentLinkAsync for UserId: {UserId}, Amount: {Amount}", request.UserId, request.Amount);
+            _logger.LogInformation("Creating Payment Link for UserId: {UserId}, Amount: {Amount}", request.UserId, request.Amount);
+            
             var wallet = await _walletRepository.GetWalletByUserIdAsync(request.UserId)
                 ?? throw new KeyNotFoundException($"Wallet not found for user {request.UserId}");
 
-            // OrderCode: số nguyên dương <= 9007199254740991, unique mỗi lần
-            var rnd = new Random();
-            long orderCode = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() % 900_000_000L) + rnd.Next(1_000, 9_999);
-
-            var returnUrl = $"{_settings.ReturnUrl}?orderCode={orderCode}";
-            var cancelUrl = $"{_settings.CancelUrl}?orderCode={orderCode}";
-
-            // Tạo signature cho request (cần cho PayOS API)
-            var sigData = $"amount={request.Amount}&cancelUrl={cancelUrl}&description={request.Description}&orderCode={orderCode}&returnUrl={returnUrl}";
-            using var hmacSig = new HMACSHA256(Encoding.UTF8.GetBytes(_settings.ChecksumKey));
-            var sigBytes = hmacSig.ComputeHash(Encoding.UTF8.GetBytes(sigData));
-            var signature = BitConverter.ToString(sigBytes).Replace("-", "").ToLowerInvariant();
-
-            // Transaction pending trước khi redirect
+            long orderCode = GenerateOrderCode();
+            
+            // Fix signature calculation: amount MUST be integer string
+            int amountInt = (int)request.Amount;
+            
+            // Transaction pending
             var transaction = new Transaction
             {
                 UserId = request.UserId,
@@ -85,51 +78,66 @@ namespace SmartRecruit.Infrastructure.Services
             await _walletRepository.AddTransactionAsync(transaction);
             await _unitOfWork.CompleteAsync();
 
-            // Gọi PayOS API tạo payment link
-            var client = _httpClientFactory.CreateClient("PayOS");
-            var body = new
+            var checkoutUrl = await CreatePayOSRequestAsync(orderCode, amountInt, request.Description);
+            if (string.IsNullOrEmpty(checkoutUrl))
             {
-                orderCode,
-                amount = (int)request.Amount,
-                description = request.Description,
-                returnUrl,
-                cancelUrl,
-                signature,
-                expiredAt = DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds()
-            };
-
-            var httpReq = new HttpRequestMessage(HttpMethod.Post, $"{PayOSApiBase}/v2/payment-requests");
-            httpReq.Headers.Add("x-client-id", _settings.ClientId);
-            httpReq.Headers.Add("x-api-key", _settings.ApiKey);
-            httpReq.Content = JsonContent.Create(body);
-
-            var response = await client.SendAsync(httpReq);
-            var responseStr = await response.Content.ReadAsStringAsync();
-
-            using var doc = JsonDocument.Parse(responseStr);
-            var root = doc.RootElement;
-
-            var code = root.TryGetProperty("code", out var codeProp) ? codeProp.GetString() : null;
-            if (code != "00")
-            {
-                var msgProp = root.TryGetProperty("desc", out var d) ? d.GetString() : responseStr;
-                _logger.LogError("PayOS error [{Code}]: {Message}", code, msgProp);
-                throw new InvalidOperationException($"PayOS error [{code}]: {msgProp}");
+                throw new Exception("Failed to create payment link with PayOS gateway.");
             }
 
-            var data = root.GetProperty("data");
+            return new CreatePaymentResponse(orderCode, checkoutUrl, string.Empty, "PENDING");
+        }
 
-            return new CreatePaymentResponse(
-                data.GetProperty("orderCode").GetInt64(),
-                data.GetProperty("checkoutUrl").GetString() ?? string.Empty,
-                data.TryGetProperty("qrCode", out var qr) ? qr.GetString() ?? string.Empty : string.Empty,
-                data.TryGetProperty("status", out var st) ? st.GetString() ?? "PENDING" : "PENDING"
-            );
+        private async Task<string?> CreatePayOSRequestAsync(long orderCode, int amountInt, string description)
+        {
+            try
+            {
+                var returnUrl = $"{_settings.ReturnUrl}?orderCode={orderCode}";
+                var cancelUrl = $"{_settings.CancelUrl}?orderCode={orderCode}";
+                var sigData = $"amount={amountInt}&cancelUrl={cancelUrl}&description={description}&orderCode={orderCode}&returnUrl={returnUrl}";
+                
+                using var hmacSig = new HMACSHA256(Encoding.UTF8.GetBytes(_settings.ChecksumKey));
+                var sigBytes = hmacSig.ComputeHash(Encoding.UTF8.GetBytes(sigData));
+                var signature = BitConverter.ToString(sigBytes).Replace("-", "").ToLowerInvariant();
+
+                var client = _httpClientFactory.CreateClient("PayOS");
+                var body = new
+                {
+                    orderCode,
+                    amount = amountInt,
+                    description,
+                    returnUrl,
+                    cancelUrl,
+                    signature
+                };
+
+                var response = await client.PostAsJsonAsync($"{PayOSApiBase}/v2/payment-requests", body);
+                var responseStr = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError("PayOS POST failed for {OrderCode}: {Status} - {Body}", orderCode, response.StatusCode, responseStr);
+                    return null;
+                }
+
+                using var doc = JsonDocument.Parse(responseStr);
+                var root = doc.RootElement;
+                if (root.GetProperty("code").GetString() == "00")
+                {
+                    return root.GetProperty("data").GetProperty("checkoutUrl").GetString();
+                }
+                
+                _logger.LogWarning("PayOS POST returned non-zero code for {OrderCode}: {Code}", orderCode, root.GetProperty("code").GetString());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception in CreatePayOSRequestAsync for {OrderCode}", orderCode);
+                return null;
+            }
         }
 
         public async Task HandleWebhookAsync(PayOSWebhookBody webhookBody)
         {
-            // Kiểm tra signature, trừ khi SkipSignatureVerification = true trong config (dùng cho dev/test)
             if (!_settings.SkipSignatureVerification)
             {
                 if (!string.IsNullOrEmpty(webhookBody.Signature) && webhookBody.Data != null)
@@ -144,7 +152,6 @@ namespace SmartRecruit.Infrastructure.Services
                 _logger.LogWarning("[DEV] Skipping PayOS webhook signature verification (SkipSignatureVerification=true)");
             }
 
-            // Nếu hủy hoặc thất bại (code != "00") → đánh dấu FAILED = 2
             if (webhookBody.Code != "00" || webhookBody.Data == null)
             {
                 if (webhookBody.Data != null)
@@ -164,23 +171,19 @@ namespace SmartRecruit.Infrastructure.Services
             var orderCode = webhookBody.Data.OrderCode;
             var transaction = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
 
-            // Idempotent: bỏ qua nếu đã xử lý
             if (transaction == null || transaction.Status == TransactionStatus.SUCCESS)
                 return;
 
-            // Đánh dấu thành công
             transaction.Status = TransactionStatus.SUCCESS;
             _walletRepository.UpdateTransaction(transaction);
 
-            // Cộng tiền vào Wallet
             var wallet = await _walletRepository.GetByIdAsync(transaction.WalletId);
             if (wallet != null)
             {
                 wallet.Balance += transaction.Amount;
                 _walletRepository.Update(wallet);
-                _logger.LogInformation("External system PayOS Transaction {OrderCode} SUCCESS. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
+                _logger.LogInformation("Webhook: Transaction {OrderCode} SUCCESS. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
 
-                // Real-time Notification for Payment Success
                 try
                 {
                     await _notificationService.SendNotificationAsync(
@@ -208,62 +211,40 @@ namespace SmartRecruit.Infrastructure.Services
             transaction.Status = TransactionStatus.FAILED;
             _walletRepository.UpdateTransaction(transaction);
             await _unitOfWork.CompleteAsync();
-            _logger.LogInformation("External system PayOS Transaction {OrderCode} cancelled and marked as FAILED", orderCode);
+            _logger.LogInformation("Transaction {OrderCode} cancelled and marked as FAILED", orderCode);
         }
 
-        /// <summary>
-        /// Gọi PayOS API để check trạng thái order, nếu PAID → credit wallet.
-        /// Dùng làm fallback tại /payment/success khi webhook không forward được (môi trường dev).
-        /// </summary>
         public async Task<bool> ConfirmPaymentByOrderCodeAsync(long orderCode)
         {
             try
             {
                 var transaction = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
-                if (transaction == null)
-                {
-                    _logger.LogWarning("ConfirmPaymentByOrderCode: Transaction not found for orderCode {OrderCode}", orderCode);
-                    return false;
-                }
+                if (transaction == null) return false;
 
-                // Idempotent: đã SUCCESS rồi thì không xử lý lại
-                if (transaction.Status == TransactionStatus.SUCCESS)
-                {
-                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} already SUCCESS", orderCode);
-                    return true;
-                }
+                if (transaction.Status == TransactionStatus.SUCCESS) return true;
 
-                // Gọi PayOS API query payment link status
+                // Manual API query for stability
                 var client = _httpClientFactory.CreateClient("PayOS");
                 var httpReq = new HttpRequestMessage(HttpMethod.Get, $"{PayOSApiBase}/v2/payment-requests/{orderCode}");
-                httpReq.Headers.Add("x-client-id", _settings.ClientId);
-                httpReq.Headers.Add("x-api-key", _settings.ApiKey);
-
+                // Headers are in client
+                
                 var response = await client.SendAsync(httpReq);
                 var responseStr = await response.Content.ReadAsStringAsync();
-
-                _logger.LogInformation("ConfirmPaymentByOrderCode: PayOS responded {Status}: {Body}", response.StatusCode, responseStr);
 
                 using var doc = JsonDocument.Parse(responseStr);
                 var root = doc.RootElement;
 
                 if (!root.TryGetProperty("code", out var codeEl) || codeEl.GetString() != "00")
                 {
-                    _logger.LogWarning("ConfirmPaymentByOrderCode: PayOS query failed for {OrderCode}: {Body}", orderCode, responseStr);
+                    _logger.LogWarning("ConfirmPayment: PayOS query failed for {OrderCode}: {Body}", orderCode, responseStr);
                     return false;
                 }
 
-                // Lấy status từ data.status
                 var dataEl = root.GetProperty("data");
                 var status = dataEl.TryGetProperty("status", out var stEl) ? stEl.GetString() : null;
 
-                if (status != "PAID")
-                {
-                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} status={Status}, not PAID yet", orderCode, status);
-                    return false;
-                }
+                if (status != "PAID") return false;
 
-                // PAID → credit wallet
                 transaction.Status = TransactionStatus.SUCCESS;
                 _walletRepository.UpdateTransaction(transaction);
 
@@ -272,9 +253,8 @@ namespace SmartRecruit.Infrastructure.Services
                 {
                     wallet.Balance += transaction.Amount;
                     _walletRepository.Update(wallet);
-                    _logger.LogInformation("ConfirmPaymentByOrderCode: orderCode {OrderCode} PAID. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
+                    _logger.LogInformation("ConfirmPayment: orderCode {OrderCode} PAID. Added {Amount} to Wallet {WalletId}", orderCode, transaction.Amount, wallet.Id);
 
-                    // Real-time Notification for Payment Success
                     try
                     {
                         await _notificationService.SendNotificationAsync(
@@ -295,15 +275,75 @@ namespace SmartRecruit.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ConfirmPaymentByOrderCode: Error for orderCode {OrderCode}", orderCode);
+                _logger.LogError(ex, "ConfirmPayment error for orderCode {OrderCode}", orderCode);
                 return false;
             }
         }
 
-        /// <summary>
-        /// Dùng PayOS SDK's built-in VerifyAsync — đây là cách chính xác nhất.
-        /// SDK biết đúng field set và format của signature.
-        /// </summary>
+        public async Task<string?> GetPaymentLinkByOrderCodeAsync(long orderCode)
+        {
+            try
+            {
+                var client = _httpClientFactory.CreateClient("PayOS");
+                var response = await client.GetAsync($"{PayOSApiBase}/v2/payment-requests/{orderCode}");
+                var responseStr = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogWarning("PayOS GetPaymentLink failed for {OrderCode}: {Status}. Attempting to re-create...", orderCode, response.StatusCode);
+                    // Fallback: Re-create link if PENDING
+                    var transaction = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
+                    if (transaction != null && transaction.Status == TransactionStatus.PENDING && transaction.Type == TransactionType.TOPUP)
+                    {
+                        // Generate a NEW orderCode because PayOS won't allow re-creation with the same one
+                        long newOrderCode = GenerateOrderCode();
+                        _logger.LogInformation("Regenerating OrderCode for transaction {OldCode} -> {NewCode}", orderCode, newOrderCode);
+                        
+                        transaction.OrderCode = newOrderCode;
+                        _walletRepository.UpdateTransaction(transaction);
+                        await _unitOfWork.CompleteAsync();
+
+                        return await CreatePayOSRequestAsync(newOrderCode, (int)transaction.Amount, transaction.Description);
+                    }
+                    return null;
+                }
+
+                using var doc = JsonDocument.Parse(responseStr);
+                var root = doc.RootElement;
+
+                if (root.GetProperty("code").GetString() == "00")
+                {
+                    var data = root.GetProperty("data");
+                    if (data.TryGetProperty("checkoutUrl", out var urlEl))
+                    {
+                        return urlEl.GetString();
+                    }
+                }
+                
+                // If code is not 00 but we have transaction, try re-creating anyway (maybe it was deleted on PayOS)
+                var fallbackTx = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
+                if (fallbackTx != null && fallbackTx.Status == TransactionStatus.PENDING && fallbackTx.Type == TransactionType.TOPUP)
+                {
+                    long newOrderCode = GenerateOrderCode();
+                    _logger.LogInformation("Regenerating OrderCode (Fallback) for transaction {OldCode} -> {NewCode}", orderCode, newOrderCode);
+                    
+                    fallbackTx.OrderCode = newOrderCode;
+                    _walletRepository.UpdateTransaction(fallbackTx);
+                    await _unitOfWork.CompleteAsync();
+
+                    return await CreatePayOSRequestAsync(newOrderCode, (int)fallbackTx.Amount, fallbackTx.Description);
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting payment link for orderCode {OrderCode}", orderCode);
+                return null;
+            }
+        }
+
+
         private async Task<bool> VerifyWithSdkAsync(PayOSWebhookBody body)
         {
             try
@@ -323,16 +363,13 @@ namespace SmartRecruit.Infrastructure.Services
                     Code                = body.Data.Code               ?? string.Empty,
                     CounterAccountBankId   = body.Data.CounterAccountBankId   ?? string.Empty,
                     CounterAccountBankName = body.Data.CounterAccountBankName ?? string.Empty,
-                    CounterAccountName     = body.Data.CounterAccountName,   // nullable — null OK
+                    CounterAccountName     = body.Data.CounterAccountName,
                     CounterAccountNumber   = body.Data.CounterAccountNumber  ?? string.Empty,
                     VirtualAccountName     = body.Data.VirtualAccountName    ?? string.Empty,
                     VirtualAccountNumber   = body.Data.VirtualAccountNumber  ?? string.Empty,
                 };
 
-                // Description2 property maps to JSON "desc" — set via reflection
-                // vì tên C# khác với tên JSON property
-                typeof(WebhookData).GetProperty("Description2")
-                    ?.SetValue(webhookData, body.Data.Desc ?? string.Empty);
+                typeof(WebhookData).GetProperty("Description2")?.SetValue(webhookData, body.Data.Desc ?? string.Empty);
 
                 var webhook = new Webhook
                 {
@@ -342,18 +379,22 @@ namespace SmartRecruit.Infrastructure.Services
                     Data      = webhookData,
                 };
 
-                // Webhook.Description maps to JSON "desc" (top-level)
-                typeof(Webhook).GetProperty("Description")
-                    ?.SetValue(webhook, body.Desc ?? string.Empty);
+                typeof(Webhook).GetProperty("Description")?.SetValue(webhook, body.Desc ?? string.Empty);
 
                 var result = await _sdkClient.Webhooks.VerifyAsync(webhook);
                 return result != null;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[PAYOS VERIFY ERROR] {Message}", ex.Message);
+                _logger.LogError(ex, "PayOS Verify Error: {Message}", ex.Message);
                 return false;
             }
+        }
+
+        private long GenerateOrderCode()
+        {
+            var rnd = new Random();
+            return (DateTimeOffset.UtcNow.ToUnixTimeSeconds() % 900_000_000L) + rnd.Next(1_000, 9_999);
         }
     }
 }

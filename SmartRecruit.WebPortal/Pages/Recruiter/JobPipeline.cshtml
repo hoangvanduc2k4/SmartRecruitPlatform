@@ -1,5 +1,5 @@
 @page "/JobPipeline/{id}"
-@model WebPortal.Pages.JobPipelineModel
+@model WebPortal.Pages.Recruiter.JobPipelineModel
 @using WebPortal.Models
 @{
     ViewData["Title"] = "Job Pipeline";
@@ -12,13 +12,61 @@
     };
 }
 
+<!-- Modal Backdrop -->
+<div id="statusModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4 animate-in fade-in duration-300">
+    <!-- Modal Content -->
+    <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md overflow-hidden transform transition-all animate-in zoom-in-95 duration-300">
+        <div class="p-8">
+            <div id="modalIconContainer" class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                <i id="modalIcon" class="fas text-2xl text-white"></i>
+            </div>
+            <h3 id="modalTitle" class="text-2xl font-black text-slate-800 tracking-tight uppercase mb-2">Update Status</h3>
+            <p id="modalDescription" class="text-slate-500 text-sm font-medium mb-8">Please provide the required information to continue.</p>
+
+            <form id="modalForm" method="post" asp-page-handler="UpdateStatus">
+                <input type="hidden" name="applicationId" id="modalAppId" />
+                <input type="hidden" name="jobId" id="modalJobId" />
+                <input type="hidden" name="status" id="modalStatus" />
+
+                <div id="dateField" class="hidden space-y-2 mb-8">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Interview Date</label>
+                    <input type="datetime-local" name="interviewDate" class="w-full h-14 px-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-bold text-slate-700" />
+                </div>
+
+                <div id="reasonField" class="hidden space-y-2 mb-8">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Rejection Reason</label>
+                    <textarea name="rejectionReason" rows="3" class="w-full p-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-slate-700 placeholder:text-slate-300" placeholder="e.g. Experience mismatch..."></textarea>
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 h-14 rounded-2xl border border-slate-200 text-slate-500 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all">Cancel</button>
+                    <button type="submit" class="flex-1 h-14 rounded-2xl bg-indigo-600 text-white font-black text-[11px] uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="space-y-8 animate-in fade-in duration-700 pb-32">
+    @if (Model.SuccessMessage != null)
+    {
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-2xl bg-green-50 border border-green-100 animate-in slide-in-from-top-4 duration-300">
+            <i class="fas fa-check-circle mr-2"></i> @Model.SuccessMessage
+        </div>
+    }
+    @if (Model.ErrorMessage != null)
+    {
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-2xl bg-red-50 border border-red-100 animate-in slide-in-from-top-4 duration-300">
+            <i class="fas fa-exclamation-circle mr-2"></i> @Model.ErrorMessage
+        </div>
+    }
+
     <div class="flex flex-col gap-4">
         <div class="flex items-center gap-3">
-            <a href="/RecruiterJobs" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm">
+            <a href="/Recruiter/AppliedJobs" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm">
                 <i class="fas fa-arrow-left"></i> Quay lại danh sách
             </a>
-            <a asp-page="/Jobs/JobDetail" asp-route-Id="@Model.Job?.Id" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-[11px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-100 transition-all shadow-sm">
+            <a href="/Jobs/JobDetail?Id=@Model.Job?.Id" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-[11px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-100 transition-all shadow-sm">
                 <i class="fas fa-info-circle"></i> Chi tiết Job
             </a>
         </div>
@@ -77,38 +125,51 @@
                                     </button>
                                 </a>
 
-                                <form method="post" asp-page-handler="UpdateStatus" class="flex">
-                                    <input type="hidden" name="id" value="@app.Id" />
+                                <div class="flex gap-2">
+                                    <input type="hidden" name="applicationId" value="@app.Id" />
+                                    <input type="hidden" name="jobId" value="@Model.Job?.Id" />
                                     @if (col.Status != ApplicationStatus.REJECTED)
                                     {
-                                        <input type="hidden" name="status" value="@ApplicationStatus.REJECTED.ToString()" />
-                                        <button type="submit" class="h-10 w-11 p-0 rounded-xl flex-shrink-0 bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 transition-colors ml-2 flex items-center justify-center">
+                                        <button type="button" onclick="openModal(@app.Id, @Model.Job?.Id, '@ApplicationStatus.REJECTED', 'REJECT')" class="h-10 w-11 p-0 rounded-xl flex-shrink-0 bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 transition-colors ml-2 flex items-center justify-center">
                                             <i class="fas fa-times text-xs"></i>
                                         </button>
                                     }
                                     else
                                     {
-                                        <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING.ToString()" />
-                                        <button type="submit" class="h-10 px-4 text-[9px] rounded-xl bg-green-600 text-white font-bold border-0 hover:bg-green-700 ml-2 uppercase tracking-widest whitespace-nowrap">
-                                            Restore
-                                        </button>
+                                        <form method="post" asp-page-handler="UpdateStatus" class="flex">
+                                            <input type="hidden" name="applicationId" value="@app.Id" />
+                                            <input type="hidden" name="jobId" value="@Model.Job?.Id" />
+                                            <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING.ToString()" />
+                                            <button type="submit" class="h-10 px-4 text-[9px] rounded-xl bg-green-600 text-white font-bold border-0 hover:bg-green-700 ml-2 uppercase tracking-widest whitespace-nowrap">
+                                                Restore
+                                            </button>
+                                        </form>
                                     }
-                                </form>
+                                </div>
 
                                 @if (col.Status != ApplicationStatus.OFFERED && col.Status != ApplicationStatus.REJECTED)
                                 {
-                                    <form method="post" asp-page-handler="UpdateStatus" class="flex" id="advanceForm_@app.Id">
-                                        <input type="hidden" name="id" value="@app.Id" />
-                                        @{
-                                            var possibleStatuses = new[] { ApplicationStatus.REVIEWING, ApplicationStatus.INTERVIEWING, ApplicationStatus.OFFERED };
-                                            var idx = System.Array.IndexOf(possibleStatuses, col.Status);
-                                            var nextStatus = possibleStatuses[idx + 1];
-                                        }
-                                        <input type="hidden" name="status" value="@nextStatus.ToString()" />
-                                        <button type="submit" class="h-10 w-11 p-0 rounded-xl bg-indigo-600 text-white border-0 shadow-lg shadow-indigo-100 hover:bg-indigo-700 flex items-center justify-center ml-2">
+                                    var possibleStatuses = new[] { ApplicationStatus.REVIEWING, ApplicationStatus.INTERVIEWING, ApplicationStatus.OFFERED };
+                                    var idx = System.Array.IndexOf(possibleStatuses, col.Status);
+                                    var nextStatus = possibleStatuses[idx + 1];
+                                    
+                                    if (nextStatus == ApplicationStatus.INTERVIEWING)
+                                    {
+                                        <button type="button" onclick="openModal(@app.Id, @Model.Job?.Id, '@nextStatus', 'INTERVIEW')" class="h-10 w-11 p-0 rounded-xl bg-indigo-600 text-white border-0 shadow-lg shadow-indigo-100 hover:bg-indigo-700 flex items-center justify-center ml-2">
                                             <i class="fas fa-arrow-right text-xs"></i>
                                         </button>
-                                    </form>
+                                    }
+                                    else
+                                    {
+                                        <form method="post" asp-page-handler="UpdateStatus" class="flex">
+                                            <input type="hidden" name="applicationId" value="@app.Id" />
+                                            <input type="hidden" name="jobId" value="@Model.Job?.Id" />
+                                            <input type="hidden" name="status" value="@nextStatus.ToString()" />
+                                            <button type="submit" class="h-10 w-11 p-0 rounded-xl bg-indigo-600 text-white border-0 shadow-lg shadow-indigo-100 hover:bg-indigo-700 flex items-center justify-center ml-2">
+                                                <i class="fas fa-arrow-right text-xs"></i>
+                                            </button>
+                                        </form>
+                                    }
                                 }
                             </div>
                         </div>
@@ -118,3 +179,55 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const modal = document.getElementById('statusModal');
+        const modalAppId = document.getElementById('modalAppId');
+        const modalJobId = document.getElementById('modalJobId');
+        const modalStatus = document.getElementById('modalStatus');
+        const dateField = document.getElementById('dateField');
+        const reasonField = document.getElementById('reasonField');
+        const modalIconContainer = document.getElementById('modalIconContainer');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+
+        function openModal(appId, jobId, status, type) {
+            modalAppId.value = appId;
+            modalJobId.value = jobId;
+            modalStatus.value = status;
+
+            // Reset fields
+            dateField.classList.add('hidden');
+            reasonField.classList.add('hidden');
+
+            if (type === 'INTERVIEW') {
+                modalTitle.innerText = "Schedule Interview";
+                modalDescription.innerText = "Select a date and time for the candidate's interview phase.";
+                modalIconContainer.className = "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg bg-indigo-500 shadow-indigo-200";
+                modalIcon.className = "fas fa-calendar-alt text-2xl text-white";
+                dateField.classList.remove('hidden');
+            } else if (type === 'REJECT') {
+                modalTitle.innerText = "Reject Candidate";
+                modalDescription.innerText = "Please provide a brief reason for rejecting this candidate.";
+                modalIconContainer.className = "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg bg-red-500 shadow-red-200";
+                modalIcon.className = "fas fa-user-times text-2xl text-white";
+                reasonField.classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+}

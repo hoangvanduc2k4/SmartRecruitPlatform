@@ -39,6 +39,12 @@ namespace SmartRecruit.Infrastructure.Repositories
                 query = query.Where(a => a.JobId == request.JobId.Value);
             }
 
+            // Filter by RecruiterId (Job Owner)
+            if (request.RecruiterId.HasValue)
+            {
+                query = query.Where(a => a.Job.RecruiterId == request.RecruiterId.Value);
+            }
+
             // Filter by Status
             if (request.Status.HasValue)
             {

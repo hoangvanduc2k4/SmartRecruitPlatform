@@ -1,4 +1,4 @@
-﻿namespace SmartRecruit.Domain.Enums
+namespace SmartRecruit.Domain.Enums
 {
     public enum ApplicationStatus
     {

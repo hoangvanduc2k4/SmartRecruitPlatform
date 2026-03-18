@@ -48,13 +48,26 @@ namespace SmartRecruit.Application.Services
 
         public async Task<PagedList<ApplicationResponse>> GetApplicationsByCandidateAsync(long candidateId, int page = 1, int pageSize = 10)
         {
-            var request = new ApplicationSearchRequest(candidateId, null, null, page, pageSize);
+            var request = new ApplicationSearchRequest(
+                CandidateId: candidateId, 
+                JobId: null, 
+                RecruiterId: null, 
+                Status: null, 
+                Page: page, 
+                PageSize: pageSize);
             return await GetApplicationsAsync(request);
         }
 
         public async Task<PagedList<ApplicationResponse>> GetApplicationsByJobAsync(long jobId, int page = 1, int pageSize = 10, bool sortByScore = false)
         {
-            var request = new ApplicationSearchRequest(null, jobId, null, page, pageSize, sortByScore);
+            var request = new ApplicationSearchRequest(
+                CandidateId: null, 
+                JobId: jobId, 
+                RecruiterId: null, 
+                Status: null, 
+                Page: page, 
+                PageSize: pageSize, 
+                SortByScore: sortByScore);
             return await GetApplicationsAsync(request);
         }
 

@@ -41,7 +41,7 @@ namespace WebPortal.Services.Api
             {
                 HttpOnly = true,
                 Secure = true, // Should be true in production (HTTPS)
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.Lax,
                 Expires = DateTimeOffset.UtcNow.AddMinutes(expiresInMinutes),
                 Path = "/"
             };
@@ -51,7 +51,7 @@ namespace WebPortal.Services.Api
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.Lax,
                 Expires = DateTimeOffset.UtcNow.AddDays(7), // Assuming refresh token valid for 7 days
                 Path = "/"
             };
