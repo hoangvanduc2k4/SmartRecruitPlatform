@@ -2,19 +2,19 @@
 @model WebPortal.Pages.Candidate.SavedJobsModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "My Bookmarked Missions";
+    ViewData["Title"] = "Công Việc Đã Lưu";
 }
 
 <div class="space-y-12 animate-in fade-in duration-700">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-pink-50 border border-pink-100 text-pink-700 shadow-sm">Talent Collection</span>
-            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Bookmarked Missions</h2>
-            <p class="text-slate-500 text-sm font-medium mt-1">Your curated list of high-priority professional targets.</p>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-pink-50 border border-pink-100 text-pink-700 shadow-sm">Bộ Sưu Tập</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Công Việc Đã Lưu</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Danh sách các công việc bạn đã lưu để xem xét sau.</p>
         </div>
         <a href="/Jobs" class="inline-flex">
             <button class="px-8 h-14 bg-slate-900 text-white shadow-xl shadow-slate-200 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-slate-800 transition">
-                <i class="fas fa-search mr-2"></i> Explore More
+                <i class="fas fa-search mr-2"></i> Khám Phá Thêm
             </button>
         </a>
     </div>
@@ -25,9 +25,9 @@
             <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="far fa-heart text-3xl text-slate-200"></i>
             </div>
-            <h3 class="text-xl font-black text-slate-400 uppercase tracking-widest">No Missions Logged</h3>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2">Your collection is currently empty. Start scouting!</p>
-            <a href="/Jobs" class="inline-block mt-8 text-indigo-600 font-black uppercase tracking-widest text-[10px] hover:underline">Return to Nexus Discovery</a>
+            <h3 class="text-xl font-black text-slate-400 uppercase tracking-widest">Chưa Có Công Việc Được Lưu</h3>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2">Danh sách của bạn đang trống. Hãy bắt đầu tìm kiếm việc làm ngay!</p>
+            <a href="/Jobs" class="inline-block mt-8 text-indigo-600 font-black uppercase tracking-widest text-[10px] hover:underline">Quay Lại Trang Tìm Việc</a>
         </div>
     }
     else
@@ -40,10 +40,10 @@
                         <form method="post" asp-page-handler="Unsave" class="inline-flex m-0">
                             <input type="hidden" name="jobId" value="@job.Id" />
                             <button type="submit"
-                                    title="Remove from Saved Jobs"
+                                    title="Xóa khỏi danh sách đã lưu"
                                     class="h-10 px-4 bg-white text-slate-500 rounded-2xl flex items-center justify-center gap-2 border border-slate-200 text-[10px] font-black uppercase tracking-widest hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-colors">
                                 <i class="fas fa-heart-broken text-xs"></i>
-                                <span>Unsave</span>
+                                <span>Bỏ Lưu</span>
                             </button>
                         </form>
                     </div>
@@ -63,7 +63,7 @@
                                 <i class="fas fa-location-dot text-indigo-400"></i> @job.Location
                             </p>
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-vault text-amber-400"></i> Est: $@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")
+                                <i class="fas fa-vault text-amber-400"></i> Mức Lương: @job.SalaryMin.ToString("N0") - @job.SalaryMax.ToString("N0") VNĐ
                             </p>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                         </div>
                         <a href="/JobDetail?id=@job.Id" class="inline-flex">
                             <button class="px-6 h-11 bg-indigo-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition">
-                                Launch Target
+                                Xem Chi Tiết
                             </button>
                         </a>
                     </div>

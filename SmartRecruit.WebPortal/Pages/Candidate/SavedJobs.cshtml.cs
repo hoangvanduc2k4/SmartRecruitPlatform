@@ -17,7 +17,7 @@ namespace WebPortal.Pages.Candidate
         }
 
         public List<Job> SavedJobs { get; set; } = new List<Job>();
-        public UserDto? CurrentUser { get; set; }
+        public new UserDto? CurrentUser { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;

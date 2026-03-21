@@ -3,6 +3,7 @@ namespace SmartRecruit.Domain.Enums
     public enum AIType
     {
         SCREENING,
-        RANKING
+        RANKING,
+        JOB_MODERATION
     }
 }

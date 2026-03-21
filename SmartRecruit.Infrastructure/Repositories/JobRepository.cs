@@ -66,15 +66,17 @@ namespace SmartRecruit.Infrastructure.Repositories
                     EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(keyword));
             }
 
-            // 4. Salary Range
+            // 4. Salary Range (Overlap Logic)
             if (request.MinSalary.HasValue)
             {
-                query = query.Where(x => x.SalaryMin >= request.MinSalary.Value);
+                // Job must be able to pay AT LEAST the min requested (JMax >= UMin)
+                query = query.Where(x => x.SalaryMax >= request.MinSalary.Value);
             }
 
             if (request.MaxSalary.HasValue)
             {
-                query = query.Where(x => x.SalaryMax <= request.MaxSalary.Value);
+                // Job must NOT start higher than the max requested (JMin <= UMax)
+                query = query.Where(x => x.SalaryMin <= request.MaxSalary.Value);
             }
 
             // 5. Specific Filters

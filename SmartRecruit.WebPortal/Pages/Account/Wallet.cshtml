@@ -1,7 +1,7 @@
 @page "/Wallet"
 @model WebPortal.Pages.WalletModel
 @{
-    ViewData["Title"] = "Wallet - SmartRecruit";
+    ViewData["Title"] = "Ví - SmartRecruit";
 }
 
 <div class="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-700 pb-32">
@@ -10,7 +10,7 @@
         <div class="p-8 md:col-span-2 bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-800 text-white rounded-[2rem] border-0 shadow-xl shadow-indigo-100">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <p class="text-indigo-100 text-xs font-bold uppercase tracking-[0.2em] mb-2 drop-shadow-sm">Available Balance</p>
+                    <p class="text-indigo-100 text-xs font-bold uppercase tracking-[0.2em] mb-2 drop-shadow-sm">Số Dư Khả Dụng</p>
                     <h2 class="text-4xl md:text-5xl font-black mb-2 flex items-baseline gap-2">
                         @Model.Wallet.Balance.ToString("N0")
                         <span class="text-xl font-bold text-indigo-200">VNĐ</span>
@@ -23,11 +23,11 @@
 
             <div class="flex gap-4 mt-8">
                 <div class="bg-black/20 backdrop-blur-md p-4 rounded-xl flex-1 border border-white/10">
-                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Total amount paid</p>
+                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Tổng Tiền Đã Dùng</p>
                     <p class="text-xl font-black">@Model.TotalAmountPaid.ToString("N0")</p>
                 </div>
                 <div class="bg-black/20 backdrop-blur-md p-4 rounded-xl flex-1 border border-white/10">
-                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Total Transactions</p>
+                    <p class="text-[10px] uppercase font-black text-indigo-300 mb-1">Số Lượng Giao Dịch</p>
                     <p class="text-xl font-black">@Model.TotalTransactions</p>
                 </div>
             </div>
@@ -37,11 +37,11 @@
         <div class="p-6 bg-white rounded-[2rem] border border-slate-200">
             <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
                 <i class="fas fa-plus-circle text-indigo-600"></i>
-                Quick Top-up
+                Nạp Tiền Nhanh
             </h3>
             <form method="post" asp-page-handler="TopUp" class="space-y-4" id="topupForm">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Amount (VNĐ)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Số Tiền (VNĐ)</label>
                     <input type="number" name="amount" id="topUpAmount" value="100000" oninput="handleManualInput(this.value)" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-bold text-indigo-600 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
                 <div class="grid grid-cols-2 gap-2">
@@ -51,10 +51,10 @@
                     <button type="button" onclick="setTopUp(1000000)" class="text-[10px] font-black p-2 rounded-lg border transition-all bg-slate-50 border-slate-200 text-slate-500 hover:border-indigo-300 quick-amt" data-amt="1000000">1,000,000</button>
                 </div>
                 <button type="submit" class="w-full py-3 h-12 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition" id="submitTopupBtn">
-                    <i class="fas fa-shield-alt mr-2"></i> Pay with PayOS
+                    <i class="fas fa-shield-alt mr-2"></i> Thanh Toán Bằng PayOS
                 </button>
                 <p class="text-[10px] text-center text-slate-400 font-medium">
-                    <i class="fas fa-lock mr-1"></i> Secure payment via PayOS Gateway
+                    <i class="fas fa-lock mr-1"></i> Thanh toán an toàn qua Cổng PayOS
                 </p>
                 <div asp-validation-summary="All" class="text-red-500 text-[10px] font-bold mt-2"></div>
             </form>
@@ -65,9 +65,9 @@
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                 <i class="fas fa-history text-indigo-500"></i>
-                Recent Transactions
+                Giao Dịch Gần Đây
             </h3>
-            <a asp-page="/Account/TransactionList" class="text-xs font-bold text-indigo-600 hover:underline">View All</a>
+            <a asp-page="/Account/TransactionList" class="text-xs font-bold text-indigo-600 hover:underline">Xem Tất Cả</a>
         </div>
 
         <div class="overflow-hidden bg-white border border-slate-200 rounded-[2rem]">
@@ -75,11 +75,11 @@
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 border-b border-slate-200">
                         <tr>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Transaction</th>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Amount</th>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Action</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Giao Dịch</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Thời Gian</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Trạng Thái</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Số Tiền</th>
+                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Hành Động</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
@@ -87,7 +87,7 @@
                         {
                             <tr>
                                 <td colspan="5" class="px-6 py-12 text-center text-slate-400 font-medium text-sm">
-                                    No transaction data available.
+                                    Chưa lịch sử giao dịch.
                                 </td>
                             </tr>
                         }
@@ -134,7 +134,7 @@
                                     {
                                         @if (tx.OrderCode.HasValue && tx.Type == "TOPUP")
                                         {
-                                            <button onclick="resumePayment(event, @tx.OrderCode)" class="px-4 py-1 bg-indigo-600 text-white text-[10px] font-black rounded-lg hover:bg-indigo-700 transition-all">PAY NOW</button>
+                                            <button onclick="resumePayment(event, @tx.OrderCode)" class="px-4 py-1 bg-indigo-600 text-white text-[10px] font-black rounded-lg hover:bg-indigo-700 transition-all">THANH TOÁN</button>
                                         }
                                         else
                                         {
@@ -143,7 +143,7 @@
                                     }
                                     else
                                     {
-                                        <button onclick='showTxDetails(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(tx)))' class="px-4 py-1 bg-slate-100 text-slate-600 text-[10px] font-black rounded-lg hover:bg-slate-200 transition-all">DETAIL</button>
+                                        <button onclick='showTxDetails(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(tx)))' class="px-4 py-1 bg-slate-100 text-slate-600 text-[10px] font-black rounded-lg hover:bg-slate-200 transition-all">CHI TIẾT</button>
                                     }
                                 </td>
                             </tr>
@@ -160,7 +160,7 @@
     <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-300">
         <div class="p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-50">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-black text-slate-900 uppercase tracking-wider">Transaction Detail</h3>
+                <h3 class="text-xl font-black text-slate-900 uppercase tracking-wider">Chi Tiết Giao Dịch</h3>
                 <button onclick="closeTxModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all">
                     <i class="fas fa-times"></i>
                 </button>
@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="p-6 bg-slate-50 flex justify-center">
-            <button onclick="closeTxModal()" class="px-10 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-all">Close</button>
+            <button onclick="closeTxModal()" class="px-10 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:bg-slate-800 transition-all">Đóng</button>
         </div>
     </div>
 </div>
@@ -200,7 +200,7 @@
         
         document.getElementById('topupForm').addEventListener('submit', function() {
             var btn = document.getElementById('submitTopupBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang Xử Lý...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
         });
 
@@ -208,11 +208,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('success')) {
-                showToast('Success!', 'Your deposit was successful and wallet balance updated.', 'success');
+                showToast('Thành Công!', 'Giao dịch nạp tiền đã thành công và số dư đã được cập nhật.', 'success');
                 // Clean up URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             } else if (urlParams.has('cancel')) {
-                showToast('Cancelled', 'You cancelled the payment process.', 'warning');
+                showToast('Đã Hủy', 'Bạn đã hủy quy trình thanh toán.', 'warning');
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
         });
@@ -235,7 +235,7 @@
                     if (json.data && json.data.paymentUrl) {
                         window.location.href = json.data.paymentUrl;
                     } else {
-                        showToast('Error', 'Payment link expired or not found.', 'warning');
+                        showToast('Lỗi', 'Đường dẫn thanh toán không tồn tại hoặc đã hết hạn.', 'warning');
                     }
                 } else {
                     try {
@@ -244,17 +244,17 @@
                         // Case-insensitive check for message
                         let errMsg = errorJson.message || errorJson.Message || 
                                     (errorJson.data && (errorJson.data.message || errorJson.data.Message)) || 
-                                    'Payment link expired or creation failed on PayOS.';
-                        showToast('Error', errMsg, 'warning');
+                                    'Liên kết thanh toán đã hết hạn hoặc không thể tạo trên PayOS.';
+                        showToast('Lỗi', errMsg, 'warning');
                     } catch (e) {
                         const text = await response.text();
                         console.error('Payment link API error (non-json):', text);
-                        showToast('Error', 'Server error. Please check console.', 'warning');
+                        showToast('Lỗi', 'Lỗi kết nối máy chủ. Vui lòng thử lại sau.', 'warning');
                     }
                 }
             } catch (e) {
                 console.error('Fetch error:', e);
-                showToast('Error', 'Connection failed. System offline.', 'warning');
+                showToast('Lỗi', 'Không có kết nối mạng. Hệ thống có thể đang bảo trì.', 'warning');
             } finally {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
@@ -278,31 +278,31 @@
 
             content.innerHTML = `
                 <div class="flex flex-col items-center py-4 mb-2">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Amount</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tổng Tiền</p>
                     <h4 class="text-3xl font-black ${isVisualTopUp ? 'text-green-600' : 'text-slate-900'}">
                         ${isVisualTopUp ? '+' : ''}${displayAmount.toLocaleString()} VNĐ
                     </h4>
                 </div>
                 <div class="grid grid-cols-1 gap-3">
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
-                        <span class="text-[10px] font-black text-slate-400 uppercase">Type</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Phân Loại</span>
                         <span class="text-xs font-black text-slate-700">${tx.Type}</span>
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
-                        <span class="text-[10px] font-black text-slate-400 uppercase">Status</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Trạng Thái</span>
                         <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status || 'PENDING'}</span>
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
-                        <span class="text-[10px] font-black text-slate-400 uppercase">Order Code</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Mã Thanh Toán</span>
                         <span class="text-xs font-bold text-slate-600 font-mono">${tx.OrderCode || 'N/A'}</span>
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
-                        <span class="text-[10px] font-black text-slate-400 uppercase">Date</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Thời Gian</span>
                         <span class="text-xs font-bold text-slate-600">${date}</span>
                     </div>
                     <div class="p-4 bg-white rounded-2xl border border-slate-100">
-                        <span class="text-[10px] font-black text-slate-400 uppercase block mb-2">Description</span>
-                        <p class="text-xs font-medium text-slate-600 leading-relaxed">${tx.Description || 'No description provided.'}</p>
+                        <span class="text-[10px] font-black text-slate-400 uppercase block mb-2">Mô Tả Giao Dịch</span>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">${tx.Description || 'Không có mô tả.'}</p>
                     </div>
                 </div>
             `;
@@ -341,7 +341,7 @@
                     <h4 class="text-lg font-black uppercase tracking-widest text-slate-900">${title}</h4>
                     <p class="text-sm text-slate-500 font-medium leading-relaxed">${msg}</p>
                 </div>
-                <button onclick="this.parentElement.remove()" class="mt-4 px-8 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 transition-all">Dismiss</button>
+                <button onclick="this.parentElement.remove()" class="mt-4 px-8 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 transition-all">Đóng</button>
             `;
             
             document.body.appendChild(toast);

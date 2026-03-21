@@ -94,13 +94,5 @@ namespace SmartRecruit.API.Controllers
             return Ok(new { Success = success }.Wrap("Job appeal rejected successfully"));
         }
 
-        [HttpGet("content/reports")]
-        public async Task<IActionResult> GetReports([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
-        {
-            _logger.LogInformation("API GetReports called with page: {Page}", page);
-            var reportService = HttpContext.RequestServices.GetRequiredService<IReportService>();
-            var reports = await reportService.GetReportsAsync(page, pageSize);
-            return Ok(reports.WrapPaged("User reports retrieved successfully"));
-        }
     }
 }
