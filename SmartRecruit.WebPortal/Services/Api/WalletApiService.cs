@@ -90,7 +90,7 @@ namespace WebPortal.Services.Api
 
         public async Task<PagedResponse<Transaction>?> GetTransactionsAsync(long? userId = null, int page = 1, int pageSize = 10, int? type = null, int? status = null)
         {
-            var url = $"wallet/transactions?page={page}&pageSize={pageSize}";
+            var url = $"wallet/transactions?Page={page}&PageSize={pageSize}";
             if (userId.HasValue)
             {
                 url += $"&UserId={userId.Value}";

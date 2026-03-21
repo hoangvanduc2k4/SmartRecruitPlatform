@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .withAutomaticReconnect()
         .build();
 
+    window.notificationHubConnection = connection;
+
     // 2. Listen for new notifications
     connection.on("ReceiveNotification", function (notification) {
         unreadCount++;

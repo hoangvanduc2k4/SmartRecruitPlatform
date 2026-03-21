@@ -72,7 +72,7 @@
 
         <div class="overflow-hidden bg-white border border-slate-200 rounded-[2rem]">
             <div class="overflow-x-auto">
-                <table class="w-full text-left min-w-[600px]">
+                <table class="w-full text-left">
                     <thead class="bg-slate-50 border-b border-slate-200">
                         <tr>
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Transaction</th>
@@ -105,7 +105,7 @@
                                         <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs shadow-sm @(isVisualTopUp ? "bg-green-100 text-green-600" : "bg-red-50 text-red-500")">
                                             <i class="fas @(isVisualTopUp ? "fa-arrow-down" : "fa-arrow-up")"></i>
                                         </div>
-                                        <span class="text-sm font-bold text-slate-700">@tx.Description</span>
+                                        <span class="text-sm font-bold text-slate-700 truncate max-w-[200px]" title="@tx.Description">@tx.Description</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-medium">

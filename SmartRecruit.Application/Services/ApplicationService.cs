@@ -18,6 +18,7 @@ namespace SmartRecruit.Application.Services
         private readonly IGeminiService _geminiService;
         private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
+        private readonly INotificationHubService _notificationHubService;
         private readonly ILogger<ApplicationService> _logger;
 
         public ApplicationService(
@@ -27,6 +28,7 @@ namespace SmartRecruit.Application.Services
             IGeminiService geminiService,
             IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
+            INotificationHubService notificationHubService,
             ILogger<ApplicationService> logger)
         {
             _applicationRepository = applicationRepository;
@@ -35,6 +37,7 @@ namespace SmartRecruit.Application.Services
             _geminiService = geminiService;
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
+            _notificationHubService = notificationHubService;
             _logger = logger;
         }
 
@@ -180,6 +183,23 @@ namespace SmartRecruit.Application.Services
 
             _applicationRepository.Update(application);
             await _unitOfWork.CompleteAsync();
+
+            try
+            {
+                var updateDto = new SmartRecruit.Application.DTO.Application.ApplicationScoreUpdateDto
+                {
+                    JobId = application.JobId,
+                    MatchScore = application.MatchScore,
+                    SkillMatch = application.SkillMatch,
+                    ExperienceMatch = application.ExperienceMatch,
+                    AI_Summary = application.AI_Summary
+                };
+                await _notificationHubService.SendApplicationScoreUpdateAsync(application.CandidateId, updateDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send real-time score update for ApplicationId {ApplicationId}", applicationId);
+            }
         }
 
         public async Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)
