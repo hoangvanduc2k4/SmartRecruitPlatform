@@ -343,7 +343,7 @@ namespace SmartRecruit.Application.Services
             catch { /* Ignore notification failures */ }
 
             // Enqueue the background processing
-            BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+            _backgroundJobClient.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
 
             return _mapper.Map<JobResponse>(job);
         }
