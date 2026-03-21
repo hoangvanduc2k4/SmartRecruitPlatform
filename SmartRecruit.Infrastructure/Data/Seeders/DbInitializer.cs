@@ -94,6 +94,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 ExperienceYears = rnd.Next(1, 15),
                 Skills = ".NET, SQL, React, Docker, Azure, Tiếng Anh giao tiếp".Limit(200),
                 CVText = "Kỹ sư phần mềm giàu kinh nghiệm với chuyên môn xây dựng các ứng dụng có khả năng mở rộng.",
+                ExpectedSalary = (decimal)(rnd.Next(15, 60) * 1000000), // 15 - 60 triệu VND
                 CreatedAt = createdAt
             }).ToList();
             modelBuilder.Entity<CandidateProfile>().HasData(profiles);
@@ -102,19 +103,26 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
             int jobIdCounter = 1;
             var recruiterIds = users.Where(u => u.Role == UserRole.RECRUITER).Select(u => u.Id).ToList();
             var jobTitles = new[] { "Lập trình viên .NET", "Chuyên viên Marketing", "Kế toán trưởng", "Nhân viên nhân sự", "Thiết kế đồ họa", "Nhân viên kinh doanh", "Kỹ sư phần mềm", "Quản lý dự án", "Chuyên viên tư vấn", "Lập trình viên Frontend" };
-            var jobs = Enumerable.Range(1, 200).Select(i => new Job
-            {
-                Id = jobIdCounter++,
-                RecruiterId = recruiterIds[rnd.Next(recruiterIds.Count)],
-                CategoryId = categories[rnd.Next(categories.Count)].Id,
-                Title = jobTitles[rnd.Next(jobTitles.Length)],
-                Company = userFaker.Company.CompanyName().Limit(100),
-                Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm".Limit(200),
-                Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.".Limit(500),
-                Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.".Limit(500),
-                SkillsRequired = ".NET Core, SQL Server",
-                Status = JobStatus.APPROVED,
-                CreatedAt = createdAt
+            var locations = new[] { "Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Bình Dương", "Đồng Nai" };
+            var jobs = Enumerable.Range(1, 200).Select(i => {
+                var sMin = (decimal)(rnd.Next(10, 40) * 1000000);
+                return new Job
+                {
+                    Id = jobIdCounter++,
+                    RecruiterId = recruiterIds[rnd.Next(recruiterIds.Count)],
+                    CategoryId = categories[rnd.Next(categories.Count)].Id,
+                    Title = jobTitles[rnd.Next(jobTitles.Length)],
+                    Company = userFaker.Company.CompanyName().Limit(100),
+                    Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm".Limit(200),
+                    Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.".Limit(500),
+                    Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.".Limit(500),
+                    SkillsRequired = ".NET Core, SQL Server",
+                    SalaryMin = sMin,
+                    SalaryMax = sMin + (decimal)(rnd.Next(5, 40) * 1000000),
+                    Location = locations[rnd.Next(locations.Length)],
+                    Status = JobStatus.APPROVED,
+                    CreatedAt = createdAt
+                };
             }).ToList();
             modelBuilder.Entity<Job>().HasData(jobs);
 
