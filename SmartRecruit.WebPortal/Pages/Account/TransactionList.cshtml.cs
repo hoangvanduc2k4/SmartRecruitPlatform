@@ -19,7 +19,7 @@ namespace WebPortal.Pages
         public PagedResponse<Transaction>? Transactions { get; set; }
         public decimal Balance { get; set; }
 
-        [BindProperty(SupportsGet = true, Name = "page")]
+        [BindProperty(SupportsGet = true)]
         public int PageNumber { get; set; } = 1;
 
         [BindProperty(SupportsGet = true)]
