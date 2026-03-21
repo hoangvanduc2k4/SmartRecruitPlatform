@@ -19,7 +19,6 @@ namespace SmartRecruit.Infrastructure.Data
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Report> Reports { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<AILog> AILogs { get; set; }
         public DbSet<SavedJob> SavedJobs { get; set; }
@@ -32,7 +31,6 @@ namespace SmartRecruit.Infrastructure.Data
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDeleted);
             modelBuilder.Entity<Job>().HasQueryFilter(j => !j.IsDeleted);
             modelBuilder.Entity<Applications>().HasQueryFilter(a => !a.IsDeleted);
-            modelBuilder.Entity<Report>().HasQueryFilter(r => !r.IsDeleted);
             modelBuilder.Entity<SavedJob>().HasQueryFilter(sj => !sj.IsDeleted);
             modelBuilder.Entity<Wallet>().HasQueryFilter(w => !w.IsDeleted);
             modelBuilder.Entity<Transaction>().HasQueryFilter(t => !t.IsDeleted);
@@ -50,19 +48,6 @@ namespace SmartRecruit.Infrastructure.Data
                 .WithMany(u => u.Applications)
                 .HasForeignKey(a => a.CandidateId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // Fix: Multiple cascade paths for Reports
-            modelBuilder.Entity<Report>()
-                .HasOne(r => r.Reporter)
-                .WithMany()
-                .HasForeignKey(r => r.ReporterId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Report>()
-                .HasOne(r => r.Job)
-                .WithMany()
-                .HasForeignKey(r => r.JobId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             // Fix: Multiple cascade paths for SavedJobs
             modelBuilder.Entity<SavedJob>()

@@ -169,15 +169,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 CreatedAt = createdAt
             }));
 
-            // --- 11. REPORTS (50) ---
-            modelBuilder.Entity<Report>().HasData(Enumerable.Range(1, 50).Select(i => new Report
-            {
-                Id = i,
-                JobId = jobs[i % jobs.Count].Id,
-                ReporterId = candidateIds[i % candidateIds.Count],
-                Reason = "Nội dung vi phạm chính sách cộng đồng.".Limit(200),
-                CreatedAt = createdAt
-            }));
+
 
             // --- 12. REFRESH TOKENS (50) ---
             modelBuilder.Entity<RefreshToken>().HasData(Enumerable.Range(1, 50).Select(i => new RefreshToken
