@@ -2,20 +2,20 @@
 @model WebPortal.Pages.Recruiter.AppliedJobsModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "Application Management";
+    ViewData["Title"] = "Quản Lý Ứng Tuyển";
     ViewData["FullWidth"] = true;
 }
 
 <div class="px-8 md:px-12 py-10 space-y-12 animate-in fade-in duration-700 w-full">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 max-w-[1920px] mx-auto">
         <div>
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Recruiter Control</span>
-            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-1">Application Hub</h2>
-            <p class="text-slate-500 text-sm font-medium mt-1">Monitor all incoming talent across your active missions.</p>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Trình Quản Lý Tuyển Dụng</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-1">Trung Tâm Ứng Viên</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Theo dõi tất cả các ứng viên ứng tuyển vào các bài đăng của bạn.</p>
         </div>
         <div class="flex items-center gap-4">
             <select onchange="window.location.href='?StatusFilter=' + this.value" class="h-14 px-6 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm">
-                <option value="">All Statuses</option>
+                <option value="">Tất Cả Trạng Thái</option>
                 @foreach (ApplicationStatus status in Enum.GetValues(typeof(ApplicationStatus)))
                 {
                     <option value="@((int)status)" selected="@(Model.StatusFilter == (int)status)">@status</option>
@@ -30,12 +30,12 @@
             <table class="w-full text-left border-collapse">
                 <thead class="bg-indigo-50/30 border-b border-slate-100">
                     <tr>
-                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Candidate</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] min-w-[300px]">Job Title</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">Date Applied</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Neural Score</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Current Status</th>
-                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Operation</th>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Ứng Viên</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] min-w-[300px]">Công Việc</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] whitespace-nowrap">Ngày Ứng Tuyển</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Độ Phù Hợp</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Trạng Thái</th>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
@@ -44,7 +44,7 @@
                         <tr>
                             <td colspan="6" class="px-10 py-32 text-center text-[10px] font-black uppercase text-slate-300 italic tracking-[0.4em]">
                                 <i class="fas fa-satellite-dish mb-4 text-4xl block opacity-20"></i>
-                                No incoming transmissions detected.
+                                Chưa có ứng viên nào ứng tuyển.
                             </td>
                         </tr>
                     }
@@ -85,7 +85,7 @@
                                             <span class="absolute text-[10px] font-black text-slate-800">@app.MatchScore.ToString("N0")%</span>
                                         </div>
                                         <div class="hidden sm:block">
-                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Neural Accuracy</p>
+                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
                                         </div>
                                     </div>
                                 </td>
