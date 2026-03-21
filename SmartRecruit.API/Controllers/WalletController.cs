@@ -51,13 +51,12 @@ namespace SmartRecruit.Controllers
             _logger.LogInformation("API GetTransactions called with parameters: {@Request}", request);
 
             // Security: If not admin, can only see own transactions
-            var finalRequest = request;
             if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN)
             {
-                finalRequest = request with { UserId = CurrentUserId };
+                request.UserId = CurrentUserId;
             }
 
-            var transactions = await _walletService.GetTransactionsAsync(finalRequest);
+            var transactions = await _walletService.GetTransactionsAsync(request);
             return Ok(transactions.WrapPaged());
         }
 
@@ -69,8 +68,8 @@ namespace SmartRecruit.Controllers
         {
             _logger.LogInformation("API GetTransactionsByUser called for UserId: {UserId}, Page: {Page}, PageSize: {PageSize}", userId, request.Page, request.PageSize);
             // Overwrite UserId in request with the one from route
-            var searchRequest = request with { UserId = userId };
-            var transactions = await _walletService.GetTransactionsAsync(searchRequest);
+            request.UserId = userId;
+            var transactions = await _walletService.GetTransactionsAsync(request);
             return Ok(transactions.WrapPaged());
         }
     }

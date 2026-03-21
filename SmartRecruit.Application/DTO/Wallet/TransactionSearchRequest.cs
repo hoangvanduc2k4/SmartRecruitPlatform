@@ -1,11 +1,13 @@
 namespace SmartRecruit.Application.DTO.Wallet
 {
-    public record TransactionSearchRequest(
-        long? UserId,
-        long? WalletId,
-        int? Type,
-        int? Status,
-        int Page = 1,
-        int PageSize = 10
-    );
+    public class TransactionSearchRequest
+    {
+        public long? UserId { get; set; }
+        public long? WalletId { get; set; }
+        public int? Type { get; set; }
+        public int? Status { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+
+    }
 }
