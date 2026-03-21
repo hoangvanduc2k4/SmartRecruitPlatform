@@ -118,2904 +118,5078 @@ namespace SmartRecruit.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
+<<<<<<< HEAD
                             CandidateId = 117L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 92L,
                             MatchScore = 44.7890726592341m,
+=======
+                            CandidateId = 70L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 68L,
+                            MatchScore = 35.2156220167948m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 2L,
+<<<<<<< HEAD
                             CandidateId = 111L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 86L,
                             MatchScore = 54.1894472922149m,
+=======
+                            CandidateId = 210L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 137L,
+                            MatchScore = 20.0123864784894m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 3L,
+<<<<<<< HEAD
                             CandidateId = 113L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 108L,
                             MatchScore = 15.2456707392101m,
+=======
+                            CandidateId = 74L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 190L,
+                            MatchScore = 32.7661816648982m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 4L,
+<<<<<<< HEAD
                             CandidateId = 168L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 16L,
                             MatchScore = 17.2173392107791m,
+=======
+                            CandidateId = 75L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 137L,
+                            MatchScore = 59.7735212462831m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 5L,
+<<<<<<< HEAD
                             CandidateId = 139L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 60L,
                             MatchScore = 39.3503251203104m,
+=======
+                            CandidateId = 230L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 77L,
+                            MatchScore = 37.934519973553m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 6L,
+<<<<<<< HEAD
                             CandidateId = 53L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 11L,
                             MatchScore = 26.610485849255m,
+=======
+                            CandidateId = 85L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 41L,
+                            MatchScore = 12.4859308416424m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 7L,
+<<<<<<< HEAD
                             CandidateId = 157L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 159L,
                             MatchScore = 52.4253135791166m,
+=======
+                            CandidateId = 89L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 172L,
+                            MatchScore = 9.21310447585448m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 8L,
+<<<<<<< HEAD
                             CandidateId = 245L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 77L,
                             MatchScore = 49.3159760485012m,
+=======
+                            CandidateId = 123L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 166L,
+                            MatchScore = 25.0582183827917m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 9L,
+<<<<<<< HEAD
                             CandidateId = 153L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 109L,
                             MatchScore = 18.2147229640813m,
+=======
+                            CandidateId = 199L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 183L,
+                            MatchScore = 21.6783438444502m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 10L,
+<<<<<<< HEAD
                             CandidateId = 235L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 20L,
                             MatchScore = 4.42471537013758m,
+=======
+                            CandidateId = 241L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 86L,
+                            MatchScore = 19.9513536970836m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 11L,
+<<<<<<< HEAD
                             CandidateId = 213L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 171L,
                             MatchScore = 16.6122661515196m,
+=======
+                            CandidateId = 91L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 172L,
+                            MatchScore = 29.6584731105987m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 12L,
+<<<<<<< HEAD
                             CandidateId = 115L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 23.9172743279102m,
+=======
+                            CandidateId = 100L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 181L,
+                            MatchScore = 88.722389698365m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 13L,
+<<<<<<< HEAD
                             CandidateId = 195L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 101L,
                             MatchScore = 35.7606047930944m,
+=======
+                            CandidateId = 85L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 183L,
+                            MatchScore = 34.8072718525339m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 14L,
+<<<<<<< HEAD
                             CandidateId = 58L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 178L,
                             MatchScore = 72.7746688634039m,
+=======
+                            CandidateId = 235L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 52L,
+                            MatchScore = 67.2541512955232m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 15L,
+<<<<<<< HEAD
                             CandidateId = 151L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 31.9764555580804m,
+=======
+                            CandidateId = 147L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 199L,
+                            MatchScore = 75.844771031218m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 16L,
+<<<<<<< HEAD
                             CandidateId = 225L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 73L,
                             MatchScore = 26.0452888095962m,
+=======
+                            CandidateId = 93L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 89L,
+                            MatchScore = 47.7286050784069m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 17L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 180L,
                             MatchScore = 65.4548163830558m,
+=======
+                            CandidateId = 80L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 137L,
+                            MatchScore = 15.1413591183449m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 18L,
+<<<<<<< HEAD
                             CandidateId = 178L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 194L,
                             MatchScore = 33.2314429959429m,
+=======
+                            CandidateId = 251L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 168L,
+                            MatchScore = 72.4731451703576m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 19L,
+<<<<<<< HEAD
                             CandidateId = 67L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 10L,
                             MatchScore = 36.2735429481946m,
+=======
+                            CandidateId = 153L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 131L,
+                            MatchScore = 73.1414175001632m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 20L,
+<<<<<<< HEAD
                             CandidateId = 228L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 191L,
                             MatchScore = 78.7599251972325m,
+=======
+                            CandidateId = 205L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 21L,
+                            MatchScore = 5.56165091952386m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 21L,
+<<<<<<< HEAD
                             CandidateId = 139L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 72L,
                             MatchScore = 38.9471699199393m,
+=======
+                            CandidateId = 156L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 197L,
+                            MatchScore = 16.4492588566846m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 22L,
+<<<<<<< HEAD
                             CandidateId = 96L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 22L,
                             MatchScore = 77.4867104261586m,
+=======
+                            CandidateId = 216L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 26L,
+                            MatchScore = 91.7309258560328m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 23L,
+<<<<<<< HEAD
                             CandidateId = 222L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 2L,
                             MatchScore = 11.9307174402898m,
+=======
+                            CandidateId = 148L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 61L,
+                            MatchScore = 64.8803170141207m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 24L,
+<<<<<<< HEAD
                             CandidateId = 161L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 31L,
                             MatchScore = 28.7745569500954m,
+=======
+                            CandidateId = 109L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 99L,
+                            MatchScore = 99.7108176814908m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 25L,
+<<<<<<< HEAD
                             CandidateId = 232L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 182L,
                             MatchScore = 49.7947508701099m,
+=======
+                            CandidateId = 171L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 156L,
+                            MatchScore = 27.0112468521163m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 26L,
+<<<<<<< HEAD
                             CandidateId = 240L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 160L,
                             MatchScore = 47.0979153397949m,
+=======
+                            CandidateId = 219L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 84L,
+                            MatchScore = 88.3159031571429m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 27L,
+<<<<<<< HEAD
                             CandidateId = 88L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 35L,
                             MatchScore = 64.3263333310961m,
+=======
+                            CandidateId = 146L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 99L,
+                            MatchScore = 53.0271234703377m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 28L,
+<<<<<<< HEAD
                             CandidateId = 91L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 185L,
                             MatchScore = 74.3683641191424m,
+=======
+                            CandidateId = 201L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 148L,
+                            MatchScore = 80.3538548668632m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 29L,
+<<<<<<< HEAD
                             CandidateId = 228L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 78L,
                             MatchScore = 17.4910830880939m,
+=======
+                            CandidateId = 56L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 10L,
+                            MatchScore = 20.2434120328368m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 30L,
+<<<<<<< HEAD
                             CandidateId = 130L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 167L,
                             MatchScore = 24.3206437790397m,
+=======
+                            CandidateId = 101L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 115L,
+                            MatchScore = 73.6418737441496m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 31L,
+<<<<<<< HEAD
                             CandidateId = 161L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 176L,
                             MatchScore = 83.3811703060666m,
+=======
+                            CandidateId = 214L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 32L,
+                            MatchScore = 40.0926639046951m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 32L,
+<<<<<<< HEAD
                             CandidateId = 157L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 115L,
                             MatchScore = 59.4492415243058m,
+=======
+                            CandidateId = 107L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 59L,
+                            MatchScore = 39.7768432459686m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 33L,
+<<<<<<< HEAD
                             CandidateId = 118L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 68L,
                             MatchScore = 27.088139591314m,
+=======
+                            CandidateId = 224L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 102L,
+                            MatchScore = 65.2398198215476m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 34L,
+<<<<<<< HEAD
                             CandidateId = 123L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 109L,
                             MatchScore = 1.12674296886043m,
+=======
+                            CandidateId = 80L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 169L,
+                            MatchScore = 72.494102396301m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 35L,
+<<<<<<< HEAD
                             CandidateId = 201L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 29L,
                             MatchScore = 62.6118639775607m,
+=======
+                            CandidateId = 89L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 166L,
+                            MatchScore = 85.3786147597146m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 36L,
+<<<<<<< HEAD
                             CandidateId = 64L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 74L,
                             MatchScore = 73.0758247305992m,
+=======
+                            CandidateId = 63L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 31L,
+                            MatchScore = 39.7863438538212m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 37L,
+<<<<<<< HEAD
                             CandidateId = 102L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 167L,
                             MatchScore = 13.5309223614311m,
+=======
+                            CandidateId = 98L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 91L,
+                            MatchScore = 66.8353697130621m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 38L,
+<<<<<<< HEAD
                             CandidateId = 208L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 179L,
                             MatchScore = 70.2511168412171m,
+=======
+                            CandidateId = 173L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 170L,
+                            MatchScore = 29.6167903717685m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 39L,
+<<<<<<< HEAD
                             CandidateId = 139L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 29L,
                             MatchScore = 23.8136390800651m,
+=======
+                            CandidateId = 100L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 106L,
+                            MatchScore = 77.2432687586375m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 40L,
+<<<<<<< HEAD
                             CandidateId = 195L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 130L,
                             MatchScore = 34.2922379888092m,
+=======
+                            CandidateId = 68L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 73L,
+                            MatchScore = 80.0407694559734m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 41L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 120L,
                             MatchScore = 45.9335885224555m,
+=======
+                            CandidateId = 197L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 143L,
+                            MatchScore = 23.1863306477602m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 42L,
+<<<<<<< HEAD
                             CandidateId = 107L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 176L,
                             MatchScore = 99.8565597924667m,
+=======
+                            CandidateId = 119L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 183L,
+                            MatchScore = 47.5962358282862m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 43L,
+<<<<<<< HEAD
                             CandidateId = 119L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 91L,
                             MatchScore = 37.5202682975308m,
+=======
+                            CandidateId = 148L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 120L,
+                            MatchScore = 32.4264829663683m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 44L,
+<<<<<<< HEAD
                             CandidateId = 143L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 181L,
                             MatchScore = 60.8643814273478m,
+=======
+                            CandidateId = 234L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 175L,
+                            MatchScore = 97.6573011361329m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 45L,
+<<<<<<< HEAD
                             CandidateId = 177L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 41L,
                             MatchScore = 82.4549687944609m,
+=======
+                            CandidateId = 182L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 47L,
+                            MatchScore = 32.9202173431032m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 46L,
+<<<<<<< HEAD
                             CandidateId = 208L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 127L,
                             MatchScore = 45.3450242268597m,
+=======
+                            CandidateId = 234L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 162L,
+                            MatchScore = 55.7991320061493m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 47L,
+<<<<<<< HEAD
                             CandidateId = 56L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 24L,
                             MatchScore = 81.9988347506145m,
+=======
+                            CandidateId = 230L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 190L,
+                            MatchScore = 96.5434216878114m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 48L,
+<<<<<<< HEAD
                             CandidateId = 251L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 14.183233498681m,
+=======
+                            CandidateId = 75L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 161L,
+                            MatchScore = 1.40301860002941m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 49L,
+<<<<<<< HEAD
                             CandidateId = 248L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 22L,
                             MatchScore = 76.7643555424941m,
+=======
+                            CandidateId = 113L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 14L,
+                            MatchScore = 20.3892910482312m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 50L,
+<<<<<<< HEAD
                             CandidateId = 137L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 27L,
                             MatchScore = 9.06912666236476m,
+=======
+                            CandidateId = 177L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 7L,
+                            MatchScore = 14.7094884490173m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 51L,
+<<<<<<< HEAD
                             CandidateId = 190L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 72L,
                             MatchScore = 61.4172508294774m,
+=======
+                            CandidateId = 222L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 157L,
+                            MatchScore = 12.6263313519891m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 52L,
+<<<<<<< HEAD
                             CandidateId = 240L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 186L,
                             MatchScore = 18.4898460369976m,
+=======
+                            CandidateId = 150L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 83L,
+                            MatchScore = 91.6098447943152m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 53L,
+<<<<<<< HEAD
                             CandidateId = 105L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 111L,
                             MatchScore = 46.7665808027455m,
+=======
+                            CandidateId = 127L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 171L,
+                            MatchScore = 55.8123876600584m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 54L,
+<<<<<<< HEAD
                             CandidateId = 234L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 126L,
                             MatchScore = 72.2725215704518m,
+=======
+                            CandidateId = 66L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 115L,
+                            MatchScore = 58.2274947120936m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 55L,
+<<<<<<< HEAD
                             CandidateId = 238L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 72L,
                             MatchScore = 79.479265575986m,
+=======
+                            CandidateId = 190L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 65L,
+                            MatchScore = 61.749431007425m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 56L,
+<<<<<<< HEAD
                             CandidateId = 190L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 106L,
                             MatchScore = 15.2838007618132m,
+=======
+                            CandidateId = 245L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 192L,
+                            MatchScore = 72.0015063751496m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 57L,
+<<<<<<< HEAD
                             CandidateId = 154L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 176L,
                             MatchScore = 65.7504273884699m,
+=======
+                            CandidateId = 94L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 67L,
+                            MatchScore = 41.1201638826729m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 58L,
+<<<<<<< HEAD
                             CandidateId = 157L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 157L,
                             MatchScore = 69.5614168278693m,
+=======
+                            CandidateId = 218L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 38L,
+                            MatchScore = 91.0304456441805m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 59L,
+<<<<<<< HEAD
                             CandidateId = 83L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 105L,
                             MatchScore = 17.280118873939m,
+=======
+                            CandidateId = 95L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 123L,
+                            MatchScore = 84.4319392388835m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 60L,
+<<<<<<< HEAD
                             CandidateId = 205L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 64L,
                             MatchScore = 29.3212156413688m,
+=======
+                            CandidateId = 106L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 6L,
+                            MatchScore = 49.1422802438691m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 61L,
+<<<<<<< HEAD
                             CandidateId = 116L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 47L,
                             MatchScore = 91.2821137305731m,
+=======
+                            CandidateId = 110L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 144L,
+                            MatchScore = 24.7008291188166m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 62L,
+<<<<<<< HEAD
                             CandidateId = 161L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 57L,
                             MatchScore = 76.5744526295804m,
+=======
+                            CandidateId = 90L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 153L,
+                            MatchScore = 37.877032970021m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 63L,
+<<<<<<< HEAD
                             CandidateId = 106L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 199L,
                             MatchScore = 68.3556575646417m,
+=======
+                            CandidateId = 235L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 105L,
+                            MatchScore = 31.2252493254958m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 64L,
+<<<<<<< HEAD
                             CandidateId = 68L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 128L,
                             MatchScore = 51.5503650771223m,
+=======
+                            CandidateId = 192L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 199L,
+                            MatchScore = 57.19286117572m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 65L,
+<<<<<<< HEAD
                             CandidateId = 150L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 198L,
                             MatchScore = 11.0027667651897m,
+=======
+                            CandidateId = 130L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 68L,
+                            MatchScore = 73.0972072915627m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 66L,
+<<<<<<< HEAD
                             CandidateId = 69L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 20L,
                             MatchScore = 6.85294824971489m,
+=======
+                            CandidateId = 190L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 107L,
+                            MatchScore = 37.6284354541583m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 67L,
+<<<<<<< HEAD
                             CandidateId = 168L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 70L,
                             MatchScore = 29.3022519113972m,
+=======
+                            CandidateId = 101L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 139L,
+                            MatchScore = 13.7793005042613m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 68L,
+<<<<<<< HEAD
                             CandidateId = 102L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 123L,
                             MatchScore = 91.3330862258249m,
+=======
+                            CandidateId = 191L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 10L,
+                            MatchScore = 41.089437734843m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 69L,
+<<<<<<< HEAD
                             CandidateId = 166L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 87L,
                             MatchScore = 16.4263874834526m,
+=======
+                            CandidateId = 171L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 148L,
+                            MatchScore = 1.70170259741214m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 70L,
+<<<<<<< HEAD
                             CandidateId = 133L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 184L,
                             MatchScore = 78.9137488132872m,
+=======
+                            CandidateId = 212L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 44L,
+                            MatchScore = 27.52445970081m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 71L,
+<<<<<<< HEAD
                             CandidateId = 98L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 3L,
                             MatchScore = 49.6841454644148m,
+=======
+                            CandidateId = 216L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 15L,
+                            MatchScore = 10.5754341513735m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 72L,
+<<<<<<< HEAD
                             CandidateId = 131L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 35L,
                             MatchScore = 59.0235396097524m,
+=======
+                            CandidateId = 223L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 14L,
+                            MatchScore = 78.0754078077504m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 73L,
+<<<<<<< HEAD
                             CandidateId = 66L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 162L,
                             MatchScore = 38.3812758784654m,
+=======
+                            CandidateId = 163L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 68L,
+                            MatchScore = 49.748101760516m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 74L,
+<<<<<<< HEAD
                             CandidateId = 158L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 6L,
                             MatchScore = 41.9519777139425m,
+=======
+                            CandidateId = 138L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 48L,
+                            MatchScore = 5.01235802891308m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 75L,
+<<<<<<< HEAD
                             CandidateId = 99L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 94L,
                             MatchScore = 43.2275655880699m,
+=======
+                            CandidateId = 119L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 82L,
+                            MatchScore = 50.973732513829m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 76L,
+<<<<<<< HEAD
                             CandidateId = 211L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 29L,
                             MatchScore = 3.82110970272734m,
+=======
+                            CandidateId = 222L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 168L,
+                            MatchScore = 44.3515186870245m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 77L,
+<<<<<<< HEAD
                             CandidateId = 137L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 118L,
                             MatchScore = 6.7206670561436m,
+=======
+                            CandidateId = 67L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 36L,
+                            MatchScore = 52.664265200805m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 78L,
+<<<<<<< HEAD
                             CandidateId = 246L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 21L,
                             MatchScore = 18.6971717601163m,
+=======
+                            CandidateId = 119L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 94L,
+                            MatchScore = 2.66200783786457m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 79L,
+<<<<<<< HEAD
                             CandidateId = 175L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 1L,
                             MatchScore = 6.929427761086m,
+=======
+                            CandidateId = 186L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 71L,
+                            MatchScore = 59.4252763592756m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 80L,
+<<<<<<< HEAD
                             CandidateId = 222L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 200L,
                             MatchScore = 97.5429193105283m,
+=======
+                            CandidateId = 57L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 168L,
+                            MatchScore = 59.8280127438847m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 81L,
+<<<<<<< HEAD
                             CandidateId = 67L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 121L,
                             MatchScore = 86.7113757816662m,
+=======
+                            CandidateId = 113L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 73L,
+                            MatchScore = 11.6545032298446m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 82L,
+<<<<<<< HEAD
                             CandidateId = 177L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 179L,
                             MatchScore = 84.5636364932003m,
+=======
+                            CandidateId = 236L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 8L,
+                            MatchScore = 88.0173766929737m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 83L,
+<<<<<<< HEAD
                             CandidateId = 214L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 4L,
                             MatchScore = 9.33809602136635m,
+=======
+                            CandidateId = 105L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 94L,
+                            MatchScore = 53.4701810467384m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 84L,
+<<<<<<< HEAD
                             CandidateId = 109L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 104L,
                             MatchScore = 1.75528712652404m,
+=======
+                            CandidateId = 91L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 191L,
+                            MatchScore = 13.2796473862974m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 85L,
+<<<<<<< HEAD
                             CandidateId = 115L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 137L,
                             MatchScore = 4.90377014731233m,
+=======
+                            CandidateId = 142L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 176L,
+                            MatchScore = 81.173853660549m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 86L,
+<<<<<<< HEAD
                             CandidateId = 81L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 175L,
                             MatchScore = 1.50288012880035m,
+=======
+                            CandidateId = 179L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 18L,
+                            MatchScore = 36.06792946163m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 87L,
+<<<<<<< HEAD
                             CandidateId = 110L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 97L,
                             MatchScore = 77.276816161944m,
+=======
+                            CandidateId = 231L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 181L,
+                            MatchScore = 74.5436393071635m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 88L,
+<<<<<<< HEAD
                             CandidateId = 118L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 26L,
                             MatchScore = 97.935408306278m,
+=======
+                            CandidateId = 59L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 115L,
+                            MatchScore = 72.3193561063704m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 89L,
+<<<<<<< HEAD
                             CandidateId = 233L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 145L,
                             MatchScore = 26.396412321551m,
+=======
+                            CandidateId = 172L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 150L,
+                            MatchScore = 48.5833541716372m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 90L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 62L,
                             MatchScore = 78.0514504658298m,
+=======
+                            CandidateId = 194L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 16L,
+                            MatchScore = 18.6632905707989m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 91L,
+<<<<<<< HEAD
                             CandidateId = 214L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 105L,
                             MatchScore = 21.9719724366311m,
+=======
+                            CandidateId = 151L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 38L,
+                            MatchScore = 52.9841517344975m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 92L,
+<<<<<<< HEAD
                             CandidateId = 137L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 82L,
                             MatchScore = 45.6281137399506m,
+=======
+                            CandidateId = 227L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 180L,
+                            MatchScore = 12.4936981650506m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 93L,
+<<<<<<< HEAD
                             CandidateId = 166L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 111L,
                             MatchScore = 61.0756296948882m,
+=======
+                            CandidateId = 126L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 187L,
+                            MatchScore = 41.4775469067868m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 94L,
+<<<<<<< HEAD
                             CandidateId = 76L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 118L,
                             MatchScore = 98.7570931663537m,
+=======
+                            CandidateId = 126L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 126L,
+                            MatchScore = 58.1613566997281m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 95L,
+<<<<<<< HEAD
                             CandidateId = 65L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 189L,
                             MatchScore = 13.8311847177479m,
+=======
+                            CandidateId = 97L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 182L,
+                            MatchScore = 87.741086346908m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 96L,
+<<<<<<< HEAD
                             CandidateId = 135L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 10L,
                             MatchScore = 65.2472321247902m,
+=======
+                            CandidateId = 169L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 79L,
+                            MatchScore = 88.7360445636958m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 97L,
+<<<<<<< HEAD
                             CandidateId = 77L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 28L,
                             MatchScore = 47.0592378857821m,
+=======
+                            CandidateId = 105L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 43L,
+                            MatchScore = 3.07902740457981m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 98L,
+<<<<<<< HEAD
                             CandidateId = 155L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 11L,
                             MatchScore = 56.0138053987239m,
+=======
+                            CandidateId = 238L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 47L,
+                            MatchScore = 13.1932258667393m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 99L,
+<<<<<<< HEAD
                             CandidateId = 147L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 41L,
                             MatchScore = 74.2941126573338m,
+=======
+                            CandidateId = 209L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 171L,
+                            MatchScore = 27.2147377614001m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 100L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 178L,
                             MatchScore = 71.9728390555702m,
+=======
+                            CandidateId = 109L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 79L,
+                            MatchScore = 31.9392985813037m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 101L,
+<<<<<<< HEAD
                             CandidateId = 193L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 117L,
                             MatchScore = 63.7066768313324m,
+=======
+                            CandidateId = 129L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 79L,
+                            MatchScore = 55.5898303890553m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 102L,
+<<<<<<< HEAD
                             CandidateId = 251L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 63L,
                             MatchScore = 47.6945250051536m,
+=======
+                            CandidateId = 204L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 70L,
+                            MatchScore = 70.0539951073257m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 103L,
+<<<<<<< HEAD
                             CandidateId = 107L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 160L,
                             MatchScore = 89.0424071760114m,
+=======
+                            CandidateId = 247L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 121L,
+                            MatchScore = 57.4365611455574m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 104L,
+<<<<<<< HEAD
                             CandidateId = 116L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 119L,
                             MatchScore = 57.0661771376925m,
+=======
+                            CandidateId = 82L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 138L,
+                            MatchScore = 26.8578626340525m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 105L,
+<<<<<<< HEAD
                             CandidateId = 230L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 81L,
                             MatchScore = 16.7847942639071m,
+=======
+                            CandidateId = 106L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 190L,
+                            MatchScore = 52.3521461767853m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 106L,
+<<<<<<< HEAD
                             CandidateId = 88L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 158L,
                             MatchScore = 26.7177610316862m,
+=======
+                            CandidateId = 184L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 33L,
+                            MatchScore = 80.7512084863853m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 107L,
+<<<<<<< HEAD
                             CandidateId = 186L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 169L,
                             MatchScore = 48.8270582858599m,
+=======
+                            CandidateId = 122L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 170L,
+                            MatchScore = 1.45123167962359m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 108L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 123L,
                             MatchScore = 4.75771189888833m,
+=======
+                            CandidateId = 224L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 120L,
+                            MatchScore = 44.711090412322m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 109L,
+<<<<<<< HEAD
                             CandidateId = 145L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 62L,
                             MatchScore = 29.1978734681373m,
+=======
+                            CandidateId = 242L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 32L,
+                            MatchScore = 56.4195880463438m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 110L,
+<<<<<<< HEAD
                             CandidateId = 93L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 132L,
                             MatchScore = 95.2139604348754m,
+=======
+                            CandidateId = 61L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 80L,
+                            MatchScore = 8.87192120257389m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 111L,
+<<<<<<< HEAD
                             CandidateId = 184L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 143L,
                             MatchScore = 40.2374074516061m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 171L,
+                            MatchScore = 8.23487230028718m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 112L,
+<<<<<<< HEAD
                             CandidateId = 52L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 179L,
                             MatchScore = 41.4545967902311m,
+=======
+                            CandidateId = 99L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 20L,
+                            MatchScore = 98.6058749717688m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 113L,
+<<<<<<< HEAD
                             CandidateId = 178L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 71L,
                             MatchScore = 6.69430760047133m,
+=======
+                            CandidateId = 164L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 6L,
+                            MatchScore = 46.539770833468m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 114L,
+<<<<<<< HEAD
                             CandidateId = 102L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 133L,
                             MatchScore = 14.3221824496622m,
+=======
+                            CandidateId = 210L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 36L,
+                            MatchScore = 60.9629254140718m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 115L,
+<<<<<<< HEAD
                             CandidateId = 161L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 153L,
                             MatchScore = 80.5590172673385m,
+=======
+                            CandidateId = 157L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 63L,
+                            MatchScore = 11.1869495879798m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 116L,
+<<<<<<< HEAD
                             CandidateId = 181L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 180L,
                             MatchScore = 62.4019153241077m,
+=======
+                            CandidateId = 109L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 153L,
+                            MatchScore = 66.336336762801m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 117L,
+<<<<<<< HEAD
                             CandidateId = 135L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 79L,
                             MatchScore = 29.4205232660382m,
+=======
+                            CandidateId = 189L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 122L,
+                            MatchScore = 12.3563001921197m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 118L,
+<<<<<<< HEAD
                             CandidateId = 61L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 96L,
                             MatchScore = 50.0211251666868m,
+=======
+                            CandidateId = 161L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 93L,
+                            MatchScore = 93.3650184391835m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 119L,
+<<<<<<< HEAD
                             CandidateId = 246L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 47L,
                             MatchScore = 53.6856738169145m,
+=======
+                            CandidateId = 211L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 61L,
+                            MatchScore = 52.2787285746442m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 120L,
+<<<<<<< HEAD
                             CandidateId = 52L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 118L,
                             MatchScore = 53.2175510903902m,
+=======
+                            CandidateId = 90L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 22L,
+                            MatchScore = 81.0788834845083m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 121L,
+<<<<<<< HEAD
                             CandidateId = 79L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 37L,
                             MatchScore = 7.06106238395956m,
+=======
+                            CandidateId = 93L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 28L,
+                            MatchScore = 93.324529097101m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 122L,
+<<<<<<< HEAD
                             CandidateId = 227L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 188L,
                             MatchScore = 65.6450378082902m,
+=======
+                            CandidateId = 218L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 98L,
+                            MatchScore = 61.3863800006855m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 123L,
+<<<<<<< HEAD
                             CandidateId = 154L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 34L,
                             MatchScore = 88.9448866196651m,
+=======
+                            CandidateId = 222L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 38L,
+                            MatchScore = 3.63701610063995m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 124L,
+<<<<<<< HEAD
                             CandidateId = 138L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 151L,
                             MatchScore = 54.9258959735399m,
+=======
+                            CandidateId = 79L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 108L,
+                            MatchScore = 10.3943991057549m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 125L,
+<<<<<<< HEAD
                             CandidateId = 87L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 41L,
                             MatchScore = 42.0456365877975m,
+=======
+                            CandidateId = 185L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 69L,
+                            MatchScore = 56.3864545227897m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 126L,
+<<<<<<< HEAD
                             CandidateId = 221L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 70L,
                             MatchScore = 62.6758268860522m,
+=======
+                            CandidateId = 109L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 81L,
+                            MatchScore = 33.6172734543762m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 127L,
+<<<<<<< HEAD
                             CandidateId = 133L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 49L,
                             MatchScore = 81.6682670180072m,
+=======
+                            CandidateId = 232L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 134L,
+                            MatchScore = 78.9498461778042m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 128L,
+<<<<<<< HEAD
                             CandidateId = 105L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 134L,
                             MatchScore = 78.8258732663588m,
+=======
+                            CandidateId = 245L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 72L,
+                            MatchScore = 38.8154311286357m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 129L,
+<<<<<<< HEAD
                             CandidateId = 99L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 132L,
                             MatchScore = 61.79289057003m,
+=======
+                            CandidateId = 81L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 199L,
+                            MatchScore = 79.0501814238029m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 130L,
+<<<<<<< HEAD
                             CandidateId = 183L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 181L,
                             MatchScore = 3.47866094833178m,
+=======
+                            CandidateId = 144L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 88L,
+                            MatchScore = 91.6927863339394m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 131L,
+<<<<<<< HEAD
                             CandidateId = 204L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 176L,
                             MatchScore = 62.9019351503355m,
+=======
+                            CandidateId = 182L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 74L,
+                            MatchScore = 4.05268417860041m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 132L,
+<<<<<<< HEAD
                             CandidateId = 147L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 107L,
                             MatchScore = 11.3569175877408m,
+=======
+                            CandidateId = 187L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 118L,
+                            MatchScore = 82.734843475155m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 133L,
+<<<<<<< HEAD
                             CandidateId = 216L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 15L,
                             MatchScore = 66.5760898806975m,
+=======
+                            CandidateId = 151L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 139L,
+                            MatchScore = 57.5981744367621m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 134L,
+<<<<<<< HEAD
                             CandidateId = 198L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 30L,
                             MatchScore = 13.6748374037793m,
+=======
+                            CandidateId = 177L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 88L,
+                            MatchScore = 7.09480848493744m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 135L,
+<<<<<<< HEAD
                             CandidateId = 179L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 147L,
                             MatchScore = 98.2770734924251m,
+=======
+                            CandidateId = 55L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 111L,
+                            MatchScore = 12.2520916220975m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 136L,
+<<<<<<< HEAD
                             CandidateId = 107L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 149L,
                             MatchScore = 86.7041800109224m,
+=======
+                            CandidateId = 125L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 176L,
+                            MatchScore = 89.9997606361284m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 137L,
+<<<<<<< HEAD
                             CandidateId = 229L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 16L,
                             MatchScore = 12.0736887269065m,
+=======
+                            CandidateId = 89L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 103L,
+                            MatchScore = 77.3545991523911m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 138L,
+<<<<<<< HEAD
                             CandidateId = 121L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 183L,
                             MatchScore = 59.2952811435309m,
+=======
+                            CandidateId = 81L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 160L,
+                            MatchScore = 23.5511557774391m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 139L,
+<<<<<<< HEAD
                             CandidateId = 155L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 144L,
                             MatchScore = 87.0959917488955m,
+=======
+                            CandidateId = 167L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 84L,
+                            MatchScore = 52.0490189325293m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 140L,
+<<<<<<< HEAD
                             CandidateId = 108L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 57L,
                             MatchScore = 64.1840058677755m,
+=======
+                            CandidateId = 176L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 90L,
+                            MatchScore = 3.75313647266158m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 141L,
+<<<<<<< HEAD
                             CandidateId = 105L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 8L,
                             MatchScore = 85.3674499249866m,
+=======
+                            CandidateId = 171L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 13L,
+                            MatchScore = 7.41912480789196m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 142L,
+<<<<<<< HEAD
                             CandidateId = 227L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 171L,
                             MatchScore = 67.3678552579916m,
+=======
+                            CandidateId = 199L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 45L,
+                            MatchScore = 68.7505503039577m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 143L,
+<<<<<<< HEAD
                             CandidateId = 185L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 185L,
                             MatchScore = 70.3275557003578m,
+=======
+                            CandidateId = 247L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 126L,
+                            MatchScore = 72.8499099485809m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 144L,
+<<<<<<< HEAD
                             CandidateId = 106L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 62L,
                             MatchScore = 2.56797704033925m,
+=======
+                            CandidateId = 180L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 92L,
+                            MatchScore = 83.7235712370479m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 145L,
+<<<<<<< HEAD
                             CandidateId = 70L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 193L,
                             MatchScore = 67.8348607699549m,
+=======
+                            CandidateId = 97L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 164L,
+                            MatchScore = 27.3839306213818m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 146L,
+<<<<<<< HEAD
                             CandidateId = 238L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 136L,
                             MatchScore = 62.8303422419496m,
+=======
+                            CandidateId = 213L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 144L,
+                            MatchScore = 94.5537199240894m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 147L,
+<<<<<<< HEAD
                             CandidateId = 234L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 162L,
                             MatchScore = 96.2047512625366m,
+=======
+                            CandidateId = 74L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 54L,
+                            MatchScore = 77.8912899447099m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 148L,
+<<<<<<< HEAD
                             CandidateId = 216L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 151L,
                             MatchScore = 77.316104936095m,
+=======
+                            CandidateId = 237L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 179L,
+                            MatchScore = 27.6656912768566m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 149L,
+<<<<<<< HEAD
                             CandidateId = 245L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 183L,
                             MatchScore = 41.3511811016831m,
+=======
+                            CandidateId = 165L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 29L,
+                            MatchScore = 50.9078240724783m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 150L,
+<<<<<<< HEAD
                             CandidateId = 215L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 8L,
                             MatchScore = 95.9393147825912m,
+=======
+                            CandidateId = 86L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 162L,
+                            MatchScore = 10.0474919704942m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 151L,
+<<<<<<< HEAD
                             CandidateId = 210L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 49L,
                             MatchScore = 54.341368635344m,
+=======
+                            CandidateId = 101L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 62L,
+                            MatchScore = 87.6800198981911m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 152L,
+<<<<<<< HEAD
                             CandidateId = 74L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 5L,
                             MatchScore = 46.551803660836m,
+=======
+                            CandidateId = 127L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 108L,
+                            MatchScore = 2.99792494764455m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 153L,
+<<<<<<< HEAD
                             CandidateId = 227L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 57L,
                             MatchScore = 76.3375391607813m,
+=======
+                            CandidateId = 117L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 200L,
+                            MatchScore = 28.4193218352363m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 154L,
+<<<<<<< HEAD
                             CandidateId = 216L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 62L,
                             MatchScore = 61.0062012732989m,
+=======
+                            CandidateId = 102L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 88L,
+                            MatchScore = 39.1766617722701m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 155L,
+<<<<<<< HEAD
                             CandidateId = 206L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 33L,
                             MatchScore = 61.3971491630176m,
+=======
+                            CandidateId = 62L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 35L,
+                            MatchScore = 54.4509852558612m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 156L,
+<<<<<<< HEAD
                             CandidateId = 241L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 20L,
                             MatchScore = 25.4655551283926m,
+=======
+                            CandidateId = 248L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 188L,
+                            MatchScore = 91.7420731818965m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 157L,
+<<<<<<< HEAD
                             CandidateId = 59L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 183L,
                             MatchScore = 58.3617639533997m,
+=======
+                            CandidateId = 191L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 193L,
+                            MatchScore = 76.9486141283757m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 158L,
+<<<<<<< HEAD
                             CandidateId = 147L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 49L,
                             MatchScore = 36.7361996959598m,
+=======
+                            CandidateId = 88L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 115L,
+                            MatchScore = 50.7204182216527m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 159L,
+<<<<<<< HEAD
                             CandidateId = 109L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 136L,
                             MatchScore = 44.3716936951371m,
+=======
+                            CandidateId = 85L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 52L,
+                            MatchScore = 66.8046620519854m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 160L,
+<<<<<<< HEAD
                             CandidateId = 240L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 17L,
                             MatchScore = 90.8021984579052m,
+=======
+                            CandidateId = 67L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 160L,
+                            MatchScore = 16.5502883105307m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 161L,
+<<<<<<< HEAD
                             CandidateId = 228L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 53L,
                             MatchScore = 84.6192244834356m,
+=======
+                            CandidateId = 216L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 36L,
+                            MatchScore = 80.7720733716954m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 162L,
+<<<<<<< HEAD
                             CandidateId = 64L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 149L,
                             MatchScore = 48.2178248223932m,
+=======
+                            CandidateId = 82L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 126L,
+                            MatchScore = 39.3894302376497m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 163L,
+<<<<<<< HEAD
                             CandidateId = 239L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 97L,
                             MatchScore = 98.2228829517136m,
+=======
+                            CandidateId = 107L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 193L,
+                            MatchScore = 85.0981127867001m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 164L,
+<<<<<<< HEAD
                             CandidateId = 131L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 43L,
                             MatchScore = 5.34812640647782m,
+=======
+                            CandidateId = 196L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 49L,
+                            MatchScore = 47.668925648401m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 165L,
+<<<<<<< HEAD
                             CandidateId = 151L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 173L,
                             MatchScore = 8.828143407045m,
+=======
+                            CandidateId = 218L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 133L,
+                            MatchScore = 86.3729269645982m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 166L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 71L,
                             MatchScore = 4.95402412719746m,
+=======
+                            CandidateId = 195L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 78L,
+                            MatchScore = 87.6708296535866m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 167L,
+<<<<<<< HEAD
                             CandidateId = 215L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 32L,
                             MatchScore = 1.84896611694664m,
+=======
+                            CandidateId = 93L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 147L,
+                            MatchScore = 58.8976859854989m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 168L,
+<<<<<<< HEAD
                             CandidateId = 76L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 32L,
                             MatchScore = 78.3716179795431m,
+=======
+                            CandidateId = 220L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 119L,
+                            MatchScore = 47.3301428590576m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 169L,
+<<<<<<< HEAD
                             CandidateId = 251L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 76L,
                             MatchScore = 31.3395416044349m,
+=======
+                            CandidateId = 198L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 67L,
+                            MatchScore = 6.7986151700833m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 170L,
+<<<<<<< HEAD
                             CandidateId = 120L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 36L,
                             MatchScore = 82.2983955416355m,
+=======
+                            CandidateId = 107L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 74L,
+                            MatchScore = 20.7613452900021m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 171L,
+<<<<<<< HEAD
                             CandidateId = 92L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 5L,
                             MatchScore = 93.9295495832011m,
+=======
+                            CandidateId = 91L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 73L,
+                            MatchScore = 25.1935817884251m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 172L,
+<<<<<<< HEAD
                             CandidateId = 61L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 172L,
                             MatchScore = 94.0533596528943m,
+=======
+                            CandidateId = 103L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 24L,
+                            MatchScore = 42.690238562734m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 173L,
+<<<<<<< HEAD
                             CandidateId = 135L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 153L,
                             MatchScore = 70.8589764176211m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 117L,
+                            MatchScore = 90.0987458369223m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 174L,
+<<<<<<< HEAD
                             CandidateId = 174L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 27L,
                             MatchScore = 1.20245693307484m,
+=======
+                            CandidateId = 247L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 31L,
+                            MatchScore = 70.1747189602697m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 175L,
+<<<<<<< HEAD
                             CandidateId = 192L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 55L,
                             MatchScore = 63.8698123227199m,
+=======
+                            CandidateId = 195L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 14L,
+                            MatchScore = 97.5203318975495m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 176L,
+<<<<<<< HEAD
                             CandidateId = 127L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 107L,
                             MatchScore = 98.0468078041667m,
+=======
+                            CandidateId = 234L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 59L,
+                            MatchScore = 34.9606262682754m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 177L,
+<<<<<<< HEAD
                             CandidateId = 117L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 56L,
                             MatchScore = 70.0513504306094m,
+=======
+                            CandidateId = 226L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 129L,
+                            MatchScore = 45.0509619177556m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 178L,
+<<<<<<< HEAD
                             CandidateId = 236L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 79L,
                             MatchScore = 12.1619929150501m,
+=======
+                            CandidateId = 65L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 159L,
+                            MatchScore = 87.0726235150698m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 179L,
+<<<<<<< HEAD
                             CandidateId = 72L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 178L,
                             MatchScore = 76.271073183171m,
+=======
+                            CandidateId = 169L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 116L,
+                            MatchScore = 98.0026626950142m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 180L,
+<<<<<<< HEAD
                             CandidateId = 125L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 13L,
                             MatchScore = 6.43251682931209m,
+=======
+                            CandidateId = 111L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 67L,
+                            MatchScore = 41.9366326378363m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 181L,
+<<<<<<< HEAD
                             CandidateId = 113L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 34L,
                             MatchScore = 59.2948235847497m,
+=======
+                            CandidateId = 170L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 66L,
+                            MatchScore = 99.9366945586804m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 182L,
+<<<<<<< HEAD
                             CandidateId = 90L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 32L,
                             MatchScore = 19.429999645534m,
+=======
+                            CandidateId = 228L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 129L,
+                            MatchScore = 52.2571038698112m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 183L,
+<<<<<<< HEAD
                             CandidateId = 53L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 23L,
                             MatchScore = 44.7470374613754m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 45L,
+                            MatchScore = 57.4029831017382m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 184L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 30L,
                             MatchScore = 16.7237028557452m,
+=======
+                            CandidateId = 212L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 88L,
+                            MatchScore = 17.5531373906662m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 185L,
+<<<<<<< HEAD
                             CandidateId = 57L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 69L,
                             MatchScore = 20.6201572532859m,
+=======
+                            CandidateId = 168L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 196L,
+                            MatchScore = 23.1196826897188m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 186L,
+<<<<<<< HEAD
                             CandidateId = 229L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 2L,
                             MatchScore = 41.9688703687717m,
+=======
+                            CandidateId = 157L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 178L,
+                            MatchScore = 12.5530837627841m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 187L,
+<<<<<<< HEAD
                             CandidateId = 221L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 30L,
                             MatchScore = 62.2224299061216m,
+=======
+                            CandidateId = 59L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 100L,
+                            MatchScore = 81.829624614599m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 188L,
+<<<<<<< HEAD
                             CandidateId = 231L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 67L,
                             MatchScore = 1.63212479168182m,
+=======
+                            CandidateId = 197L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 144L,
+                            MatchScore = 40.8359730806369m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 189L,
+<<<<<<< HEAD
                             CandidateId = 177L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 25L,
                             MatchScore = 28.1236532740871m,
+=======
+                            CandidateId = 166L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 152L,
+                            MatchScore = 13.38352263597m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 190L,
+<<<<<<< HEAD
                             CandidateId = 245L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 164L,
                             MatchScore = 94.761495895107m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 77L,
+                            MatchScore = 66.9818397457627m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 191L,
+<<<<<<< HEAD
                             CandidateId = 192L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 36L,
                             MatchScore = 5.17769330422286m,
+=======
+                            CandidateId = 101L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 90L,
+                            MatchScore = 24.6438925734926m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 192L,
+<<<<<<< HEAD
                             CandidateId = 244L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 129L,
                             MatchScore = 30.6576638159611m,
+=======
+                            CandidateId = 216L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 97L,
+                            MatchScore = 38.5035269141679m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 193L,
+<<<<<<< HEAD
                             CandidateId = 74L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 84L,
                             MatchScore = 51.0744161210369m,
+=======
+                            CandidateId = 136L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 141L,
+                            MatchScore = 83.5884767042419m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 194L,
+<<<<<<< HEAD
                             CandidateId = 135L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 36.8153840474856m,
+=======
+                            CandidateId = 65L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 91L,
+                            MatchScore = 37.0955363554394m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 195L,
+<<<<<<< HEAD
                             CandidateId = 78L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 107L,
                             MatchScore = 73.9691314166268m,
+=======
+                            CandidateId = 93L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 156L,
+                            MatchScore = 6.83717858364674m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 196L,
+<<<<<<< HEAD
                             CandidateId = 62L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 107L,
                             MatchScore = 89.3927577833611m,
+=======
+                            CandidateId = 215L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 55L,
+                            MatchScore = 48.3855765072562m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 197L,
+<<<<<<< HEAD
                             CandidateId = 228L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 184L,
                             MatchScore = 21.4880943864063m,
+=======
+                            CandidateId = 189L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 128L,
+                            MatchScore = 6.15518484551235m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 198L,
+<<<<<<< HEAD
                             CandidateId = 235L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 69L,
                             MatchScore = 52.2467768063055m,
+=======
+                            CandidateId = 219L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 171L,
+                            MatchScore = 25.8843507738245m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 199L,
+<<<<<<< HEAD
                             CandidateId = 219L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 40.9243268151415m,
+=======
+                            CandidateId = 173L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 121L,
+                            MatchScore = 86.4718392428345m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 200L,
+<<<<<<< HEAD
                             CandidateId = 59L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 116L,
                             MatchScore = 56.3405067456609m,
+=======
+                            CandidateId = 229L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 119L,
+                            MatchScore = 31.1333122808176m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 201L,
+<<<<<<< HEAD
                             CandidateId = 111L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 183L,
                             MatchScore = 4.3753540163745m,
+=======
+                            CandidateId = 220L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 78L,
+                            MatchScore = 0.0489333644737179m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 202L,
+<<<<<<< HEAD
                             CandidateId = 245L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 100L,
                             MatchScore = 88.6722029134036m,
+=======
+                            CandidateId = 249L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 181L,
+                            MatchScore = 55.3473818839283m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 203L,
-                            CandidateId = 191L,
+                            CandidateId = 150L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
+<<<<<<< HEAD
                             JobId = 24L,
                             MatchScore = 6.43859030978688m,
+=======
+                            JobId = 186L,
+                            MatchScore = 75.6824110521387m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 204L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 180L,
                             MatchScore = 77.3247690300107m,
+=======
+                            CandidateId = 88L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 170L,
+                            MatchScore = 10.2145975968868m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 205L,
+<<<<<<< HEAD
                             CandidateId = 192L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 182L,
                             MatchScore = 42.9688525586244m,
+=======
+                            CandidateId = 61L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 58L,
+                            MatchScore = 97.0148447421449m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 206L,
+<<<<<<< HEAD
                             CandidateId = 211L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 51L,
                             MatchScore = 76.5638401157054m,
+=======
+                            CandidateId = 240L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 90L,
+                            MatchScore = 51.9473075642936m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 207L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 56L,
                             MatchScore = 57.4398185393958m,
+=======
+                            CandidateId = 148L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 68L,
+                            MatchScore = 75.4976819155261m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 208L,
+<<<<<<< HEAD
                             CandidateId = 232L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 78L,
                             MatchScore = 8.27538520483085m,
+=======
+                            CandidateId = 200L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 130L,
+                            MatchScore = 85.2867958998712m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 209L,
+<<<<<<< HEAD
                             CandidateId = 218L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 147L,
                             MatchScore = 78.3935694389015m,
+=======
+                            CandidateId = 170L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 122L,
+                            MatchScore = 41.3305383368072m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 210L,
+<<<<<<< HEAD
                             CandidateId = 92L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 106L,
                             MatchScore = 12.715491704976m,
+=======
+                            CandidateId = 228L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 198L,
+                            MatchScore = 21.7179137848867m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 211L,
+<<<<<<< HEAD
                             CandidateId = 220L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 180L,
                             MatchScore = 7.64074246754904m,
+=======
+                            CandidateId = 74L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 105L,
+                            MatchScore = 53.680808774047m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 212L,
+<<<<<<< HEAD
                             CandidateId = 158L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 190L,
                             MatchScore = 11.9440405685194m,
+=======
+                            CandidateId = 64L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 105L,
+                            MatchScore = 22.4499590333784m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 213L,
+<<<<<<< HEAD
                             CandidateId = 58L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 65L,
                             MatchScore = 16.1407752503365m,
+=======
+                            CandidateId = 226L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 75L,
+                            MatchScore = 21.6696903210458m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 214L,
+<<<<<<< HEAD
                             CandidateId = 135L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 171L,
                             MatchScore = 35.654033737096m,
+=======
+                            CandidateId = 121L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 103L,
+                            MatchScore = 32.151777964156m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 215L,
+<<<<<<< HEAD
                             CandidateId = 55L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 166L,
                             MatchScore = 29.56784732154m,
+=======
+                            CandidateId = 210L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 146L,
+                            MatchScore = 50.4446926761627m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 216L,
+<<<<<<< HEAD
                             CandidateId = 138L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 21.6838078674319m,
+=======
+                            CandidateId = 164L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 192L,
+                            MatchScore = 79.0855366173599m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 217L,
+<<<<<<< HEAD
                             CandidateId = 89L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 19L,
                             MatchScore = 3.59258596021337m,
+=======
+                            CandidateId = 82L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 58L,
+                            MatchScore = 66.4724804304878m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 218L,
+<<<<<<< HEAD
                             CandidateId = 111L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 129L,
                             MatchScore = 44.7580447628899m,
+=======
+                            CandidateId = 102L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 70L,
+                            MatchScore = 40.4138252792944m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 219L,
+<<<<<<< HEAD
                             CandidateId = 157L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 198L,
                             MatchScore = 39.425299148739m,
+=======
+                            CandidateId = 199L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 112L,
+                            MatchScore = 10.1863681386161m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 220L,
+<<<<<<< HEAD
                             CandidateId = 205L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 193L,
                             MatchScore = 13.5124136291036m,
+=======
+                            CandidateId = 111L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 30L,
+                            MatchScore = 39.7571155986549m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 221L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 21L,
                             MatchScore = 49.4522154561487m,
+=======
+                            CandidateId = 240L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 29L,
+                            MatchScore = 61.3548654417297m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 222L,
+<<<<<<< HEAD
                             CandidateId = 52L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 188L,
                             MatchScore = 74.4939412802895m,
+=======
+                            CandidateId = 117L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 108L,
+                            MatchScore = 7.34763970009407m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 223L,
+<<<<<<< HEAD
                             CandidateId = 244L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 140L,
                             MatchScore = 16.9285266738983m,
+=======
+                            CandidateId = 205L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 114L,
+                            MatchScore = 98.1569361398727m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 224L,
+<<<<<<< HEAD
                             CandidateId = 237L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 63L,
                             MatchScore = 76.6787346809538m,
+=======
+                            CandidateId = 67L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 150L,
+                            MatchScore = 7.14384592470892m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 225L,
+<<<<<<< HEAD
                             CandidateId = 136L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 121L,
                             MatchScore = 17.1377595128202m,
+=======
+                            CandidateId = 217L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 61L,
+                            MatchScore = 13.6239791352413m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 226L,
+<<<<<<< HEAD
                             CandidateId = 163L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 44L,
                             MatchScore = 88.6463787819475m,
+=======
+                            CandidateId = 236L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 87L,
+                            MatchScore = 94.8312323982042m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 227L,
+<<<<<<< HEAD
                             CandidateId = 110L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 158L,
                             MatchScore = 40.0723350886592m,
+=======
+                            CandidateId = 181L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 70L,
+                            MatchScore = 2.75302506180155m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 228L,
+<<<<<<< HEAD
                             CandidateId = 139L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 114L,
                             MatchScore = 1.41333160056422m,
+=======
+                            CandidateId = 191L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 125L,
+                            MatchScore = 72.6821854117709m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 229L,
+<<<<<<< HEAD
                             CandidateId = 102L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 19L,
                             MatchScore = 54.2452291372443m,
+=======
+                            CandidateId = 87L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 111L,
+                            MatchScore = 86.0353759424926m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 230L,
+<<<<<<< HEAD
                             CandidateId = 243L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 126L,
                             MatchScore = 0.558015425018042m,
+=======
+                            CandidateId = 245L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 27L,
+                            MatchScore = 32.5140116887698m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 231L,
+<<<<<<< HEAD
                             CandidateId = 124L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 146L,
                             MatchScore = 26.6020887189554m,
+=======
+                            CandidateId = 96L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 25L,
+                            MatchScore = 57.5420113548366m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 232L,
+<<<<<<< HEAD
                             CandidateId = 202L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 6L,
                             MatchScore = 83.1665449697369m,
+=======
+                            CandidateId = 126L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 164L,
+                            MatchScore = 40.43887669241m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 233L,
+<<<<<<< HEAD
                             CandidateId = 230L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 173L,
                             MatchScore = 1.35018578793397m,
+=======
+                            CandidateId = 89L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 142L,
+                            MatchScore = 46.7523169455828m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 234L,
+<<<<<<< HEAD
                             CandidateId = 200L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 111L,
                             MatchScore = 47.2472036943059m,
+=======
+                            CandidateId = 130L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 87L,
+                            MatchScore = 79.9755292385703m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 235L,
+<<<<<<< HEAD
                             CandidateId = 208L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 10L,
                             MatchScore = 25.8360252370294m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 162L,
+                            MatchScore = 7.68543449588373m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 236L,
+<<<<<<< HEAD
                             CandidateId = 59L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 54L,
                             MatchScore = 87.6336405461811m,
+=======
+                            CandidateId = 60L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 119L,
+                            MatchScore = 42.5929291837816m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 237L,
+<<<<<<< HEAD
                             CandidateId = 206L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 56L,
                             MatchScore = 96.7987228635693m,
+=======
+                            CandidateId = 76L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 54L,
+                            MatchScore = 81.5808544315309m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 238L,
+<<<<<<< HEAD
                             CandidateId = 86L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 102L,
                             MatchScore = 47.6020639052624m,
+=======
+                            CandidateId = 211L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 31L,
+                            MatchScore = 64.7084208041003m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 239L,
+<<<<<<< HEAD
                             CandidateId = 159L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 147L,
                             MatchScore = 14.9621008033688m,
+=======
+                            CandidateId = 155L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 75L,
+                            MatchScore = 24.2596672495174m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 240L,
+<<<<<<< HEAD
                             CandidateId = 221L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 97L,
                             MatchScore = 74.8563061351219m,
+=======
+                            CandidateId = 249L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 178L,
+                            MatchScore = 15.0773121114249m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 241L,
+<<<<<<< HEAD
                             CandidateId = 65L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 41L,
                             MatchScore = 0.327323703247739m,
+=======
+                            CandidateId = 138L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 43L,
+                            MatchScore = 79.6899085769848m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 242L,
+<<<<<<< HEAD
                             CandidateId = 169L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 33L,
                             MatchScore = 56.6269546079575m,
+=======
+                            CandidateId = 176L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 132L,
+                            MatchScore = 85.4030197418309m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
@@ -3026,692 +5200,1205 @@ namespace SmartRecruit.Infrastructure.Migrations
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
+<<<<<<< HEAD
                             JobId = 101L,
                             MatchScore = 67.3477698431107m,
+=======
+                            JobId = 100L,
+                            MatchScore = 45.0360446446743m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 244L,
+<<<<<<< HEAD
                             CandidateId = 123L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 68L,
                             MatchScore = 66.5456591483884m,
+=======
+                            CandidateId = 197L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 147L,
+                            MatchScore = 73.5561124857311m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 245L,
+<<<<<<< HEAD
                             CandidateId = 99L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 175L,
                             MatchScore = 54.6307773583712m,
+=======
+                            CandidateId = 235L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 97L,
+                            MatchScore = 25.4792692258392m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 246L,
+<<<<<<< HEAD
                             CandidateId = 155L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 186L,
                             MatchScore = 65.3998799926601m,
+=======
+                            CandidateId = 214L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 46L,
+                            MatchScore = 15.5854154450751m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 247L,
+<<<<<<< HEAD
                             CandidateId = 216L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 152L,
                             MatchScore = 21.4354284673163m,
+=======
+                            CandidateId = 243L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 130L,
+                            MatchScore = 13.2602415574995m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 248L,
+<<<<<<< HEAD
                             CandidateId = 122L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 134L,
                             MatchScore = 18.7183177651457m,
+=======
+                            CandidateId = 224L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 87L,
+                            MatchScore = 84.5298076442116m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 249L,
+<<<<<<< HEAD
                             CandidateId = 95L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 8L,
                             MatchScore = 18.9476302913146m,
+=======
+                            CandidateId = 245L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 102L,
+                            MatchScore = 42.3644312854691m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 250L,
+<<<<<<< HEAD
                             CandidateId = 110L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 159L,
                             MatchScore = 21.4494231256886m,
+=======
+                            CandidateId = 141L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 186L,
+                            MatchScore = 85.7011113249236m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 251L,
+<<<<<<< HEAD
                             CandidateId = 128L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 137L,
                             MatchScore = 4.63087600871496m,
+=======
+                            CandidateId = 216L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 33L,
+                            MatchScore = 20.0196042750122m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 252L,
+<<<<<<< HEAD
                             CandidateId = 121L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 53L,
                             MatchScore = 67.6779699361315m,
+=======
+                            CandidateId = 95L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 64L,
+                            MatchScore = 96.1399930976983m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 253L,
+<<<<<<< HEAD
                             CandidateId = 228L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 94L,
                             MatchScore = 19.7470416872516m,
+=======
+                            CandidateId = 82L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 1L,
+                            MatchScore = 92.003325508909m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 254L,
+<<<<<<< HEAD
                             CandidateId = 205L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 139L,
                             MatchScore = 46.1427185899311m,
+=======
+                            CandidateId = 71L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 45L,
+                            MatchScore = 55.8818719144361m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 255L,
+<<<<<<< HEAD
                             CandidateId = 239L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 41L,
                             MatchScore = 41.5309368826127m,
+=======
+                            CandidateId = 159L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 196L,
+                            MatchScore = 39.7407349849775m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 256L,
+<<<<<<< HEAD
                             CandidateId = 178L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 61L,
                             MatchScore = 93.7587990862126m,
+=======
+                            CandidateId = 186L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 17L,
+                            MatchScore = 88.1749839932541m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 257L,
+<<<<<<< HEAD
                             CandidateId = 213L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 186L,
                             MatchScore = 1.61439152509644m,
+=======
+                            CandidateId = 80L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 79L,
+                            MatchScore = 70.4554405857136m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 258L,
+<<<<<<< HEAD
                             CandidateId = 196L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 100L,
                             MatchScore = 2.39113839454536m,
+=======
+                            CandidateId = 99L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 18L,
+                            MatchScore = 2.80226506423311m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 259L,
+<<<<<<< HEAD
                             CandidateId = 159L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 107L,
                             MatchScore = 71.538916403213m,
+=======
+                            CandidateId = 207L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 4L,
+                            MatchScore = 56.7896679773879m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 260L,
+<<<<<<< HEAD
                             CandidateId = 77L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 164L,
                             MatchScore = 36.7662495173357m,
+=======
+                            CandidateId = 81L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 191L,
+                            MatchScore = 65.392839659654m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 261L,
+<<<<<<< HEAD
                             CandidateId = 194L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 76L,
                             MatchScore = 28.6064201633476m,
+=======
+                            CandidateId = 165L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 87L,
+                            MatchScore = 3.45655833531942m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 262L,
+<<<<<<< HEAD
                             CandidateId = 183L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 92L,
                             MatchScore = 97.4210320959897m,
+=======
+                            CandidateId = 166L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 119L,
+                            MatchScore = 90.4247589364763m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 263L,
+<<<<<<< HEAD
                             CandidateId = 173L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 124L,
                             MatchScore = 88.808437943835m,
+=======
+                            CandidateId = 84L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 108L,
+                            MatchScore = 69.9602610291728m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 264L,
+<<<<<<< HEAD
                             CandidateId = 143L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 174L,
                             MatchScore = 63.5697104332828m,
+=======
+                            CandidateId = 96L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 59L,
+                            MatchScore = 66.030725215576m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 265L,
+<<<<<<< HEAD
                             CandidateId = 64L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 92L,
                             MatchScore = 5.37184914824173m,
+=======
+                            CandidateId = 137L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 48L,
+                            MatchScore = 86.1899989127135m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 266L,
+<<<<<<< HEAD
                             CandidateId = 144L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 151L,
                             MatchScore = 41.6133417476031m,
+=======
+                            CandidateId = 143L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 115L,
+                            MatchScore = 32.8723936494777m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 267L,
+<<<<<<< HEAD
                             CandidateId = 199L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 155L,
                             MatchScore = 58.2570936802109m,
+=======
+                            CandidateId = 137L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 90L,
+                            MatchScore = 29.6322348665596m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 268L,
+<<<<<<< HEAD
                             CandidateId = 224L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 51L,
                             MatchScore = 48.5733359346973m,
+=======
+                            CandidateId = 159L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 109L,
+                            MatchScore = 30.6818894719155m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 269L,
+<<<<<<< HEAD
                             CandidateId = 89L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 40L,
                             MatchScore = 65.7013569333131m,
+=======
+                            CandidateId = 67L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 31L,
+                            MatchScore = 58.4483033783959m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 270L,
+<<<<<<< HEAD
                             CandidateId = 198L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 5L,
                             MatchScore = 81.1880703462232m,
+=======
+                            CandidateId = 111L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 35L,
+                            MatchScore = 43.9149722195766m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 271L,
+<<<<<<< HEAD
                             CandidateId = 182L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 193L,
                             MatchScore = 75.7735512572218m,
+=======
+                            CandidateId = 62L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 79L,
+                            MatchScore = 0.575908832520204m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 272L,
+<<<<<<< HEAD
                             CandidateId = 115L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 166L,
                             MatchScore = 5.76058416895596m,
+=======
+                            CandidateId = 210L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 54L,
+                            MatchScore = 52.9585559167706m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 273L,
+<<<<<<< HEAD
                             CandidateId = 200L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 36L,
                             MatchScore = 27.8823003302712m,
+=======
+                            CandidateId = 128L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 105L,
+                            MatchScore = 96.5988507012831m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 274L,
+<<<<<<< HEAD
                             CandidateId = 188L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 89L,
                             MatchScore = 2.68041403157656m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 99L,
+                            MatchScore = 50.8723096693271m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 275L,
+<<<<<<< HEAD
                             CandidateId = 64L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 10L,
                             MatchScore = 34.709695742796m,
+=======
+                            CandidateId = 71L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 37L,
+                            MatchScore = 91.7347195519762m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 276L,
+<<<<<<< HEAD
                             CandidateId = 59L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 77L,
                             MatchScore = 66.0933417575869m,
+=======
+                            CandidateId = 222L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 9L,
+                            MatchScore = 80.9615929522373m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 277L,
+<<<<<<< HEAD
                             CandidateId = 208L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 195L,
                             MatchScore = 7.31140566398921m,
+=======
+                            CandidateId = 140L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 34L,
+                            MatchScore = 31.9842547792868m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 278L,
+<<<<<<< HEAD
                             CandidateId = 60L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 60L,
                             MatchScore = 39.1049898411636m,
+=======
+                            CandidateId = 152L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 48L,
+                            MatchScore = 71.8013518824248m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 279L,
+<<<<<<< HEAD
                             CandidateId = 76L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 158L,
                             MatchScore = 85.0478828815035m,
+=======
+                            CandidateId = 229L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 72L,
+                            MatchScore = 3.16380504666074m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 280L,
+<<<<<<< HEAD
                             CandidateId = 104L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 161L,
                             MatchScore = 47.1245470210559m,
+=======
+                            CandidateId = 140L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 146L,
+                            MatchScore = 49.5009353614882m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 281L,
+<<<<<<< HEAD
                             CandidateId = 171L,
+=======
+                            CandidateId = 124L,
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 64L,
+<<<<<<< HEAD
                             MatchScore = 87.7293113561949m,
+=======
+                            MatchScore = 86.545976338231m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 282L,
+<<<<<<< HEAD
                             CandidateId = 233L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 16L,
                             MatchScore = 80.5943773503389m,
+=======
+                            CandidateId = 231L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 53L,
+                            MatchScore = 17.3663554328337m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 283L,
+<<<<<<< HEAD
                             CandidateId = 177L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 176L,
                             MatchScore = 74.8384894220338m,
+=======
+                            CandidateId = 245L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 131L,
+                            MatchScore = 63.4705098641433m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 284L,
+<<<<<<< HEAD
                             CandidateId = 167L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 200L,
                             MatchScore = 71.9381939023445m,
+=======
+                            CandidateId = 61L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 67L,
+                            MatchScore = 7.66361100024712m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 285L,
+<<<<<<< HEAD
                             CandidateId = 118L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 28L,
                             MatchScore = 5.16794827076045m,
+=======
+                            CandidateId = 242L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 73L,
+                            MatchScore = 88.4201815763582m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 286L,
-                            CandidateId = 92L,
+                            CandidateId = 123L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
+<<<<<<< HEAD
                             JobId = 112L,
                             MatchScore = 80.0102591421503m,
+=======
+                            JobId = 158L,
+                            MatchScore = 43.714563522355m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 287L,
+<<<<<<< HEAD
                             CandidateId = 215L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 28L,
                             MatchScore = 14.7328408503592m,
+=======
+                            CandidateId = 73L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 78L,
+                            MatchScore = 22.4127957701743m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 288L,
+<<<<<<< HEAD
                             CandidateId = 62L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 200L,
                             MatchScore = 94.9448341945861m,
+=======
+                            CandidateId = 53L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 155L,
+                            MatchScore = 85.4192333693706m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 289L,
+<<<<<<< HEAD
                             CandidateId = 184L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 148L,
                             MatchScore = 60.8892489973871m,
+=======
+                            CandidateId = 82L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 24L,
+                            MatchScore = 54.754491455273m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 290L,
+<<<<<<< HEAD
                             CandidateId = 60L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 74L,
                             MatchScore = 19.0392532008883m,
+=======
+                            CandidateId = 233L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 58L,
+                            MatchScore = 90.3946851335441m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 291L,
+<<<<<<< HEAD
                             CandidateId = 127L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 42L,
                             MatchScore = 48.3242088688184m,
+=======
+                            CandidateId = 211L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 100L,
+                            MatchScore = 94.132688638816m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 292L,
+<<<<<<< HEAD
                             CandidateId = 76L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 162L,
                             MatchScore = 8.66323505000362m,
+=======
+                            CandidateId = 86L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 95L,
+                            MatchScore = 18.1690647351411m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 293L,
+<<<<<<< HEAD
                             CandidateId = 246L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 30L,
                             MatchScore = 15.2047252353303m,
+=======
+                            CandidateId = 236L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 129L,
+                            MatchScore = 19.9009244422898m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 294L,
+<<<<<<< HEAD
                             CandidateId = 152L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 109L,
                             MatchScore = 41.2373363698075m,
+=======
+                            CandidateId = 129L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 149L,
+                            MatchScore = 88.120557781365m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 295L,
+<<<<<<< HEAD
                             CandidateId = 246L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 183L,
                             MatchScore = 20.3717563396188m,
+=======
+                            CandidateId = 218L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 35L,
+                            MatchScore = 39.4856448469151m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 296L,
+<<<<<<< HEAD
                             CandidateId = 84L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 71L,
                             MatchScore = 71.3441489596591m,
+=======
+                            CandidateId = 227L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 49L,
+                            MatchScore = 54.8979316628063m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 297L,
+<<<<<<< HEAD
                             CandidateId = 97L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 68L,
                             MatchScore = 92.2520230488162m,
+=======
+                            CandidateId = 166L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 167L,
+                            MatchScore = 52.8744168360133m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 298L,
+<<<<<<< HEAD
                             CandidateId = 184L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 11L,
                             MatchScore = 44.2729646080513m,
+=======
+                            CandidateId = 119L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 119L,
+                            MatchScore = 33.2683072114681m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 299L,
+<<<<<<< HEAD
                             CandidateId = 116L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 65L,
                             MatchScore = 54.4545971576379m,
+=======
+                            CandidateId = 160L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 55L,
+                            MatchScore = 35.7140959406803m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         },
                         new
                         {
                             Id = 300L,
+<<<<<<< HEAD
                             CandidateId = 119L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExperienceMatch = 0m,
                             IsDeleted = false,
                             JobId = 186L,
                             MatchScore = 24.6002750120127m,
+=======
+                            CandidateId = 80L,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExperienceMatch = 0m,
+                            IsDeleted = false,
+                            JobId = 3L,
+                            MatchScore = 74.5559002154301m,
+>>>>>>> master
                             SkillMatch = 0m,
                             Status = 0
                         });
@@ -6200,13 +8887,19 @@ namespace SmartRecruit.Infrastructure.Migrations
                         {
                             Id = 1L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 2L,
                             Company = "Phạm LLC",
+=======
+                            CategoryId = 8L,
+                            Company = "Đoàn Inc",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hà Nội",
                             RecruiterId = 9L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6215,19 +8908,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Lập trình viên Frontend",
+=======
+                            Location = "",
+                            RecruiterId = 30L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 2L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 2L,
                             Company = "Lâm - Hoàng",
+=======
+                            CategoryId = 8L,
+                            Company = "Đoàn Inc",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Bình Dương",
                             RecruiterId = 26L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6236,24 +8945,47 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
+=======
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 3L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 2L,
                             Company = "Đoàn - Tăng",
+=======
+                            CategoryId = 6L,
+                            Company = "Dương, Dương and Phạm",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Cần Thơ",
                             RecruiterId = 46L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
                             SalaryMax = 67000000m,
                             SalaryMin = 38000000m,
+=======
+                            Location = "",
+                            RecruiterId = 33L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+>>>>>>> master
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Thiết kế đồ họa",
@@ -6263,13 +8995,19 @@ namespace SmartRecruit.Infrastructure.Migrations
                         {
                             Id = 4L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 10L,
                             Company = "Trương Group",
+=======
+                            CategoryId = 2L,
+                            Company = "Phùng - Vương",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Đà Nẵng",
                             RecruiterId = 27L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6278,19 +9016,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Lập trình viên Frontend",
+=======
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 5L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 5L,
                             Company = "Phùng LLC",
+=======
+                            CategoryId = 4L,
+                            Company = "Đỗ - Đặng",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hải Phòng",
                             RecruiterId = 27L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6299,19 +9053,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Thiết kế đồ họa",
+=======
+                            Location = "",
+                            RecruiterId = 42L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 6L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 7L,
                             Company = "Lâm and Sons",
+=======
+                            CategoryId = 6L,
+                            Company = "Đặng, Đoàn and Tăng",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hải Phòng",
                             RecruiterId = 27L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6320,19 +9090,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Kế toán trưởng",
+=======
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 7L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 2L,
                             Company = "Lý - Hà",
+=======
+                            CategoryId = 8L,
+                            Company = "Trịnh, Phùng and Phạm",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Đồng Nai",
                             RecruiterId = 23L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6341,19 +9127,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Quản lý dự án",
+=======
+                            Location = "",
+                            RecruiterId = 41L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 8L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 8L,
                             Company = "Hoàng Group",
+=======
+                            CategoryId = 9L,
+                            Company = "Phạm, Phùng and Mai",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "TP. Hồ Chí Minh",
                             RecruiterId = 3L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6362,19 +9164,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Lập trình viên .NET",
+=======
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 9L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 2L,
                             Company = "Tô Inc",
+=======
+                            CategoryId = 8L,
+                            Company = "Nguyễn LLC",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Đà Nẵng",
                             RecruiterId = 40L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6383,19 +9201,35 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Quản lý dự án",
+=======
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 10L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 6L,
                             Company = "Đặng - Hồ",
+=======
+                            CategoryId = 5L,
+                            Company = "Dương LLC",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Đồng Nai",
                             RecruiterId = 40L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6404,24 +9238,47 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Chuyên viên tư vấn",
+=======
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 11L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 1L,
                             Company = "Phùng - Bùi",
+=======
+                            CategoryId = 2L,
+                            Company = "Đinh, Vương and Trần",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "TP. Hồ Chí Minh",
                             RecruiterId = 42L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
                             SalaryMax = 58000000m,
                             SalaryMin = 29000000m,
+=======
+                            Location = "",
+                            RecruiterId = 9L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+>>>>>>> master
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
@@ -6431,13 +9288,19 @@ namespace SmartRecruit.Infrastructure.Migrations
                         {
                             Id = 12L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 10L,
                             Company = "Trịnh LLC",
+=======
+                            CategoryId = 4L,
+                            Company = "Trịnh - Lâm",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "TP. Hồ Chí Minh",
                             RecruiterId = 38L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -6446,12 +9309,23 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
+=======
+                            Location = "",
+                            RecruiterId = 13L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
                             Id = 13L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+<<<<<<< HEAD
                             CategoryId = 3L,
                             Company = "Trương, Đỗ and Hồ",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
@@ -8945,10 +11819,28 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Lập trình viên Frontend",
+=======
+                            CategoryId = 2L,
+                            Company = "Lâm, Phan and Dương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 132L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 10L,
@@ -9092,24 +11984,58 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
-                            ViewCount = 0
-                        },
-                        new
-                        {
-                            Id = 139L,
+=======
+                            Id = 14L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
-                            CategoryId = 7L,
-                            Company = "Đặng - Đoàn",
+                            CategoryId = 4L,
+                            Company = "Nguyễn, Trương and Đinh",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+>>>>>>> master
+                            ViewCount = 0
+                        },
+                        new
+                        {
+<<<<<<< HEAD
+                            Id = 139L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Đặng - Đoàn",
+=======
+                            Id = 15L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Bùi, Trần and Trịnh",
+>>>>>>> master
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+<<<<<<< HEAD
                             Location = "Cần Thơ",
                             RecruiterId = 36L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
                             SalaryMax = 62000000m,
                             SalaryMin = 32000000m,
+=======
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+>>>>>>> master
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Lập trình viên Frontend",
@@ -9117,15 +12043,23 @@ namespace SmartRecruit.Infrastructure.Migrations
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 140L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 9L,
                             Company = "Phạm Inc",
+=======
+                            Id = 16L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Bùi LLC",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Bình Dương",
                             RecruiterId = 43L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9134,10 +12068,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Kế toán trưởng",
+=======
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 141L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 3L,
@@ -9176,10 +12121,30 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
+=======
+                            Id = 17L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Đào, Lý and Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 13L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 143L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 4L,
@@ -9247,11 +12212,18 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 10L,
                             Company = "Tô Group",
+=======
+                            Id = 18L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Phan - Đặng",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hải Phòng",
                             RecruiterId = 47L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9260,10 +12232,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Kỹ sư phần mềm",
+=======
+                            Location = "",
+                            RecruiterId = 20L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 147L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 3L,
@@ -9373,11 +12356,18 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 4L,
                             Company = "Dương, Phan and Hà",
+=======
+                            Id = 19L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Phùng and Sons",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Đà Nẵng",
                             RecruiterId = 25L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9386,10 +12376,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Quản lý dự án",
+=======
+                            Location = "",
+                            RecruiterId = 48L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 153L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 4L,
@@ -9701,19 +12702,46 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Kỹ sư phần mềm",
-                            ViewCount = 0
-                        },
-                        new
-                        {
-                            Id = 168L,
+=======
+                            Id = 20L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
-                            CategoryId = 4L,
-                            Company = "Phan - Tăng",
+                            CategoryId = 10L,
+                            Company = "Đoàn, Đặng and Tăng",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+                            Location = "",
+                            RecruiterId = 26L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+>>>>>>> master
+                            ViewCount = 0
+                        },
+                        new
+                        {
+<<<<<<< HEAD
+                            Id = 168L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Phan - Tăng",
+=======
+                            Id = 21L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Trịnh Group",
+>>>>>>> master
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+<<<<<<< HEAD
                             Location = "Đồng Nai",
                             RecruiterId = 17L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9722,10 +12750,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Chuyên viên tư vấn",
+=======
+                            Location = "",
+                            RecruiterId = 39L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 169L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 10L,
@@ -9940,11 +12979,18 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 6L,
                             Company = "Lý and Sons",
+=======
+                            Id = 22L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Trịnh Inc",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Bình Dương",
                             RecruiterId = 5L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9953,10 +12999,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Quản lý dự án",
+=======
+                            Location = "",
+                            RecruiterId = 25L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 180L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 4L,
@@ -9982,11 +13039,18 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 4L,
                             Company = "Mai, Đặng and Phùng",
+=======
+                            Id = 23L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Phùng, Hà and Vũ",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hải Phòng",
                             RecruiterId = 49L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -9995,19 +13059,37 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Kỹ sư phần mềm",
+=======
+                            Location = "",
+                            RecruiterId = 5L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 182L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 6L,
                             Company = "Vương Group",
+=======
+                            Id = 24L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Trịnh, Tô and Nguyễn",
+>>>>>>> master
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
+<<<<<<< HEAD
                             Location = "Hà Nội",
                             RecruiterId = 38L,
                             Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
@@ -10016,10 +13098,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Chuyên viên Marketing",
+=======
+                            Location = "",
+                            RecruiterId = 48L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 183L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 2L,
@@ -10331,10 +13424,30 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Quản lý dự án",
+=======
+                            Id = 25L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Lâm, Đào and Dương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 29L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+>>>>>>> master
                             ViewCount = 0
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = 198L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 5L,
@@ -10352,10 +13465,177 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Nhân viên kinh doanh",
+=======
+                            Id = 26L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Hoàng Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 24L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
                             ViewCount = 0
                         },
                         new
                         {
+                            Id = 27L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Hồ, Hà and Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 11L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Vũ - Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 37L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Bùi Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 40L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Trần and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 13L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 31L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Mai Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 12L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Vũ Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 42L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Bùi - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+>>>>>>> master
+                            ViewCount = 0
+                        },
+                        new
+                        {
+<<<<<<< HEAD
                             Id = 199L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 6L,
@@ -10373,10 +13653,2130 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Chuyên viên Marketing",
+=======
+                            Id = 34L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Mai - Mai",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 3L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
                             ViewCount = 0
                         },
                         new
                         {
+                            Id = 35L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Trịnh Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 37L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 36L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Mai LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 42L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Đặng - Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Hoàng, Tăng and Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 39L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Phạm - Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 24L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 40L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Trương and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 41L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Trương Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 42L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Ngô - Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 43L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Hồ - Hồ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 7L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 44L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Hoàng - Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 26L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 45L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Lý and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 46L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Phan - Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 5L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 47L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Đinh, Dương and Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 12L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 48L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Đoàn, Phạm and Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 19L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 49L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Phùng - Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 38L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 50L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lâm and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 46L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 51L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Dương - Vũ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 52L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Phan Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 29L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 53L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Đỗ Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 54L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Phạm - Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 55L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Đinh - Vũ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 6L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 56L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Phan, Lê and Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 57L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lê - Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 39L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 58L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Tăng - Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 59L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Vũ, Lý and Hồ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 60L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Tô, Bùi and Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 24L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 61L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Đoàn, Trịnh and Dương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 37L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 62L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Trần LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 63L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Nguyễn LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 64L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Vũ LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 24L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 65L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Phạm - Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 66L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Hoàng - Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 67L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Nguyễn - Bùi",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 43L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 68L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Hà - Ngô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 9L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 69L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Trương, Vũ and Trần",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 70L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Trương - Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 26L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 71L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Đỗ, Lâm and Đỗ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 35L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 72L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Mai - Mai",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 46L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 73L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Lê Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 36L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 74L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Dương, Vương and Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 75L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Đoàn - Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 30L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 76L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Phạm - Lâm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 77L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Trịnh Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 25L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 78L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Đinh, Hà and Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 79L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đào, Hoàng and Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 48L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 80L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Tô - Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 81L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Lâm - Nguyễn",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 13L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 82L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Đặng - Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 3L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 83L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Dương - Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 84L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Hoàng, Phạm and Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 40L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 85L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Hoàng, Đinh and Dương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 86L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đoàn, Phan and Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 40L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 87L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Trương - Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 88L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Đặng - Lâm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 42L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 89L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Lâm and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 36L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 90L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Phạm Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 38L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 91L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Hoàng - Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 92L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Phạm - Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 40L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 93L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Trịnh - Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 40L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 94L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Đoàn, Tô and Ngô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 28L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 95L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Lý - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 96L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Bùi, Đặng and Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 6L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 97L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Vương, Phùng and Đào",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 98L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Trịnh and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 13L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 99L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Hồ, Tô and Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 8L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 100L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Dương, Đặng and Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Đỗ, Trịnh and Vũ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 102L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lê and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 103L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Dương, Trần and Vũ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 104L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Dương and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 105L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Lâm - Đoàn",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 19L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 106L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Lâm Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 107L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Phạm, Đỗ and Đào",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 7L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 108L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Dương, Tô and Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 109L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Đỗ - Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 30L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 110L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Lâm Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 3L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 111L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Lý, Dương and Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 112L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Hà Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 113L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Nguyễn - Phùng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 114L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Dương Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 28L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 115L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Dương - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 116L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Lê, Hoàng and Ngô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 117L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Vũ - Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 18L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 118L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Bùi Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 30L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 119L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Hồ - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 30L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 120L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Trần and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 26L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 121L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Hoàng - Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 122L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Phạm Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 11L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 123L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Phùng Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 43L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 124L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Vũ - Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 46L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 125L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Hoàng - Mai",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 51L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 126L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Dương Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 127L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Hoàng, Dương and Phùng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 128L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Đinh and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 6L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 129L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Nguyễn, Đỗ and Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 130L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Tăng Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 25L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 131L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Phan, Ngô and Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 6L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 132L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Đinh Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 12L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 133L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Vũ, Tô and Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 134L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Lý and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 16L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+>>>>>>> master
+                            ViewCount = 0
+                        },
+                        new
+                        {
+<<<<<<< HEAD
                             Id = 200L,
                             Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
                             CategoryId = 3L,
@@ -10394,6 +15794,1390 @@ namespace SmartRecruit.Infrastructure.Migrations
                             SkillsRequired = ".NET Core, SQL Server",
                             Status = 1,
                             Title = "Thiết kế đồ họa",
+=======
+                            Id = 135L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Mai Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 48L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 136L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đào and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 137L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Đỗ, Vương and Hồ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 41L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 138L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Vương - Đỗ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 38L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 139L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đào, Tăng and Ngô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 42L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 140L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Trương - Đỗ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 51L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 141L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Vũ - Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 142L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Vương and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 28L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 143L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Đào Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 144L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Bùi - Lê",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 145L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Trịnh Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 39L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 146L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Phạm, Tô and Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 49L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 147L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Hà, Bùi and Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 5L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 148L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Trương, Dương and Vũ",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 33L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 149L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Đặng - Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 18L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 150L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lê Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 151L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Lâm - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 32L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 152L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Trịnh, Đoàn and Dương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 3L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 153L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lâm LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 154L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Hoàng - Mai",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 33L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 155L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Đoàn, Phạm and Đinh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 15L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 156L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Lý, Đỗ and Hà",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 41L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 157L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Nguyễn, Lâm and Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 49L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 158L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Trương LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 21L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 159L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Tô Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 25L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 160L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Tăng, Ngô and Trịnh",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 161L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Bùi, Dương and Đào",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 43L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 162L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Lê - Đào",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 20L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 163L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Dương - Bùi",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 39L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 164L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Trương LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 36L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 165L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Mai, Đỗ and Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 34L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 166L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Vũ, Trương and Mai",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 12L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 167L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đoàn Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 36L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 168L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Phùng - Vương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 51L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 169L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Lâm - Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 49L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 170L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Đoàn, Lý and Đặng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 171L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lê Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 5L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 172L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Nguyễn Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 173L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Phan LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 23L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 174L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 1L,
+                            Company = "Mai, Ngô and Lâm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 175L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Phùng and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 176L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Đinh - Trần",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 177L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Vương - Bùi",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 14L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 178L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Trần and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 11L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 179L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Lâm LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 180L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Dương LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 181L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Trần, Bùi and Lâm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 18L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 182L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 7L,
+                            Company = "Trần - Hoàng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 50L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 183L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 5L,
+                            Company = "Mai Group",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 32L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 184L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Hà Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 7L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 185L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Lý LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 22L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên kinh doanh",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 186L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Tô, Lê and Phạm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 10L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 187L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Ngô, Đặng and Lý",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 25L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 188L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Đặng Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 2L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 189L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Nguyễn - Trương",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên Marketing",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 190L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Tăng, Đỗ and Phan",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 27L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 191L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Lý, Trịnh and Lâm",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 18L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 192L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 6L,
+                            Company = "Dương - Tô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 16L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Chuyên viên tư vấn",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 193L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 3L,
+                            Company = "Hồ, Trịnh and Ngô",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 4L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kỹ sư phần mềm",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 194L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Đỗ, Đoàn and Phùng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Kế toán trưởng",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 195L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 2L,
+                            Company = "Đinh LLC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Thiết kế đồ họa",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 196L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 8L,
+                            Company = "Lê - Trần",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 45L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Nhân viên nhân sự",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 197L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 9L,
+                            Company = "Nguyễn Inc",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 9L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 198L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lê, Ngô and Phùng",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 31L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên .NET",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 199L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 4L,
+                            Company = "Lý, Đào and Đoàn",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 19L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Lập trình viên Frontend",
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 200L,
+                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
+                            CategoryId = 10L,
+                            Company = "Phan and Sons",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
+                            IsAppealed = false,
+                            IsDeleted = false,
+                            JobType = 0,
+                            Location = "",
+                            RecruiterId = 44L,
+                            Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.",
+                            SalaryMax = 0m,
+                            SalaryMin = 0m,
+                            SkillsRequired = ".NET Core, SQL Server",
+                            Status = 1,
+                            Title = "Quản lý dự án",
+>>>>>>> master
                             ViewCount = 0
                         });
                 });
@@ -15774,7 +22558,11 @@ namespace SmartRecruit.Infrastructure.Migrations
                             FullName = "Hệ thống Quản trị",
                             IsActive = true,
                             IsDeleted = false,
+<<<<<<< HEAD
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 2
                         },
                         new
@@ -15782,12 +22570,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 2L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhatquang.dinh62@yahoo.com",
                             EmailVerified = true,
                             FullName = "Anh Quân Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhhong_bui@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Uyển Nhi Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15795,12 +22592,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 3L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuhue.do@yahoo.com",
                             EmailVerified = true,
                             FullName = "Minh Thủy Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quynhhuong.ly@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Ngọc Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15808,12 +22614,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 4L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dantam27@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thế Dũng Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuelam.tran@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Quốc Anh Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15821,12 +22636,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 5L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhatlan.do16@gmail.com",
                             EmailVerified = true,
                             FullName = "Cẩm Nhi Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "xuanson_tang89@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Giang Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15834,12 +22658,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 6L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhatduy.ho@gmail.com",
                             EmailVerified = true,
                             FullName = "Nguyệt Hà Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "mailoan.ly@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Đan Tâm Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15847,12 +22680,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 7L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anhphuong_duong@yahoo.com",
                             EmailVerified = true,
                             FullName = "Việt Khoa Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhman61@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Lệ Thủy Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15860,12 +22702,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 8L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngocnu.truong59@hotmail.com",
                             EmailVerified = true,
                             FullName = "Nguyệt Cát Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hongque54@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Thạch Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15873,12 +22724,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 9L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuytrang.ha@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thúy Liễu Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "diemlien_vu@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thụy Lâm Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15886,12 +22746,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 10L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "kimanh_ho@gmail.com",
                             EmailVerified = true,
                             FullName = "Diệp Vy Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhhong.ho@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Uyển Khanh Lâm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15899,12 +22768,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 11L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dacthai_dang24@gmail.com",
                             EmailVerified = true,
                             FullName = "Diễm Liên Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phidiep.dang26@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Trúc Vân Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15912,12 +22790,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 12L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuvong.to@hotmail.com",
                             EmailVerified = true,
                             FullName = "Tiến Võ Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhhau_le46@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thành Khiêm Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15925,12 +22812,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 13L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuanhai.do42@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hùng Tường Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ducthanh52@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Kim Ánh Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15938,12 +22834,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 14L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anco56@gmail.com",
                             EmailVerified = true,
                             FullName = "Hoài Thanh Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huehuong_hoang36@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Giao Kiều Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15951,12 +22856,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 15L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khoinguyen84@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thành Công Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "mongnhi13@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Vân Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15964,12 +22878,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 16L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huyenthoai62@gmail.com",
                             EmailVerified = true,
                             FullName = "Nhật Khương Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhtruc97@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Mỹ Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15977,12 +22900,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 17L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "chanhviet53@yahoo.com",
                             EmailVerified = true,
                             FullName = "Vĩnh Luân Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichdao_pham@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Khánh Văn Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -15990,12 +22922,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 18L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "trieuthanh_vuong52@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quang Hưng Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "danlinh_to@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Phương Phi Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16003,12 +22944,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 19L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anhxuan28@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hạnh Linh Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuylinh31@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Quỳnh Thanh Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16016,12 +22966,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 20L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "danquynh_trinh37@hotmail.com",
                             EmailVerified = true,
                             FullName = "Bá Thành Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhgiang.le24@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Yến Oanh Hồ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16029,12 +22988,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 21L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khanhthuy25@gmail.com",
                             EmailVerified = true,
                             FullName = "Mai Linh Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thaisang72@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Đan Linh Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16042,12 +23010,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 22L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "banmai.dang14@yahoo.com",
                             EmailVerified = true,
                             FullName = "Nhật Quốc Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dinhloc.do8@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Phương Hiền Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16055,12 +23032,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 23L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huytran.phung13@gmail.com",
                             EmailVerified = true,
                             FullName = "Quỳnh Dao Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhang.bui@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thảo Ly Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16068,12 +23054,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 24L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quocvu0@hotmail.com",
                             EmailVerified = true,
                             FullName = "Nguyên Văn Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huonggiang.truong@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ánh Lệ Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16081,12 +23076,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 25L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thunhan.lam26@gmail.com",
                             EmailVerified = true,
                             FullName = "Khánh Huy Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhle.nguyen@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Duy Mỹ Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16094,12 +23098,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 26L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khanhly69@gmail.com",
                             EmailVerified = true,
                             FullName = "Kim Dung Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quynhthanh_dinh27@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thông Tuệ Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16107,12 +23120,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 27L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngantruc40@gmail.com",
                             EmailVerified = true,
                             FullName = "Kim Duyên Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khoivi54@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Bảo Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16120,12 +23142,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 28L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuanphuc.to7@gmail.com",
                             EmailVerified = true,
                             FullName = "Anh Thơ Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phiphi.doan95@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Chấn Hưng Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16133,12 +23164,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 29L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "bichtrang_lam26@gmail.com",
                             EmailVerified = true,
                             FullName = "Niệm Nhiên Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhhung22@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bách Nhân Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16146,12 +23186,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 30L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khanhgiang_trinh@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bảo Quỳnh Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhhoa.duong60@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Mạnh Dũng Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16159,12 +23208,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 31L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "kimmai82@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hữu Khôi Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhang_bui@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Nguyệt Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16172,12 +23230,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 32L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "camthao.mai@hotmail.com",
                             EmailVerified = true,
                             FullName = "Uyên Nhi Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kieudung.mai51@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Toàn Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16185,12 +23252,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 33L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhdat.dao@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thanh Hiền Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "haimy.phung@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thúy Minh Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16198,12 +23274,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 34L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuananh.truong@yahoo.com",
                             EmailVerified = true,
                             FullName = "Kim Thoa Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuonglong43@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Hạnh Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16211,12 +23296,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 35L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "myhoan.lam@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hoàng Xuân Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huutai_truong75@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Kim Liên Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16224,12 +23318,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 36L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vietphong_nguyen72@hotmail.com",
                             EmailVerified = true,
                             FullName = "Minh Cảnh Trần",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhtrieu_phan23@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Tài Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16237,12 +23340,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 37L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhcanh_to@gmail.com",
                             EmailVerified = true,
                             FullName = "Xuân Ngọc Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuyenlam.lam@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Xuyến Chi Dương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16250,12 +23362,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 38L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ducgiang_dang@yahoo.com",
                             EmailVerified = true,
                             FullName = "Liên Kiệt Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hanhnga64@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thy Oanh Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16263,12 +23384,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 39L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngockhang.lam95@gmail.com",
                             EmailVerified = true,
                             FullName = "Minh Hoàng Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hungdao_trinh@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Nga Ngô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16276,12 +23406,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 40L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "mongquynh_duong51@gmail.com",
                             EmailVerified = true,
                             FullName = "Vinh Diệu Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhdoanh_vuong72@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiên Trung Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16289,12 +23428,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 41L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhuhong.tran@yahoo.com",
                             EmailVerified = true,
                             FullName = "Liên Chi Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "truongthanh.truong13@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Kiên Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16302,12 +23450,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 42L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huutri59@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bữu Toại Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "diemchi_tran@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Cương Nghị Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16315,12 +23472,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 43L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhhuong12@gmail.com",
                             EmailVerified = true,
                             FullName = "Tân Bình Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "haonhien.phan45@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thái Chi Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16328,12 +23494,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 44L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dieuthien_ho@yahoo.com",
                             EmailVerified = true,
                             FullName = "Diễm Quỳnh Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichnha.trinh@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Hiếu Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16341,12 +23516,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 45L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quanganh82@gmail.com",
                             EmailVerified = true,
                             FullName = "Quốc Hải Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhhung.ngo@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Phúc Hòa Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16354,12 +23538,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 46L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuanngoc.truong@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Hạ Trần",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuquynh17@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Việt Hải Hồ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16367,12 +23560,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 47L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhnhan.duong@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thụy Trinh Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhvu.lam@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Ðoàn Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16380,12 +23582,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 48L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "chinhtam93@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ðồng Bằng Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thicam43@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Tuấn Tài Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16393,12 +23604,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 49L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuannhien_dang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Nhã Trúc Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhdan_duong@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kim Hoàng Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16406,12 +23626,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 50L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuanhanh_do@yahoo.com",
                             EmailVerified = true,
                             FullName = "Nguyệt Cầm Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dinhthien.lam67@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Minh Thắng Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16419,12 +23648,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 51L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuyhang.nguyen@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hiền Nương Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ngocminh_phung@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hoàng Xuân Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 1
                         },
                         new
@@ -16432,12 +23670,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 52L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anha_trinh@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hồng Phát Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tahien_phung46@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Vân Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16445,12 +23692,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 53L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhunga.bui@hotmail.com",
                             EmailVerified = true,
                             FullName = "Dã Lâm Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kienlam.mai@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Nương Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16458,12 +23714,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 54L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quangtrung31@yahoo.com",
                             EmailVerified = true,
                             FullName = "Uyên Thy Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bachhoa_dinh@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Hoài Vỹ Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16471,12 +23736,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 55L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhhuy.ho@hotmail.com",
                             EmailVerified = true,
                             FullName = "Huyền Thoại Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nghiminh54@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Diễm Hạnh Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16484,12 +23758,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 56L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phihoang_duong43@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bích Hằng Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hongson48@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Phượng Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16497,12 +23780,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 57L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhakhanh_vu61@gmail.com",
                             EmailVerified = true,
                             FullName = "Mộng Nhi Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "truongnam_trinh@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Tân Long Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16510,12 +23802,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 58L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ductho.trinh18@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thanh Hảo Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuongthe.trinh@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Duy Tuyền Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16523,12 +23824,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 59L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "diemhanh.trinh@gmail.com",
                             EmailVerified = true,
                             FullName = "Đăng Khương Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "uyentram34@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Giang Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16536,12 +23846,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 60L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thongnhat_phung76@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ý Bình Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "duythang70@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Duy Cẩn Dương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16549,12 +23868,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 61L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "kieuthu16@hotmail.com",
                             EmailVerified = true,
                             FullName = "Quang Trung Bùi",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kimcuong.pham@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quảng Ðại Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16562,12 +23890,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 62L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thiennuong.dang21@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hải Hà Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quangdai58@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Thế Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16575,12 +23912,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 63L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngocdung_lam64@gmail.com",
                             EmailVerified = true,
                             FullName = "Cẩm Linh Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lamgiang.phan8@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thuần Hậu Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16588,12 +23934,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 64L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tamnguyen.ha@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thảo Trang Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vylan.ho59@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Lệ Huyền Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16601,12 +23956,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 65L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "daitrang_phan43@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ðình Ðôn Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuan.mai@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Nam Phi Lâm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16614,12 +23978,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 66L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuloan52@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thiệu Bảo Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "trunganh_vu@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Khải Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16627,12 +24000,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 67L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hoangngon0@gmail.com",
                             EmailVerified = true,
                             FullName = "Anh Ðào Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhthu80@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Hoa Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16640,12 +24022,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 68L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hoankiem.tang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hải Giang Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vannhi.lam@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Sơn Lâm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16653,12 +24044,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 69L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thienan.truong66@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thu Nguyệt Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khanhvan_phung67@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ánh Hoa Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16666,12 +24066,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 70L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ylan_hoang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hạo Nhiên Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "naman5@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Ngọc Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16679,12 +24088,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 71L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuygiang_phan@gmail.com",
                             EmailVerified = true,
                             FullName = "Cảnh Tuấn Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhhoa_pham@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Dung Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16692,12 +24110,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 72L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baoanh_nguyen@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hạnh San Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhy82@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Diễm Thư Ngô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16705,12 +24132,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 73L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anhvu.tran@gmail.com",
                             EmailVerified = true,
                             FullName = "Tuyết Nga Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhminh95@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quế Linh Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16718,12 +24154,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 74L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dinhduong_ly29@hotmail.com",
                             EmailVerified = true,
                             FullName = "Khiết Tâm Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuocson18@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Lập Thành Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16731,12 +24176,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 75L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongoanh_truong81@gmail.com",
                             EmailVerified = true,
                             FullName = "Tường Vân Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "diemthu_phung24@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thiều Ly Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16744,12 +24198,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 76L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vietmi.bui42@gmail.com",
                             EmailVerified = true,
                             FullName = "Thiên Nga Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vanphuong.tran37@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quốc Huy Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16757,12 +24220,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 77L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuantuong.mai@yahoo.com",
                             EmailVerified = true,
                             FullName = "Danh Văn Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huylinh.ha80@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Mai Vy Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16770,12 +24242,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 78L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thienmanh48@gmail.com",
                             EmailVerified = true,
                             FullName = "Lâm Dũng Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuylinh_le@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Kim Tuyến Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16783,12 +24264,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 79L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "giahan46@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hoàng Phát Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuongvan_to26@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hạnh Phương Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16796,12 +24286,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 80L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongthao_ly59@gmail.com",
                             EmailVerified = true,
                             FullName = "Bích Huệ Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuyuyen61@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Huy Tường Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16809,12 +24308,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 81L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "longvinh.dang86@gmail.com",
                             EmailVerified = true,
                             FullName = "Bình Yên Bùi",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phucduy89@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Lan Ngọc Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16822,12 +24330,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 82L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huongduong_phung@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hiền Hòa Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "haiphuong58@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Tuấn Hải Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16835,12 +24352,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 83L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuansy8@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mộng Liễu Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhatanh67@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Nguyệt Cầm Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16848,12 +24374,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 84L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "truclinh_pham65@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ngọc Hằng Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuongtrang_ha@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hải My Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16861,12 +24396,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 85L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thientri_doan66@hotmail.com",
                             EmailVerified = true,
                             FullName = "Mai Quyên Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vietduong.nguyen@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Nguyệt Anh Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16874,12 +24418,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 86L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thienluong42@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ðông Sơn Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lamphuong_doan@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bằng Sơn Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16887,12 +24440,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 87L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "kimlien.tran@gmail.com",
                             EmailVerified = true,
                             FullName = "Thiện Sinh Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "mailinh90@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Nam Nhật Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16900,12 +24462,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 88L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huyentrang.trinh75@yahoo.com",
                             EmailVerified = true,
                             FullName = "Tân Ðịnh Đinh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dieunuong_tang@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Huy Thông Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16913,12 +24484,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 89L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "haisan_trinh@gmail.com",
                             EmailVerified = true,
                             FullName = "Liên Trân Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lienphuong.doan71@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Duy Hoàng Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16926,12 +24506,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 90L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "namloc_bui@yahoo.com",
                             EmailVerified = true,
                             FullName = "Anh Thi Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuyhuong.doan@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Kiên Giang Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16939,12 +24528,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 91L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuongmai_dinh33@gmail.com",
                             EmailVerified = true,
                             FullName = "Tâm Nguyên Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tramhuong11@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Tường Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16952,12 +24550,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 92L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hoaly77@hotmail.com",
                             EmailVerified = true,
                             FullName = "Uyển Nhã Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kieutrang_duong17@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thụy Linh Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16965,12 +24572,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 93L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongthinh_trinh@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bình Dân Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lienphuong_duong@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thái Thanh Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16978,12 +24594,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 94L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dangkhuong5@yahoo.com",
                             EmailVerified = true,
                             FullName = "Khúc Lan Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hongthu_nguyen@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Tuấn Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -16991,12 +24616,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 95L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nguyetcam_phung1@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thắng Lợi Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "sydan_vu@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Thư Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17004,12 +24638,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 96L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuyoanh13@yahoo.com",
                             EmailVerified = true,
                             FullName = "Giang Thanh Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "xuanngoc98@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Trường Nhân Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17017,12 +24660,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 97L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuocloc.phung@hotmail.com",
                             EmailVerified = true,
                             FullName = "Khả Khanh Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "baongoc57@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hương Tiên Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17030,12 +24682,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 98L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vietthong_dinh14@gmail.com",
                             EmailVerified = true,
                             FullName = "Ðình Hợp Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuongcuong.ha11@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Quang Danh Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17043,12 +24704,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 99L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khanhmai.dinh57@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hoàng Mỹ Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "danthanh_do81@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Duy Khánh Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17056,12 +24726,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 100L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuongchi.vuong74@hotmail.com",
                             EmailVerified = true,
                             FullName = "Khởi Phong Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ngoccam_lam53@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Hòa Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17069,12 +24748,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 101L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhthuan_truong43@gmail.com",
                             EmailVerified = true,
                             FullName = "Kiều Diễm Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kimyen13@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Quốc Bình Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17082,12 +24770,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 102L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thaohong_ho@hotmail.com",
                             EmailVerified = true,
                             FullName = "Duy Cường Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "mongnhi_dao@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Như Bảo Dương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17095,12 +24792,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 103L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "uyenmy.dang12@gmail.com",
                             EmailVerified = true,
                             FullName = "Hồng Phương Bùi",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhthuy34@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Uyên Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17108,12 +24814,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 104L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuongvan17@gmail.com",
                             EmailVerified = true,
                             FullName = "Như Khang Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhngan_ha@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thảo Linh Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17121,12 +24836,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 105L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khacduy_hoang37@gmail.com",
                             EmailVerified = true,
                             FullName = "Minh Hiền Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhtu44@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bình Nguyên Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17134,12 +24858,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 106L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuynga_vuong@yahoo.com",
                             EmailVerified = true,
                             FullName = "Vân Thường Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichphuong53@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Gia Quỳnh Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17147,12 +24880,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 107L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhtu36@gmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Quế Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhkhiem.do65@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thảo Hồng Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17160,12 +24902,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 108L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuyuyen.bui@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mai Thanh Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhyen22@gmail.com",
+                            EmailVerified = true,
+                            FullName = "An Ninh Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17173,12 +24924,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 109L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuanhung.duong@hotmail.com",
                             EmailVerified = true,
                             FullName = "Uy Vũ Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khanhly.duong@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quỳnh Nhi Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17186,12 +24946,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 110L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vanthuong_tang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Tuyết Nga Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "totam.ngo45@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thu Phong Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17199,12 +24968,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 111L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "maithu.ho@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thành Danh Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhdanh.do44@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quang Trọng Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17212,12 +24990,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 112L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ducbao_dao91@gmail.com",
                             EmailVerified = true,
                             FullName = "Thiện Khiêm Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huyanh.vuong@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Hiếu Minh Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17225,12 +25012,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 113L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhquan.le@hotmail.com",
                             EmailVerified = true,
                             FullName = "Quốc Huy Đinh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nguyenphong_phung10@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bích Nga Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17238,12 +25034,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 114L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phucnguyen68@yahoo.com",
                             EmailVerified = true,
                             FullName = "Lệ Khanh Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hienhoa.nguyen@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Lệ Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17251,12 +25056,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 115L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quochoai.duong@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mộng Vy Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "maianh_pham65@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Tuấn Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17264,12 +25078,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 116L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuantam_dao88@hotmail.com",
                             EmailVerified = true,
                             FullName = "Xuân Uyên Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thaonhi56@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Nguyệt Minh Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17277,12 +25100,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 117L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuanthao.tran48@yahoo.com",
                             EmailVerified = true,
                             FullName = "Nguyệt Lan Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhnhi_vu34@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kim Duyên Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17290,12 +25122,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 118L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vanngoc.truong53@gmail.com",
                             EmailVerified = true,
                             FullName = "Hồng Mai Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dinhhuong_hoang@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Công Hào Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17303,12 +25144,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 119L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "toanthang_to87@hotmail.com",
                             EmailVerified = true,
                             FullName = "Diệu Lan Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tamtrang_dao@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Nga Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17316,12 +25166,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 120L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "sonca_vu29@hotmail.com",
                             EmailVerified = true,
                             FullName = "Duy Nhượng Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhtan_vu83@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Gia Huấn Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17329,12 +25188,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 121L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "linhduyen68@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hương Trang Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huyendieu.phung69@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Quế Linh Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17342,12 +25210,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 122L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "bathinh.nguyen@hotmail.com",
                             EmailVerified = true,
                             FullName = "Khải Ca Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "giakhanh96@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Nguyên Phong Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17355,12 +25232,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 123L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhuhong98@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quốc Việt Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuydu_phung@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Giang Nam Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17368,12 +25254,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 124L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "camnhung.doan@yahoo.com",
                             EmailVerified = true,
                             FullName = "Tường Vinh Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhphong39@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Lam Tuyền Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17381,12 +25276,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 125L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhtriet_vu@yahoo.com",
                             EmailVerified = true,
                             FullName = "Nghi Dung Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kieudiem_trinh55@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Tiểu My Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17394,12 +25298,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 126L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hainhi_lam@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hữu Trung Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "sydan_hoang@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Mạnh Trường Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17407,12 +25320,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 127L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dinhhop.hoang21@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mai Lan Đinh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bachcuc_pham@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Trí Hữu Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17420,12 +25342,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 128L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuyvu_vu@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ái Thy Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vinhthuy.doan73@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Tú Quyên Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17433,12 +25364,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 129L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "kimmai_to19@gmail.com",
                             EmailVerified = true,
                             FullName = "Sỹ Phú Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "sontuyen25@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thu Sương Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17446,12 +25386,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 130L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anhngoc.vuong73@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bích Ðào Bùi",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "congluat38@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hoàng Oanh Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17459,12 +25408,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 131L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phihung.doan12@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thu Hà Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phungviet7@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Công Lý Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17472,12 +25430,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 132L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhayen_dang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thông Minh Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thucanh43@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Lam Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17485,12 +25452,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 133L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngocson_ha@hotmail.com",
                             EmailVerified = true,
                             FullName = "Phúc Ðiền Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhien_phan@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Duy Ngôn Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17498,12 +25474,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 134L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tusuong.to@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mỹ Hường Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "xuanhan.nguyen@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Trọng Hà Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17511,12 +25496,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 135L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huongtien21@yahoo.com",
                             EmailVerified = true,
                             FullName = "Từ Dung Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lamkhe54@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Mai Chi Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17524,12 +25518,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 136L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "mytam_tran46@gmail.com",
                             EmailVerified = true,
                             FullName = "Nhân Nguyên Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuonguyen15@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Anh Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17537,12 +25540,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 137L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "duyan_tran80@yahoo.com",
                             EmailVerified = true,
                             FullName = "Tâm Thanh Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhdan.vu50@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Thịnh Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17550,12 +25562,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 138L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhcanh_dao36@hotmail.com",
                             EmailVerified = true,
                             FullName = "Tường Lân Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichthuy.doan69@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thúy Diễm Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17563,12 +25584,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 139L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quynhtrang.pham@hotmail.com",
                             EmailVerified = true,
                             FullName = "Anh Việt Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kieunguyet_phung13@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Như Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17576,12 +25606,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 140L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hoaitrang77@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thương Thương Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "sihoang.to5@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thu Trang Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17589,12 +25628,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 141L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhloan_phan9@gmail.com",
                             EmailVerified = true,
                             FullName = "Bá Long Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kieuminh60@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Tuấn Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17602,12 +25650,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 142L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quocdien_bui@hotmail.com",
                             EmailVerified = true,
                             FullName = "Quỳnh Sa Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "baotien_dang35@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Tuấn Long Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17615,12 +25672,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 143L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "viettrinh99@gmail.com",
                             EmailVerified = true,
                             FullName = "Oanh Thơ Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khacvu_phan@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Bích Huệ Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17628,12 +25694,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 144L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuylong.ly94@hotmail.com",
                             EmailVerified = true,
                             FullName = "Khôi Vĩ Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhthuy.hoang87@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Anh Thơ Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17641,12 +25716,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 145L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuocloc_dao38@hotmail.com",
                             EmailVerified = true,
                             FullName = "Thanh Liêm Bùi",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "giaohuong.dinh59@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bảo Vy Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17654,12 +25738,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 146L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dinhluan.lam19@yahoo.com",
                             EmailVerified = true,
                             FullName = "Mỹ Hường Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhthai.le@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Anh Thi Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17667,12 +25760,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 147L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dongnhi_nguyen52@hotmail.com",
                             EmailVerified = true,
                             FullName = "Công Lộc Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phutho.truong@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Thu Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17680,12 +25782,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 148L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quochoa78@gmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Hằng Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhai73@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Phúc Thịnh Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17693,12 +25804,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 149L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "lamtuyen.dang68@gmail.com",
                             EmailVerified = true,
                             FullName = "Mạnh Trình Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhatquan29@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thương Thương Bùi",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17706,12 +25826,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 150L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhsang51@hotmail.com",
                             EmailVerified = true,
                             FullName = "Kim Ánh Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kimdung27@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hải Phong Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17719,12 +25848,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 151L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhgiang_dinh45@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hà Tiên Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuyhuyen.le@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Huệ My Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17732,12 +25870,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 152L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "annguyen_trinh51@yahoo.com",
                             EmailVerified = true,
                             FullName = "Niệm Nhiên Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "chibao_do98@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thục Quyên Hồ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17745,12 +25892,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 153L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "yenhong.lam@gmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Tâm Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "monglam.dinh73@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Uyên Vi Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17758,12 +25914,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 154L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongtruc_ho67@yahoo.com",
                             EmailVerified = true,
                             FullName = "Hoàng Sa Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quynhlam5@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thùy Uyên Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17771,12 +25936,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 155L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anco.vuong22@hotmail.com",
                             EmailVerified = true,
                             FullName = "Trung Dũng Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuongcuong.ly16@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Lân Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17784,12 +25958,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 156L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "aihong73@gmail.com",
                             EmailVerified = true,
                             FullName = "Thụy Lâm Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huyha7@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thảo My Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17797,12 +25980,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 157L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huytuan_hoang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Việt Nhi Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "myuyen12@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Kiên Ngô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17810,12 +26002,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 158L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhthu34@yahoo.com",
                             EmailVerified = true,
                             FullName = "Xuân Bình Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhanh_ha@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Huyền Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17823,12 +26024,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 159L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quyvinh94@yahoo.com",
                             EmailVerified = true,
                             FullName = "Nhã Thanh Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "haibinh16@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thúy My Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17836,12 +26046,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 160L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tanthanh.phung@gmail.com",
                             EmailVerified = true,
                             FullName = "Thái Chi Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tungquan.dang45@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Minh Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17849,12 +26068,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 161L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dankhanh_ngo@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quỳnh Phương Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tranchau_tran50@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Việt Thương Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17862,12 +26090,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 162L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngocsan4@gmail.com",
                             EmailVerified = true,
                             FullName = "Kiều Loan Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "trucdao24@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hoàng Minh Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17875,12 +26112,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 163L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "trongnhan.tran37@gmail.com",
                             EmailVerified = true,
                             FullName = "Triều Thanh Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phucle83@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Quang Tài Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17888,12 +26134,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 164L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "bichnga.dao89@hotmail.com",
                             EmailVerified = true,
                             FullName = "Nhật Hạ Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quocvu_to@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Hằng Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17901,12 +26156,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 165L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "uyenminh90@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ngọc Huệ Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ductrung_lam78@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ðông Trà Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17914,12 +26178,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 166L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "mynhi74@gmail.com",
                             EmailVerified = true,
                             FullName = "Mộng Giác Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "huongthao_truong25@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Trọng Duy Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17927,12 +26200,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 167L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "oanhtho_ly@gmail.com",
                             EmailVerified = true,
                             FullName = "Thuận Thành Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuankhoan54@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thế Dũng Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17940,12 +26222,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 168L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thaitan_le@gmail.com",
                             EmailVerified = true,
                             FullName = "Ánh Ngọc Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhtuyet_ho@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Triều Thành Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17953,12 +26244,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 169L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "viencanh.to44@gmail.com",
                             EmailVerified = true,
                             FullName = "Thanh Nguyên Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thienthanh_mai@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Phượng Tiên Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17966,12 +26266,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 170L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "binhquan.duong@gmail.com",
                             EmailVerified = true,
                             FullName = "Thành Long Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhthy_vu@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Liễu Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17979,12 +26288,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 171L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuthinh.dang@yahoo.com",
                             EmailVerified = true,
                             FullName = "Anh Vũ Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "myvan.dinh@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Toản Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -17992,12 +26310,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 172L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhminh29@hotmail.com",
                             EmailVerified = true,
                             FullName = "An Di Đoàn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "giaanh_dang@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Phương Thủy Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18005,12 +26332,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 173L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anhtung_trinh@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quang Tài Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quangtrieu.pham82@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Khôi Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18018,12 +26354,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 174L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongnhu.tang@yahoo.com",
                             EmailVerified = true,
                             FullName = "Kim Mai Hoàng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "yenbinh.ngo@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Phương Anh Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18031,12 +26376,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 175L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "vanngoc64@gmail.com",
                             EmailVerified = true,
                             FullName = "Gia Uy Trần",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuchoa.truong77@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Dung Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18044,12 +26398,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 176L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dongvy93@gmail.com",
                             EmailVerified = true,
                             FullName = "Tùng Châu Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thaihoa39@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Quý Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18057,12 +26420,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 177L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuongnga_hoang@gmail.com",
                             EmailVerified = true,
                             FullName = "Minh Dân Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "myanh.tang67@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hoài Nam Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18070,12 +26442,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 178L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongdao66@gmail.com",
                             EmailVerified = true,
                             FullName = "Minh Xuân Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hoaigiang81@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Sỹ Thực Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18083,12 +26464,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 179L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hiephoa78@gmail.com",
                             EmailVerified = true,
                             FullName = "Nhã Trang Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "truccuong19@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Khánh An Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18096,12 +26486,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 180L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nhuloan_hoang16@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Tâm Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thienlac52@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Hùng Cường Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18109,12 +26508,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 181L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhthien_lam11@hotmail.com",
                             EmailVerified = true,
                             FullName = "Mộc Miên Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thaitan.vuong@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hùng Sơn Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18122,12 +26530,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 182L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuantai_phung85@yahoo.com",
                             EmailVerified = true,
                             FullName = "Giang Nam Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhumai92@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Kim Thu Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18135,12 +26552,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 183L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "truclinh94@gmail.com",
                             EmailVerified = true,
                             FullName = "Tâm Nguyên Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhanvan.vuong@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hoàng Ân Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18148,12 +26574,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 184L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nguyengiap.phan40@gmail.com",
                             EmailVerified = true,
                             FullName = "Quỳnh Giao Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhdanh.pham97@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Nhã Ý Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18161,12 +26596,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 185L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thaibinh96@yahoo.com",
                             EmailVerified = true,
                             FullName = "Kim Phượng Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quynhanh30@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Như Bảo Trần",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18174,12 +26618,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 186L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baochau_phung50@gmail.com",
                             EmailVerified = true,
                             FullName = "Bích Ðào Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thiengiang19@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bạch Mai Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18187,12 +26640,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 187L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tiengiang63@yahoo.com",
                             EmailVerified = true,
                             FullName = "Diên Vỹ Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ductri17@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Mai Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18200,12 +26662,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 188L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongtam84@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quỳnh Trang Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhhuy.ha@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Huệ Phương Dương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18213,12 +26684,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 189L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baochan_dang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Vân Chi Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "namthong89@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Diệu Vân Ngô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18226,12 +26706,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 190L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huychieu_ngo@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Thiện Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tunganh_doan89@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Tùng Quang Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18239,12 +26728,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 191L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dongnghi40@gmail.com",
                             EmailVerified = true,
                             FullName = "Xuân Cao Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tamnhi.hoang@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Anh Hương Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18252,12 +26750,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 192L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huonglam64@gmail.com",
                             EmailVerified = true,
                             FullName = "Thiều Ly Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "maichau.do56@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Vân Mai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18265,12 +26772,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 193L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "yenanh26@yahoo.com",
                             EmailVerified = true,
                             FullName = "Trí Hào Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quanghuy_ngo@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Phú Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18278,12 +26794,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 194L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thienbuu_do65@hotmail.com",
                             EmailVerified = true,
                             FullName = "Mỹ Kiều Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tinhlam67@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Chế Phương Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18291,12 +26816,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 195L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khoatruong_to87@hotmail.com",
                             EmailVerified = true,
                             FullName = "Công Lộc Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dahuong_hoang@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Lương Thiện Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18304,12 +26838,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 196L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baoanh_tran41@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thiên Kim Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hoangoanh20@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Kỳ Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18317,12 +26860,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 197L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thuyvan_phung93@hotmail.com",
                             EmailVerified = true,
                             FullName = "Minh Hòa Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thientien_ha@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ngọc Tuyết Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18330,12 +26882,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 198L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngocngan.trinh35@hotmail.com",
                             EmailVerified = true,
                             FullName = "Xuân Hương Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhai.trinh39@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thục Quyên Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18343,12 +26904,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 199L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuananh_vu43@gmail.com",
                             EmailVerified = true,
                             FullName = "Tích Ðức Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vietnhan_trinh@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Nga Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18356,12 +26926,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 200L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhnghia2@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thiện Minh Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuan.lam@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hoài Vỹ Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18369,12 +26948,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 201L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quykhanh_tran65@hotmail.com",
                             EmailVerified = true,
                             FullName = "Hồ Bắc Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quangkhai.mai62@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thành Thiện Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18382,12 +26970,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 202L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "uyenthi81@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Khanh Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thongnhat58@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Cẩm Hường Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18395,12 +26992,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 203L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "monglieu_ly@gmail.com",
                             EmailVerified = true,
                             FullName = "Ðức Trí Trần",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tronghung_ngo@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Dung Hồ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18408,12 +27014,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 204L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hieukhanh_le67@hotmail.com",
                             EmailVerified = true,
                             FullName = "Nhật Lan Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "xuanvu99@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hạ Phương Dương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18421,12 +27036,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 205L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ngoctram.to78@yahoo.com",
                             EmailVerified = true,
                             FullName = "Diễm Liên Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhatkhuong_lam82@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Công Lập Đoàn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18434,12 +27058,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 206L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "trihung20@hotmail.com",
                             EmailVerified = true,
                             FullName = "Từ Ân Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nguyenkhoi77@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Tâm Đan Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18447,12 +27080,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 207L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tamdan.phung@yahoo.com",
                             EmailVerified = true,
                             FullName = "Uyên Thi Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quocviet.doan54@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Tùy Anh Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18460,12 +27102,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 208L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quangsang_pham@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ðông Nhi Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thusuong97@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Tâm Nguyệt Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18473,12 +27124,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 209L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "uyenphuong33@yahoo.com",
                             EmailVerified = true,
                             FullName = "Lệ Khanh Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "yennhi_phung@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Kiều Trinh Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18486,12 +27146,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 210L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "duykhiem.truong16@gmail.com",
                             EmailVerified = true,
                             FullName = "Phương Diễm Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "hongvinh.doan19@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hải Nguyên Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18499,12 +27168,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 211L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "haithuy.trinh16@hotmail.com",
                             EmailVerified = true,
                             FullName = "Phú Thịnh Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhphuong.dinh70@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Trân Châu Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18512,12 +27190,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 212L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thongtue_phan@hotmail.com",
                             EmailVerified = true,
                             FullName = "Xuân Thuyết Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhtuyet22@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kỳ Duyên Lý",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18525,12 +27212,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 213L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhhao.phung@gmail.com",
                             EmailVerified = true,
                             FullName = "Hương Liên Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vantien71@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Quốc Khánh Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18538,12 +27234,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 214L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "ducquang.ly@gmail.com",
                             EmailVerified = true,
                             FullName = "Anh Thư Đinh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khanhvan59@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thông Ðạt Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18551,12 +27256,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 215L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "anlai.vuong13@yahoo.com",
                             EmailVerified = true,
                             FullName = "Tuyết Trầm Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhvu.ly56@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Bích Ty Ngô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18564,12 +27278,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 216L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hoangmy.truong@gmail.com",
                             EmailVerified = true,
                             FullName = "Lệ Quân Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quangnhan_to99@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Cát Linh Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18577,12 +27300,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 217L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "haibinh_le@yahoo.com",
                             EmailVerified = true,
                             FullName = "Xuân Thiện Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quelam_lam@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Minh Ðạt Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18590,12 +27322,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 218L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "duytiep.dinh26@hotmail.com",
                             EmailVerified = true,
                             FullName = "Lê Quỳnh Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "dinhhuong.ha61@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Thủy Đào",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18603,12 +27344,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 219L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "mynhi44@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ngọc Cảnh Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichhanh_ngo1@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bích Hồng Lâm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18616,12 +27366,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 220L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "nguyethong_ngo91@yahoo.com",
                             EmailVerified = true,
                             FullName = "Việt Dũng Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thucvan.vuong@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thiện Lương Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18629,12 +27388,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 221L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quangthinh_phan@yahoo.com",
                             EmailVerified = true,
                             FullName = "Khánh Vy Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "bichlam19@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Mẫn Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18642,12 +27410,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 222L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thulam.le@gmail.com",
                             EmailVerified = true,
                             FullName = "Thy Oanh Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "truongnhan17@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Nhã Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18655,12 +27432,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 223L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "trucphuong_phan36@hotmail.com",
                             EmailVerified = true,
                             FullName = "Minh Ðạt Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "daihanh.doan81@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Ðào Trương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18668,12 +27454,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 224L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "khanhhoan25@yahoo.com",
                             EmailVerified = true,
                             FullName = "Trúc Vy Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "trieuthanh64@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hiếu Minh Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18681,12 +27476,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 225L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thoinhiem.truong99@yahoo.com",
                             EmailVerified = true,
                             FullName = "Xuân Hạnh Vương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ducquang92@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Liên Phương Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18694,12 +27498,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 226L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "haibinh_tran71@gmail.com",
                             EmailVerified = true,
                             FullName = "Minh Hào Đào",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khacvu.bui@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thu Ngọc Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18707,12 +27520,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 227L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huunam_phung@gmail.com",
                             EmailVerified = true,
                             FullName = "Hữu Khôi Trương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "khanhhuyen.phan@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Kim Vượng Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18720,12 +27542,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 228L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baohuynh_dang70@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thăng Long Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tuyetnhung.truong@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thúy Ngọc Phùng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18733,12 +27564,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 229L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baokhanh.tran@gmail.com",
                             EmailVerified = true,
                             FullName = "Hạnh Tường Phạm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "baotruc30@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Xuân Kiên Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18746,12 +27586,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 230L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dinhphu82@gmail.com",
                             EmailVerified = true,
                             FullName = "Trọng Duy Trịnh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "baotram_nguyen@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Yến Mai Đỗ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18759,12 +27608,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 231L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quynhlam.duong@gmail.com",
                             EmailVerified = true,
                             FullName = "Duy Hiếu Hà",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "cuongthinh.dinh6@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Chính Tâm Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18772,12 +27630,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 232L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "quynhphuong15@gmail.com",
                             EmailVerified = true,
                             FullName = "Thủy Hằng Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuynhu88@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Sơn Trang Lê",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18785,12 +27652,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 233L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baolan.tran@hotmail.com",
                             EmailVerified = true,
                             FullName = "Ánh Xuân Tô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nhatha31@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Phượng Uyên Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18798,12 +27674,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 234L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hatien31@yahoo.com",
                             EmailVerified = true,
                             FullName = "Từ Dung Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thuongthuong_mai98@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Lạc Phúc Tăng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18811,12 +27696,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 235L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "caotien.dao7@gmail.com",
                             EmailVerified = true,
                             FullName = "Thanh Thúy Vũ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "anhquan.vu@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Việt Chính Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18824,12 +27718,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 236L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhyen_ngo@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thanh Nguyên Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phuonghanh_truong@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Gia Hùng Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18837,12 +27740,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 237L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "baotin36@gmail.com",
                             EmailVerified = true,
                             FullName = "Anh Minh Tăng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "lehoa63@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hương Chi Nguyễn",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18850,12 +27762,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 238L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "aivan72@yahoo.com",
                             EmailVerified = true,
                             FullName = "Bảo Hân Đỗ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "nguyetque_to62@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Bá Trúc Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18863,12 +27784,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 239L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "minhhanh36@hotmail.com",
                             EmailVerified = true,
                             FullName = "Đức Hòa Mai",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thienmanh_tran8@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "An Tâm Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18876,12 +27806,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 240L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hangnga28@gmail.com",
                             EmailVerified = true,
                             FullName = "Thế Huấn Phan",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ducnhan_ly64@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Hồng Hà Lâm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18889,12 +27828,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 241L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "toquyen.pham44@yahoo.com",
                             EmailVerified = true,
                             FullName = "Ngọc Thơ Nguyễn",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "chanhviet_ngo@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Hữu Châu Vương",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18902,12 +27850,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 242L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "phuclam.vu@yahoo.com",
                             EmailVerified = true,
                             FullName = "Thu Hoài Phùng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "minhtue_dao84@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Ðức Tuệ Đinh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18915,12 +27872,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 243L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "doanthanh.doan84@gmail.com",
                             EmailVerified = true,
                             FullName = "Khởi Phong Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "vankhanh_ly@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Khắc Duy Hà",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18928,12 +27894,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 244L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "binhhoa.phan39@hotmail.com",
                             EmailVerified = true,
                             FullName = "Bảo Hoàng Hồ",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "phubinh.truong@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Tân Thành Vũ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18941,12 +27916,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 245L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "tuyetlan33@hotmail.com",
                             EmailVerified = true,
                             FullName = "Yến Thảo Lý",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thienkim_trinh@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Như Hồng Trịnh",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18954,12 +27938,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 246L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "huuchien.hoang@yahoo.com",
                             EmailVerified = true,
                             FullName = "Cẩm Nhung Dương",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "tantrinh_tran@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Loan Hồ",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18967,12 +27960,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 247L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "thanhthuy71@gmail.com",
                             EmailVerified = true,
                             FullName = "Hiệp Hiền Lâm",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "daithong.ly@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Hữu Phước Phạm",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18980,12 +27982,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 248L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "honghanh_dang90@yahoo.com",
                             EmailVerified = true,
                             FullName = "Uyên Trâm Ngô",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "thanhviet48@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Lan Hoàng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -18993,12 +28004,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 249L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "dactrong77@yahoo.com",
                             EmailVerified = true,
                             FullName = "Quốc Văn Đặng",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "kimtrang_to47@gmail.com",
+                            EmailVerified = true,
+                            FullName = "Mỹ Yến Đặng",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -19006,12 +28026,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 250L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "hongdang.hoang@hotmail.com",
                             EmailVerified = true,
                             FullName = "Bảo Thoa Lê",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "ngocdung_tran@hotmail.com",
+                            EmailVerified = true,
+                            FullName = "Ái Thy Phan",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         },
                         new
@@ -19019,12 +28048,21 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Id = 251L,
                             AvatarUrl = "https://i.pravatar.cc/150",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+<<<<<<< HEAD
                             Email = "xuanhanh7@yahoo.com",
                             EmailVerified = true,
                             FullName = "Đông Nghi Đinh",
                             IsActive = true,
                             IsDeleted = false,
                             PasswordHash = "$2a$11$fuz8wOA4rsQxvkf6sFF0uuCPguTEvnt1Cka6dfJQh.0xP1QYnq.Oi",
+=======
+                            Email = "quocmanh6@yahoo.com",
+                            EmailVerified = true,
+                            FullName = "Thanh Kiều Tô",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$bp0lIs2uwQPEv1ckDowKbuE6c1zDMsbkX0HCEi3HnR4Jva1BV9Ofq",
+>>>>>>> master
                             Role = 0
                         });
                 });
