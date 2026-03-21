@@ -5,21 +5,18 @@ namespace WebPortal.Pages
 {
     public class AdminOversightModel : PageModel
     {
-        [BindProperty(SupportsGet = true)]
-        public string Tab { get; set; } = "AI_LOGS"; // AI_LOGS, APPEALS, FINANCIAL
+        private readonly WebPortal.Services.Api.IAdminApiService _adminApiService;
 
-        public void OnGet()
+        public AdminOversightModel(WebPortal.Services.Api.IAdminApiService adminApiService)
         {
+            _adminApiService = adminApiService;
         }
 
-        public IActionResult OnPostApproveAppeal()
-        {
-            return RedirectToPage(new { Tab = "APPEALS" });
-        }
+        public WebPortal.Models.Api.PagedResponse<WebPortal.Models.Api.Admin.AILogResponse> AILogs { get; set; }
 
-        public IActionResult OnPostRejectAppeal()
+        public async Task OnGetAsync(int page = 1)
         {
-            return RedirectToPage(new { Tab = "APPEALS" });
+            AILogs = await _adminApiService.GetAiLogsAsync(page: page, pageSize: 12);
         }
     }
 }

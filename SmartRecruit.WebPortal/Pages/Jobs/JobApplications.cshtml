@@ -2,7 +2,7 @@
 @model WebPortal.Pages.JobApplicationsModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "Job Applications";
+    ViewData["Title"] = "Danh Sách Ứng Viên";
 }
 
 <div class="space-y-10 animate-in fade-in duration-700 pb-32">
@@ -12,27 +12,27 @@
                 <i class="fas fa-arrow-left"></i> Quay lại danh sách
             </a>
             <a asp-page="/Jobs/JobDetail" asp-route-Id="@Model.Id" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-[11px] font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-100 transition-all shadow-sm">
-                <i class="fas fa-info-circle"></i> Chi tiết Job
+                <i class="fas fa-info-circle"></i> Chi Tiết Job
             </a>
         </div>
         <div>
-            <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Talent Queue</h2>
-            <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">Sorted by neural compatibility score • Mission #@Model.Id</p>
+            <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Danh Sách Ứng Tuyển</h2>
+            <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">Sắp xếp theo độ phù hợp • Mã Bài Đăng #@Model.Id</p>
         </div>
     </div>
 
     <div class="bg-white rounded-[2rem] border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
             <div>
-                <h4 class="text-[12px] font-black uppercase tracking-[0.3em] text-slate-900">Applications</h4>
-                <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">@Model.TotalApplicationCount candidates</p>
+                <h4 class="text-[12px] font-black uppercase tracking-[0.3em] text-slate-900">Ứng Viên</h4>
+                <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">@Model.TotalApplicationCount ứng viên</p>
             </div>
             <form method="post" asp-page-handler="BulkReject" id="bulkRejectForm" class="m-0 hidden">
                 <input type="hidden" name="Id" value="@Model.Job.Id" />
                 <div id="hiddenInputsWrapper"></div>
             </form>
             <button type="button" onclick="submitBulkReject()" id="bulkRejectBtn" class="hidden h-10 px-6 bg-red-50 text-red-500 font-bold text-[10px] uppercase tracking-widest rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition-all">
-                Reject Selected (<span id="selectedCount">0</span>)
+                Từ Chối Hàng Loạt (<span id="selectedCount">0</span>)
             </button>
         </div>
         <table class="w-full text-left">
@@ -42,10 +42,10 @@
                         <input type="checkbox" id="selectAllApps" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" onclick="toggleAllCheckboxes(this)" />
                     </th>
                     <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center w-12">#</th>
-                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Candidate Identity</th>
-                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Neural Score</th>
-                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
+                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Hồ Sơ Ứng Viên</th>
+                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Độ Phù Hợp</th>
+                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Trạng Thái</th>
+                    <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Thao Tác</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-50">
@@ -64,7 +64,7 @@
                                 <div>
                                     <p class="font-black text-slate-900">@app.CandidateName</p>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 flex items-center gap-2">
-                                        Ref: #@app.Id <span class="text-slate-200">|</span> @app.CreatedAt.ToString("MMM dd, yyyy")
+                                        Mã số: #@app.Id <span class="text-slate-200">|</span> @app.CreatedAt.ToString("MMM dd, yyyy")
                                     </p>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
                                 <a href="/CandidatePreview/@app.Id" class="inline-flex">
-                                    <button type="button" class="h-10 px-4 rounded-xl bg-white border border-slate-200 text-[9px] font-black uppercase text-slate-600 hover:text-indigo-600 hover:border-indigo-500 transition-all shadow-sm">Profile</button>
+                                    <button type="button" class="h-10 px-4 rounded-xl bg-white border border-slate-200 text-[9px] font-black uppercase text-slate-600 hover:text-indigo-600 hover:border-indigo-500 transition-all shadow-sm">Chi Tiết</button>
                                 </a>
                                 <form method="post" asp-page-handler="UpdateStatus" class="inline">
                                     <input type="hidden" name="Id" value="@Model.Job.Id" />
@@ -92,12 +92,12 @@
                                     @if (app.Status != ApplicationStatus.REJECTED)
                                     {
                                         <input type="hidden" name="status" value="@ApplicationStatus.REJECTED" />
-                                        <button type="submit" class="w-10 h-10 rounded-xl bg-red-50 text-red-500 border border-red-100 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all" title="Reject"><i class="fas fa-times text-xs"></i></button>
+                                        <button type="submit" class="w-10 h-10 rounded-xl bg-red-50 text-red-500 border border-red-100 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all" title="Từ Chối"><i class="fas fa-times text-xs"></i></button>
                                     }
                                     else
                                     {
                                         <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING" />
-                                        <button type="submit" class="w-10 h-10 rounded-xl bg-green-50 text-green-500 border border-green-100 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all" title="Restore"><i class="fas fa-rotate-left text-xs"></i></button>
+                                        <button type="submit" class="w-10 h-10 rounded-xl bg-green-50 text-green-500 border border-green-100 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all" title="Khôi Phục"><i class="fas fa-rotate-left text-xs"></i></button>
                                     }
                                 </form>
                             </div>
@@ -107,7 +107,7 @@
                 @if (Model.Applications.Count == 0)
                 {
                     <tr>
-                        <td colspan="6" class="py-24 text-center text-[10px] font-black uppercase text-slate-300 italic tracking-[0.4em]">Queue Empty - No DNA profiles matched yet.</td>
+                        <td colspan="6" class="py-24 text-center text-[10px] font-black uppercase text-slate-300 italic tracking-[0.4em]">Danh sách trống - Chưa có ứng viên nào ứng tuyển.</td>
                     </tr>
                 }
             </tbody>
@@ -152,7 +152,7 @@
                 wrapper.appendChild(input);
             });
             
-            if (checked.length > 0 && confirm(`Are you sure you want to reject ${checked.length} selected candidates?`)) {
+            if (checked.length > 0 && confirm(`Bạn có chắc chắn muốn từ chối ${checked.length} ứng viên đã chọn không?`)) {
                 form.submit();
             }
         }

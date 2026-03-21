@@ -19,7 +19,6 @@ namespace SmartRecruit.Infrastructure.Repositories
         public IGenericRepository<CompanyProfile> CompanyProfiles { get; private set; }
         public IGenericRepository<SavedJob> SavedJobs { get; private set; }
         public INotificationRepository Notifications { get; private set; }
-        public IGenericRepository<Report> Reports { get; private set; }
  
         public UnitOfWork(ApplicationDbContext context, ILoggerFactory loggerFactory)
         {
@@ -34,7 +33,6 @@ namespace SmartRecruit.Infrastructure.Repositories
             CompanyProfiles = new GenericRepository<CompanyProfile>(_context);
             SavedJobs = new GenericRepository<SavedJob>(_context);
             Notifications = new NotificationRepository(_context, loggerFactory.CreateLogger<NotificationRepository>());
-            Reports = new GenericRepository<Report>(_context);
         }
 
 

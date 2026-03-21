@@ -129,7 +129,7 @@ namespace SmartRecruit.Application.Services
                         "New Application",
                         $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
                         NotificationType.APPLICATION,
-                        $"/CandidatePreview/{application.Id}");
+                        $"/JobDetail?Id={appWithDetails.Job.Id}");
 
                     // 4b. Real-time Notification for Candidate (Confirmation)
                     await _notificationService.SendNotificationAsync(
@@ -137,7 +137,7 @@ namespace SmartRecruit.Application.Services
                         "Application Submitted",
                         $"You have successfully applied for: {appWithDetails.Job.Title}. Good luck!",
                         NotificationType.APPLICATION,
-                        "/JobApplications");
+                        $"/JobDetail?Id={appWithDetails.Job.Id}");
                 }
             }
             catch (Exception ex)
