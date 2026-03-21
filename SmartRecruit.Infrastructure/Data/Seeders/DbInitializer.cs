@@ -180,6 +180,19 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 ExpiryDate = createdAt.AddDays(7),
                 CreatedAt = createdAt
             }));
+
+            // --- 13. AI LOGS ---
+            modelBuilder.Entity<AILog>().HasData(Enumerable.Range(1, 20).Select(i => new AILog
+            {
+                Id = i,
+                JobId = jobs[i % jobs.Count].Id,
+                AIType = AIType.JOB_MODERATION,
+                InputText = "Yêu cầu cung cấp thông tin tài khoản ngân hàng trong mô tả công việc...",
+                OutputResult = "BLOCK",
+                Decision = "BLOCK",
+                Reason = "Phát hiện dấu hiệu lừa đảo: Yêu cầu thông tin nhạy cảm.",
+                CreatedAt = createdAt.AddHours(i)
+            }));
         }
     }
 }
