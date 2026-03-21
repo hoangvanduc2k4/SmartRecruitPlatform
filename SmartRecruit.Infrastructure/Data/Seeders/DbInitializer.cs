@@ -3,29 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SmartRecruit.Infrastructure.Data.Seeders
 {
     public static class DbInitializer
     {
-        // Helper tránh lỗi MaxLength trong Database
         private static string Limit(this string text, int max) =>
             string.IsNullOrEmpty(text) ? text : (text.Length <= max ? text : text.Substring(0, max));
 
         public static void SeedSmartRecruitData(this ModelBuilder modelBuilder)
         {
-            // 1. Cấu hình Seed cố định
             var seedValue = 999;
-            Randomizer.Seed = new Random(seedValue);
             var rnd = new Random(seedValue);
             var createdAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-            // 2. Hash mật khẩu MỘT LẦN DUY NHẤT để tối ưu tốc độ sinh Migration
-            // Tất cả user seed sẽ có pass là "password123"
             var commonHash = PasswordUtil.HashPassword("password123");
 
-            // --- 3. CATEGORIES (10) ---
-            var categoryNames = new[] { "IT", "Marketing", "Finance", "HR", "Design", "Sales", "Legal", "Education", "Healthcare", "Engineering" };
+            // --- 3. CATEGORIES ---
+            var categoryNames = new[] { "Công nghệ thông tin", "Marketing", "Tài chính", "Nhân sự", "Thiết kế", "Bán hàng", "Pháp lý", "Giáo dục", "Y tế", "Kỹ thuật" };
             var categories = categoryNames.Select((name, i) => new Category
             {
                 Id = i + 1,
@@ -34,14 +30,13 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
             }).ToList();
             modelBuilder.Entity<Category>().HasData(categories);
 
-            // --- 4. USERS (251) ---
+            // --- 4. USERS ---
             var users = new List<User>();
-            // Admin (ID 1)
             users.Add(new User
             {
                 Id = 1,
                 Email = "admin@smartrecruit.com",
-                FullName = "Admin System",
+                FullName = "Hệ thống Quản trị",
                 Role = UserRole.ADMIN,
                 PasswordHash = commonHash,
                 CreatedAt = createdAt,
@@ -49,39 +44,38 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
             });
 
             int userIdCounter = 2;
-            // Recruiters (50: ID 2 - 51)
+            var userFaker = new Faker("vi");
             for (int i = 0; i < 50; i++)
-                users.Add(new Faker<User>().CustomInstantiator(f => new User
+                users.Add(new User
                 {
                     Id = userIdCounter++,
-                    Email = f.Internet.Email().ToLower().Limit(100),
-                    FullName = f.Name.FullName().Limit(100),
+                    Email = userFaker.Internet.Email().ToLower().Limit(100),
+                    FullName = userFaker.Name.FullName().Limit(100),
                     Role = UserRole.RECRUITER,
                     PasswordHash = commonHash,
                     CreatedAt = createdAt,
                     EmailVerified = true
-                }));
+                });
 
-            // Candidates (200: ID 52 - 251)
             var candidateIds = new List<long>();
             for (int i = 0; i < 200; i++)
             {
                 var cId = userIdCounter++;
                 candidateIds.Add(cId);
-                users.Add(new Faker<User>().CustomInstantiator(f => new User
+                users.Add(new User
                 {
                     Id = cId,
-                    Email = f.Internet.Email().ToLower().Limit(100),
-                    FullName = f.Name.FullName().Limit(100),
+                    Email = userFaker.Internet.Email().ToLower().Limit(100),
+                    FullName = userFaker.Name.FullName().Limit(100),
                     Role = UserRole.CANDIDATE,
                     PasswordHash = commonHash,
                     CreatedAt = createdAt,
                     EmailVerified = true
-                }));
+                });
             }
             modelBuilder.Entity<User>().HasData(users);
 
-            // --- 5. WALLETS (251 - 1:1 với User) ---
+            // --- 5. WALLETS ---
             var wallets = users.Select(u => new Wallet
             {
                 Id = u.Id,
@@ -91,47 +85,47 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
             }).ToList();
             modelBuilder.Entity<Wallet>().HasData(wallets);
 
-            // --- 6. CANDIDATE PROFILES (200 - 1:1 với Candidates) ---
+            // --- 6. CANDIDATE PROFILES ---
             int profileId = 1;
             var profiles = candidateIds.Select(cid => new CandidateProfile
             {
                 Id = profileId++,
                 UserId = cid,
                 ExperienceYears = rnd.Next(1, 15),
-                Skills = ".NET, SQL, React, Docker, Azure".Limit(200),
-                CVText = "Experienced software engineer with expertise in building scalable cloud-native applications.",
+                Skills = ".NET, SQL, React, Docker, Azure, Tiếng Anh giao tiếp".Limit(200),
+                CVText = "Kỹ sư phần mềm giàu kinh nghiệm với chuyên môn xây dựng các ứng dụng có khả năng mở rộng.",
                 CreatedAt = createdAt
             }).ToList();
             modelBuilder.Entity<CandidateProfile>().HasData(profiles);
 
-            // --- 7. JOBS (200) ---
+            // --- 7. JOBS ---
             int jobIdCounter = 1;
             var recruiterIds = users.Where(u => u.Role == UserRole.RECRUITER).Select(u => u.Id).ToList();
-            var jobs = new Faker<Job>().CustomInstantiator(f => new Job
+            var jobTitles = new[] { "Lập trình viên .NET", "Chuyên viên Marketing", "Kế toán trưởng", "Nhân viên nhân sự", "Thiết kế đồ họa", "Nhân viên kinh doanh", "Kỹ sư phần mềm", "Quản lý dự án", "Chuyên viên tư vấn", "Lập trình viên Frontend" };
+            var jobs = Enumerable.Range(1, 200).Select(i => new Job
             {
                 Id = jobIdCounter++,
-                RecruiterId = f.PickRandom(recruiterIds),
-                CategoryId = f.PickRandom(categories).Id,
-                Title = f.Name.JobTitle().Limit(100),
-                Company = f.Company.CompanyName().Limit(100),
-                Benefits = f.Lorem.Sentence(5).Limit(200),
-                Description = f.Lorem.Sentence(12).Limit(500),
-                Requirement = f.Lorem.Sentence(8).Limit(500),
-                SkillsRequired = ".NET Core, C#, EF Core",
+                RecruiterId = recruiterIds[rnd.Next(recruiterIds.Count)],
+                CategoryId = categories[rnd.Next(categories.Count)].Id,
+                Title = jobTitles[rnd.Next(jobTitles.Length)],
+                Company = userFaker.Company.CompanyName().Limit(100),
+                Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm".Limit(200),
+                Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.".Limit(500),
+                Requirement = "Có kinh nghiệm tương đương, nhiệt huyết với công việc.".Limit(500),
+                SkillsRequired = ".NET Core, SQL Server",
                 Status = JobStatus.APPROVED,
                 CreatedAt = createdAt
-            }).Generate(200);
+            }).ToList();
             modelBuilder.Entity<Job>().HasData(jobs);
 
-            // --- 8. APPLICATIONS (300 - Unique JobId-CandidateId Pair) ---
+            // --- 8. APPLICATIONS ---
             var applications = new List<Applications>();
             var usedPairs = new HashSet<(long, long)>();
-            var appFaker = new Faker();
             int appId = 1;
             while (applications.Count < 300)
             {
-                var jId = appFaker.PickRandom(jobs).Id;
-                var cId = appFaker.PickRandom(candidateIds);
+                var jId = jobs[rnd.Next(jobs.Count)].Id;
+                var cId = candidateIds[rnd.Next(candidateIds.Count)];
                 if (usedPairs.Add((jId, cId)))
                 {
                     applications.Add(new Applications
@@ -147,7 +141,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
             }
             modelBuilder.Entity<Applications>().HasData(applications);
 
-            // --- 9. TRANSACTIONS (200) ---
+            // --- 9. TRANSACTIONS ---
             modelBuilder.Entity<Transaction>().HasData(Enumerable.Range(1, 200).Select(i => new Transaction
             {
                 Id = i,
@@ -159,7 +153,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 CreatedAt = createdAt
             }));
 
-            // --- 10. NOTIFICATIONS (200) ---
+            // --- 10. NOTIFICATIONS ---
             modelBuilder.Entity<Notification>().HasData(Enumerable.Range(1, 200).Select(i => new Notification
             {
                 Id = i,
@@ -169,9 +163,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                 CreatedAt = createdAt
             }));
 
-
-
-            // --- 12. REFRESH TOKENS (50) ---
+            // --- 12. REFRESH TOKENS ---
             modelBuilder.Entity<RefreshToken>().HasData(Enumerable.Range(1, 50).Select(i => new RefreshToken
             {
                 Id = i,
