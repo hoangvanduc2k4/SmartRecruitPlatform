@@ -19,15 +19,6 @@ namespace WebPortal.Services.Api
     }
 
 
-    public class Report
-    {
-        public string Id { get; set; } = string.Empty;
-        public string JobId { get; set; } = string.Empty;
-        public string ReporterId { get; set; } = string.Empty;
-        public string Reason { get; set; } = string.Empty;
-        public bool IsProcessed { get; set; }
-    }
-
     public class AdminApiService : IAdminApiService
     {
         private readonly HttpClient _httpClient;
@@ -111,15 +102,6 @@ namespace WebPortal.Services.Api
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<List<Report>> GetReportsAsync()
-        {
-            var response = await _httpClient.GetAsync("admin/content/reports");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<List<Report>>() ?? new List<Report>();
-            }
-            return new List<Report>();
-        }
 
         public async Task<FinanceStatsResponse?> GetFinanceStatsAsync()
         {
