@@ -15,6 +15,7 @@ namespace WebPortal.Services.Api
         Task<FinanceStatsResponse?> GetFinanceStatsAsync();
         Task<bool> RejectAppealAsync(long jobId);
         Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10);
+        Task<PagedResponse<AILogResponse>> GetAiLogsAsync(int page = 1, int pageSize = 10);
         Task<List<Notification>> GetNotificationsAsync();
     }
 
@@ -74,14 +75,10 @@ namespace WebPortal.Services.Api
             return pagedResponse ?? new PagedResponse<T> { Success = false, Message = "Invalid response format" };
         }
 
-        public async Task<List<object>> GetAiLogsAsync()
+        public async Task<PagedResponse<AILogResponse>> GetAiLogsAsync(int page = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync("admin/content/ai-logs");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<List<object>>() ?? new List<object>();
-            }
-            return new List<object>();
+            var response = await _httpClient.GetAsync($"admin/content/ai-logs?page={page}&pageSize={pageSize}");
+            return await HandlePagedResponseAsync<AILogResponse>(response);
         }
 
         public async Task<PagedResponse<AppealedJobResponse>> GetAppealsAsync(int page = 1, int pageSize = 10)
