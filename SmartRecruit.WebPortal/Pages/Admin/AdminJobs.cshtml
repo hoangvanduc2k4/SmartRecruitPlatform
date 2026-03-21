@@ -61,7 +61,7 @@
                     <div class="w-full lg:w-72 space-y-4 flex flex-col justify-center">
                         <div class="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 mb-4">
                             <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Mức Lương</p>
-                            <p class="text-xl font-black text-indigo-600">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</p>
+                            <p class="text-xl font-black text-indigo-600">@job.SalaryMin.ToString("N0") - @job.SalaryMax.ToString("N0") VNĐ</p>
                         </div>
                         
                         @if (Model.Tab == "PENDING")
