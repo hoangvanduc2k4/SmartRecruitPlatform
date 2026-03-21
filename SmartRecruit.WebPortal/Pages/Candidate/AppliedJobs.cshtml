@@ -2,19 +2,19 @@
 @model WebPortal.Pages.Candidate.AppliedJobsModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "My Applied Jobs";
+    ViewData["Title"] = "Việc Làm Đã Ứng Tuyển";
 }
 
 <div class="space-y-12 animate-in fade-in duration-700">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Candidate Dashboard</span>
-            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Applied Missions</h2>
-            <p class="text-slate-500 text-sm font-medium mt-1">Track your progress and neural compatibility across all submitted applications.</p>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Bảng Điều Khiển Ứng Viên</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Việc Làm Đã Ứng Tuyển</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Theo dõi tiến độ và mức độ phù hợp trên tất cả các công việc đã ứng tuyển.</p>
         </div>
         <a href="/Jobs" class="inline-flex">
             <button class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition-all active:scale-95">
-                <i class="fas fa-search mr-2"></i> Explore More Missions
+                <i class="fas fa-search mr-2"></i> Khám Phá Thêm Việc Làm
             </button>
         </a>
     </div>
@@ -25,21 +25,21 @@
             <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-paper-plane text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Total Applications</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Số Lượt Ứng Tuyển</p>
             <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.AppliedJobs.Count</h3>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:border-amber-200 transition-all duration-300">
             <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-amber-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-spinner text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">In Review</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Đang Chờ Xử Lý</p>
             <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.AppliedJobs.Count(a => a.Status != ApplicationStatus.REJECTED)</h3>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:border-green-200 transition-all duration-300">
             <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-green-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-brain text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Avg compatibility</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Độ Phù Hợp Trung Bình</p>
             <h3 class="text-3xl font-black text-slate-900 tracking-tighter">
                 @(Model.AppliedJobs.Any() ? Model.AppliedJobs.Average(a => a.MatchScore).ToString("F0") + "%" : "0%")
             </h3>
@@ -52,11 +52,11 @@
             <table class="w-full text-left border-collapse">
                 <thead class="bg-slate-50/50 border-b border-slate-100">
                     <tr>
-                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Mission Identity</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Compatibility</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Deployment Status</th>
-                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Submission Date</th>
-                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Operation</th>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Tên Việc Làm</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Độ Phù Hợp</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Trạng Thái</th>
+                        <th class="px-8 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Ngày Ứng Tuyển</th>
+                        <th class="px-10 py-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Hành Động</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
@@ -69,10 +69,10 @@
                                         <i class="fas fa-folder-open text-4xl"></i>
                                     </div>
                                     <div class="space-y-2">
-                                        <p class="text-xl font-bold text-slate-800">No missions launched yet</p>
-                                        <p class="text-sm text-slate-400 font-medium">Your application history is empty. Start exploring new opportunities.</p>
+                                        <p class="text-xl font-bold text-slate-800">Bạn chưa ứng tuyển công việc nào</p>
+                                        <p class="text-sm text-slate-400 font-medium">Lịch sử ứng tuyển đang trống. Hãy bắt đầu khám phá các cơ hội nghề nghiệp mới.</p>
                                     </div>
-                                    <a href="/Jobs" class="px-8 py-3 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-all">Launch First Application</a>
+                                    <a href="/Jobs" class="px-8 py-3 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-all">Ứng Tuyển Ngay</a>
                                 </div>
                             </td>
                         </tr>
@@ -84,7 +84,7 @@
                             <tr class="group hover:bg-slate-50/50 transition-all duration-300">
                                 <td class="px-10 py-8">
                                     <div class="flex flex-col gap-1">
-                                        <a href="/Jobs/JobDetail?Id=@app.JobId" class="text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">@app.JobTitle</a>
+                                        <a href="/CandidatePreview/@app.Id" class="text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">@app.JobTitle</a>
                                         <p class="text-xs font-bold text-slate-400 flex items-center gap-2 uppercase tracking-tight">
                                             <i class="fas fa-building text-slate-300"></i> @app.Company
                                         </p>
@@ -102,8 +102,8 @@
                                             <span class="absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
                                         </div>
                                         <div class="hidden sm:block">
-                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Match Index</p>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Neural Verification</p>
+                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
                                         </div>
                                     </div>
                                 </td>
@@ -127,7 +127,7 @@
                                 </td>
                                 <td class="px-10 py-8 text-right">
                                     <div class="flex justify-end items-center gap-3 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
-                                        <a href="/Jobs/JobDetail?Id=@app.JobId" class="w-12 h-12 bg-white border border-slate-200 text-slate-600 flex items-center justify-center rounded-2xl hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all shadow-sm active:scale-90">
+                                        <a href="/CandidatePreview/@app.Id" class="w-12 h-12 bg-white border border-slate-200 text-slate-600 flex items-center justify-center rounded-2xl hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all shadow-sm active:scale-90">
                                             <i class="fas fa-arrow-right text-xs"></i>
                                         </a>
                                     </div>

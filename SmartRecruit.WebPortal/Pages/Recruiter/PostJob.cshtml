@@ -2,7 +2,7 @@
 @model WebPortal.Pages.PostJobModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "Create New Job Posting";
+    ViewData["Title"] = "Tạo Tuyển Dụng Mới";
 }
 
 <div class="max-w-3xl mx-auto animate-in fade-in duration-700 pb-32">
@@ -11,11 +11,11 @@
             <a href="/RecruiterJobs" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm w-fit">
                 <i class="fas fa-arrow-left"></i> Quay lại danh sách
             </a>
-            <h2 class="text-3xl font-black text-slate-800 tracking-tight">Create Job Draft</h2>
-            <p class="text-slate-500 mt-1">Creating a draft is free. Publishing it will cost 50,000 VNĐ.</p>
+            <h2 class="text-3xl font-black text-slate-800 tracking-tight">Tạo Bản Nháp Tuyển Dụng</h2>
+            <p class="text-slate-500 mt-1">Tạo bản nháp hoàn toàn miễn phí. Phí xuất bản bài đăng sẽ là 50,000 VNĐ.</p>
         </div>
         <div class="bg-indigo-50 px-4 py-3 rounded-xl border border-indigo-100 shadow-sm">
-            <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest block mb-0.5">Your Balance</span>
+            <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest block mb-0.5">Số Dư Của Bạn</span>
             <span class="text-indigo-700 font-bold">@Model.WalletBalance.ToString("N0") VNĐ</span>
         </div>
     </div>
@@ -30,34 +30,34 @@
     <form method="post" class="space-y-6" onsubmit="return submitJob()">
         <div class="p-8 space-y-6 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg">
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Job Title</label>
-                <input type="text" asp-for="JobInput.Title" required placeholder="e.g. Senior Software Engineer" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tiêu Đề Công Việc</label>
+                <input type="text" asp-for="JobInput.Title" required placeholder="vd: Kỹ Sư Phần Mềm, Chuyên Viên Kinh Doanh..." class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Job Type</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Hình Thức Khai Thác</label>
                     <select asp-for="JobInput.JobType" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
-                        <option value="0">Full Time</option>
-                        <option value="1">Part Time</option>
-                        <option value="2">Remote</option>
+                        <option value="0">Toàn Thời Gian</option>
+                        <option value="1">Bán Thời Gian</option>
+                        <option value="2">Làm Việc Từ Xa</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Required Skills (comma separated)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Kỹ Năng Yêu Cầu (cách nhau bởi phẩy)</label>
                     <input type="text" asp-for="SkillsInput" placeholder="React, .NET, SQL, Docker" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Location</label>
-                    <input type="text" asp-for="JobInput.Location" placeholder="e.g. Ho Chi Minh or Remote" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Địa Điểm</label>
+                    <input type="text" asp-for="JobInput.Location" placeholder="vd: HCM hoặc Làm Việc Từ Xa" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Category</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Danh Mục</label>
                     <select asp-for="JobInput.CategoryId" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
-                        <option value="">-- Select Category --</option>
+                        <option value="">-- Chọn Danh Mục --</option>
                         @foreach (var cat in Model.Categories)
                         {
                             <option value="@cat.Id">@cat.Name</option>
@@ -68,34 +68,34 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salary Min ($)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Lương Tối Thiểu</label>
                     <input type="number" asp-for="JobInput.SalaryMin" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Salary Max ($)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Lương Tối Đa</label>
                     <input type="number" asp-for="JobInput.SalaryMax" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
                 </div>
             </div>
 
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Job Description</label>
-                <textarea asp-for="JobInput.Description" placeholder="Describe the role and day-to-day responsibilities..." class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Mô Tả Công Việc</label>
+                <textarea asp-for="JobInput.Description" placeholder="Mô tả vai trò và trách nhiệm hàng ngày..." class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
             </div>
 
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Requirements</label>
-                <textarea asp-for="JobInput.Requirement" placeholder="What should the candidate have? (e.g. 5+ years experience...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Yêu Cầu Công Việc</label>
+                <textarea asp-for="JobInput.Requirement" placeholder="Ứng viên cần có những yêu cầu như thế nào? (vd: Kinh nghiệm tối thiểu 5 năm...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
             </div>
             
             <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Benefits</label>
-                <textarea asp-for="JobInput.Benefits" placeholder="What perks do you offer? (e.g. Remote work, 13th month salary...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Quyền Lợi</label>
+                <textarea asp-for="JobInput.Benefits" placeholder="Công ty mang lại những quyền lợi gì cho ứng viên? (vd: Làm việc từ xa, thưởng lương tháng 13...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
             </div>
         </div>
 
         <div class="flex justify-end gap-3">
             <a href="/RecruiterJobs" class="h-12 px-6 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors flex items-center">Quay lại danh sách</a>
-            <button type="submit" class="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-100 transition" id="submitBtn">Create Draft (Free)</button>
+            <button type="submit" class="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-100 transition" id="submitBtn">Tạo Bản Nháp Tuyển Dụng</button>
         </div>
     </form>
 </div>
@@ -104,7 +104,7 @@
     <script>
         function submitJob() {
             var btn = document.getElementById('submitBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Initializing...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang Xử Lý...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
             return true;
         }

@@ -2,19 +2,19 @@
 @model WebPortal.Pages.RecruiterJobsModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "Recruitment Hub";
+    ViewData["Title"] = "Trung Tâm Tuyển Dụng";
 }
 
 <div class="space-y-12 animate-in fade-in duration-700">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Recruiter Control Hub</span>
-            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Recruitment Hub</h2>
-            <p class="text-slate-500 text-sm font-medium mt-1">Manage missions and monitor talent throughput in real-time.</p>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Trình Quản Lý Tuyển Dụng</span>
+            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Trung Tâm Tuyển Dụng</h2>
+            <p class="text-slate-500 text-sm font-medium mt-1">Quản lý bài đăng và theo dõi hiệu suất tuyển dụng theo thời gian thực.</p>
         </div>
         <a href="/PostJob" class="inline-flex">
             <button class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition">
-                <i class="fas fa-plus-circle mr-2"></i> Post New Mission
+                <i class="fas fa-plus-circle mr-2"></i> Tạo Bài Đăng Mới
             </button>
         </a>
     </div>
@@ -23,34 +23,34 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div class="w-14 h-14 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-indigo-100 group-hover:rotate-12 transition-transform"><i class="fas fa-eye text-xl"></i></div>
-            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Total Job Views</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Tổng Lượt Xem</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.Stats.TotalViews.ToString("N0")</h3>
-                <span class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100">Live</span>
+                <span class="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100">Khả Dụng</span>
             </div>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div class="w-14 h-14 bg-indigo-500 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-indigo-100 group-hover:rotate-12 transition-transform"><i class="fas fa-bookmark text-xl"></i></div>
-            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Saved by Talent</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Được Lưu Lại</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.Stats.TotalSaves.ToString("N0")</h3>
-                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">Interest</span>
+                <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-100">Quan Tâm</span>
             </div>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div class="w-14 h-14 bg-amber-500 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-amber-100 group-hover:rotate-12 transition-transform"><i class="fas fa-paper-plane text-xl"></i></div>
-            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Total Applications</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Tổng Ứng Viên</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.Stats.TotalApplications.ToString("N0")</h3>
-                <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">Pipeline</span>
+                <span class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">Tiềm Năng</span>
             </div>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div class="w-14 h-14 bg-slate-900 rounded-[1.5rem] flex items-center justify-center text-white mb-6 shadow-xl shadow-slate-200 group-hover:rotate-12 transition-transform"><i class="fas fa-chart-line text-xl"></i></div>
-            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Apply/Save Ratio</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">Tỷ Lệ Chuyển Đổi</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@(Model.Stats.TotalSaves > 0 ? (Model.Stats.TotalApplications * 100.0 / Model.Stats.TotalSaves).ToString("F1") + "%" : "0%")</h3>
-                <span class="text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">Conversion</span>
+                <span class="text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">Chuyển Đổi</span>
             </div>
         </div>
     </div>
@@ -61,11 +61,11 @@
             <table class="w-full text-left">
                 <thead class="bg-slate-50/80 border-b border-slate-100">
                     <tr>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Thông tin Job</th>
-                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Trạng thái</th>
-                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Lý do AI Block</th>
-                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Ứng viên</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Thao tác</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Thông Tin Công Việc</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Trạng Thái</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Lý Do Bị Chặn</th>
+                        <th class="px-6 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Ứng Viên</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
@@ -73,7 +73,7 @@
                     {
                         <tr>
                             <td colspan="5" class="px-8 py-12 text-center text-slate-500">
-                                No jobs found. Post a new mission to get started.
+                                Chưa có công việc nào. Vui lòng tạo bài đăng mới để bắt đầu.
                             </td>
                         </tr>
                     }
@@ -123,13 +123,13 @@
                                 <td class="px-8 py-8 text-right">
                                     <div class="flex justify-end items-center gap-3">
                                         <div class="flex items-center gap-1.5 p-1.5 bg-slate-50 rounded-2xl border border-slate-100 shadow-inner">
-                                            <a href="/JobDetail?Id=@job.Id" title="View & Edit Details" class="w-10 h-10 bg-white text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
+                                            <a href="/JobDetail?Id=@job.Id" title="Xem & Chỉnh sửa chi tiết" class="w-10 h-10 bg-white text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a asp-page="/Jobs/JobApplications" asp-route-Id="@job.Id" title="View Applications" class="w-10 h-10 bg-white text-green-600 hover:bg-green-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
+                                            <a asp-page="/Jobs/JobApplications" asp-route-Id="@job.Id" title="Xem Ứng Viên" class="w-10 h-10 bg-white text-green-600 hover:bg-green-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
                                                 <i class="fas fa-users text-sm"></i>
                                             </a>
-                                            <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="ATS Pipeline" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
+                                            <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="Quản Lý Quy Trình" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
                                                 <i class="fas fa-layer-group text-xs"></i>
                                             </a>
                                         </div>
@@ -137,14 +137,14 @@
                                         {
                                             <form method="post" asp-page-handler="ToggleStatus" class="inline-flex m-0">
                                                 <input type="hidden" name="jobId" value="@job.Id" />
-                                                <button type="submit" title="@(job.Status == JobStatus.APPROVED ? "Hide Job" : "Show Job")" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border @(job.Status == JobStatus.APPROVED ? "bg-slate-50 text-slate-400 hover:text-amber-600 hover:bg-amber-50 border-slate-100" : "bg-green-50 text-green-600 border-green-100 hover:bg-green-100")">
+                                                <button type="submit" title="@(job.Status == JobStatus.APPROVED ? "Ẩn Công Việc" : "Hiện Công Việc")" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border @(job.Status == JobStatus.APPROVED ? "bg-slate-50 text-slate-400 hover:text-amber-600 hover:bg-amber-50 border-slate-100" : "bg-green-50 text-green-600 border-green-100 hover:bg-green-100")">
                                                     <i class="fas @(job.Status == JobStatus.APPROVED ? "fa-eye-slash" : "fa-eye")"></i>
                                                 </button>
                                             </form>
                                         }
-                                        <form method="post" asp-page-handler="Delete" class="inline-flex m-0" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                                        <form method="post" asp-page-handler="Delete" class="inline-flex m-0" onsubmit="return confirm('Bạn có chắc chắn muốn xóa công việc này không?')">
                                             <input type="hidden" name="jobId" value="@job.Id" />
-                                            <button type="submit" title="Delete Job" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border bg-red-50 text-red-400 border-red-100 hover:bg-red-100 hover:text-red-600">
+                                            <button type="submit" title="Xóa Công Việc" class="w-11 h-11 rounded-xl transition-all flex items-center justify-center border bg-red-50 text-red-400 border-red-100 hover:bg-red-100 hover:text-red-600">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
@@ -165,7 +165,7 @@
 <div id="appealModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
     <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeAppeal()"></div>
     <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md mx-4 p-8 relative z-10 animate-in zoom-in-95 duration-200">
-        <h3 class="text-xl font-black text-slate-900 mb-6">Appeal AI Block</h3>
+        <h3 class="text-xl font-black text-slate-900 mb-6">Khiếu Nại Chặn AI</h3>
         <form method="post" asp-page-handler="AppealBlock" class="space-y-6" id="appealForm">
             <input type="hidden" name="jobId" id="appealJobId" />
             <div>

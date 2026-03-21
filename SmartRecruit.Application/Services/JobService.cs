@@ -410,14 +410,24 @@ namespace SmartRecruit.Application.Services
                 }
                 else
                 {
-                    // If blocked, previous version (if approved) stays live.
-                    // If it was DRAFT/CHECKING, it moves to BLOCKED.
-                    if (job.Status != JobStatus.APPROVED)
+                    if (draft != null)
                     {
-                        job.Status = JobStatus.BLOCKED;
+                        // This was a re-publish of a previously live (APPROVED) job.
+                        // The fraudulent draft is rejected, but we KEEP DraftChanges so the recruiter
+                        // can still see and fix their draft before re-publishing.
+                        // The job remains APPROVED and visible to candidates with the old content.
+                        job.Status = JobStatus.APPROVED;
+                        job.ModerationNote = $"Edit blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
+                        // job.DraftChanges is intentionally NOT cleared - recruiter needs to fix their draft
+                        _logger.LogWarning("ProcessJobPublishing: Job {JobId} re-publish BLOCKED. Job reverted to APPROVED. DraftChanges preserved for recruiter to fix.", jobId);
                     }
-                    job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
-                    job.DraftChanges = null; // Clear failing draft changes
+                    else
+                    {
+                        // Fresh publish that got blocked (was DRAFT or previously BLOCKED).
+                        job.Status = JobStatus.BLOCKED;
+                        job.ModerationNote = $"Blocked by AI: {screeningResult.ViolationType} - {screeningResult.Analysis}";
+                        _logger.LogWarning("ProcessJobPublishing: Fresh publish for Job {JobId} BLOCKED.", jobId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -443,10 +453,28 @@ namespace SmartRecruit.Application.Services
             // 3. Notify Recruiter
             try
             {
+                string notifTitle, notifBody;
+                if (job.Status == JobStatus.APPROVED && job.ModerationNote?.StartsWith("Edit blocked") == true)
+                {
+                    // Re-publish blocked, job still live
+                    notifTitle = "Chỉnh sửa Job bị từ chối";
+                    notifBody = $"Nội dung chỉnh sửa của job '{job.Title}' vi phạm chính sách và đã bị từ chối. Job của bạn vẫn đang hoạt động bình thường với nội dung cũ.";
+                }
+                else if (job.Status == JobStatus.APPROVED)
+                {
+                    notifTitle = "Phát hành Job thành công";
+                    notifBody = $"Công việc '{job.Title}' đã được duyệt và đăng tải.";
+                }
+                else
+                {
+                    notifTitle = "Job bị từ chối";
+                    notifBody = $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.";
+                }
+
                 await _notificationService.SendNotificationAsync(
                     userId,
-                    job.Status == JobStatus.APPROVED ? "Phát hành Job thành công" : "Job bị từ chối",
-                    job.Status == JobStatus.APPROVED ? $"Công việc '{job.Title}' đã được duyệt và đăng tải." : $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.",
+                    notifTitle,
+                    notifBody,
                     NotificationType.JOB,
                     $"/JobDetail?id={job.Id}");
             }

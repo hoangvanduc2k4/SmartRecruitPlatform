@@ -2,7 +2,7 @@
 @model WebPortal.Pages.CandidatePreviewModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "Review Application";
+    ViewData["Title"] = "Chi Tiết Ứng Viên";
 }
 
 <div class="space-y-6">
@@ -10,7 +10,7 @@
         <button onclick="history.back()" class="p-2 w-10 h-10 rounded-full bg-white border border-slate-200 hover:bg-slate-50 flex items-center justify-center transition text-slate-600 hover:text-indigo-600">
             <i class="fas fa-arrow-left"></i>
         </button>
-        <h2 class="text-2xl font-bold text-slate-800">Review Application</h2>
+        <h2 class="text-2xl font-bold text-slate-800">Chi Tiết Ứng Viên</h2>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -25,7 +25,7 @@
                                 <p class="text-indigo-600 font-bold">@Model.Job.Title</p>
                             </div>
                             <div class="text-right">
-                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Match Score</p>
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Độ Phù Hợp</p>
                                 <span class="text-3xl font-black text-indigo-600">@(Model.Application.MatchScore.ToString("0"))%</span>
                             </div>
                         </div>
@@ -37,14 +37,14 @@
                 </div>
 
                 <section class="mb-8">
-                    <h4 class="font-bold text-slate-800 mb-4">Extracted CV Summary</h4>
+                    <h4 class="font-bold text-slate-800 mb-4">Tóm Tắt CV (AI Trích Xuất)</h4>
                     <div class="bg-slate-50 p-4 rounded-xl text-sm text-slate-600 leading-relaxed border border-slate-100 italic">
-                        "Candidate has strong background in relevant skills with recent transition. Demonstrated leadership in agile teams. Missing: Kubernetes experience required by job posting."
+                        "Ứng viên có kỹ năng nền tảng vững chắc và phù hợp. Đã thể hiện khả năng làm việc nhóm xuất sắc. Điểm thiếu sót: Chưa có kinh nghiệm với Kubernetes như yêu cầu của bài đăng."
                     </div>
                 </section>
 
                 <section>
-                    <h4 class="font-bold text-slate-800 mb-4">Education & Experience</h4>
+                    <h4 class="font-bold text-slate-800 mb-4">Học Vấn & Kinh Nghiệm</h4>
                     <div class="space-y-4">
                         <div class="flex gap-4">
                             <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0">
@@ -71,7 +71,7 @@
 
         <div class="space-y-6">
             <div class="p-6 bg-white border border-slate-200 rounded-3xl shadow-sm">
-                <h4 class="font-bold text-slate-800 mb-4">Pipeline Status</h4>
+                <h4 class="font-bold text-slate-800 mb-4">Trạng Thái Tuyển Dụng</h4>
                 <div class="space-y-3">
                     @{
                         var pipelineSteps = new[]
@@ -100,10 +100,10 @@
             <div class="p-6 bg-slate-900 text-white rounded-3xl shadow-sm">
                 <h4 class="font-bold mb-4 flex items-center gap-2">
                     <i class="fas fa-comment-dots text-indigo-400"></i>
-                    Internal Notes
+                    Ghi Chú Nội Bộ
                 </h4>
-                <textarea class="w-full bg-slate-800 border-0 rounded-lg p-3 text-sm focus:ring-1 focus:ring-indigo-500 min-h-[100px] mb-4 text-white outline-none" placeholder="Add a private note for other HRs..."></textarea>
-                <button class="w-full h-10 bg-indigo-500 hover:bg-indigo-600 font-bold rounded-xl transition">Save Note</button>
+                <textarea class="w-full bg-slate-800 border-0 rounded-lg p-3 text-sm focus:ring-1 focus:ring-indigo-500 min-h-[100px] mb-4 text-white outline-none" placeholder="Thêm ghi chú riêng tư cho các HR khác..."></textarea>
+                <button class="w-full h-10 bg-indigo-500 hover:bg-indigo-600 font-bold rounded-xl transition">Lưu Ghi Chú</button>
             </div>
         </div>
     </div>

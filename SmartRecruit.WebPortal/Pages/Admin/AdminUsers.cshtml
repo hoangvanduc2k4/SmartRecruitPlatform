@@ -2,7 +2,7 @@
 @model WebPortal.Pages.AdminUsersModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = "User Management Terminal";
+    ViewData["Title"] = "Quản Lý Người Dùng";
     
     // Data is now loaded from PageModel
 }
@@ -10,14 +10,14 @@
 <div class="space-y-12 animate-in fade-in duration-700 pb-20">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div class="space-y-2">
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-red-50 border border-red-100 text-red-700 shadow-sm">Identity Protocol</span>
-            <h2 class="text-5xl font-black text-slate-900 tracking-tighter uppercase">User Management Terminal</h2>
-            <p class="text-slate-500 font-medium">Monitoring and managing @Model.TotalUsers authenticated identities.</p>
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-red-50 border border-red-100 text-red-700 shadow-sm">Bảo Mật Hệ Thống</span>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter uppercase">Quản Lý Người Dùng</h2>
+            <p class="text-slate-500 font-medium">Theo dõi và quản lý @Model.TotalUsers tài khoản đã xác thực.</p>
         </div>
         <div class="relative w-full md:w-96 group">
             <form method="get" class="m-0">
                 <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors"></i>
-                <input type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Search Identity or Email..." onchange="this.form.submit()" class="w-full h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-[1.5rem] focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" />
+                <input type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Tìm kiếm người dùng hoặc Email..." onchange="this.form.submit()" class="w-full h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-[1.5rem] focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" />
             </form>
         </div>
     </div>
@@ -25,12 +25,11 @@
     <div class="overflow-hidden border border-slate-200/60 shadow-2xl shadow-slate-200/20 bg-white rounded-[3rem]">
         <table class="w-full text-left">
             <thead class="bg-slate-50/50 border-b border-slate-100">
-                <tr>
-                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Identity Details</th>
-                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Sector Role</th>
-                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">System Status</th>
-                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created At</th>
-                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Action Protocol</th>
+                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Hồ Sơ Danh Tính</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Vai Trò</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Trạng Thái</th>
+                    <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Ngày Tạo</th>
+                    <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Thao Tác</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-50">
@@ -59,11 +58,11 @@
                             <button onclick="toggleLock(@u.Id, @u.IsActive.ToString().ToLower())" class="h-11 px-6 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-colors @(!u.IsActive ? "bg-green-600 text-white hover:bg-green-700" : "bg-red-50 text-red-600 hover:bg-red-100")">
                                 @if (!u.IsActive)
                                 {
-                                    <><i class="fas fa-unlock mr-2"></i> Unlock</>
+                                    <><i class="fas fa-unlock mr-2"></i> Mở Khóa</>
                                 }
                                 else
                                 {
-                                    <><i class="fas fa-lock mr-2"></i> Lock Account</>
+                                    <><i class="fas fa-lock mr-2"></i> Khóa Tài Khoản</>
                                 }
                             </button>
                         </td>
@@ -85,11 +84,11 @@
             
             if (isActive) {
                 // User is currently ACTIVE -> we want to LOCK
-                lockReason = prompt("Reason for protocol suspension (Account Lock):");
+                lockReason = prompt("Lý do khóa tài khoản người dùng này:");
                 if (lockReason === null) return; // User cancelled
             } else {
                 // User is currently LOCKED -> we want to UNLOCK
-                if (!confirm("Are you sure you want to RESTORE (Unlock) this identity?")) return;
+                if (!confirm("Bạn có chắc chắn muốn MỞ KHÓA cho tải khoản này không?")) return;
             }
 
             try {
@@ -104,11 +103,11 @@
                 if (result.success) {
                     window.location.reload();
                 } else {
-                    alert('Action protocol failed. Integrity check required.');
+                    alert('Thao tác không thành công. Vui lòng kiểm tra lại.');
                 }
             } catch (error) {
                 console.error('Error toggling status:', error);
-                alert('A system error occurred.');
+                alert('Có lỗi hệ thống xảy ra.');
             }
         }
     </script>

@@ -5,10 +5,10 @@
     ViewData["Title"] = "Job Pipeline";
     var statuses = new[]
     {
-        new { Status = ApplicationStatus.REVIEWING, Label = "Reviewing", Icon = "fa-search", Color = "bg-indigo-400 shadow-indigo-400/30" },
-        new { Status = ApplicationStatus.INTERVIEWING, Label = "Interview", Icon = "fa-comments", Color = "bg-amber-400 shadow-amber-400/30" },
-        new { Status = ApplicationStatus.OFFERED, Label = "Offer", Icon = "fa-gift", Color = "bg-green-400 shadow-green-400/30" },
-        new { Status = ApplicationStatus.REJECTED, Label = "Rejected Pool", Icon = "fa-circle-xmark", Color = "bg-red-400 shadow-red-400/30" }
+        new { Status = ApplicationStatus.REVIEWING, Label = "Đang Xem Xét", Icon = "fa-search", Color = "bg-indigo-400 shadow-indigo-400/30" },
+        new { Status = ApplicationStatus.INTERVIEWING, Label = "Phỏng Vấn", Icon = "fa-comments", Color = "bg-amber-400 shadow-amber-400/30" },
+        new { Status = ApplicationStatus.OFFERED, Label = "Đề Nghị Trúng Tuyển", Icon = "fa-gift", Color = "bg-green-400 shadow-green-400/30" },
+        new { Status = ApplicationStatus.REJECTED, Label = "Đã Từ Chối", Icon = "fa-circle-xmark", Color = "bg-red-400 shadow-red-400/30" }
     };
 }
 
@@ -20,8 +20,8 @@
             <div id="modalIconContainer" class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <i id="modalIcon" class="fas text-2xl text-white"></i>
             </div>
-            <h3 id="modalTitle" class="text-2xl font-black text-slate-800 tracking-tight uppercase mb-2">Update Status</h3>
-            <p id="modalDescription" class="text-slate-500 text-sm font-medium mb-8">Please provide the required information to continue.</p>
+            <h3 id="modalTitle" class="text-2xl font-black text-slate-800 tracking-tight uppercase mb-2">Cập Nhật Trạng Thái</h3>
+            <p id="modalDescription" class="text-slate-500 text-sm font-medium mb-8">Vui lòng cung cấp thông tin cần thiết để tiếp tục.</p>
 
             <form id="modalForm" method="post" asp-page-handler="UpdateStatus">
                 <input type="hidden" name="applicationId" id="modalAppId" />
@@ -29,18 +29,18 @@
                 <input type="hidden" name="status" id="modalStatus" />
 
                 <div id="dateField" class="hidden space-y-2 mb-8">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Interview Date</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Ngày Phỏng Vấn</label>
                     <input type="datetime-local" name="interviewDate" class="w-full h-14 px-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-bold text-slate-700" />
                 </div>
 
                 <div id="reasonField" class="hidden space-y-2 mb-8">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Rejection Reason</label>
-                    <textarea name="rejectionReason" rows="3" class="w-full p-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-slate-700 placeholder:text-slate-300" placeholder="e.g. Experience mismatch..."></textarea>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Lý Do Từ Chối</label>
+                    <textarea name="rejectionReason" rows="3" class="w-full p-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-slate-700 placeholder:text-slate-300" placeholder="vd: Không đủ kinh nghiệm..."></textarea>
                 </div>
 
                 <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="closeModal()" class="flex-1 h-14 rounded-2xl border border-slate-200 text-slate-500 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all">Cancel</button>
-                    <button type="submit" class="flex-1 h-14 rounded-2xl bg-indigo-600 text-white font-black text-[11px] uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">Confirm</button>
+                    <button type="button" onclick="closeModal()" class="flex-1 h-14 rounded-2xl border border-slate-200 text-slate-500 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all">Hủy</button>
+                    <button type="submit" class="flex-1 h-14 rounded-2xl bg-indigo-600 text-white font-black text-[11px] uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">Xác Nhận</button>
                 </div>
             </form>
         </div>
@@ -71,8 +71,8 @@
             </a>
         </div>
         <div>
-            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Mission Pipeline</h2>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Drag and drop talent metrics through the deployment phases</p>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Sơ Đồ Tuyển Dụng</h2>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Sắp xếp tình trạng ứng viên qua các giai đoạn tuyển dụng</p>
         </div>
     </div>
 
@@ -99,7 +99,7 @@
                     {
                         <div class="py-32 text-center text-slate-400/20 flex flex-col items-center gap-4">
                             <i class="fas @col.Icon text-5xl opacity-10"></i>
-                            <p class="text-[9px] font-black uppercase tracking-widest opacity-30 italic">No Identity Segment</p>
+                            <p class="text-[9px] font-black uppercase tracking-widest opacity-30 italic">Chưa Có Ứng Viên</p>
                         </div>
                     }
                     
@@ -121,7 +121,7 @@
                             <div class="flex gap-2">
                                 <a href="/CandidatePreview/@app.Id" class="flex-1">
                                     <button class="text-[9px] font-black h-10 w-full rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-indigo-500 hover:text-indigo-600 transition-all uppercase tracking-widest">
-                                        Preview
+                                        Chi Tiết
                                     </button>
                                 </a>
 
@@ -141,7 +141,7 @@
                                             <input type="hidden" name="jobId" value="@Model.Job?.Id" />
                                             <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING.ToString()" />
                                             <button type="submit" class="h-10 px-4 text-[9px] rounded-xl bg-green-600 text-white font-bold border-0 hover:bg-green-700 ml-2 uppercase tracking-widest whitespace-nowrap">
-                                                Restore
+                                                Khôi Phục
                                             </button>
                                         </form>
                                     }
@@ -203,14 +203,14 @@
             reasonField.classList.add('hidden');
 
             if (type === 'INTERVIEW') {
-                modalTitle.innerText = "Schedule Interview";
-                modalDescription.innerText = "Select a date and time for the candidate's interview phase.";
+                modalTitle.innerText = "Lên Lịch Phỏng Vấn";
+                modalDescription.innerText = "Chọn ngày giờ cho đợt phỏng vấn của ứng viên.";
                 modalIconContainer.className = "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg bg-indigo-500 shadow-indigo-200";
                 modalIcon.className = "fas fa-calendar-alt text-2xl text-white";
                 dateField.classList.remove('hidden');
             } else if (type === 'REJECT') {
-                modalTitle.innerText = "Reject Candidate";
-                modalDescription.innerText = "Please provide a brief reason for rejecting this candidate.";
+                modalTitle.innerText = "Từ Chối Ứng Viên";
+                modalDescription.innerText = "Vui lòng cung cấp lý do ngắn gọn để từ chối ứng viên.";
                 modalIconContainer.className = "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg bg-red-500 shadow-red-200";
                 modalIcon.className = "fas fa-user-times text-2xl text-white";
                 reasonField.classList.remove('hidden');

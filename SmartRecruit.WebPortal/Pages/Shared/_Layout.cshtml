@@ -29,29 +29,29 @@
                 }
                 @if (userRole != "ADMIN")
                 {
-                    <a href="/Jobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Jobs Explorer</a>
+                    <a href="/Jobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Tìm Việc</a>
                 }
                 
                 @if (userRole == "RECRUITER")
                 {
-                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Job Hub</a>
-                    <a href="/Recruiter/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Candidate List</a>
-                    <a href="/Wallet" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Wallet</a>
+                    <a href="/RecruiterJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Việc Làm Của Tôi</a>
+                    <a href="/Recruiter/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Danh Sách Ứng Viên</a>
+                    <a href="/Wallet" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Ví Tiền</a>
                 }
 
                 @if (userRole == "CANDIDATE")
                 {
-                    <a href="/Candidate/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">My Applied Jobs</a>
-                    <a href="/SavedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Saved Jobs</a>
+                    <a href="/Candidate/AppliedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Việc Đã Ứng Tuyển</a>
+                    <a href="/SavedJobs" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Việc Đã Lưu</a>
                 }
 
                 @if (userRole == "ADMIN")
                 {
-                    <a href="/AdminDashboard" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Command Center</a>
-                    <a href="/AdminUsers" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">User Registry</a>
-                    <a href="/Admin/Moderation" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Moderation Terminal</a>
-                    <a href="/Admin/Finance" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Finance</a>
-                    <a href="/AdminOversight" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Oversight & Audit</a>
+                    <a href="/AdminDashboard" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Tổng Quan</a>
+                    <a href="/AdminUsers" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Quản Lý Người Dùng</a>
+                    <a href="/Admin/Moderation" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Quản Lý Kiểm Duyệt</a>
+                    <a href="/Admin/Finance" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Tài Chính</a>
+                    <a href="/AdminOversight" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors">Giám Sát & Kiểm Toán</a>
                 }
             </nav>
         </div>
@@ -60,7 +60,7 @@
             @if (string.IsNullOrEmpty(userRole))
             {
                 <a href="/Auth">
-                    <button class="h-11 px-6 text-[10px] bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition-colors">Access Terminal</button>
+                    <button class="h-11 px-6 text-[10px] bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition-colors">Đăng Nhập / Đăng Ký</button>
                 </a>
             }
             else
@@ -81,10 +81,10 @@
                     <!-- Notifications Dropdown -->
                     <div class="absolute right-0 mt-2 w-80 bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 invisible opacity-0 group-hover/notif:visible group-hover/notif:opacity-100 transition-all duration-300 z-50">
                         <div class="flex justify-between items-center mb-5">
-                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Incoming Data</h4>
+                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Thông báo mới</h4>
                         </div>
                         <div id="notification-list" class="space-y-3 max-h-[350px] overflow-y-auto custom-scrollbar pr-1 text-left">
-                            <div class="text-center p-4 text-slate-400 text-xs" id="empty-notif" style="display: none;">No new notifications.</div>
+                            <div class="text-center p-4 text-slate-400 text-xs" id="empty-notif" style="display: none;">Không có thông báo mới.</div>
                         </div>
                     </div>
                 </div>
@@ -109,17 +109,17 @@
                     <!-- Dropdown on hover -->
                     <div class="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border border-slate-100 p-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300">
                         <div class="p-4 border-b border-slate-50 mb-2">
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Authenticated As</p>
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Đăng nhập với quyền</p>
                             <p class="text-sm font-black text-slate-900 capitalize">@userRole</p>
                         </div>
                         <a href="/Profile" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-[10px] font-black uppercase text-slate-500 hover:text-indigo-600 transition-all">
-                            <i class="fas fa-fingerprint opacity-50 w-4 text-center"></i> View Identity
+                            <i class="fas fa-fingerprint opacity-50 w-4 text-center"></i> Hồ sơ cá nhân
                         </a>
                         <a href="/SavedJobs" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-[10px] font-black uppercase text-slate-500 hover:text-indigo-600 transition-all">
-                            <i class="fas fa-heart opacity-50 w-4 text-center"></i> Saved Missions
+                            <i class="fas fa-heart opacity-50 w-4 text-center"></i> Việc làm đã lưu
                         </a>
                         <a href="/Auth?handler=Logout" class="flex w-full items-center gap-3 px-4 py-3 hover:bg-red-50 text-red-500 rounded-xl text-[10px] font-black uppercase transition-all text-left">
-                            <i class="fas fa-power-off opacity-50 w-4 text-center"></i> Terminate Session
+                            <i class="fas fa-power-off opacity-50 w-4 text-center"></i> Đăng xuất hệ thống
                         </a>
                     </div>
                 </div>
@@ -144,11 +144,11 @@
                     <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center font-black text-white text-sm">SR</div>
                     <span class="font-black text-lg uppercase tracking-tighter">SmartRecruit</span>
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed font-medium">The most advanced AI-powered recruitment ecosystem for the modern era. Blueprinting for ASP.NET architecture.</p>
+                <p class="text-xs text-slate-400 leading-relaxed font-medium">Hệ sinh thái tuyển dụng tích hợp AI tiên tiến nhất hiện nay. Xây dựng trên nền tảng ASP.NET.</p>
             </div>
             <div class="space-y-4 text-right col-span-3">
-                <h5 class="text-[10px] font-black uppercase tracking-widest text-slate-900">System Status</h5>
-                <span class="inline-flex items-center px-4 py-2 border font-bold text-[10px] uppercase rounded-full border-green-200 bg-green-50 text-green-700">All Sectors Operational</span>
+                <h5 class="text-[10px] font-black uppercase tracking-widest text-slate-900">Trạng Thái Hệ Thống</h5>
+                <span class="inline-flex items-center px-4 py-2 border font-bold text-[10px] uppercase rounded-full border-green-200 bg-green-50 text-green-700">Hoạt Động Bình Thường</span>
                 <p class="text-[10px] text-slate-300 mt-4 uppercase font-black">© 2026 SmartRecruit Nexus</p>
             </div>
         </div>
