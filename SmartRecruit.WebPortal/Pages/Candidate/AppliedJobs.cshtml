@@ -25,22 +25,22 @@
             <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-paper-plane text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Số Lượt Ứng Tuyển</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Số Công Việc Đã Ứng Tuyển</p>
             <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.AppliedJobs.Count</h3>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:border-amber-200 transition-all duration-300">
             <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-amber-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-spinner text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Đang Chờ Xử Lý</p>
-            <h3 class="text-3xl font-black text-slate-900 tracking-tighter">@Model.AppliedJobs.Count(a => a.Status != ApplicationStatus.REJECTED)</h3>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Đang Chờ Phản Hồi</p>
+            <h3 class="text-3xl font-black text-slate-900 tracking-tighter" id="pending-responses-count">@Model.AppliedJobs.Count(a => a.Status != ApplicationStatus.REJECTED)</h3>
         </div>
         <div class="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm group hover:border-green-200 transition-all duration-300">
             <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-green-100 group-hover:scale-110 transition-transform">
                 <i class="fas fa-brain text-xl"></i>
             </div>
             <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Độ Phù Hợp Trung Bình</p>
-            <h3 class="text-3xl font-black text-slate-900 tracking-tighter">
+            <h3 class="text-3xl font-black text-slate-900 tracking-tighter" id="average-match-score">
                 @(Model.AppliedJobs.Any() ? Model.AppliedJobs.Average(a => a.MatchScore).ToString("F0") + "%" : "0%")
             </h3>
         </div>
@@ -90,35 +90,61 @@
                                         </p>
                                     </div>
                                 </td>
-                                <td class="px-8 py-8">
-                                    <div class="flex items-center gap-4">
-                                        <div class="relative w-12 h-12 flex items-center justify-center">
-                                            <svg class="w-full h-full transform -rotate-90">
-                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
-                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="@(app.MatchScore > 80 ? "text-green-500" : app.MatchScore > 50 ? "text-indigo-500" : "text-amber-500")" 
-                                                        stroke-dasharray="@(2 * Math.PI * 20)" 
-                                                        stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
-                                            </svg>
-                                            <span class="absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
+                                <td class="px-8 py-8" id="match-score-cell-job-@app.JobId">
+                                    @if (app.MatchScore == 0 && string.IsNullOrEmpty(app.AI_Summary))
+                                    {
+                                        <div id="ai-evaluating-job-@app.JobId" class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg border border-indigo-100 w-max">
+                                            <i class="fas fa-robot text-indigo-500 animate-bounce text-[10px]"></i>
+                                            <span class="text-[9px] font-black text-indigo-700 uppercase tracking-wider">Đang đánh giá độ phù hợp</span>
                                         </div>
-                                        <div class="hidden sm:block">
-                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                        <div id="score-container-job-@app.JobId" class="hidden items-center gap-4">
+                                            <div class="relative w-12 h-12 flex items-center justify-center">
+                                                <svg class="w-full h-full transform -rotate-90">
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-amber-500" 
+                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                            stroke-dashoffset="@(2 * Math.PI * 20)" />
+                                                </svg>
+                                                <span class="absolute text-[10px] font-black text-slate-700">0%</span>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="score-container-job-@app.JobId" class="flex items-center gap-4">
+                                            <div class="relative w-12 h-12 flex items-center justify-center">
+                                                <svg class="w-full h-full transform -rotate-90">
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="@(app.MatchScore > 80 ? "text-green-500" : app.MatchScore > 50 ? "text-indigo-500" : "text-amber-500")" 
+                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                            stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
+                                                </svg>
+                                                <span class="absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                            </div>
+                                        </div>
+                                    }
                                 </td>
-                                <td class="px-8 py-8">
+                                <td class="px-8 py-8" id="status-cell-app-@app.Id">
                                     @{
                                         var statusClass = app.Status switch {
                                             ApplicationStatus.OFFERED => "bg-green-50 text-green-600 border-green-100",
                                             ApplicationStatus.REJECTED => "bg-red-50 text-red-600 border-red-100",
                                             ApplicationStatus.REVIEWING => "bg-indigo-50 text-indigo-600 border-indigo-100",
+                                            ApplicationStatus.INTERVIEWING => "bg-amber-50 text-amber-600 border-amber-100",
                                             _ => "bg-slate-50 text-slate-600 border-slate-100"
                                         };
                                     }
-                                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black">
+                                    <span id="status-badge-app-@app.Id" data-status="@app.Status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black">
                                         <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                                        @app.Status
+                                        <span class="status-text">@app.Status</span>
                                     </span>
                                 </td>
                                 <td class="px-8 py-8">
@@ -144,3 +170,94 @@
         <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, $"?CurrentPage={{0}}")' />
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.notificationHubConnection) {
+                window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
+                    if (!update) return;
+                    
+                    const jobId = update.jobId || update.JobId;
+                    const score = update.matchScore || update.MatchScore || 0;
+                    
+                    const evaluatingEl = document.getElementById("ai-evaluating-job-" + jobId);
+                    const scoreContainerEl = document.getElementById("score-container-job-" + jobId);
+                    
+                    if (evaluatingEl) {
+                        evaluatingEl.classList.add('hidden');
+                        evaluatingEl.classList.remove('flex');
+                    }
+                    if (scoreContainerEl) {
+                        scoreContainerEl.classList.remove('hidden');
+                        scoreContainerEl.classList.add('flex');
+                        
+                        const circleEl = scoreContainerEl.querySelector('circle:nth-child(2)');
+                        const textEl = scoreContainerEl.querySelector('span.absolute');
+                        if (circleEl && textEl) {
+                            const offset = 2 * Math.PI * 20 * (1 - score / 100);
+                            circleEl.setAttribute('stroke-dashoffset', offset);
+                            circleEl.className.baseVal = score > 80 ? "text-green-500" : (score > 50 ? "text-indigo-500" : "text-amber-500");
+                            textEl.innerText = Math.round(score) + "%";
+                        }
+                    }
+
+                    // Recalculate average (simplified: just current items in view)
+                    updateAverageScore();
+                });
+
+                window.notificationHubConnection.on("ReceiveApplicationStatusUpdate", function (update) {
+                    if (!update) return;
+                    
+                    const appId = update.applicationId || update.ApplicationId;
+                    const newStatus = update.status || update.Status;
+                    
+                    const badgeEl = document.getElementById("status-badge-app-" + appId);
+                    if (badgeEl) {
+                        const textEl = badgeEl.querySelector('.status-text');
+                        if (textEl) textEl.innerText = newStatus;
+                        
+                        badgeEl.setAttribute('data-status', newStatus);
+                        
+                        // Update classes
+                        badgeEl.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm font-black " + getStatusClass(newStatus);
+                    }
+
+                    // Update pending count
+                    updatePendingCount();
+                });
+            }
+
+            function getStatusClass(status) {
+                switch(status) {
+                    case 'OFFERED': return "bg-green-50 text-green-600 border-green-100";
+                    case 'REJECTED': return "bg-red-50 text-red-600 border-red-100";
+                    case 'REVIEWING': return "bg-indigo-50 text-indigo-600 border-indigo-100";
+                    case 'INTERVIEWING': return "bg-amber-50 text-amber-600 border-amber-100";
+                    default: return "bg-slate-50 text-slate-600 border-slate-100";
+                }
+            }
+
+            function updatePendingCount() {
+                const count = Array.from(document.querySelectorAll('[id^="status-badge-app-"]'))
+                    .map(el => el.getAttribute('data-status'))
+                    .filter(s => s !== 'REJECTED').length;
+                
+                const countEl = document.getElementById('pending-responses-count');
+                if (countEl) countEl.innerText = count;
+            }
+
+            function updateAverageScore() {
+                const scores = Array.from(document.querySelectorAll('[id^="score-container-job-"] span.absolute'))
+                    .map(el => parseFloat(el.innerText))
+                    .filter(s => !isNaN(s));
+                
+                if (scores.length > 0) {
+                    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+                    const avgEl = document.getElementById('average-match-score');
+                    if (avgEl) avgEl.innerText = Math.round(avg) + "%";
+                }
+            }
+        });
+    </script>
+}

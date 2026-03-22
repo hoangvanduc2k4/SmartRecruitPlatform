@@ -11,6 +11,8 @@ namespace WebPortal.Services.Api
         Task<PagedResponse<Application>> GetApplicationsAsync(long? candidateId = null, long? jobId = null, int? status = null, int page = 1, int pageSize = 10, bool sortByScore = false, long? recruiterId = null);
         Task<Application?> GetApplicationByIdAsync(long id);
         Task<(bool Success, string? Message)> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
+        Task<bool> AddNoteAsync(long id, string note);
+        Task<bool> ClearNotesAsync(long id);
         Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
         Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId);
         Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
@@ -125,6 +127,18 @@ namespace WebPortal.Services.Api
             {
                 return (false, $"HTTP {response.StatusCode}: {errorContent}");
             }
+        }
+
+        public async Task<bool> AddNoteAsync(long id, string note)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"applications/{id}/notes", note);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ClearNotesAsync(long id)
+        {
+            var response = await _httpClient.DeleteAsync($"applications/{id}/notes");
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)

@@ -19,6 +19,7 @@ namespace SmartRecruit.Application.Services
         private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
         private readonly INotificationHubService _notificationHubService;
+        private readonly IEmailService _emailService;
         private readonly ILogger<ApplicationService> _logger;
 
         public ApplicationService(
@@ -29,6 +30,7 @@ namespace SmartRecruit.Application.Services
             IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
             INotificationHubService notificationHubService,
+            IEmailService emailService,
             ILogger<ApplicationService> logger)
         {
             _applicationRepository = applicationRepository;
@@ -38,6 +40,7 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
             _notificationHubService = notificationHubService;
+            _emailService = emailService;
             _logger = logger;
         }
 
@@ -226,8 +229,6 @@ namespace SmartRecruit.Application.Services
             }
 
             // 2. Ràng buộc dữ liệu & Tận dụng cột Notes
-            application.Notes = null; // Clear old notes
-
             if (newStatus == ApplicationStatus.INTERVIEWING)
             {
                 if (!request.InterviewDate.HasValue)
@@ -238,7 +239,6 @@ namespace SmartRecruit.Application.Services
                 {
                     throw new InvalidOperationException("Rejection reason should not be provided when moving to Interviewing status.");
                 }
-                application.Notes = $"Interview Date: {request.InterviewDate.Value:yyyy-MM-dd HH:mm}";
             }
             else if (newStatus == ApplicationStatus.REJECTED)
             {
@@ -250,7 +250,6 @@ namespace SmartRecruit.Application.Services
                 {
                     throw new InvalidOperationException("Interview date should not be provided when rejecting an application.");
                 }
-                application.Notes = $"Rejection Reason: {request.RejectionReason}";
             }
             else
             {
@@ -261,6 +260,30 @@ namespace SmartRecruit.Application.Services
                 }
             }
 
+
+            // Append History to Notes
+            string newNote = "";
+            if (newStatus == ApplicationStatus.INTERVIEWING)
+            {
+                newNote = $"Interview: {request.InterviewDate.Value.ToString("yyyy-MM-dd HH:mm")}";
+            }
+            else if (newStatus == ApplicationStatus.OFFERED)
+            {
+                newNote = $"Offered: {DateTime.Now:yyyy-MM-dd HH:mm}";
+            }
+            else if (newStatus == ApplicationStatus.REJECTED)
+            {
+                newNote = $"Rejected: {request.RejectionReason}";
+            }
+
+            // ONLY append if something actually changed (new status or new interview date)
+            bool dataChanged = application.Status != newStatus || 
+                              (newStatus == ApplicationStatus.INTERVIEWING && application.Notes?.Contains(newNote) == false);
+
+            if (!string.IsNullOrEmpty(newNote) && dataChanged)
+            {
+                application.Notes = string.IsNullOrEmpty(application.Notes) ? newNote : $"{application.Notes}, {newNote}";
+            }
 
             application.Status = newStatus;
             application.UpdatedAt = DateTime.UtcNow;
@@ -292,6 +315,60 @@ namespace SmartRecruit.Application.Services
                             message,
                             NotificationType.APPLICATION,
                             $"/JobApplications"); // Candidate views their apps here
+                            
+                        // Real-time UI Update (SignalR)
+                        await _notificationHubService.SendApplicationStatusUpdateAsync(appWithDetails.CandidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
+                        {
+                            ApplicationId = id,
+                            Status = newStatus.ToString()
+                        });
+
+                        // Send Email Notification
+                        if (appWithDetails.Candidate != null && !string.IsNullOrEmpty(appWithDetails.Candidate.Email))
+                        {
+                            string emailSubject = $"Update regarding your application for {jobTitle}";
+                            string emailBody = "";
+
+                            if (newStatus == ApplicationStatus.INTERVIEWING)
+                            {
+                                emailSubject = $"Interview Invitation: {jobTitle}";
+                                emailBody = $@"
+                                    <h2>Chúc mừng!</h2>
+                                    <p>Chào {appWithDetails.Candidate.FullName},</p>
+                                    <p>Chúng tôi rất ấn tượng với hồ sơ của bạn và muốn mời bạn tham gia buổi phỏng vấn cho vị trí <strong>{jobTitle}</strong>.</p>
+                                    <p><strong>Thời gian:</strong> {request.InterviewDate?.ToString("f")}</p>
+                                    <p>Vui lòng xác nhận sự tham gia của bạn bằng cách phản hồi email này.</p>
+                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                            }
+                            else if (newStatus == ApplicationStatus.OFFERED)
+                            {
+                                emailSubject = $"Job Offer: {jobTitle}";
+                                emailBody = $@"
+                                    <h2>Chúc mừng!</h2>
+                                    <p>Chào {appWithDetails.Candidate.FullName},</p>
+                                    <p>Chúng tôi rất vui mừng được gửi đến bạn lời mời làm việc (Job Offer) cho vị trí <strong>{jobTitle}</strong>.</p>
+                                    <p>Kinh nghiệm và kỹ năng của bạn rất phù hợp với đội ngũ của chúng tôi. Chúng tôi rất mong chờ bạn gia nhập công ty!</p>
+                                    <p>Vui lòng kiểm tra hồ sơ ứng tuyển của bạn trên hệ thống SmartRecruit để xem chi tiết lời mời.</p>
+                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                            }
+                            else if (newStatus == ApplicationStatus.REJECTED)
+                            {
+                                emailSubject = $"Application Update: {jobTitle}";
+                                emailBody = $@"
+                                    <p>Chào {appWithDetails.Candidate.FullName},</p>
+                                    <p>Cảm ơn bạn đã quan tâm và dành thời gian ứng tuyển vào vị trí <strong>{jobTitle}</strong>.</p>
+                                    <p>Chúng tôi rất tiếc phải thông báo rằng bạn chưa phù hợp trong đợt tuyển dụng này.</p>
+                                    <p><strong>Lời nhắn từ nhà tuyển dụng:</strong> {request.RejectionReason}</p>
+                                    <p>Chúng tôi sẽ lưu hồ sơ của bạn và hy vọng có cơ hội hợp tác trong tương lai.</p>
+                                    <p>Chúc bạn nhiều may mắn trên con đường sự nghiệp!</p>
+                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                            }
+
+                            if (!string.IsNullOrEmpty(emailBody))
+                            {
+                                await _emailService.SendHtmlEmailAsync(appWithDetails.Candidate.Email, emailSubject, emailBody);
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -306,6 +383,31 @@ namespace SmartRecruit.Application.Services
         {
             var application = await _applicationRepository.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
             return _mapper.Map<ApplicationResponse>(application);
+        }
+
+        public async Task<bool> AddNoteAsync(long id, string note)
+        {
+            var application = await _applicationRepository.GetByIdAsync(id);
+            if (application == null) throw new KeyNotFoundException($"Application with ID {id} not found.");
+
+            if (!string.IsNullOrWhiteSpace(note))
+            {
+                var cleanNote = note.Replace(",", ";");
+                application.Notes = string.IsNullOrEmpty(application.Notes) ? cleanNote : $"{application.Notes}, {cleanNote}";
+                _applicationRepository.Update(application);
+                return await _unitOfWork.CompleteAsync() > 0;
+            }
+            return false;
+        }
+
+        public async Task<bool> ClearNotesAsync(long id)
+        {
+            var application = await _applicationRepository.GetByIdAsync(id);
+            if (application == null) throw new KeyNotFoundException($"Application with ID {id} not found.");
+
+            application.Notes = null;
+            _applicationRepository.Update(application);
+            return await _unitOfWork.CompleteAsync() > 0;
         }
 
         public async Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)

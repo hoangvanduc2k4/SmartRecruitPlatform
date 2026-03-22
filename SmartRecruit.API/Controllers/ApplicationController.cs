@@ -132,6 +132,60 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
+        /// Thêm ghi chú mới vào hồ sơ ứng tuyển (nối thêm vào Notes hiện có)
+        /// </summary>
+        [HttpPost("{id}/notes")]
+        public async Task<IActionResult> AddNote(long id, [FromBody] string note)
+        {
+            _logger.LogInformation("API AddNote called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.AddNoteAsync(id, note);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Note added successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to add note"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during AddNote for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
+        /// Xóa tất cả ghi chú của hồ sơ ứng tuyển
+        /// </summary>
+        [HttpDelete("{id}/notes")]
+        public async Task<IActionResult> DeleteNotes(long id)
+        {
+            _logger.LogInformation("API DeleteNotes called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.ClearNotesAsync(id);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Notes cleared successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to clear notes"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during DeleteNotes for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
         /// Cập nhật trạng thái hàng loạt (Kanban)
         /// </summary>
         [HttpPut("bulk-status")]
