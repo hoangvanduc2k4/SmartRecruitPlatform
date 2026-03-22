@@ -55,6 +55,7 @@ namespace WebPortal.Pages
             {
                 RecruiterId = recruiterId.Value,
                 Title = JobInput.Title ?? "",
+                Company = JobInput.Company ?? "",
                 Description = JobInput.Description ?? "",
                 Requirement = JobInput.Requirement ?? "",
                 Benefits = JobInput.Benefits ?? "",
@@ -63,7 +64,8 @@ namespace WebPortal.Pages
                 SalaryMax = JobInput.SalaryMax,
                 JobType = JobInput.JobType,
                 Location = string.IsNullOrEmpty(JobInput.Location) ? "Remote" : JobInput.Location,
-                CategoryId = JobInput.CategoryId
+                CategoryId = JobInput.CategoryId,
+                ExpireDate = JobInput.ExpireDate
             });
 
             if (result != null)

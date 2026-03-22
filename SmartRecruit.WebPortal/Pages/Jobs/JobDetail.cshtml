@@ -175,6 +175,13 @@ else
                                     </select>
                                 </div>
                                 <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Ngày Hết Hạn Ứng Tuyển</label>
+                                    <input type="date" name="EditJob.ExpireDate" value="@(Model.Job.ExpireDate?.ToString("yyyy-MM-dd"))" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 gap-6 mt-4">
+                                <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Kỹ Năng Yêu Cầu (cách nhau bởi dấu phẩy)</label>
                                     <input type="text" name="EditJob.SkillsRequired" value="@Model.Job.SkillsRequired" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
                                 </div>
