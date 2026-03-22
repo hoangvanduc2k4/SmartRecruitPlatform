@@ -156,6 +156,15 @@
                                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                                 <i class="fas fa-eye text-slate-300"></i> @job.ViewCount Lượt Xem
                                             </span>
+                                            @if (job.ExpireDate.HasValue)
+                                            {
+                                                var daysLeft = (job.ExpireDate.Value.Date - DateTime.UtcNow.Date).Days;
+                                                string expireText = daysLeft > 0 ? $"Còn {daysLeft} ngày" : (daysLeft == 0 ? "Hết hạn hôm nay" : "Đã hết hạn");
+                                                string expireColor = daysLeft > 3 ? "text-emerald-500" : (daysLeft >= 0 ? "text-amber-500" : "text-red-500");
+                                                <span class="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 @expireColor">
+                                                    <i class="fas fa-clock"></i> Hạn: @job.ExpireDate.Value.ToString("dd/MM/yyyy") (@expireText)
+                                                </span>
+                                            }
                                         </div>
                                     </div>
 

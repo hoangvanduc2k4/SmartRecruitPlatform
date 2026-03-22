@@ -47,6 +47,8 @@ namespace SmartRecruit.Infrastructure.Repositories
             if (!request.RecruiterId.HasValue)
             {
                 query = query.Where(x => x.Status != JobStatus.DRAFT);
+                // Exclude expired jobs from public search
+                query = query.Where(x => x.ExpireDate == null || x.ExpireDate.Value >= DateTime.UtcNow);
             }
 
             // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
@@ -266,9 +268,11 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 3. Fetch potentially matching jobs 
             // - Exclude already applied jobs
             // - Only APPROVED and NOT deleted/blocked/hidden
+            // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
                 .Where(j => !j.IsDeleted && j.Status == JobStatus.APPROVED && !appliedJobIds.Contains(j.Id))
+                .Where(j => j.ExpireDate == null || j.ExpireDate.Value >= DateTime.UtcNow)
                 .ToListAsync();
 
             // 4. Score jobs based on rules

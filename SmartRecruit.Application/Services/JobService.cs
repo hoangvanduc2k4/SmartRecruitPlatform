@@ -93,6 +93,7 @@ namespace SmartRecruit.Application.Services
                 JobType = request.JobType,
                 Location = request.Location,
                 CategoryId = request.CategoryId,
+                ExpireDate = request.ExpireDate,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
                 Status = JobStatus.DRAFT 
@@ -215,7 +216,8 @@ namespace SmartRecruit.Application.Services
                 SalaryMax = request.SalaryMax,
                 JobType = request.JobType,
                 Location = request.Location,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId,
+                ExpireDate = request.ExpireDate
             };
 
             return await SaveDraftAsync(id, draftReq, currentUserId);
@@ -248,7 +250,8 @@ namespace SmartRecruit.Application.Services
                             SalaryMax = draft.SalaryMax,
                             JobType = draft.JobType.ToString(),
                             Location = draft.Location,
-                            CategoryId = draft.CategoryId
+                            CategoryId = draft.CategoryId,
+                            ExpireDate = draft.ExpireDate
                         };
                     }
                 }
@@ -281,6 +284,7 @@ namespace SmartRecruit.Application.Services
                 job.JobType = request.JobType;
                 job.Location = request.Location;
                 job.CategoryId = request.CategoryId;
+                job.ExpireDate = request.ExpireDate;
                 job.DraftChanges = null; // Clear any existing draft since we're updating main
             }
             else if (job.Status == JobStatus.APPROVED)
@@ -403,6 +407,7 @@ namespace SmartRecruit.Application.Services
                         job.JobType = draft.JobType;
                         job.Location = draft.Location;
                         job.CategoryId = draft.CategoryId;
+                        job.ExpireDate = draft.ExpireDate;
                         job.DraftChanges = null;
                     }
                     job.Status = JobStatus.APPROVED;
