@@ -39,13 +39,12 @@ namespace SmartRecruit.Infrastructure.Services
                 Bạn là AI Moderator. Phân tích tin tuyển dụng:
                 Tiêu đề: {title}
                 Mô tả: {description}
-                YÊU CẦU: Trả về JSON (không markdown). Tất cả các trường văn bản PHẢI bằng TIẾNG VIỆT.
-                Mẫu JSON:
+                YÊU CẦU: Trả về JSON (không markdown) theo mẫu:
                 {{
                     ""IsSafe"": (bool),
-                    ""RiskLevel"": ""(Thấp/Trung bình/Cao)"",
-                    ""ViolationType"": ""(Không/Lừa đảo/Phân biệt đối xử/Spam/Khác)"",
-                    ""Analysis"": ""(Giải thích chi tiết bằng tiếng Việt)""
+                    ""RiskLevel"": ""(Low/Medium/High)"",
+                    ""ViolationType"": ""(None/Scam/Discrimination/Spam)"",
+                    ""Analysis"": ""(string)""
                 }}";
 
             _logger.LogInformation("Calling external system Gemini API to CheckJobContent for title: {Title}", title);
@@ -71,7 +70,6 @@ namespace SmartRecruit.Infrastructure.Services
                 5. Liệt kê kỹ năng thiếu (MissingSkills).
                 6. Lời khuyên (Recommendation).
 
-                YÊU CẦU: Tất cả các trường văn bản TRẢ VỀ PHẢI BẰNG TIẾNG VIỆT. 
                 TRẢ VỀ JSON (không markdown, không code block) theo mẫu:
                 {{
                     ""MatchScore"": (decimal),

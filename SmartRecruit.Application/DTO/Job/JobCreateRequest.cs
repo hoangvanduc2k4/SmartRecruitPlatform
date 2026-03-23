@@ -15,7 +15,6 @@ namespace SmartRecruit.Application.DTO.Job
          decimal SalaryMax,
          JobType JobType,
          string Location,
-         long CategoryId,
-         DateTime? ExpireDate
+         long CategoryId
      );
 }

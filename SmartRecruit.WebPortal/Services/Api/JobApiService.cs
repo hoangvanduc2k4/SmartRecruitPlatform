@@ -154,8 +154,7 @@ namespace WebPortal.Services.Api
                 SalaryMax = job.SalaryMax,
                 JobType = (int)job.JobType,
                 Location = job.Location ?? string.Empty,
-                CategoryId = job.CategoryId,
-                ExpireDate = job.ExpireDate
+                CategoryId = job.CategoryId
             };
 
             var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}/draft", draftRequest);

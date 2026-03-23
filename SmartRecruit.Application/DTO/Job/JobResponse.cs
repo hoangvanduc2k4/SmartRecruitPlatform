@@ -25,7 +25,6 @@ namespace SmartRecruit.Application.DTO.Job
         string? ModerationNote,
         string? AppealMessage,
         bool IsBoosted,
-        string? DraftChanges,
-        DateTime? ExpireDate
+        string? DraftChanges
     );
 }

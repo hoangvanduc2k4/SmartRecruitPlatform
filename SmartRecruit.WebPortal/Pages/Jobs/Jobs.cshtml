@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="sm:w-48 relative">
-                    <select name="LocationFilter" onchange="document.getElementById('searchForm').requestSubmit();" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
+                    <select name="LocationFilter" onchange="document.getElementById('searchForm').submit();" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
                         @foreach (var loc in Model.AvailableLocations)
                         {
                             <option value="@loc" selected="@(Model.LocationFilter == loc)">@loc.ToUpper()</option>
@@ -50,7 +50,7 @@
                 
                 <div class="space-y-4">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Lĩnh Vực Ngành Nghề</h4>
-                    <select name="CategoryFilter" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <select name="CategoryFilter" onchange="document.getElementById('filterForm').submit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
                         <option value="0" selected="@(Model.CategoryFilter == null || Model.CategoryFilter == 0)">TẤT CẢ LĨNH VỰC</option>
                         @foreach (var cat in Model.Categories)
                         {
@@ -69,8 +69,8 @@
                         @foreach (var t in types)
                         {
                             <label class="flex items-center gap-3 p-3 bg-slate-50/50 rounded-xl border border-slate-100 cursor-pointer hover:bg-white hover:border-indigo-400 transition-all group">
-                                <input type="radio" name="TypeFilter" value="@t" onchange="document.getElementById('filterForm').requestSubmit();" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
-                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@(t == "ALL" ? "TẤT CẢ" : (t == "FULL_TIME" ? "TOÀN THỜI GIAN" : (t == "PART_TIME" ? "BÁN THỜI GIAN" : (t == "REMOTE" ? "LÀM VIỆC TỪ XA" : t))))</span>
+                                <input type="radio" name="TypeFilter" value="@t" onchange="document.getElementById('filterForm').submit();" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@(t == "ALL" ? "TẤT CẢ" : t.Replace("_", " "))</span>
                             </label>
                         }
                     </div>
@@ -78,19 +78,19 @@
 
                 <div class="space-y-4 pt-4 border-t border-slate-50">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Mức Lương</h4>
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Thiểu (VNĐ)</label>
-                             <input type="text" name="MinSalary" value="@Model.MinSalary" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="0" />
+                             <input type="number" name="MinSalary" value="@Model.MinSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="0" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Đa (VNĐ)</label>
-                            <input type="text" name="MaxSalary" value="@Model.MaxSalary" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="Không G.hạn" />
+                            <input type="number" name="MaxSalary" value="@Model.MaxSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Không G.hạn" />
                         </div>
                     </div>
                 </div>
 
-                <button type="button" onclick="clearFilters()" class="block w-full text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 mt-4 bg-transparent border-0 outline-none cursor-pointer">Xóa Bộ Lọc</button>
+                <a href="/Jobs" class="block w-full text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 mt-4">Xóa Bộ Lọc</a>
             </form>
         </aside>
 
@@ -136,7 +136,7 @@
                                                 </span>
                                             </div>
                                             <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest @(job.JobType == JobType.REMOTE ? "bg-blue-50 border-blue-100 text-blue-700" : "bg-slate-50 border-slate-200 text-slate-700") border shadow-sm">
-                                                @(job.JobType == JobType.FULL_TIME ? "TOÀN THỜI GIAN" : (job.JobType == JobType.PART_TIME ? "BÁN THỜI GIAN" : "LÀM VIỆC TỪ XA"))
+                                                @job.JobType.ToString().Replace("_", " ")
                                             </span>
                                         </div>
                                         <div class="flex flex-wrap gap-x-6 gap-y-1">
@@ -149,27 +149,12 @@
                                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                                 <i class="fas fa-eye text-slate-300"></i> @job.ViewCount Lượt Xem
                                             </span>
-                                            @if (job.ExpireDate.HasValue)
-                                            {
-                                                var daysLeft = (job.ExpireDate.Value.Date - DateTime.UtcNow.Date).Days;
-                                                string expireText = daysLeft > 0 ? $"Còn {daysLeft} ngày" : (daysLeft == 0 ? "Hết hạn hôm nay" : "Đã hết hạn");
-                                                string expireColor = daysLeft > 3 ? "text-emerald-500" : (daysLeft >= 0 ? "text-amber-500" : "text-red-500");
-                                                <span class="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 @expireColor">
-                                                    <i class="fas fa-clock"></i> Hạn: @job.ExpireDate.Value.ToString("dd/MM/yyyy") (@expireText)
-                                                </span>
-                                            }
                                         </div>
                                     </div>
 
                                     <div class="text-right w-full md:w-auto pt-6 md:pt-0 border-t md:border-0 border-slate-50 flex flex-row md:flex-col justify-between items-center md:items-end gap-2 md:pr-14">
-                                        @{
-                                            string FormatSalary(decimal val) {
-                                                if (val >= 1000000) return (val / 1000000m).ToString("0.#") + "tr";
-                                                if (val >= 1000) return (val / 1000m).ToString("0.#") + "k";
-                                                return val.ToString("N0");
-                                            }
-                                        }
-                                        <p class="text-2xl font-black text-indigo-600 tracking-tighter">@FormatSalary(job.SalaryMin) - @FormatSalary(job.SalaryMax) VNĐ</p>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mức Lương</p>
+                                        <p class="text-2xl font-black text-indigo-600 tracking-tighter">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</p>
                                     </div>
                                 </div>
 

@@ -112,11 +112,40 @@
                                             </svg>
                                             <span class="score-text absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
                                         </div>
-                                        <div class="hidden sm:block">
-                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
-                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                        <div id="score-container-job-@app.JobId" class="hidden items-center gap-4">
+                                            <div class="relative w-12 h-12 flex items-center justify-center">
+                                                <svg class="w-full h-full transform -rotate-90">
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-amber-500" 
+                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                            stroke-dashoffset="@(2 * Math.PI * 20)" />
+                                                </svg>
+                                                <span class="absolute text-[10px] font-black text-slate-700">0%</span>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="score-container-job-@app.JobId" class="flex items-center gap-4">
+                                            <div class="relative w-12 h-12 flex items-center justify-center">
+                                                <svg class="w-full h-full transform -rotate-90">
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="@(app.MatchScore > 80 ? "text-green-500" : app.MatchScore > 50 ? "text-indigo-500" : "text-amber-500")" 
+                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                            stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
+                                                </svg>
+                                                <span class="absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
+                                            </div>
+                                            <div class="hidden sm:block">
+                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                            </div>
+                                        </div>
+                                    }
                                 </td>
                                 <td class="px-8 py-8" id="status-cell-app-@app.Id">
                                     @{

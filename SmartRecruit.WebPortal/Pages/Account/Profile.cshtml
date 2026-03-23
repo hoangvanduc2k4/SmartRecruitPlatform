@@ -80,13 +80,13 @@
                     </div>
                 </div>
                 <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-1">@(Model.CurrentUser?.FullName ?? "-")</h3>
-                <p class="text-indigo-600 font-black uppercase tracking-[0.3em] text-[9px]">@(Model.CurrentUser?.Role == "CANDIDATE" ? "ỨNG VIÊN" : Model.CurrentUser?.Role == "RECRUITER" ? "NHÀ TUYỂN DỤNG" : Model.CurrentUser?.Role == "ADMIN" ? "QUẢN TRỊ VIÊN" : Model.CurrentUser?.Role)</p>
+                <p class="text-indigo-600 font-black uppercase tracking-[0.3em] text-[9px]">@(Model.CurrentUser?.Role ?? "-")</p>
                 <p class="text-slate-400 text-xs mt-1 font-medium">@(Model.CurrentUser?.Email ?? "")</p>
 
                 <div class="mt-8 space-y-4 text-left">
                     <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 flex justify-between items-center group hover:bg-white hover:border-indigo-100 transition-all">
                         <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Thành Viên Từ</span>
-                        <span class="text-[10px] font-black text-slate-900">@(Model.CurrentUser?.CreatedAt.ToString("MM/yyyy") ?? "-")</span>
+                        <span class="text-[10px] font-black text-slate-900">@(Model.CurrentUser?.CreatedAt.ToString("MMM yyyy") ?? "-")</span>
                     </div>
 
                     @if (isCandidate && Model.CurrentUser?.CandidateProfile != null)
@@ -184,7 +184,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300">
                                         <i class="fas fa-shield-halved text-xs"></i>
                                     </div>
-                                     <input type="text" value="@(Model.CurrentUser?.Role == "CANDIDATE" ? "ỨNG VIÊN" : Model.CurrentUser?.Role == "RECRUITER" ? "NHÀ TUYỂN DỤNG" : Model.CurrentUser?.Role == "ADMIN" ? "QUẢN TRỊ VIÊN" : Model.CurrentUser?.Role)" disabled 
+                                    <input type="text" value="@(Model.CurrentUser?.Role)" disabled 
                                            class="w-full h-14 bg-slate-100/50 border border-slate-100 rounded-2xl pl-11 pr-4 text-[10px] font-black uppercase tracking-widest text-slate-500 outline-none" />
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300">
                                         <i class="fas fa-calendar-check text-xs"></i>
                                     </div>
-                                     <input type="text" value="@(Model.CurrentUser?.CreatedAt.ToString("dd/MM/yyyy"))" disabled 
+                                    <input type="text" value="@(Model.CurrentUser?.CreatedAt.ToString("MMMM dd, yyyy"))" disabled 
                                            class="w-full h-14 bg-slate-100/50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-semibold text-slate-400 outline-none" />
                                 </div>
                             </div>

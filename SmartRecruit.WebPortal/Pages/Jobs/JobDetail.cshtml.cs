@@ -49,7 +49,6 @@ namespace WebPortal.Pages
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
         public bool HasCV { get; set; }
         public Application? MyApplication { get; set; }
-        public CompanyProfileInfo? CompanyProfile { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -98,10 +97,6 @@ namespace WebPortal.Pages
                             MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
                         }
                     }
-
-                    // Fetch Company Profile
-                    var profile = await _authApiService.GetProfileAsync(Job.RecruiterId);
-                    CompanyProfile = profile?.CompanyProfile;
 
                     // Only the recruiter who owns this job can edit it
                     if (currentUserId.HasValue)
@@ -157,8 +152,7 @@ namespace WebPortal.Pages
             }
             else if (status == ApplicationStatus.REJECTED)
             {
-                request.RejectionReason = "Không đáp ứng yêu cầu.";
-
+                request.RejectionReason = "Not matching requirements.";
             }
 
             await _applicationApiService.UpdateStatusAsync(applicationId, request);
@@ -173,8 +167,7 @@ namespace WebPortal.Pages
                 {
                     ApplicationIds = selectedApplications,
                     Status = ApplicationStatus.REJECTED,
-                    RejectionReason = "Đã từ chối hàng loạt ứng viên."
-
+                    RejectionReason = "Bulk Rejection"
                 };
                 await _applicationApiService.BulkUpdateStatusAsync(request);
             }
@@ -206,8 +199,7 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = $"Ứng tuyển thất bại: {ex.Message}";
-
+                    TempData["Error"] = $"Application failed: {ex.Message}";
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });

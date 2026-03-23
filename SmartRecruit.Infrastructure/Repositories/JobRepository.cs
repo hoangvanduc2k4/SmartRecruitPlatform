@@ -48,8 +48,6 @@ namespace SmartRecruit.Infrastructure.Repositories
             if (!request.RecruiterId.HasValue)
             {
                 query = query.Where(x => x.Status != JobStatus.DRAFT);
-                // Exclude expired jobs from public search
-                query = query.Where(x => x.ExpireDate == null || x.ExpireDate.Value >= DateTime.UtcNow);
             }
 
             // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
@@ -106,38 +104,50 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 6. Sorting
             var now = DateTime.UtcNow;
 
+            // Priority 1: Boosted jobs (BoostExpiryTime > Now)
+            // Priority 2: Tie-breaking for boosted jobs (ViewCount DESC, SalaryMax DESC, CreatedAt ASC)
+            // Priority 3: Normal jobs (SortBy/SortOrder or Default)
+
             IOrderedQueryable<Job> orderedQuery;
 
-            if (request.RecruiterId.HasValue)
-            {
-                // For recruiter management, we primarily care about the latest activity (Created or Updated)
-                // We ignore boost priority here as it's a management view
-                orderedQuery = query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt);
-            }
-            else
-            {
-                // Public search: Boosted jobs first
-                orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
-                                    .ThenByDescending(x => x.BoostExpiryTime)
-                                    .ThenByDescending(x => x.ViewCount)
-                                    .ThenByDescending(x => x.SalaryMax)
-                                    .ThenByDescending(x => x.CreatedAt);
-            }
+            // We always prioritize Boosted jobs regardless of the requested SortBy
+            // But within those boosted jobs, we follow the requirements:
+            // "Tin nào vừa được thanh toán Boost thành công sẽ ngay lập tức chiếm vị trí Top 1"
+            // This means we should sort boosted jobs by BoostExpiryTime DESC (since boost duration is fixed at 20 mins, newest boost will have latest expiry)
 
-            // Apply requested sorting if specified
+            // 1. Boosted jobs first: we sort by BoostExpiryTime DESC.
+            // If BoostExpiryTime is null or in the past, they will naturally be sorted after currently boosted jobs if we use a default value for nulls,
+            // or we can sort by HasBoost first, then ExpiryTime.
+
+            // To ensure "Boosted jobs appear on top, ordered by most recently boosted (which means latest expiry time)",
+            // we first order by whether they are currently boosted:
+            orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
+                                .ThenByDescending(x => x.BoostExpiryTime) // Within boosted, newest boost (latest expiry) first. For non-boosted, this puts previously boosted jobs higher.
+                                .ThenByDescending(x => x.ViewCount)
+                                .ThenByDescending(x => x.SalaryMax)
+                                .ThenBy(x => x.CreatedAt); // Oldest created first as tie-breaker
+
+            // After boosted jobs, apply the requested or default sorting for non-boosted jobs
+            bool isDesc = !string.Equals(request.SortOrder, "asc", StringComparison.OrdinalIgnoreCase);
+
             if (!string.IsNullOrEmpty(request.SortBy))
             {
-                bool isDesc = !string.Equals(request.SortOrder, "asc", StringComparison.OrdinalIgnoreCase);
                 switch (request.SortBy.ToLower())
                 {
                     case "salary":
                         orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.SalaryMin) : orderedQuery.ThenBy(x => x.SalaryMin);
                         break;
                     case "date":
-                        // Use UpdatedAt ?? CreatedAt for "date" sorting
-                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.UpdatedAt ?? x.CreatedAt) : orderedQuery.ThenBy(x => x.UpdatedAt ?? x.CreatedAt);
+                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.CreatedAt) : orderedQuery.ThenBy(x => x.CreatedAt);
+                        break;
+                    default:
+                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.CreatedAt) : orderedQuery.ThenBy(x => x.CreatedAt);
                         break;
                 }
+            }
+            else
+            {
+                orderedQuery = orderedQuery.ThenByDescending(x => x.CreatedAt);
             }
 
             return await PagedList<Job>.CreateAsync(orderedQuery, request.Page, request.PageSize);
@@ -257,11 +267,9 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 3. Fetch potentially matching jobs 
             // - Exclude already applied jobs
             // - Only APPROVED and NOT deleted/blocked/hidden
-            // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
                 .Where(j => !j.IsDeleted && j.Status == JobStatus.APPROVED && !appliedJobIds.Contains(j.Id))
-                .Where(j => j.ExpireDate == null || j.ExpireDate.Value >= DateTime.UtcNow)
                 .ToListAsync();
 
             // 4. Score jobs based on rules

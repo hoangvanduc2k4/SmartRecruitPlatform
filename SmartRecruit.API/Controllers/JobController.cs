@@ -57,7 +57,7 @@ namespace SmartRecruit.Controllers
             }
 
             var job = await _jobService.CreateJobAsync(jobRequest);
-            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Công việc đã được tạo dưới dạng nháp. Vui lòng kiểm tra và Đăng bài để mở ứng tuyển."));
+            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job.Wrap("Job created as draft. Please review and Publish to make it live."));
         }
 
         [HttpGet("my-jobs")]
@@ -76,7 +76,7 @@ namespace SmartRecruit.Controllers
             {
                 // Note: In new flow, this will update draft if live, or main if not live
                 var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
-                return Ok(job.Wrap("Đã lưu thay đổi. Nếu công việc đang hiển thị, các thay đổi sẽ được cập nhật sau khi đăng lại."));
+                return Ok(job.Wrap("Changes saved. If job is live, changes are pending publish."));
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -108,7 +108,7 @@ namespace SmartRecruit.Controllers
             try
             {
                 var job = await _jobService.SaveDraftAsync(id, request, CurrentUserId);
-                return Ok(job.Wrap("Đã lưu bản nháp thành công"));
+                return Ok(job.Wrap("Draft saved successfully"));
             }
             catch (UnauthorizedAccessException) { return Forbid(); }
             catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
@@ -124,15 +124,15 @@ namespace SmartRecruit.Controllers
                 string message;
                 if (job.Status == SmartRecruit.Domain.Enums.JobStatus.CHECKING)
                 {
-                    message = "Công việc đang được kiểm duyệt bởi AI. Bạn sẽ nhận được thông báo khi bài đăng được duyệt.";
+                    message = "Job is being processed by AI screening. You will be notified once it's live.";
                 }
                 else if (job.Status == SmartRecruit.Domain.Enums.JobStatus.APPROVED)
                 {
-                    message = "Đăng bài tuyển dụng thành công!";
+                    message = "Job published successfully and is now live!";
                 }
                 else
                 {
-                    message = "Công việc đã bị chặn hoặc cần xem xét thêm.";
+                    message = "Job was blocked or requires further review.";
                 }
                 return Ok(job.Wrap(message));
             }
@@ -147,7 +147,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> DeleteJob(long id)
         {
             await _jobService.DeleteJobAsync(id);
-            return Ok(new { }.Wrap("Xóa công việc thành công"));
+            return Ok(new { }.Wrap("Job deleted successfully"));
         }
 
         [HttpPatch("{id}/visibility")]
@@ -155,8 +155,8 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> ToggleVisibility(long id)
         {
             var isVisible = await _jobService.ToggleVisibilityAsync(id);
-            string status = isVisible ? "Hiển thị" : "Ẩn";
-            return Ok(new { IsVisible = isVisible }.Wrap($"Công việc hiện đang {status}"));
+            string status = isVisible ? "Visible" : "Hidden";
+            return Ok(new { IsVisible = isVisible }.Wrap($"Job is now {status}"));
         }
 
         [HttpPost("{id}/boost")]
@@ -168,9 +168,9 @@ namespace SmartRecruit.Controllers
                 var success = await _jobService.BoostJobAsync(id, CurrentUserId);
                 if (success)
                 {
-                    return Ok(new { }.Wrap("Đẩy tin thành công! Tin tuyển dụng của bạn sẽ xuất hiện ở đầu danh sách."));
+                    return Ok(new { }.Wrap("Job boosted successfully! It will now appear at the top of the listings."));
                 }
-                return BadRequest(new { }.Wrap("Đẩy tin thất bại."));
+                return BadRequest(new { }.Wrap("Failed to boost job."));
             }
 
             catch (InvalidOperationException ex)
@@ -212,7 +212,7 @@ namespace SmartRecruit.Controllers
             try
             {
                 var isSaved = await _savedJobService.ToggleSaveJobAsync(id, CurrentUserId);
-                var message = isSaved ? "Đã lưu công việc thành công" : "Đã bỏ lưu công việc thành công";
+                var message = isSaved ? "Job saved successfully" : "Job unsaved successfully";
                 return Ok(new { IsSaved = isSaved }.Wrap(message));
             }
             catch (KeyNotFoundException ex)
@@ -245,7 +245,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> AppealJob(long id, [FromBody] string message)
         {
             var success = await _jobService.AppealJobAsync(id, message);
-            return Ok(new { Success = success }.Wrap("Gửi khiếu nại thành công"));
+            return Ok(new { Success = success }.Wrap("Appeal submitted successfully"));
         }
 
         [HttpGet("stats/recruiter")]
@@ -261,7 +261,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> GetRecommendations()
         {
             var recommendations = await _jobService.GetRecommendedJobsAsync(CurrentUserId);
-            return Ok(recommendations.Wrap("Gợi ý công việc phù hợp dựa trên hồ sơ và lịch sử của bạn."));
+            return Ok(recommendations.Wrap("Your personalized job recommendations based on your profile and history."));
         }
     }
 }

@@ -49,11 +49,6 @@ namespace SmartRecruitWeb.Extensions
                 client.BaseAddress = new Uri(apiBaseUrl);
             }).AddHttpMessageHandler<JwtAuthHandler>();
 
-            services.AddHttpClient<ICategoryApiService, CategoryApiService>(client =>
-            {
-                client.BaseAddress = new Uri(apiBaseUrl);
-            }).AddHttpMessageHandler<JwtAuthHandler>();
-
             // Register Mock Data Service as a Singleton so all pages share the same mock data instance
             services.AddSingleton<IMockDataService, MockDataService>();
 

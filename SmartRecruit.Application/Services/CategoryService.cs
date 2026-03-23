@@ -3,21 +3,17 @@ using AutoMapper;
 using SmartRecruit.Application.DTO.Category;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
-using SmartRecruit.Application.Wrappers;
-using SmartRecruit.Domain.Entities;
 
 namespace SmartRecruit.Application.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
