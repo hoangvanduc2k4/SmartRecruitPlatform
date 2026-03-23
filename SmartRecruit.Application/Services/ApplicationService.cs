@@ -82,7 +82,7 @@ namespace SmartRecruit.Application.Services
             // ĐỔI THÀNH: Gọi hàm có Details để lấy đủ dữ liệu từ các bảng liên quan
             var application = await _applicationRepository.GetApplicationWithDetailsAsync(id);
 
-            if (application == null) throw new KeyNotFoundException("Application not found");
+            if (application == null) throw new KeyNotFoundException("Không tìm thấy đơn ứng tuyển");
 
             return _mapper.Map<ApplicationResponse>(application);
         }
@@ -96,7 +96,7 @@ namespace SmartRecruit.Application.Services
             if (alreadyApplied)
             {
                 _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has already applied for Job {JobId}", request.CandidateId, request.JobId);
-                throw new InvalidOperationException("You have already applied for this job.");
+                throw new InvalidOperationException("Bạn đã ứng tuyển công việc này rồi.");
             }
 
             // 2. Kiểm tra xem candidate đã có CVText chưa
@@ -104,7 +104,7 @@ namespace SmartRecruit.Application.Services
             if (candidateProfile == null || string.IsNullOrWhiteSpace(candidateProfile.CVText))
             {
                 _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has not uploaded a CV", request.CandidateId);
-                throw new InvalidOperationException("Please upload your CV in your profile before applying.");
+                throw new InvalidOperationException("Vui lòng tải lên CV trong hồ sơ của bạn trước khi ứng tuyển.");
             }
 
             // 3. Tạo bản ghi đơn giản
@@ -132,16 +132,16 @@ namespace SmartRecruit.Application.Services
                     string candidateName = appWithDetails.Candidate?.FullName ?? "A candidate";
                     await _notificationService.SendNotificationAsync(
                         appWithDetails.Job.RecruiterId,
-                        "New Application",
-                        $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
+                        "Đơn ứng tuyển mới",
+                        $"{candidateName} đã ứng tuyển vào công việc: {appWithDetails.Job.Title}",
                         NotificationType.APPLICATION,
                         $"/JobDetail?Id={appWithDetails.Job.Id}");
-
+ 
                     // 4b. Real-time Notification for Candidate (Confirmation)
                     await _notificationService.SendNotificationAsync(
                         request.CandidateId,
-                        "Application Submitted",
-                        $"You have successfully applied for: {appWithDetails.Job.Title}. Good luck!",
+                        "Đã nộp đơn ứng tuyển",
+                        $"Bạn đã ứng tuyển thành công vào: {appWithDetails.Job.Title}. Chúc bạn may mắn!",
                         NotificationType.APPLICATION,
                         $"/JobDetail?Id={appWithDetails.Job.Id}");
                 }
@@ -181,7 +181,7 @@ namespace SmartRecruit.Application.Services
                 }
 
                 _logger.LogError(ex, "ScoreApplication use-case failed for ApplicationId {ApplicationId}", applicationId);
-                application.AI_Summary = $"AI Scoring Failed: {ex.Message}";
+                application.AI_Summary = $"Chấm điểm AI thất bại: {ex.Message}";
             }
 
             _applicationRepository.Update(application);
@@ -208,7 +208,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)
         {
             var application = await _applicationRepository.GetByIdAsync(id);
-            if (application == null) throw new KeyNotFoundException("Application not found.");
+            if (application == null) throw new KeyNotFoundException("Không tìm thấy đơn ứng tuyển.");
 
             var currentStatus = application.Status;
             var newStatus = request.Status;
@@ -219,13 +219,13 @@ namespace SmartRecruit.Application.Services
                 // Chỉ được tiến tới bước kế tiếp (Reviewing(0) -> Interviewing(1) -> Offered(2))
                 if ((int)newStatus != (int)currentStatus + 1)
                 {
-                    throw new InvalidOperationException($"Invalid status transition from {currentStatus} to {newStatus}. You can only move to the next logical step.");
+                    throw new InvalidOperationException($"Chuyển đổi trạng thái không hợp lệ từ {currentStatus} sang {newStatus}. Bạn chỉ có thể chuyển sang bước logic tiếp theo.");
                 }
             }
             // Rejected có thể chuyển từ bất kỳ đâu, trừ khi đã là Rejected
             else if (currentStatus == ApplicationStatus.REJECTED)
             {
-                throw new InvalidOperationException("Application is already rejected.");
+                throw new InvalidOperationException("Đơn ứng tuyển này đã bị từ chối.");
             }
 
             // 2. Ràng buộc dữ liệu & Tận dụng cột Notes
@@ -233,30 +233,32 @@ namespace SmartRecruit.Application.Services
             {
                 if (!request.InterviewDate.HasValue)
                 {
-                    throw new InvalidOperationException("Interview date is required when moving to Interviewing status.");
+                    throw new InvalidOperationException("Ngày phỏng vấn là bắt buộc khi chuyển sang trạng thái Phỏng vấn.");
                 }
                 if (!string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("Rejection reason should not be provided when moving to Interviewing status.");
+                    throw new InvalidOperationException("Lý do từ chối không được cung cấp khi chuyển sang trạng thái Phỏng vấn.");
                 }
+                application.Notes = $"Ngày phỏng vấn: {request.InterviewDate.Value:yyyy-MM-dd HH:mm}";
             }
             else if (newStatus == ApplicationStatus.REJECTED)
             {
                 if (string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("Rejection reason is required when rejecting an application.");
+                    throw new InvalidOperationException("Lý do từ chối là bắt buộc khi từ chối đơn ứng tuyển.");
                 }
                 if (request.InterviewDate.HasValue)
                 {
-                    throw new InvalidOperationException("Interview date should not be provided when rejecting an application.");
+                    throw new InvalidOperationException("Ngày phỏng vấn không được cung cấp khi từ chối đơn ứng tuyển.");
                 }
+                application.Notes = $"Lý do từ chối: {request.RejectionReason}";
             }
             else
             {
                 // Đối với các trạng thái khác (Reviewing, Offered), nếu người dùng cố tình truyền data thì báo lỗi để họ xóa đi cho sạch
                 if (request.InterviewDate.HasValue || !string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("InterviewDate or RejectionReason are not required for this status. Please clear them.");
+                    throw new InvalidOperationException("Ngày phỏng vấn hoặc Lý do từ chối không bắt buộc cho trạng thái này. Vui lòng xóa chúng.");
                 }
             }
 
@@ -301,18 +303,25 @@ namespace SmartRecruit.Application.Services
                     var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(id);
                     if (appWithDetails != null)
                     {
-                        string jobTitle = appWithDetails.Job?.Title ?? "vị trí ứng tuyển";
-                        string statusText = newStatus.ToString().Replace("_", " ").ToLower();
-                        string message = $"Hồ sơ của bạn cho vị trí '{jobTitle}' đã được cập nhật trạng thái: {statusText}.";
+                        string jobTitle = appWithDetails.Job?.Title ?? "công việc của bạn";
+                        string statusText = newStatus switch
+                        {
+                            ApplicationStatus.REVIEWING => "đang xem xét",
+                            ApplicationStatus.INTERVIEWING => "phỏng vấn",
+                            ApplicationStatus.OFFERED => "đã mời làm việc",
+                            ApplicationStatus.REJECTED => "đã từ chối",
+                            _ => newStatus.ToString().ToLower()
+                        };
+                        string message = $"Đơn ứng tuyển của bạn cho '{jobTitle}' đã được cập nhật thành: {statusText}.";
                         
                         if (newStatus == ApplicationStatus.INTERVIEWING)
-                            message = $"Chúc mừng! Bạn đã nhận được lời mời phỏng vấn cho vị trí '{jobTitle}'. Vui lòng kiểm tra email để biết chi tiết.";
+                            message = $"Chúc mừng! Bạn đã được mời phỏng vấn cho công việc '{jobTitle}'. Vui lòng kiểm tra email để biết thêm chi tiết.";
                         else if (newStatus == ApplicationStatus.OFFERED)
-                            message = $"Tin tốt lành! Bạn đã nhận được đề nghị nhận việc (Job Offer) cho vị trí '{jobTitle}'. Chúc mừng bạn!";
+                            message = $"Tin vui! Bạn đã nhận được lời mời làm việc cho '{jobTitle}'. Chúc mừng bạn!";
 
                         await _notificationService.SendNotificationAsync(
                             appWithDetails.CandidateId,
-                            "Cập nhật hồ sơ",
+                            "Cập nhật đơn ứng tuyển",
                             message,
                             NotificationType.APPLICATION,
                             "/JobApplications"); // Candidate views their apps here

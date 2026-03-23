@@ -144,7 +144,13 @@
                                     }
                                     <span id="status-badge-app-@app.Id" data-status="@app.Status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black">
                                         <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                                        <span class="status-text">@app.Status</span>
+                                        @(app.Status switch {
+                                            ApplicationStatus.REVIEWING => "Đang xem xét",
+                                            ApplicationStatus.INTERVIEWING => "Đang phỏng vấn",
+                                            ApplicationStatus.OFFERED => "Đề nghị trúng tuyển",
+                                            ApplicationStatus.REJECTED => "Đã từ chối",
+                                            _ => app.Status.ToString()
+                                        })
                                     </span>
                                 </td>
                                 <td class="px-8 py-8">

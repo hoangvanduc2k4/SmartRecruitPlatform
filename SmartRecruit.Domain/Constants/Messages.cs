@@ -1,4 +1,4 @@
-﻿namespace SmartRecruit.Domain.Constants
+namespace SmartRecruit.Domain.Constants
 {
     public static class Messages
     {
@@ -7,16 +7,16 @@
         // ================================
         public static class GeneralMsg
         {
-            public const string INTERNAL_SERVER_ERROR = "An unexpected error occurred. Please try again later.";
-            public const string BAD_REQUEST = "The request is invalid.";
-            public const string NOT_FOUND = "The requested resource was not found.";
-            public const string UNAUTHORIZED = "Authentication is required to access this resource.";
-            public const string FORBIDDEN = "You do not have permission to perform this action.";
-            public const string CONCURRENCY_ERROR = "The data has been modified by another user. Please refresh.";
-            public const string VALIDATION_ERROR = "Validation failed";
-            public const string SERVER_ERROR = "Internal server error";
-            public const string RETRIEVE_SUCCESS = "Retrieved successfully";
-            public const string SEARCH_SUCCESS = "Search completed successfully";
+            public const string INTERNAL_SERVER_ERROR = "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau.";
+            public const string BAD_REQUEST = "Yêu cầu không hợp lệ.";
+            public const string NOT_FOUND = "Không tìm thấy yêu cầu.";
+            public const string UNAUTHORIZED = "Cần đăng nhập để truy cập.";
+            public const string FORBIDDEN = "Bạn không có quyền thực hiện hành động này.";
+            public const string CONCURRENCY_ERROR = "Dữ liệu đã được thay đổi bởi người khác. Vui lòng tải lại trang.";
+            public const string VALIDATION_ERROR = "Lỗi dữ liệu";
+            public const string SERVER_ERROR = "Lỗi máy chủ";
+            public const string RETRIEVE_SUCCESS = "Tải dữ liệu thành công";
+            public const string SEARCH_SUCCESS = "Tìm kiếm thành công";
         }
 
         // ================================
@@ -24,12 +24,12 @@
         // ================================
         public static class AuthMsg
         {
-            public const string INVALID_CREDENTIALS = "Invalid email or password.";
-            public const string ACCOUNT_LOCKED = "Your account has been locked. Please contact support.";
-            public const string EMAIL_EXISTS = "This email address is already registered.";
-            public const string INVALID_TOKEN = "Invalid or expired access token.";
-            public const string PASSWORD_MISMATCH = "Password and confirmation password do not match.";
-            public const string REFRESH_TOKEN_EXPIRED = "Session has expired. Please login again.";
+            public const string INVALID_CREDENTIALS = "Email hoặc mật khẩu không đúng.";
+            public const string ACCOUNT_LOCKED = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ hỗ trợ.";
+            public const string EMAIL_EXISTS = "Địa chỉ email này đã được đăng ký.";
+            public const string INVALID_TOKEN = "Mã truy cập không hợp lệ hoặc đã hết hạn.";
+            public const string PASSWORD_MISMATCH = "Mật khẩu và xác nhận mật khẩu không khớp.";
+            public const string REFRESH_TOKEN_EXPIRED = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.";
         }
 
         // ================================
@@ -37,11 +37,11 @@
         // ================================
         public static class WalletMsg
         {
-            public const string INSUFFICIENT_BALANCE = "Your wallet balance is insufficient for this transaction.";
-            public const string INVALID_AMOUNT = "Transaction amount must be greater than zero.";
-            public const string BELOW_MINIMUM = "The amount is below the required minimum limit.";
-            public const string DAILY_LIMIT_EXCEEDED = "You have reached your daily transaction limit.";
-            public const string TRANSACTION_NOT_FOUND = "Transaction record not found.";
+            public const string INSUFFICIENT_BALANCE = "Số dư ví của bạn không đủ để thực hiện giao dịch này.";
+            public const string INVALID_AMOUNT = "Số tiền giao dịch phải lớn hơn không.";
+            public const string BELOW_MINIMUM = "Số tiền thấp hơn hạn mức tối thiểu yêu cầu.";
+            public const string DAILY_LIMIT_EXCEEDED = "Bạn đã đạt giới hạn giao dịch hàng ngày.";
+            public const string TRANSACTION_NOT_FOUND = "Không tìm thấy lịch sử giao dịch.";
         }
 
         // ================================
@@ -49,18 +49,18 @@
         // ================================
         public static class JobMsg
         {
-            public const string JOB_NOT_FOUND = "The job posting was not found or has been closed.";
-            public const string ALREADY_APPLIED = "You have already applied for this position.";
-            public const string JOB_EXPIRED = "This job posting has reached its application deadline.";
-            public const string PROFILE_INCOMPLETE = "Please complete your profile and upload a CV before applying.";
-            public const string RECRUITMENT_CLOSED = "The recruiter has stopped receiving applications for this job.";
-            public const string JOB_CREATED = "Job posted successfully";
-            public const string JOB_UPDATED = "Job updated successfully";
-            public const string JOB_DELETED = "Job deleted successfully";
-            public const string JOB_RESTORED = "Job restored successfully";
-            public const string JOB_BLOCKED = "Job is blocked and cannot be modified";
-            public const string JOB_NOT_OWNED = "You do not own this job";
-            public const string SALARY_RANGE_INVALID = "Maximum salary must be greater than minimum salary";
+            public const string JOB_NOT_FOUND = "Không tìm thấy bài đăng tuyển dụng hoặc đã đóng.";
+            public const string ALREADY_APPLIED = "Bạn đã ứng tuyển vào vị trí này rồi.";
+            public const string JOB_EXPIRED = "Bài đăng này đã hết hạn ứng tuyển.";
+            public const string PROFILE_INCOMPLETE = "Vui lòng hoàn thiện hồ sơ và tải lên CV trước khi ứng tuyển.";
+            public const string RECRUITMENT_CLOSED = "Nhà tuyển dụng đã ngừng nhận hồ sơ cho công việc này.";
+            public const string JOB_CREATED = "Đăng bài tuyển dụng thành công";
+            public const string JOB_UPDATED = "Cập nhật bài tuyển dụng thành công";
+            public const string JOB_DELETED = "Xóa bài tuyển dụng thành công";
+            public const string JOB_RESTORED = "Khôi phục bài tuyển dụng thành công";
+            public const string JOB_BLOCKED = "Bài đăng bị chặn và không thể sửa đổi";
+            public const string JOB_NOT_OWNED = "Bạn không sở hữu bài đăng này";
+            public const string SALARY_RANGE_INVALID = "Lương tối đa phải lớn hơn lương tối thiểu";
         }
 
         // ================================
@@ -68,16 +68,16 @@
         // ================================
         public static class SuccessMsg
         {
-            public const string CREATED = "Resource created successfully.";
-            public const string UPDATED = "Resource updated successfully.";
-            public const string DELETED = "Resource deleted successfully.";
-            public const string APPLIED = "Application submitted successfully! Good luck.";
-            public const string DEPOSIT_SUCCESS = "Money has been successfully added to your wallet.";
-            public const string WITHDRAWAL_REQUESTED = "Withdrawal request submitted for approval.";
-            public const string JOB_PUBLISHED = "Your job posting is now live.";
-            public const string CREATE_SUCCESS = "Created successfully";
-            public const string UPDATE_SUCCESS = "Updated successfully";
-            public const string DELETE_SUCCESS = "Deleted successfully";
+            public const string CREATED = "Tạo thành công.";
+            public const string UPDATED = "Cập nhật thành công.";
+            public const string DELETED = "Xóa thành công.";
+            public const string APPLIED = "Ứng tuyển thành công! Chúc bạn may mắn.";
+            public const string DEPOSIT_SUCCESS = "Nạp tiền vào ví thành công.";
+            public const string WITHDRAWAL_REQUESTED = "Yêu cầu rút tiền đã được gửi để duyệt.";
+            public const string JOB_PUBLISHED = "Bài tuyển dụng của bạn đã được hiển thị.";
+            public const string CREATE_SUCCESS = "Thành công";
+            public const string UPDATE_SUCCESS = "Cập nhật thành công";
+            public const string DELETE_SUCCESS = "Xóa thành công";
         }
     }
 }
