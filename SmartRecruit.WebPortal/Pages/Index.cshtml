@@ -95,7 +95,7 @@
                                 <span class="bg-green-100 text-green-700 text-[10px] font-black px-2 py-1 rounded uppercase tracking-wider">Ưu Tiên Gấp</span>
                             </div>
                             <h4 class="font-black text-slate-800 text-xl mb-1">Kiến trúc sư phần mềm Senior</h4>
-                            <p class="text-sm text-slate-500 font-medium flex gap-3"><span><i class="fas fa-map-marker-alt text-indigo-400 mr-1"></i> Hồ Chí Minh</span> <span><i class="fas fa-dollar-sign text-emerald-500 mr-1"></i> 140k - 180k</span></p>
+                            <p class="text-sm text-slate-500 font-medium flex gap-3"><span><i class="fas fa-map-marker-alt text-indigo-400 mr-1"></i> Hồ Chí Minh</span> <span><i class="fas fa-money-bill-wave text-emerald-500 mr-1"></i> 140k - 180k VNĐ</span></p>
                          </div>
                          <div class="grid grid-cols-3 gap-2 mt-4 opacity-70">
                              <div class="h-8 bg-slate-100 rounded-lg flex items-center justify-center text-xs font-bold text-slate-600">C#</div>
@@ -159,7 +159,18 @@
                                 }
 
                                 <h3 class="text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors mb-1 truncate">@job.Title</h3>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 truncate">@job.Company</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest truncate">@job.Company</p>
+                                    @if (job.ExpireDate.HasValue)
+                                    {
+                                        var daysLeft = (job.ExpireDate.Value.Date - DateTime.UtcNow.Date).Days;
+                                        string expireText = daysLeft > 0 ? $"Còn {daysLeft} ngày" : (daysLeft == 0 ? "Hôm nay" : "Hết hạn");
+                                        string expireColor = daysLeft > 3 ? "text-emerald-600 bg-emerald-50 border border-emerald-100" : (daysLeft >= 0 ? "text-amber-600 bg-amber-50 border border-amber-100" : "text-red-600 bg-red-50 border border-red-100");
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider @expireColor">
+                                            <i class="fas fa-clock mr-1"></i> @expireText
+                                        </span>
+                                    }
+                                </div>
                                 
                                 <div class="flex flex-wrap gap-2 mb-6">
                                     @if (!string.IsNullOrEmpty(job.SkillsRequired))

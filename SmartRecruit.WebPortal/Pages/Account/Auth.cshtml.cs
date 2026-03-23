@@ -141,7 +141,7 @@ namespace WebPortal.Pages
                     var success = await _authApiService.VerifyEmailAsync(new VerifyEmailRequest { Email = Input.Email!, Code = Input.OTPCode! });
                     if (success)
                     {
-                        TempData["SuccessMessage"] = "Email verified successfully! You can now login.";
+                        TempData["SuccessMessage"] = "Xác nhận Email thành công! Bây giờ bạn có thể đăng nhập.";
                         ModelState.Remove("Input.Mode");
                         Input.Mode = "LOGIN";
                         Input.OTPCode = string.Empty; // Clear code
@@ -182,7 +182,7 @@ namespace WebPortal.Pages
                     var success = await _authApiService.ResetPasswordAsync(new ResetPasswordRequest { Email = Input.Email!, Code = Input.OTPCode!, NewPassword = Input.Password! });
                     if (success)
                     {
-                        TempData["SuccessMessage"] = "Password reset successfully! You can now login.";
+                        TempData["SuccessMessage"] = "Đặt lại mật khẩu thành công! Bây giờ bạn có thể đăng nhập.";
                         ModelState.Remove("Input.Mode");
                         Input.Mode = "LOGIN";
                         Input.Password = string.Empty; // Clear password

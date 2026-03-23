@@ -1,4 +1,4 @@
-﻿using SmartRecruit.Domain.Enums;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Application.DTO.Job
 {
@@ -13,6 +13,7 @@ namespace SmartRecruit.Application.DTO.Job
          decimal SalaryMax,
          JobType JobType,
          string Location,
-         long CategoryId
+         long CategoryId,
+         DateTime? ExpireDate
     );
 }
