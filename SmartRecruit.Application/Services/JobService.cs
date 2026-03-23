@@ -50,7 +50,7 @@ namespace SmartRecruit.Application.Services
 
         public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
         {
-            var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true)
+            var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true, "date", "desc")
             {
                 RecruiterId = recruiterId
             };
