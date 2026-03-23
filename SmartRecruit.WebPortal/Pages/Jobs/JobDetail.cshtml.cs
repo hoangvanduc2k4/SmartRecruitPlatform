@@ -48,6 +48,7 @@ namespace WebPortal.Pages
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
         public bool HasCV { get; set; }
         public Application? MyApplication { get; set; }
+        public CompanyProfileInfo? CompanyProfile { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -96,6 +97,162 @@ namespace WebPortal.Pages
                             MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
                         }
                     }
+
+                    // Fetch Company Profile
+                    var profile = await _authApiService.GetProfileAsync(Job.RecruiterId);
+                    CompanyProfile = profile?.CompanyProfile;
+
+                    // Only the recruiter who owns this job can edit it
+                    if (currentUserId.HasValue)
+                    {
+                        IsOwner = (CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
+                    }
+
+                    // Fetch applications for this job
+                    var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
+                    Applications = (List<Application>)pagedApps.Data;
+                    TotalApplicationCount = pagedApps.TotalCount;
+                    TotalPages = pagedApps.TotalPages;
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostToggleSaveAsync()
+        {
+            var currentUserId = CurrentUserId;
+
+            if (!currentUserId.HasValue)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            if (long.TryParse(Id, out var longId))
+            {
+                try
+                {
+                    var result = await _jobApiService.ToggleSaveJobAsync(longId, currentUserId.Value);
+                    System.Console.WriteLine($"[JobDetail] ToggleSaveAsync result: {result}");
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine($"[JobDetail] Error in ToggleSaveAsync: {ex.Message}");
+                }
+            }
+            return RedirectToPage(new { Id = Id, Tab = Tab });
+        }
+
+        public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, ApplicationStatus status, string returnTab = "APPLICANTS")
+        {
+            var request = new UpdateApplicationStatusRequest { Status = status };
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
+using WebPortal.Models;
+using WebPortal.Models.Api;
+using WebPortal.Services.Api;
+
+namespace WebPortal.Pages
+{
+    public class JobDetailModel : BasePageModel
+    {
+        private readonly IJobApiService _jobApiService;
+        private readonly IApplicationApiService _applicationApiService;
+        private readonly IAuthApiService _authApiService;
+
+        public JobDetailModel(
+            IJobApiService jobApiService,
+            IApplicationApiService applicationApiService,
+            IAuthApiService authApiService)
+        {
+            _jobApiService = jobApiService;
+            _applicationApiService = applicationApiService;
+            _authApiService = authApiService;
+        }
+
+        public Job? Job { get; set; }
+        public List<Application> Applications { get; set; } = new List<Application>();
+
+        [BindProperty(SupportsGet = true)]
+        public string Id { get; set; } = string.Empty;
+
+        [BindProperty(SupportsGet = true)]
+        public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
+
+        [BindProperty]
+        public Job EditJob { get; set; } = new Job();
+
+        public UserDto? CurrentUserDto { get; set; }
+        public bool IsSaved { get; set; }
+        public bool IsOwner { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int CurrentPage { get; set; } = 1;
+
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; } = 5;
+        public int TotalApplicationCount { get; set; }
+        public IEnumerable<Category> Categories { get; set; } = new List<Category>();
+        public bool HasCV { get; set; }
+        public Application? MyApplication { get; set; }
+        public CompanyProfileInfo? CompanyProfile { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            Categories = await _jobApiService.GetCategoriesAsync();
+            // Populate basic user info from base properties for the view
+            if (IsAuthenticated)
+            {
+                CurrentUserDto = new UserDto
+                {
+                    Id = CurrentUserId?.ToString() ?? "",
+                    Role = CurrentUserRole ?? UserRole.CANDIDATE
+                };
+
+                // Fetch full profile for CV check
+                var profile = await _authApiService.GetProfileAsync();
+                if (profile?.CandidateProfile != null)
+                {
+                    HasCV = !string.IsNullOrWhiteSpace(profile.CandidateProfile.CVText);
+                }
+            }
+
+            if (long.TryParse(Id, out var longId))
+            {
+                // First get the basic job to check ownership
+                Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
+                if (Job != null)
+                {
+                    var currentUserId = CurrentUserId;
+                    
+                    // Ownership check
+                    IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
+
+                    // If owner, reload with draft changes if they exist
+                    if (IsOwner)
+                    {
+                        var editJob = await _jobApiService.GetJobForEditAsync(longId.ToString());
+                        if (editJob != null) Job = editJob;
+                    }
+
+                    if (currentUserId.HasValue)
+                    {
+                        IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
+
+                        if (CurrentUserRole == UserRole.CANDIDATE)
+                        {
+                            MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
+                        }
+                    }
+
+                    // Fetch Company Profile
+                    var profile = await _authApiService.GetProfileAsync(Job.RecruiterId);
+                    CompanyProfile = profile?.CompanyProfile;
 
                     // Only the recruiter who owns this job can edit it
                     if (currentUserId.HasValue)
@@ -151,7 +308,8 @@ namespace WebPortal.Pages
             }
             else if (status == ApplicationStatus.REJECTED)
             {
-                request.RejectionReason = "Not matching requirements.";
+                request.RejectionReason = "Không đáp ứng yêu cầu.";
+
             }
 
             await _applicationApiService.UpdateStatusAsync(applicationId, request);
@@ -166,7 +324,8 @@ namespace WebPortal.Pages
                 {
                     ApplicationIds = selectedApplications,
                     Status = ApplicationStatus.REJECTED,
-                    RejectionReason = "Bulk Rejection"
+                    RejectionReason = "Đã từ chối hàng loạt ứng viên."
+
                 };
                 await _applicationApiService.BulkUpdateStatusAsync(request);
             }
@@ -198,7 +357,8 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = $"Application failed: {ex.Message}";
+                    TempData["Error"] = $"Ứng tuyển thất bại: {ex.Message}";
+
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
@@ -247,7 +407,8 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                     TempData["Error"] = $"Publishing failed: {ex.Message}";
+                     TempData["Error"] = $"Xuất bản thất bại: {ex.Message}";
+
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });

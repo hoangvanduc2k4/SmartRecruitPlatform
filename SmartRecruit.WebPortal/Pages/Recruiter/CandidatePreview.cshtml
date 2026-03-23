@@ -90,7 +90,15 @@
                             <input type="hidden" name="status" value="@step.S.ToString()" />
                             <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all @(Model.Application.Status == step.S ? "bg-indigo-600 border-indigo-600 text-white shadow-lg" : "bg-white border-slate-100 text-slate-600 hover:border-indigo-200")">
                                 <i class="fas @step.Icon w-5"></i>
-                                <span class="font-bold text-sm">@step.S</span>
+                                <span class="font-bold text-sm">
+                                    @(step.S switch {
+                                        ApplicationStatus.REVIEWING => "Đang xem xét",
+                                        ApplicationStatus.INTERVIEWING => "Phỏng vấn",
+                                        ApplicationStatus.OFFERED => "Đã mời làm việc",
+                                        ApplicationStatus.REJECTED => "Đã từ chối",
+                                        _ => step.S.ToString()
+                                    })
+                                </span>
                             </button>
                         </form>
                     }

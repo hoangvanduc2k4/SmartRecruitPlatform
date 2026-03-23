@@ -37,11 +37,11 @@
                         <tr class="hover:bg-slate-50 transition-all group">
                             <td class="px-10 py-8">
                                 <p class="font-black text-slate-900 text-sm">#@log.Id</p>
-                                <p class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mt-1">Job ID: @log.JobId</p>
+                                <p class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mt-1">Mã Bài Đăng: @log.JobId</p>
                             </td>
                             <td class="px-8 py-8">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(log.Decision == "BLOCK" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800") mb-2">
-                                    @log.Decision
+                                    @(log.Decision == "BLOCK" ? "CHẶN" : (log.Decision == "ALLOW" ? "CHO PHÉP" : log.Decision))
                                 </span>
                                 <p class="text-sm font-medium text-slate-700">@log.Reason</p>
                             </td>

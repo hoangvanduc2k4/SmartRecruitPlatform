@@ -35,7 +35,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCategoryDTO request)
         {
             var category = await _categoryService.CreateCategoryAsync(request);
-            return Ok(category.Wrap("Category created successfully."));
+            return Ok(category.Wrap("Tạo danh mục thành công."));
         }
 
         [HttpPut("{id}")]
@@ -44,7 +44,7 @@ namespace SmartRecruit.Controllers
             try
             {
                 var category = await _categoryService.UpdateCategoryAsync(id, request);
-                return Ok(category.Wrap("Category updated successfully."));
+                return Ok(category.Wrap("Cập nhật danh mục thành công."));
             }
             catch (KeyNotFoundException ex)
             {
@@ -57,9 +57,9 @@ namespace SmartRecruit.Controllers
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (!result)
-                return NotFound(new { Success = false, Message = "Category not found or already deleted." });
+                return NotFound(new { Success = false, Message = "Không tìm thấy danh mục hoặc đã bị xóa." });
 
-            return Ok(new { Success = true, Message = "Category deleted successfully." });
+            return Ok(new { Success = true, Message = "Xóa danh mục thành công." });
         }
     }
 }
