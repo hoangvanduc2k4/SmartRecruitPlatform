@@ -42,7 +42,7 @@ namespace SmartRecruit.Application.Services
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
             {
-                throw new KeyNotFoundException("Không tìm thấy người dùng.");
+                throw new KeyNotFoundException("User not found.");
             }
 
             var response = new UserProfileResponse
@@ -94,7 +94,7 @@ namespace SmartRecruit.Application.Services
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
             {
-                throw new KeyNotFoundException("Không tìm thấy người dùng.");
+                throw new KeyNotFoundException("User not found.");
             }
 
             // Update generic User details
@@ -170,24 +170,24 @@ namespace SmartRecruit.Application.Services
 
             if (user.Role != Domain.Enums.UserRole.CANDIDATE)
             {
-                throw new InvalidOperationException("Chỉ ứng viên mới có thể tải lên CV.");
+                throw new InvalidOperationException("Only candidates can upload CVs.");
             }
 
             // Validation: Size
             if (fileStream.Length == 0)
             {
-                throw new ArgumentException("Tệp CV tải lên trống.");
+                throw new ArgumentException("Uploaded CV file is empty.");
             }
             if (fileStream.Length > Policies.MaxCvFileSize)
             {
-                throw new ArgumentException($"Dung lượng CV phải <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
+                throw new ArgumentException($"CV file size must be <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
             var ext = Path.GetExtension(fileName).ToLowerInvariant();
             if (ext != ".pdf")
             {
-                throw new ArgumentException("Chỉ hỗ trợ tệp định dạng PDF cho CV.");
+                throw new ArgumentException("Only PDF format is supported for CV upload.");
             }
 
             var candidateProfile = await _unitOfWork.CandidateProfiles.FindAsync(c => c.UserId == userId);
@@ -253,11 +253,11 @@ namespace SmartRecruit.Application.Services
             // Validation: Size
             if (fileStream == null || fileStream.Length == 0)
             {
-                throw new ArgumentException("Tệp ảnh đại diện tải lên trống.");
+                throw new ArgumentException("Uploaded avatar file is empty.");
             }
             if (fileStream.Length > Policies.MaxAvatarFileSize)
             {
-                throw new ArgumentException($"Dung lượng ảnh đại diện phải <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
+                throw new ArgumentException($"Avatar file size must be <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
@@ -265,7 +265,7 @@ namespace SmartRecruit.Application.Services
             var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             if (!allowed.Contains(ext))
             {
-                throw new ArgumentException("Chỉ hỗ trợ các định dạng ảnh JPG, PNG hoặc WEBP.");
+                throw new ArgumentException("Only JPG, PNG, or WEBP images are supported for avatar upload.");
             }
 
             if (fileStream.CanSeek) fileStream.Position = 0;

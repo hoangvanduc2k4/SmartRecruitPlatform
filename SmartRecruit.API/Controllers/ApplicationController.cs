@@ -61,7 +61,7 @@ namespace SmartRecruit.Controllers
         {
             _logger.LogInformation("API GetByJobAndCandidate called for JobId: {JobId}, CandidateId: {CandidateId}", jobId, candidateId);
             var application = await _applicationService.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
-            if (application == null) return NotFound(new { }.Wrap("Không tìm thấy hồ sơ ứng tuyển"));
+            if (application == null) return NotFound(new { }.Wrap("Application not found"));
             return Ok(application.Wrap());
         }
 
@@ -87,7 +87,7 @@ namespace SmartRecruit.Controllers
             try 
             {
                 var success = await _applicationService.ApplyJobAsync(request);
-                return Ok(success.Wrap("Nộp hồ sơ ứng tuyển thành công"));
+                return Ok(success.Wrap("Application submitted successfully"));
             }
             catch (InvalidOperationException ex)
             {
@@ -112,9 +112,9 @@ namespace SmartRecruit.Controllers
                 var success = await _applicationService.UpdateStatusAsync(id, request);
                 if (success)
                 {
-                    return Ok(new { }.Wrap("Cập nhật trạng thái ứng tuyển thành công"));
+                    return Ok(new { }.Wrap("Application status updated successfully"));
                 }
-                return BadRequest(new { }.Wrap("Cập nhật trạng thái ứng tuyển thất bại"));
+                return BadRequest(new { }.Wrap("Failed to update application status"));
             }
             catch (InvalidOperationException ex)
             {
@@ -132,6 +132,87 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
+        /// Thêm ghi chú mới vào hồ sơ ứng tuyển (nối thêm vào Notes hiện có)
+        /// </summary>
+        [HttpPost("{id}/notes")]
+        public async Task<IActionResult> AddNote(long id, [FromBody] string note)
+        {
+            _logger.LogInformation("API AddNote called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.AddNoteAsync(id, note);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Note added successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to add note"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during AddNote for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
+        /// Xóa tất cả ghi chú của hồ sơ ứng tuyển
+        /// </summary>
+        [HttpDelete("{id}/notes")]
+        public async Task<IActionResult> DeleteNotes(long id)
+        {
+            _logger.LogInformation("API DeleteNotes called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.ClearNotesAsync(id);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Notes cleared successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to clear notes"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during DeleteNotes for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
+        /// Khôi phục trạng thái hồ sơ ứng tuyển (từ Rejected về trạng thái trước đó)
+        /// </summary>
+        [HttpPost("{id}/restore")]
+        public async Task<IActionResult> RestoreApplication(long id)
+        {
+            _logger.LogInformation("API RestoreApplication called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.RestoreStatusAsync(id);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Application restored successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to restore application"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during RestoreApplication for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
         /// Cập nhật trạng thái hàng loạt (Kanban)
         /// </summary>
         [HttpPut("bulk-status")]
@@ -141,7 +222,7 @@ namespace SmartRecruit.Controllers
             try
             {
                 var count = await _applicationService.BulkUpdateStatusAsync(request);
-                return Ok(new { UpdatedCount = count }.Wrap($"Cập nhật trạng thái thành công cho {count} hồ sơ"));
+                return Ok(new { UpdatedCount = count }.Wrap($"Successfully updated status for {count} applications"));
             }
             catch (InvalidOperationException ex)
             {

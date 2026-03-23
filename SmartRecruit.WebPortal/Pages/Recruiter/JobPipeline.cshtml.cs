@@ -48,12 +48,18 @@ namespace WebPortal.Pages.Recruiter
             if (!ModelState.IsValid)
             {
                 var errors = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                ErrorMessage = $"Lỗi liên kết: {errors}";
+                ErrorMessage = $"Binding error: {errors}";
                 return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
             }
 
             if (System.Enum.TryParse<ApplicationStatus>(status, out var nextStatus))
             {
+                if (nextStatus == ApplicationStatus.INTERVIEWING && interviewDate.HasValue && interviewDate.Value < DateTime.Now)
+                {
+                    ErrorMessage = "Ngày phỏng vấn không được trong quá khứ.";
+                    return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
+                }
+
                 var request = new UpdateApplicationStatusRequest 
                 { 
                     Status = nextStatus,
@@ -64,14 +70,30 @@ namespace WebPortal.Pages.Recruiter
                 var result = await _applicationApiService.UpdateStatusAsync(applicationId, request);
                 if (result.Success)
                 {
-                    SuccessMessage = "Cập nhật trạng thái thành công.";
+                    SuccessMessage = "Status updated successfully.";
                 }
                 else
                 {
-                    ErrorMessage = $"Thất bại: {result.Message}";
+                    ErrorMessage = $"Failed: {result.Message}";
                 }
             }
             
+            return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
+        }
+
+        public async Task<IActionResult> OnPostRestoreAsync(long applicationId, long jobId)
+        {
+            if (!IsRecruiter) return RedirectToPage("/Index");
+
+            var success = await _applicationApiService.RestoreStatusAsync(applicationId);
+            if (success)
+            {
+                SuccessMessage = "Hồ sơ đã được khôi phục thành công.";
+            }
+            else
+            {
+                ErrorMessage = "Không thể khôi phục hồ sơ.";
+            }
             return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
         }
     }
