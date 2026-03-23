@@ -21,7 +21,6 @@ namespace SmartRecruit.Domain.Entities
         public long CategoryId { get; set; }
         public virtual Category Category { get; set; } = null!; 
         public DateTime? BoostExpiryTime { get; set; }
-        public DateTime? ExpireDate { get; set; } // Added ExpireDate field
         public string? ModerationNote { get; set; }
         public bool IsAppealed { get; set; } = false;
         public string? AppealMessage { get; set; }

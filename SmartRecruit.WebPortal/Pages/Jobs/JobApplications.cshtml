@@ -108,15 +108,7 @@
                             </div>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @(app.Status == ApplicationStatus.REJECTED ? "bg-red-50 text-red-600" : "bg-indigo-50 text-indigo-600")">
-                                @(app.Status switch {
-                                    ApplicationStatus.REVIEWING => "Đang xem xét",
-                                    ApplicationStatus.INTERVIEWING => "Phỏng vấn",
-                                    ApplicationStatus.OFFERED => "Đã mời làm việc",
-                                    ApplicationStatus.REJECTED => "Đã từ chối",
-                                    _ => app.Status.ToString()
-                                })
-                            </span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @(app.Status == ApplicationStatus.REJECTED ? "bg-red-50 text-red-600" : "bg-indigo-50 text-indigo-600")">@app.Status</span>
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">

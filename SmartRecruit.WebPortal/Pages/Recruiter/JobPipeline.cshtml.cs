@@ -48,7 +48,7 @@ namespace WebPortal.Pages.Recruiter
             if (!ModelState.IsValid)
             {
                 var errors = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                ErrorMessage = $"Lỗi liên kết: {errors}";
+                ErrorMessage = $"Binding error: {errors}";
                 return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
             }
 
@@ -70,11 +70,11 @@ namespace WebPortal.Pages.Recruiter
                 var result = await _applicationApiService.UpdateStatusAsync(applicationId, request);
                 if (result.Success)
                 {
-                    SuccessMessage = "Cập nhật trạng thái thành công.";
+                    SuccessMessage = "Status updated successfully.";
                 }
                 else
                 {
-                    ErrorMessage = $"Thất bại: {result.Message}";
+                    ErrorMessage = $"Failed: {result.Message}";
                 }
             }
             

@@ -66,7 +66,7 @@ namespace WebPortal.Services.Api
                 options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
             }
-            return new PagedResponse<Job> { Success = false, Message = "Lấy danh sách công việc thất bại" };
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
         }
 
         public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
@@ -78,7 +78,7 @@ namespace WebPortal.Services.Api
                 options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
             }
-            return new PagedResponse<Job> { Success = false, Message = "Lấy danh sách công việc của nhà tuyển dụng thất bại" };
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch recruiter jobs" };
         }
 
         public async Task<Job?> GetJobByIdAsync(string id)
@@ -154,8 +154,7 @@ namespace WebPortal.Services.Api
                 SalaryMax = job.SalaryMax,
                 JobType = (int)job.JobType,
                 Location = job.Location ?? string.Empty,
-                CategoryId = job.CategoryId,
-                ExpireDate = job.ExpireDate
+                CategoryId = job.CategoryId
             };
 
             var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}/draft", draftRequest);
@@ -163,7 +162,7 @@ namespace WebPortal.Services.Api
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
             
             return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) 
-                   ?? new ApiResponse<Job> { Success = false, Message = "Lỗi kết nối với máy chủ" };
+                   ?? new ApiResponse<Job> { Success = false, Message = "Failed to communicate with API" };
         }
 
         public async Task<ApiResponse<Job>> PublishJobAsync(string id)
@@ -172,7 +171,7 @@ namespace WebPortal.Services.Api
             var response = await _httpClient.PostAsync($"jobs/{longId}/publish", null);
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) ?? new ApiResponse<Job> { Success = false, Message = "Lỗi không xác định" };
+            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) ?? new ApiResponse<Job> { Success = false, Message = "Unknown error" };
         }
 
         public async Task<bool> DeleteJobAsync(string id)
@@ -326,7 +325,7 @@ namespace WebPortal.Services.Api
             {
                 System.Console.WriteLine($"[JobApiService] Error fetching saved jobs for user {userId}: {ex.Message}");
             }
-            return new PagedResponse<Job> { Success = false, Message = "Lấy danh sách công việc đã lưu thất bại" };
+            return new PagedResponse<Job> { Success = false, Message = "Failed to fetch saved jobs" };
         }
 
         public async Task<bool> AppealJobAsync(long jobId, string message)

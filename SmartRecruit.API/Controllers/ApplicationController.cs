@@ -61,7 +61,7 @@ namespace SmartRecruit.Controllers
         {
             _logger.LogInformation("API GetByJobAndCandidate called for JobId: {JobId}, CandidateId: {CandidateId}", jobId, candidateId);
             var application = await _applicationService.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
-            if (application == null) return NotFound(new { }.Wrap("Không tìm thấy hồ sơ ứng tuyển"));
+            if (application == null) return NotFound(new { }.Wrap("Application not found"));
             return Ok(application.Wrap());
         }
 
@@ -87,7 +87,7 @@ namespace SmartRecruit.Controllers
             try 
             {
                 var success = await _applicationService.ApplyJobAsync(request);
-                return Ok(success.Wrap("Nộp hồ sơ ứng tuyển thành công"));
+                return Ok(success.Wrap("Application submitted successfully"));
             }
             catch (InvalidOperationException ex)
             {
@@ -112,9 +112,9 @@ namespace SmartRecruit.Controllers
                 var success = await _applicationService.UpdateStatusAsync(id, request);
                 if (success)
                 {
-                    return Ok(new { }.Wrap("Cập nhật trạng thái ứng tuyển thành công"));
+                    return Ok(new { }.Wrap("Application status updated successfully"));
                 }
-                return BadRequest(new { }.Wrap("Cập nhật trạng thái ứng tuyển thất bại"));
+                return BadRequest(new { }.Wrap("Failed to update application status"));
             }
             catch (InvalidOperationException ex)
             {
@@ -222,7 +222,7 @@ namespace SmartRecruit.Controllers
             try
             {
                 var count = await _applicationService.BulkUpdateStatusAsync(request);
-                return Ok(new { UpdatedCount = count }.Wrap($"Cập nhật trạng thái thành công cho {count} hồ sơ"));
+                return Ok(new { UpdatedCount = count }.Wrap($"Successfully updated status for {count} applications"));
             }
             catch (InvalidOperationException ex)
             {
