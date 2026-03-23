@@ -282,7 +282,8 @@ namespace SmartRecruit.Application.Services
 
             if (!string.IsNullOrEmpty(newNote) && dataChanged)
             {
-                application.Notes = string.IsNullOrEmpty(application.Notes) ? newNote : $"{application.Notes}, {newNote}";
+                var cleanNote = newNote.Replace(",", ";");
+                application.Notes = string.IsNullOrEmpty(application.Notes) ? cleanNote : $"{application.Notes}, {cleanNote}";
             }
 
             application.Status = newStatus;
@@ -300,28 +301,35 @@ namespace SmartRecruit.Application.Services
                     var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(id);
                     if (appWithDetails != null)
                     {
-                        string jobTitle = appWithDetails.Job?.Title ?? "your application";
+                        string jobTitle = appWithDetails.Job?.Title ?? "vị trí ứng tuyển";
                         string statusText = newStatus.ToString().Replace("_", " ").ToLower();
-                        string message = $"Your application for '{jobTitle}' has been updated to: {statusText}.";
+                        string message = $"Hồ sơ của bạn cho vị trí '{jobTitle}' đã được cập nhật trạng thái: {statusText}.";
                         
                         if (newStatus == ApplicationStatus.INTERVIEWING)
-                            message = $"Congratulations! You've been invited for an interview for '{jobTitle}'. Check your email for details.";
+                            message = $"Chúc mừng! Bạn đã nhận được lời mời phỏng vấn cho vị trí '{jobTitle}'. Vui lòng kiểm tra email để biết chi tiết.";
                         else if (newStatus == ApplicationStatus.OFFERED)
-                            message = $"Great news! You received a job offer for '{jobTitle}'. Congratulations!";
+                            message = $"Tin tốt lành! Bạn đã nhận được đề nghị nhận việc (Job Offer) cho vị trí '{jobTitle}'. Chúc mừng bạn!";
 
                         await _notificationService.SendNotificationAsync(
                             appWithDetails.CandidateId,
-                            "Application Update",
+                            "Cập nhật hồ sơ",
                             message,
                             NotificationType.APPLICATION,
-                            $"/JobApplications"); // Candidate views their apps here
+                            "/JobApplications"); // Candidate views their apps here
                             
                         // Real-time UI Update (SignalR)
-                        await _notificationHubService.SendApplicationStatusUpdateAsync(appWithDetails.CandidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
+                        try 
                         {
-                            ApplicationId = id,
-                            Status = newStatus.ToString()
-                        });
+                            await _notificationHubService.SendApplicationStatusUpdateAsync(appWithDetails.CandidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
+                            {
+                                ApplicationId = id,
+                                Status = newStatus.ToString()
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Failed to send SignalR status update for ApplicationId {ApplicationId}", id);
+                        }
 
                         // Send Email Notification
                         if (appWithDetails.Candidate != null && !string.IsNullOrEmpty(appWithDetails.Candidate.Email))
@@ -338,7 +346,7 @@ namespace SmartRecruit.Application.Services
                                     <p>Chúng tôi rất ấn tượng với hồ sơ của bạn và muốn mời bạn tham gia buổi phỏng vấn cho vị trí <strong>{jobTitle}</strong>.</p>
                                     <p><strong>Thời gian:</strong> {request.InterviewDate?.ToString("f")}</p>
                                     <p>Vui lòng xác nhận sự tham gia của bạn bằng cách phản hồi email này.</p>
-                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                                    <p>Trân trọng,<br/>Bộ phận Nhân sự & Ban điều hành Công ty</p>";
                             }
                             else if (newStatus == ApplicationStatus.OFFERED)
                             {
@@ -349,7 +357,7 @@ namespace SmartRecruit.Application.Services
                                     <p>Chúng tôi rất vui mừng được gửi đến bạn lời mời làm việc (Job Offer) cho vị trí <strong>{jobTitle}</strong>.</p>
                                     <p>Kinh nghiệm và kỹ năng của bạn rất phù hợp với đội ngũ của chúng tôi. Chúng tôi rất mong chờ bạn gia nhập công ty!</p>
                                     <p>Vui lòng kiểm tra hồ sơ ứng tuyển của bạn trên hệ thống SmartRecruit để xem chi tiết lời mời.</p>
-                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                                    <p>Trân trọng,<br/>Bộ phận Nhân sự & Ban điều hành Công ty</p>";
                             }
                             else if (newStatus == ApplicationStatus.REJECTED)
                             {
@@ -361,7 +369,7 @@ namespace SmartRecruit.Application.Services
                                     <p><strong>Lời nhắn từ nhà tuyển dụng:</strong> {request.RejectionReason}</p>
                                     <p>Chúng tôi sẽ lưu hồ sơ của bạn và hy vọng có cơ hội hợp tác trong tương lai.</p>
                                     <p>Chúc bạn nhiều may mắn trên con đường sự nghiệp!</p>
-                                    <p>Trân trọng,<br/>Đội ngũ Tuyển dụng SmartRecruit</p>";
+                                    <p>Trân trọng,<br/>Bộ phận Nhân sự & Ban điều hành Công ty</p>";
                             }
 
                             if (!string.IsNullOrEmpty(emailBody))
@@ -408,6 +416,137 @@ namespace SmartRecruit.Application.Services
             application.Notes = null;
             _applicationRepository.Update(application);
             return await _unitOfWork.CompleteAsync() > 0;
+        }
+
+        public async Task<bool> RestoreStatusAsync(long id)
+        {
+            try
+            {
+                _logger.LogInformation("Restoring application status for Id: {Id}", id);
+                var application = await _applicationRepository.GetByIdAsync(id);
+                if (application == null) throw new KeyNotFoundException("Application not found.");
+                if (application.Status != ApplicationStatus.REJECTED) throw new InvalidOperationException("Only rejected applications can be restored.");
+
+                var notesHistory = application.Notes?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+                
+                // Default to Reviewing
+                var restoredStatus = ApplicationStatus.REVIEWING;
+                string apologyMessage = "Chúng tôi xin lỗi vì sự bất tiện này. Hồ sơ của bạn đã được xem xét kỹ lại và chúng tôi nhận thấy tiềm năng của bạn.";
+                string specificReason = "HR có thể đã lỡ tay loại hoặc sau khi xem kỹ lại thấy tiềm năng.";
+
+                // Find the last status note before current Rejected status
+                for (int i = notesHistory.Length - 1; i >= 0; i--)
+                {
+                    var note = notesHistory[i].Trim();
+                    if (note.StartsWith("Offered:"))
+                    {
+                        restoredStatus = ApplicationStatus.OFFERED;
+                        specificReason = "Ứng viên từ chối lương, nhưng sau đó 2 bên thương lượng lại thành công.";
+                        apologyMessage = "Sau khi thương lượng lại, chúng tôi rất vui mừng được khôi phục đề nghị nhận việc cho bạn.";
+                        break;
+                    }
+                    if (note.StartsWith("Interview:"))
+                    {
+                        restoredStatus = ApplicationStatus.INTERVIEWING;
+                        specificReason = "Có thể ứng viên chưa đạt ở vòng 1 nhưng công ty muốn cho họ cơ hội phỏng vấn ở một Team khác/vòng khác.";
+                        apologyMessage = "Chúng tôi muốn mời bạn tham gia phỏng vấn tại một vòng khác hoặc một nhóm chuyên môn khác phù hợp hơn.";
+                        break;
+                    }
+                }
+
+                application.Status = restoredStatus;
+                string restoreNote = $"Restored to {restoredStatus} (Reason: {specificReason})".Replace(",", ";");
+                application.Notes = string.IsNullOrEmpty(application.Notes) ? restoreNote : $"{application.Notes}, {restoreNote}";
+                
+                _applicationRepository.Update(application);
+                var saveResult = await _unitOfWork.CompleteAsync();
+                var success = saveResult > 0 || restoredStatus == ApplicationStatus.REVIEWING; // Success if saved or at least state updated
+
+                if (success)
+                {
+                    try 
+                    {
+                        var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(id);
+                        if (appWithDetails != null)
+                        {
+                            string jobTitle = appWithDetails.Job?.Title ?? "vị trí ứng tuyển";
+                            long candidateId = appWithDetails.CandidateId;
+                            
+                            // Real-time Update
+                            try 
+                            {
+                                await _notificationHubService.SendApplicationStatusUpdateAsync(candidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
+                                {
+                                    ApplicationId = id,
+                                    Status = restoredStatus.ToString()
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogWarning(ex, "Failed to send SignalR notification for restoration of app {Id}", id);
+                            }
+
+                            // Persistent Notification
+                            try
+                            {
+                                string statusText = restoredStatus.ToString().Replace("_", " ").ToLower();
+                                string message = $"Hồ sơ của bạn cho vị trí '{jobTitle}' đã được khôi phục về trạng thái: {statusText}.";
+                                if (restoredStatus == ApplicationStatus.OFFERED)
+                                    message = $"Tin vui! Đề nghị nhận việc của bạn cho vị trí '{jobTitle}' đã được khôi phục. Vui lòng kiểm tra lại.";
+
+                                await _notificationService.SendNotificationAsync(
+                                    candidateId,
+                                    "Khôi phục hồ sơ",
+                                    message,
+                                    NotificationType.APPLICATION,
+                                    "/JobApplications");
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogError(ex, "Failed to send persistent notification for restoration of app {Id}", id);
+                            }
+
+                            // Send Email
+                            if (appWithDetails.Candidate != null && !string.IsNullOrEmpty(appWithDetails.Candidate.Email))
+                            {
+                                try
+                                {
+                                    string candidateName = appWithDetails.Candidate.FullName ?? "Ứng viên";
+                                    string emailSubject = $"[SmartRecruit] Thông báo khôi phục hồ sơ: {jobTitle}";
+                                    string emailBody = $@"
+                                        <div style='font-family: Arial, sans-serif;'>
+                                            <h2>Lời xin lỗi từ Bộ phận Nhân sự & Công ty</h2>
+                                            <p>Chào {candidateName},</p>
+                                            <p>Chúng tôi gửi email này để thông báo rằng hồ sơ của bạn cho vị trí <strong>{jobTitle}</strong> đã được khôi phục về trạng thái <strong>{restoredStatus}</strong>.</p>
+                                            <p style='background-color: #f8f9fa; padding: 15px; border-left: 5px solid #28a745;'>
+                                                <strong>Lý do khôi phục:</strong> {specificReason}
+                                            </p>
+                                            <p>{apologyMessage}</p>
+                                            <p>Bạn vui lòng truy cập hệ thống để cập nhật tiến độ mới nhất.</p>
+                                            <p>Trân trọng,<br/>Đội ngũ Nhân sự & Ban điều hành Công ty</p>
+                                        </div>";
+                                    
+                                    await _emailService.SendHtmlEmailAsync(appWithDetails.Candidate.Email, emailSubject, emailBody);
+                                }
+                                catch (Exception ex)
+                                {
+                                    _logger.LogError(ex, "Failed to send apology email for restoration of app {Id}", id);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Critical error after successful restoration of app {Id}", id);
+                    }
+                }
+                return true; // Return true as long as we updated the status
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in RestoreStatusAsync for Id: {Id}", id);
+                throw;
+            }
         }
 
         public async Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request)

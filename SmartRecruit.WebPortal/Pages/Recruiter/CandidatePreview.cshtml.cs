@@ -68,5 +68,16 @@ namespace WebPortal.Pages
             await _applicationApiService.ClearNotesAsync(id);
             return RedirectToPage(new { id });
         }
+
+        public async Task<IActionResult> OnPostRestoreAsync(long id)
+        {
+            var success = await _applicationApiService.RestoreStatusAsync(id);
+            if (!success)
+            {
+                // In a real app we might use TempData for error messages
+                // TempData["Error"] = "Unable to restore application status.";
+            }
+            return RedirectToPage(new { id });
+        }
     }
 }

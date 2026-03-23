@@ -54,6 +54,12 @@ namespace WebPortal.Pages.Recruiter
 
             if (System.Enum.TryParse<ApplicationStatus>(status, out var nextStatus))
             {
+                if (nextStatus == ApplicationStatus.INTERVIEWING && interviewDate.HasValue && interviewDate.Value < DateTime.Now)
+                {
+                    ErrorMessage = "Ngày phỏng vấn không được trong quá khứ.";
+                    return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
+                }
+
                 var request = new UpdateApplicationStatusRequest 
                 { 
                     Status = nextStatus,
@@ -72,6 +78,22 @@ namespace WebPortal.Pages.Recruiter
                 }
             }
             
+            return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
+        }
+
+        public async Task<IActionResult> OnPostRestoreAsync(long applicationId, long jobId)
+        {
+            if (!IsRecruiter) return RedirectToPage("/Index");
+
+            var success = await _applicationApiService.RestoreStatusAsync(applicationId);
+            if (success)
+            {
+                SuccessMessage = "Hồ sơ đã được khôi phục thành công.";
+            }
+            else
+            {
+                ErrorMessage = "Không thể khôi phục hồ sơ.";
+            }
             return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
         }
     }

@@ -30,7 +30,8 @@
 
                 <div id="dateField" class="hidden space-y-2 mb-8">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Ngày Phỏng Vấn</label>
-                    <input type="datetime-local" name="interviewDate" class="w-full h-14 px-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-bold text-slate-700" />
+                    <input type="datetime-local" id="interviewDateInput" name="interviewDate" class="w-full h-14 px-6 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-bold text-slate-700" />
+                    <p id="dateError" class="text-red-500 text-[10px] font-bold uppercase tracking-widest px-1 hidden">Vui lòng chọn ngày trong tương lai</p>
                 </div>
 
                 <div id="reasonField" class="hidden space-y-2 mb-8">
@@ -136,10 +137,9 @@
                                     }
                                     else
                                     {
-                                        <form method="post" asp-page-handler="UpdateStatus" class="flex">
+                                        <form method="post" asp-page-handler="Restore" class="flex">
                                             <input type="hidden" name="applicationId" value="@app.Id" />
                                             <input type="hidden" name="jobId" value="@Model.Job?.Id" />
-                                            <input type="hidden" name="status" value="@ApplicationStatus.REVIEWING.ToString()" />
                                             <button type="submit" class="h-10 px-4 text-[9px] rounded-xl bg-green-600 text-white font-bold border-0 hover:bg-green-700 ml-2 uppercase tracking-widest whitespace-nowrap">
                                                 Khôi Phục
                                             </button>
@@ -208,6 +208,15 @@
                 modalIconContainer.className = "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg bg-indigo-500 shadow-indigo-200";
                 modalIcon.className = "fas fa-calendar-alt text-2xl text-white";
                 dateField.classList.remove('hidden');
+
+                // Set min date to current time
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                const minDateTime = now.toISOString().slice(0, 16);
+                const dateInput = document.getElementById('interviewDateInput');
+                dateInput.min = minDateTime;
+                dateInput.value = minDateTime;
+                document.getElementById('dateError').classList.add('hidden');
             } else if (type === 'REJECT') {
                 modalTitle.innerText = "Từ Chối Ứng Viên";
                 modalDescription.innerText = "Vui lòng cung cấp lý do ngắn gọn để từ chối ứng viên.";
@@ -228,6 +237,22 @@
         // Close on backdrop click
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
+        });
+
+        document.getElementById('modalForm').addEventListener('submit', function(e) {
+            const status = modalStatus.value;
+            if (status === 'INTERVIEWING') {
+                const dateInput = document.getElementById('interviewDateInput');
+                const selectedDate = new Date(dateInput.value);
+                const now = new Date();
+                
+                if (selectedDate < now) {
+                    e.preventDefault();
+                    document.getElementById('dateError').classList.remove('hidden');
+                    dateInput.classList.add('border-red-500');
+                    return false;
+                }
+            }
         });
     </script>
 }

@@ -22,10 +22,10 @@
 
             <nav class="hidden lg:flex items-center gap-8">
                 @{
-                    var userPrincipal = TokenService.GetUserPrincipal();
-                    var userRole = userPrincipal?.FindFirstValue(ClaimTypes.Role)?.ToUpper() ?? "";
-                    var userName = userPrincipal?.FindFirstValue("Fullname") ?? "User";
-                    var avatarUrl = userPrincipal?.FindFirstValue("AvatarUrl");
+                    var userPrincipal = TokenService?.GetUserPrincipal();
+                    var userRole = userPrincipal?.FindFirst(ClaimTypes.Role)?.Value?.ToUpper() ?? "";
+                    var userName = userPrincipal?.FindFirst("Fullname")?.Value ?? userPrincipal?.FindFirst(ClaimTypes.Name)?.Value ?? "User";
+                    var avatarUrl = userPrincipal?.FindFirst("AvatarUrl")?.Value;
                 }
                 @if (userRole != "ADMIN")
                 {
@@ -155,15 +155,24 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @if (userRole != "")
+    @if (!string.IsNullOrEmpty(userRole))
     {
-        var rawApiUrl = Configuration["ApiBaseUrl"] ?? "https://localhost:7001/api/";
-        var hubUrl = rawApiUrl.Replace("/api/", "/notificationHub");
+        string rawApiUrl = "https://localhost:7001/api/";
+        try {
+            var configUrl = Configuration?["ApiBaseUrl"];
+            if (!string.IsNullOrEmpty(configUrl)) {
+                rawApiUrl = configUrl;
+            }
+        } catch {
+            // Fallback to default if configuration access fails
+        }
+        
+        var hubUrl = !string.IsNullOrEmpty(rawApiUrl) ? rawApiUrl.Replace("/api/", "/notificationHub") : "/notificationHub";
         <script>
             window.appConfig = {
                 apiBaseUrl: '@rawApiUrl',
                 notificationHubUrl: '@hubUrl',
-                accessToken: '@TokenService.GetAccessToken()'
+                accessToken: '@(TokenService?.GetAccessToken() ?? "")'
             };
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>

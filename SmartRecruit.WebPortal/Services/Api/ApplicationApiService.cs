@@ -13,6 +13,7 @@ namespace WebPortal.Services.Api
         Task<(bool Success, string? Message)> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
         Task<bool> AddNoteAsync(long id, string note);
         Task<bool> ClearNotesAsync(long id);
+        Task<bool> RestoreStatusAsync(long id);
         Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
         Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId);
         Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
@@ -138,6 +139,12 @@ namespace WebPortal.Services.Api
         public async Task<bool> ClearNotesAsync(long id)
         {
             var response = await _httpClient.DeleteAsync($"applications/{id}/notes");
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> RestoreStatusAsync(long id)
+        {
+            var response = await _httpClient.PostAsync($"applications/{id}/restore", null);
             return response.IsSuccessStatusCode;
         }
 

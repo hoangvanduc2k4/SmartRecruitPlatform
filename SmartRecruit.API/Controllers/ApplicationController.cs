@@ -186,6 +186,33 @@ namespace SmartRecruit.Controllers
         }
 
         /// <summary>
+        /// Khôi phục trạng thái hồ sơ ứng tuyển (từ Rejected về trạng thái trước đó)
+        /// </summary>
+        [HttpPost("{id}/restore")]
+        public async Task<IActionResult> RestoreApplication(long id)
+        {
+            _logger.LogInformation("API RestoreApplication called for ApplicationId: {Id}", id);
+            try
+            {
+                var success = await _applicationService.RestoreStatusAsync(id);
+                if (success)
+                {
+                    return Ok(new { }.Wrap("Application restored successfully"));
+                }
+                return BadRequest(new { }.Wrap("Failed to restore application"));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { }.Wrap(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred during RestoreApplication for ApplicationId: {Id}", id);
+                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
         /// Cập nhật trạng thái hàng loạt (Kanban)
         /// </summary>
         [HttpPut("bulk-status")]

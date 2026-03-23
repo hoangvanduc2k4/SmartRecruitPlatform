@@ -386,6 +386,21 @@
                         }
                     </div>
 
+                    @if (app.Status == ApplicationStatus.REJECTED)
+                    {
+                        <div class="mt-8 pt-8 border-t border-slate-50">
+                            <form method="post" asp-page-handler="Restore">
+                                <input type="hidden" name="id" value="@app.Id" />
+                                <button type="submit" class="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-3">
+                                    <i class="fas fa-undo-alt"></i> Khôi phục trạng thái
+                                </button>
+                            </form>
+                            <p class="mt-4 text-[10px] text-slate-400 text-center font-medium italic">
+                                * Khôi phục hồ sơ về trạng thái cuối cùng trước khi bị từ chối
+                            </p>
+                        </div>
+                    }
+
                     <div class="mt-8 pt-8 border-t border-slate-50">
                         <h5 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Ghi Chú Nội Bộ</h5>
                         <form method="post" asp-page-handler="AddNote" class="space-y-4">
