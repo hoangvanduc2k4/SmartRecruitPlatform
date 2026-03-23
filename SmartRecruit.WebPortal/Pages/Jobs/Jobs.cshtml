@@ -69,7 +69,7 @@
                         {
                             <label class="flex items-center gap-3 p-3 bg-slate-50/50 rounded-xl border border-slate-100 cursor-pointer hover:bg-white hover:border-indigo-400 transition-all group">
                                 <input type="radio" name="TypeFilter" value="@t" onchange="document.getElementById('filterForm').submit();" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
-                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@(t == "ALL" ? "TẤT CẢ" : t.Replace("_", " "))</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@(t == "ALL" ? "TẤT CẢ" : (t == "FULL_TIME" ? "TOÀN THỜI GIAN" : (t == "PART_TIME" ? "BÁN THỜI GIAN" : (t == "REMOTE" ? "LÀM VIỆC TỪ XA" : t))))</span>
                             </label>
                         }
                     </div>
@@ -80,11 +80,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Thiểu (VNĐ)</label>
-                             <input type="number" name="MinSalary" value="@Model.MinSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="0" />
+                             <input type="text" name="MinSalary" value="@Model.MinSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="0" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Đa (VNĐ)</label>
-                            <input type="number" name="MaxSalary" value="@Model.MaxSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Không G.hạn" />
+                            <input type="text" name="MaxSalary" value="@Model.MaxSalary" onchange="document.getElementById('filterForm').submit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="Không G.hạn" />
                         </div>
                     </div>
                 </div>
@@ -141,9 +141,17 @@
 
                                     <div class="flex-1 space-y-2">
                                         <div class="flex flex-wrap items-center gap-3">
-                                            <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">@job.Title</h3>
+                                            <div class="flex flex-col">
+                                                <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">@job.Title</h3>
+                                                <button type="button" 
+                                                        onclick="event.preventDefault(); event.stopPropagation(); document.getElementsByName('SearchTerm')[0].value='@job.Company'; document.getElementById('searchForm').submit();"
+                                                        class="text-[10px] font-black text-slate-400 hover:text-indigo-600 uppercase tracking-widest transition-colors flex items-center gap-1.5 w-fit mt-0.5">
+                                                    <i class="fas fa-building text-[9px] text-slate-300"></i>
+                                                    @job.Company
+                                                </button>
+                                            </div>
                                             <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest @(job.JobType == JobType.REMOTE ? "bg-blue-50 border-blue-100 text-blue-700" : "bg-slate-50 border-slate-200 text-slate-700") border shadow-sm">
-                                                @job.JobType.ToString().Replace("_", " ")
+                                                @(job.JobType == JobType.FULL_TIME ? "TOÀN THỜI GIAN" : (job.JobType == JobType.PART_TIME ? "BÁN THỜI GIAN" : "LÀM VIỆC TỪ XA"))
                                             </span>
                                         </div>
                                         <div class="flex flex-wrap gap-x-6 gap-y-1">
@@ -170,7 +178,7 @@
 
                                     <div class="text-right w-full md:w-auto pt-6 md:pt-0 border-t md:border-0 border-slate-50 flex flex-row md:flex-col justify-between items-center md:items-end gap-2 md:pr-14">
                                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mức Lương</p>
-                                        <p class="text-2xl font-black text-indigo-600 tracking-tighter">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</p>
+                                        <p class="text-2xl font-black text-indigo-600 tracking-tighter">@job.SalaryMin.ToString("N0") - @job.SalaryMax.ToString("N0") VNĐ</p>
                                     </div>
                                 </div>
 
