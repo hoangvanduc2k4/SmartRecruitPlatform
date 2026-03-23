@@ -90,30 +90,5 @@ namespace WebPortal.Pages
             return RedirectToPage(new { id, ReturnUrl });
         }
 
-        public async Task<IActionResult> OnPostAddNoteAsync(long id, string note)
-        {
-            if (!string.IsNullOrWhiteSpace(note))
-            {
-                await _applicationApiService.AddNoteAsync(id, note);
-            }
-            return RedirectToPage(new { id });
-        }
-
-        public async Task<IActionResult> OnPostClearNotesAsync(long id)
-        {
-            await _applicationApiService.ClearNotesAsync(id);
-            return RedirectToPage(new { id });
-        }
-
-        public async Task<IActionResult> OnPostRestoreAsync(long id)
-        {
-            var success = await _applicationApiService.RestoreStatusAsync(id);
-            if (!success)
-            {
-                // In a real app we might use TempData for error messages
-                // TempData["Error"] = "Unable to restore application status.";
-            }
-            return RedirectToPage(new { id });
-        }
     }
 }

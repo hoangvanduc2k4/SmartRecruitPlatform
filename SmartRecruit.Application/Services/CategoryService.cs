@@ -1,19 +1,22 @@
-
 using AutoMapper;
 using SmartRecruit.Application.DTO.Category;
+using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Entities;
 
 namespace SmartRecruit.Application.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -23,16 +26,16 @@ namespace SmartRecruit.Application.Services
             return _mapper.Map<IEnumerable<CategoryResponse>>(categories);
         }
 
-        public async Task<PagedResponse<CategoryResponse>> GetCategoriesPagedAsync(CategoryFilter filter)
+        public async Task<PagedList<CategoryResponse>> GetCategoriesPagedAsync(CategoryFilter filter)
         {
             var pagedCategories = await _categoryRepository.GetCategoriesPagedAsync(filter);
-            var categoryResponses = _mapper.Map<IEnumerable<CategoryResponse>>(pagedCategories);
+            var categoryResponses = _mapper.Map<List<CategoryResponse>>(pagedCategories);
 
-            return PagedResponse<CategoryResponse>.Create(
+            return new PagedList<CategoryResponse>(
                 categoryResponses,
+                pagedCategories.TotalCount,
                 pagedCategories.CurrentPage,
-                pagedCategories.PageSize,
-                pagedCategories.TotalCount);
+                pagedCategories.PageSize);
         }
 
         public async Task<CategoryResponse> CreateCategoryAsync(CreateCategoryDTO request)
@@ -73,9 +76,7 @@ namespace SmartRecruit.Application.Services
             category.UpdatedAt = DateTime.UtcNow;
 
             _categoryRepository.Update(category);
-            await _unitOfWork.CompleteAsync();
-
-            return true;
+            return await _unitOfWork.CompleteAsync() > 0;
         }
     }
 }

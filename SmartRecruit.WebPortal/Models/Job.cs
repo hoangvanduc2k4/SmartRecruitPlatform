@@ -20,6 +20,7 @@ namespace WebPortal.Models
         public JobStatus Status { get; set; }
         public int ViewCount { get; set; }
         public DateTime CreatedTime { get; set; }
+        public DateTime? ExpireDate { get; set; } // Added to fix Index.cshtml build error
         public string Location { get; set; } = string.Empty;
         public long CategoryId { get; set; }
         public string Category { get; set; } = string.Empty;

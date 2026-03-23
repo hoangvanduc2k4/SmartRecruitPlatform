@@ -53,7 +53,7 @@ namespace SmartRecruit.Application.Services
         {
             var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true)
             {
-                RecruiterId = recruiterId
+                recruiterId = recruiterId
             };
             return await GetJobsAsync(request);
         }
