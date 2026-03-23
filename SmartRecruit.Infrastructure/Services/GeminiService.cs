@@ -1,3 +1,4 @@
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -38,12 +39,13 @@ namespace SmartRecruit.Infrastructure.Services
                 Bạn là AI Moderator. Phân tích tin tuyển dụng:
                 Tiêu đề: {title}
                 Mô tả: {description}
-                YÊU CẦU: Trả về JSON (không markdown) theo mẫu:
+                YÊU CẦU: Trả về JSON (không markdown). Tất cả các trường văn bản PHẢI bằng TIẾNG VIỆT.
+                Mẫu JSON:
                 {{
                     ""IsSafe"": (bool),
-                    ""RiskLevel"": ""(Low/Medium/High)"",
-                    ""ViolationType"": ""(None/Scam/Discrimination/Spam)"",
-                    ""Analysis"": ""(string)""
+                    ""RiskLevel"": ""(Thấp/Trung bình/Cao)"",
+                    ""ViolationType"": ""(Không/Lừa đảo/Phân biệt đối xử/Spam/Khác)"",
+                    ""Analysis"": ""(Giải thích chi tiết bằng tiếng Việt)""
                 }}";
 
             _logger.LogInformation("Calling external system Gemini API to CheckJobContent for title: {Title}", title);
@@ -69,6 +71,7 @@ namespace SmartRecruit.Infrastructure.Services
                 5. Liệt kê kỹ năng thiếu (MissingSkills).
                 6. Lời khuyên (Recommendation).
 
+                YÊU CẦU: Tất cả các trường văn bản TRẢ VỀ PHẢI BẰNG TIẾNG VIỆT. 
                 TRẢ VỀ JSON (không markdown, không code block) theo mẫu:
                 {{
                     ""MatchScore"": (decimal),
@@ -99,17 +102,23 @@ namespace SmartRecruit.Infrastructure.Services
                 throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
             }
 
-            dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
+            dynamic? jsonResponse = JsonConvert.DeserializeObject(responseString);
             if (jsonResponse?.candidates == null || jsonResponse.candidates.Count == 0)
             {
                 throw new Exception($"No content returned. Raw: {responseString}");
             }
 
-            string aiText = jsonResponse.candidates[0].content.parts[0].text;
+            var candidate = jsonResponse.candidates[0];
+            if (candidate?.content?.parts == null || candidate.content.parts.Count == 0)
+            {
+                throw new Exception($"No parts returned in candidate content. Raw: {responseString}");
+            }
+
+            string aiText = candidate.content.parts[0].text ?? "";
             aiText = aiText.Replace("```json", "").Replace("```", "").Trim();
             try
             {
-                return JsonConvert.DeserializeObject<T>(aiText);
+                return JsonConvert.DeserializeObject<T>(aiText) ?? throw new Exception("Deserialized object is null");
             }
             catch (Exception ex)
             {

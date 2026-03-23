@@ -1,3 +1,4 @@
+
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Utils;
@@ -121,6 +122,7 @@ namespace SmartRecruit.Infrastructure.Data.Seeders
                     SalaryMax = sMin + (decimal)(rnd.Next(5, 40) * 1000000),
                     Location = locations[rnd.Next(locations.Length)],
                     Status = JobStatus.APPROVED,
+                    ExpireDate = DateTime.UtcNow.AddDays(rnd.Next(-5, 30)),
                     CreatedAt = createdAt
                 };
             }).ToList();

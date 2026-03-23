@@ -59,9 +59,9 @@ namespace WebPortal.Services.Api
                 var content = await response.Content.ReadAsStringAsync();
                 System.Console.WriteLine($"[JobApiService] Content Length: {content.Length}");
                 // System.Console.WriteLine($"[JobApiService] Content: {content.Substring(0, Math.Min(content.Length, 500))}");
-                var options = new System.Text.Json.JsonSerializerOptions 
-                { 
-                    PropertyNameCaseInsensitive = true 
+                var options = new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
                 };
                 options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 return await response.Content.ReadFromJsonAsync<PagedResponse<Job>>(options) ?? new PagedResponse<Job>();
@@ -111,7 +111,7 @@ namespace WebPortal.Services.Api
         public async Task<bool> UpdateJobAsync(string id, Job job)
         {
             if (!long.TryParse(id, out var longId)) return false;
-            
+
             try
             {
                 var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
@@ -141,7 +141,7 @@ namespace WebPortal.Services.Api
         public async Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job)
         {
             if (!long.TryParse(id, out var longId)) return new ApiResponse<Job> { Success = false, Message = "Invalid ID" };
-            
+
             var draftRequest = new
             {
                 Title = job.Title ?? string.Empty,
@@ -154,14 +154,15 @@ namespace WebPortal.Services.Api
                 SalaryMax = job.SalaryMax,
                 JobType = (int)job.JobType,
                 Location = job.Location ?? string.Empty,
-                CategoryId = job.CategoryId
+                CategoryId = job.CategoryId,
+                ExpireDate = job.ExpireDate
             };
 
             var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}/draft", draftRequest);
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-            
-            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options) 
+
+            return await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options)
                    ?? new ApiResponse<Job> { Success = false, Message = "Failed to communicate with API" };
         }
 
@@ -278,15 +279,15 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Calling ToggleSaveJob for jobId={jobId}, userId={userId}");
                 var response = await _httpClient.PostAsync($"jobs/{jobId}/save", null);
                 System.Console.WriteLine($"[JobApiService] ToggleSaveJob response: {response.StatusCode}");
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     var contentStr = await response.Content.ReadAsStringAsync();
                     System.Console.WriteLine($"[JobApiService] ToggleSaveJob response content: {contentStr}");
-                    
+
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     var result = JsonSerializer.Deserialize<ApiResponse<JsonElement>>(contentStr, options);
-                    
+
                     if (result != null && result.Success)
                     {
                         if (result.Data.TryGetProperty("isSaved", out var isSavedProp))
@@ -352,7 +353,7 @@ namespace WebPortal.Services.Api
             }
             return null;
         }
-        
+
         public async Task<IEnumerable<Job>> GetRecommendedJobsAsync()
         {
             try

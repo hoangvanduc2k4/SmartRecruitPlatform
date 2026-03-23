@@ -1,7 +1,7 @@
 @page "/Auth"
 @model WebPortal.Pages.AuthModel
 @{
-    ViewData["Title"] = "Authenticate";
+    ViewData["Title"] = "Xác Thực";
 }
 
 <div class="min-h-[85vh] flex items-center justify-center p-4">
@@ -209,12 +209,12 @@
                         errorAlert.className = 'mb-4 p-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative z-10';
                         form.parentNode.insertBefore(errorAlert, form);
                     }
-                    errorAlert.innerText = result.message || 'Google login protocol failed.';
+                    errorAlert.innerText = result.message || 'Giao thức đăng nhập Google thất bại.';
                     errorAlert.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("Google Login Error:", error);
-                alert('A system error occurred during Google authentication.');
+                alert('Đã xảy ra lỗi hệ thống khi xác thực Google.');
             }
         }
 
@@ -327,13 +327,13 @@
         async function resendOtp() {
             const emailInput = document.getElementById('Input_Email');
             if(!emailInput || !emailInput.value) {
-                alert("Please enter your email address first.");
+                alert("Vui lòng nhập địa chỉ email của bạn trước.");
                 return;
             }
             const resendBtn = document.getElementById('resendOtpBtn');
             const resendMsg = document.getElementById('resendMessage');
             
-            resendBtn.innerText = 'Sending...';
+            resendBtn.innerText = 'Đang gửi...';
             resendBtn.disabled = true;
 
             try {

@@ -118,25 +118,27 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-medium">
-                                    @tx.CreatedAt.ToString("MMM dd, yyyy HH:mm")
+                                    @tx.CreatedAt.ToString("dd/MM/yyyy HH:mm")
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @switch (tx.Status?.ToUpper())
                                     {
                                         case "SUCCESS":
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-green-100 text-green-800">SUCCESS</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-green-100 text-green-800">THÀNH CÔNG</span>
                                             break;
                                         case "FAILED":
                                         case "CANCELLED":
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800">FAILED</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800">THẤT BẠI</span>
                                             break;
                                         default:
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800">@(string.IsNullOrEmpty(tx.Status) ? "PENDING" : tx.Status)</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800">@(string.IsNullOrEmpty(tx.Status) || tx.Status == "PENDING" ? "ĐANG XỬ LÝ" : tx.Status)</span>
                                             break;
                                     }
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="text-[10px] font-black uppercase text-slate-400">@tx.Type</span>
+                                    <span class="text-[10px] font-black uppercase text-slate-400">
+                                        @(tx.Type == "TOPUP" ? "Nạp Tiền" : tx.Type == "JOB_POST" ? "Đăng Tin" : tx.Type == "BOOST" ? "Đẩy Tin" : tx.Type == "VIP" ? "Nâng Cấp VIP" : tx.Type)
+                                    </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-right @(isVisualTopUp ? "text-green-600" : "text-slate-800")">
                                     @(isVisualTopUp ? "+" : "")@displayAmount.ToString("N0") VNĐ
@@ -270,8 +272,8 @@
 
         function showTxDetails(tx) {
             const content = document.getElementById('txDetailsContent');
-            const date = new Date(tx.CreatedAt).toLocaleString('en-US', { 
-                month: 'short', day: '2-digit', year: 'numeric', 
+            const date = new Date(tx.CreatedAt).toLocaleString('vi-VN', { 
+                day: '2-digit', month: '2-digit', year: 'numeric', 
                 hour: '2-digit', minute: '2-digit' 
             });
             
@@ -297,7 +299,7 @@
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
                         <span class="text-[10px] font-black text-slate-400 uppercase">Trạng Thái</span>
-                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status || 'PENDING'}</span>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status === 'SUCCESS' ? 'THÀNH CÔNG' : (tx.Status === 'FAILED' || tx.Status === 'CANCELLED' ? 'THẤT BẠI' : 'ĐANG XỬ LÝ')}</span>
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
                         <span class="text-[10px] font-black text-slate-400 uppercase">Mã Thanh Toán</span>

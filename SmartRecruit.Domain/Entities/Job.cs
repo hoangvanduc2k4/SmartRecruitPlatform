@@ -19,8 +19,9 @@ namespace SmartRecruit.Domain.Entities
         public int ViewCount { get; set; } = 0;
         public string Location { get; set; } = string.Empty;
         public long CategoryId { get; set; }
-        public virtual Category Category { get; set; } = null!; 
+        public virtual Category Category { get; set; } = null!;
         public DateTime? BoostExpiryTime { get; set; }
+        public DateTime? ExpireDate { get; set; } // Added ExpireDate field
         public string? ModerationNote { get; set; }
         public bool IsAppealed { get; set; } = false;
         public string? AppealMessage { get; set; }

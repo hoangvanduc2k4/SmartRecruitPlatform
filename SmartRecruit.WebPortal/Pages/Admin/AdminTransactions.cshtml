@@ -59,7 +59,7 @@
                         </td>
                         <td class="px-8 py-8">
                             <span class="px-3 py-1 bg-slate-100 text-slate-600 border border-slate-200 text-[9px] font-black uppercase tracking-widest rounded-lg">
-                                @t.Type.Replace("_", " ")
+                                @(t.Type switch { "TOPUP" => "NẠP TIỀN", "JOB_POST" => "ĐĂNG BÀI", "BOOST" => "ĐẨY TIN", "VIP" => "NÂNG CẤP VIP", _ => t.Type.Replace("_", " ") })
                             </span>
                         </td>
                         <td class="px-8 py-8 text-right text-sm font-black tabular-nums @(t.Amount > 0 ? "text-green-600" : "text-slate-900")">

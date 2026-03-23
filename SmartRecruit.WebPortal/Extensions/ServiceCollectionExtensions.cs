@@ -1,3 +1,4 @@
+
 using WebPortal.Services;
 using WebPortal.Services.Api;
 
@@ -44,6 +45,11 @@ namespace SmartRecruitWeb.Extensions
             }).AddHttpMessageHandler<JwtAuthHandler>();
 
             services.AddHttpClient<IAdminApiService, AdminApiService>(client =>
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+            }).AddHttpMessageHandler<JwtAuthHandler>();
+
+            services.AddHttpClient<ICategoryApiService, CategoryApiService>(client =>
             {
                 client.BaseAddress = new Uri(apiBaseUrl);
             }).AddHttpMessageHandler<JwtAuthHandler>();

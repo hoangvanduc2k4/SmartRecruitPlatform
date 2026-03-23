@@ -107,12 +107,19 @@
                                 </div>
                             </div>
                         </td>
+
                         <td class="px-8 py-6">
+
+
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @(app.Status == ApplicationStatus.REJECTED ? "bg-red-50 text-red-600" : "bg-indigo-50 text-indigo-600")">@app.Status</span>
+
+
+
+
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
-                                <a href="/CandidatePreview/@app.Id" class="inline-flex h-10 px-4 items-center rounded-xl bg-white border border-slate-200 text-[9px] font-black uppercase text-slate-600 hover:text-indigo-600 hover:border-indigo-500 transition-all shadow-sm">
+                                <a href="/CandidatePreview/@app.Id?ReturnUrl=@System.Net.WebUtility.UrlEncode(Request.Path + Request.QueryString)" class="inline-flex h-10 px-4 items-center rounded-xl bg-white border border-slate-200 text-[9px] font-black uppercase text-slate-600 hover:text-indigo-600 hover:border-indigo-500 transition-all shadow-sm">
                                     Chi Tiết
                                 </a>
                                     @if (app.Status != ApplicationStatus.REJECTED)

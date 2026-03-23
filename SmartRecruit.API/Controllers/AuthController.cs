@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Auth;
 using SmartRecruit.Application.Extensions;
@@ -22,7 +23,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API Login called for email: {Email}", request.Email);
             var result = await _authService.LoginAsync(request);
-            return Ok(result.Wrap("Login successful"));
+            return Ok(result.Wrap("Đăng nhập thành công"));
         }
 
         [HttpPost("register")]
@@ -30,7 +31,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API Register called for email: {Email}", request.Email);
             await _authService.RegisterAsync(request);
-            return Ok(new { }.Wrap("Registration successful. Please check your email for the verification code."));
+            return Ok(new { }.Wrap("Đăng ký thành công. Vui lòng kiểm tra email để lấy mã xác nhận."));
         }
 
         [HttpPost("refresh-token")]
@@ -38,7 +39,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API RefreshToken called");
             var result = await _authService.RefreshTokenAsync(request.RefreshToken);
-            return Ok(result.Wrap("Token refreshed successfully"));
+            return Ok(result.Wrap("Làm mới token thành công"));
         }
 
         [HttpPost("google-login")]
@@ -46,14 +47,14 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GoogleLogin called");
             var result = await _authService.GoogleLoginAsync(request);
-            return Ok(result.Wrap("Google login successful"));
+            return Ok(result.Wrap("Đăng nhập Google thành công"));
         }
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
             _logger.LogInformation("API Logout called");
             await _authService.LogoutAsync(request);
-            return Ok(new { }.Wrap("Logged out successfully"));
+            return Ok(new { }.Wrap("Đăng xuất thành công"));
         }
 
         [HttpPost("verify-email")]
@@ -61,7 +62,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API VerifyEmail called for email: {Email}", request.Email);
             await _authService.VerifyEmailAsync(request);
-            return Ok(new { }.Wrap("Email verified successfully"));
+            return Ok(new { }.Wrap("Xác nhận email thành công"));
         }
 
         [HttpPost("resend-verification-email")]
@@ -69,7 +70,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API ResendVerificationEmail called for email: {Email}", request.Email);
             await _authService.SendVerificationEmailAsync(request.Email);
-            return Ok(new { }.Wrap("Verification email sent successfully"));
+            return Ok(new { }.Wrap("Gửi email xác nhận thành công"));
         }
 
         [HttpPost("forgot-password")]
@@ -77,7 +78,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API ForgotPassword called for email: {Email}", request.Email);
             await _authService.ForgotPasswordAsync(request);
-            return Ok(new { }.Wrap("Password reset code sent to email"));
+            return Ok(new { }.Wrap("Mã đặt lại mật khẩu đã được gửi đến email"));
         }
 
         [HttpPost("reset-password")]
@@ -85,7 +86,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API ResetPassword called for email: {Email}", request.Email);
             await _authService.ResetPasswordAsync(request);
-            return Ok(new { }.Wrap("Password has been reset successfully"));
+            return Ok(new { }.Wrap("Đặt lại mật khẩu thành công"));
         }
     }
 }

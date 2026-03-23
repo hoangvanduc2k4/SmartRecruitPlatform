@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
@@ -48,6 +49,7 @@ namespace WebPortal.Pages
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
         public bool HasCV { get; set; }
         public Application? MyApplication { get; set; }
+        public CompanyProfileInfo? CompanyProfile { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -76,7 +78,7 @@ namespace WebPortal.Pages
                 if (Job != null)
                 {
                     var currentUserId = CurrentUserId;
-                    
+
                     // Ownership check
                     IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
 
@@ -97,6 +99,10 @@ namespace WebPortal.Pages
                         }
                     }
 
+                    // Fetch Company Profile
+                    var profile = await _authApiService.GetProfileAsync(Job.RecruiterId);
+                    CompanyProfile = profile?.CompanyProfile;
+
                     // Only the recruiter who owns this job can edit it
                     if (currentUserId.HasValue)
                     {
@@ -105,7 +111,7 @@ namespace WebPortal.Pages
 
                     // Fetch applications for this job
                     var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
-                    Applications = (List<Application>)pagedApps.Data;
+                    Applications = pagedApps.Data != null ? ((IEnumerable<Application>)pagedApps.Data).ToList() : new List<Application>();
                     TotalApplicationCount = pagedApps.TotalCount;
                     TotalPages = pagedApps.TotalPages;
                 }
@@ -151,7 +157,8 @@ namespace WebPortal.Pages
             }
             else if (status == ApplicationStatus.REJECTED)
             {
-                request.RejectionReason = "Not matching requirements.";
+                request.RejectionReason = "Không đáp ứng yêu cầu.";
+
             }
 
             await _applicationApiService.UpdateStatusAsync(applicationId, request);
@@ -166,7 +173,8 @@ namespace WebPortal.Pages
                 {
                     ApplicationIds = selectedApplications,
                     Status = ApplicationStatus.REJECTED,
-                    RejectionReason = "Bulk Rejection"
+                    RejectionReason = "Đã từ chối hàng loạt ứng viên."
+
                 };
                 await _applicationApiService.BulkUpdateStatusAsync(request);
             }
@@ -198,7 +206,8 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = $"Application failed: {ex.Message}";
+                    TempData["Error"] = $"Ứng tuyển thất bại: {ex.Message}";
+
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
@@ -247,7 +256,8 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                     TempData["Error"] = $"Publishing failed: {ex.Message}";
+                    TempData["Error"] = $"Xuất bản thất bại: {ex.Message}";
+
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });

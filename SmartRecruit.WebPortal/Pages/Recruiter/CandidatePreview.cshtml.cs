@@ -22,6 +22,9 @@ namespace WebPortal.Pages
         public Job? Job { get; set; }
         public WebPortal.Models.Api.UserProfileResponse? CandidateProfile { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
+
         public async Task<IActionResult> OnGetAsync(long id)
         {
             Application = await _applicationApiService.GetApplicationByIdAsync(id);
@@ -35,6 +38,13 @@ namespace WebPortal.Pages
             {
                 return RedirectToPage("/Recruiter/RecruiterJobs");
             }
+
+            // Set default ReturnUrl if not provided
+            if (string.IsNullOrEmpty(ReturnUrl))
+            {
+                ReturnUrl = IsRecruiter ? $"/JobApplications?Id={Application.JobId}" : "/Candidate/AppliedJobs";
+            }
+
             return Page();
         }
 
@@ -51,7 +61,7 @@ namespace WebPortal.Pages
                 
                 await _applicationApiService.UpdateStatusAsync(id, request);
             }
-            return RedirectToPage(new { id });
+            return RedirectToPage(new { id, ReturnUrl });
         }
 
         public async Task<IActionResult> OnPostAddNoteAsync(long id, string note)
@@ -60,13 +70,13 @@ namespace WebPortal.Pages
             {
                 await _applicationApiService.AddNoteAsync(id, note);
             }
-            return RedirectToPage(new { id });
+            return RedirectToPage(new { id, ReturnUrl });
         }
 
         public async Task<IActionResult> OnPostClearNotesAsync(long id)
         {
             await _applicationApiService.ClearNotesAsync(id);
-            return RedirectToPage(new { id });
+            return RedirectToPage(new { id, ReturnUrl });
         }
 
         public async Task<IActionResult> OnPostRestoreAsync(long id)
@@ -77,7 +87,7 @@ namespace WebPortal.Pages
                 // In a real app we might use TempData for error messages
                 // TempData["Error"] = "Unable to restore application status.";
             }
-            return RedirectToPage(new { id });
+            return RedirectToPage(new { id, ReturnUrl });
         }
     }
 }

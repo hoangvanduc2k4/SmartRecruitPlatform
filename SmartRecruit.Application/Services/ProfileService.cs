@@ -1,3 +1,4 @@
+
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Interfaces.Repositories;
@@ -16,9 +17,9 @@ namespace SmartRecruit.Application.Services
         private readonly ITokenService _tokenService;
 
         public ProfileService(
-            IUnitOfWork unitOfWork, 
-            ILogger<ProfileService> logger, 
-            ICloudinaryService cloudinaryService, 
+            IUnitOfWork unitOfWork,
+            ILogger<ProfileService> logger,
+            ICloudinaryService cloudinaryService,
             ICvService cvService,
             ITokenService tokenService)
         {
@@ -42,7 +43,7 @@ namespace SmartRecruit.Application.Services
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
             {
-                throw new KeyNotFoundException("User not found.");
+                throw new KeyNotFoundException("Không tìm thấy người dùng.");
             }
 
             var response = new UserProfileResponse
@@ -94,7 +95,7 @@ namespace SmartRecruit.Application.Services
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
             {
-                throw new KeyNotFoundException("User not found.");
+                throw new KeyNotFoundException("Không tìm thấy người dùng.");
             }
 
             // Update generic User details
@@ -153,10 +154,10 @@ namespace SmartRecruit.Application.Services
 
             // Fetch updated profile
             var response = await GetCurrentUserProfileAsync(userId);
-            
+
             // Inject new token after profile update (in case FullName changed and is in claims)
             response.NewToken = await GenerateNewTokenAsync(userId);
-            
+
             return response;
         }
 
@@ -170,24 +171,24 @@ namespace SmartRecruit.Application.Services
 
             if (user.Role != Domain.Enums.UserRole.CANDIDATE)
             {
-                throw new InvalidOperationException("Only candidates can upload CVs.");
+                throw new InvalidOperationException("Chỉ ứng viên mới có thể tải lên CV.");
             }
 
             // Validation: Size
             if (fileStream.Length == 0)
             {
-                throw new ArgumentException("Uploaded CV file is empty.");
+                throw new ArgumentException("Tệp CV tải lên trống.");
             }
             if (fileStream.Length > Policies.MaxCvFileSize)
             {
-                throw new ArgumentException($"CV file size must be <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
+                throw new ArgumentException($"Dung lượng CV phải <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
             var ext = Path.GetExtension(fileName).ToLowerInvariant();
             if (ext != ".pdf")
             {
-                throw new ArgumentException("Only PDF format is supported for CV upload.");
+                throw new ArgumentException("Chỉ hỗ trợ tệp định dạng PDF cho CV.");
             }
 
             var candidateProfile = await _unitOfWork.CandidateProfiles.FindAsync(c => c.UserId == userId);
@@ -253,11 +254,11 @@ namespace SmartRecruit.Application.Services
             // Validation: Size
             if (fileStream == null || fileStream.Length == 0)
             {
-                throw new ArgumentException("Uploaded avatar file is empty.");
+                throw new ArgumentException("Tệp ảnh đại diện tải lên trống.");
             }
             if (fileStream.Length > Policies.MaxAvatarFileSize)
             {
-                throw new ArgumentException($"Avatar file size must be <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
+                throw new ArgumentException($"Dung lượng ảnh đại diện phải <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
@@ -265,7 +266,7 @@ namespace SmartRecruit.Application.Services
             var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             if (!allowed.Contains(ext))
             {
-                throw new ArgumentException("Only JPG, PNG, or WEBP images are supported for avatar upload.");
+                throw new ArgumentException("Chỉ hỗ trợ các định dạng ảnh JPG, PNG hoặc WEBP.");
             }
 
             if (fileStream.CanSeek) fileStream.Position = 0;
@@ -278,10 +279,10 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("Avatar uploaded for user {UserId}", userId);
-            
+
             var response = await GetCurrentUserProfileAsync(userId);
             response.NewToken = await GenerateNewTokenAsync(userId);
-            
+
             return response;
         }
 

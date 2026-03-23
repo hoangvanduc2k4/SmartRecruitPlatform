@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebPortal.Models.Api;
@@ -36,7 +37,7 @@ namespace WebPortal.Pages
                 // If userId is provided, we are viewing someone else (or ourselves via ID)
                 // If not, we are viewing the current logged-in user
                 CurrentUser = await _authApiService.GetProfileAsync(userId);
-                
+
                 if (CurrentUser == null)
                 {
                     if (!userId.HasValue) return RedirectToPage("/Account/Auth");
@@ -76,7 +77,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UpdateProfileAsync(UpdateInput);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "Profile synchronized successfully.";
+                    TempData["SuccessMessage"] = "Đồng bộ hồ sơ thành công.";
                 }
             }
             catch (Exception ex)
@@ -90,13 +91,13 @@ namespace WebPortal.Pages
         {
             if (CvFile == null || CvFile.Length == 0)
             {
-                TempData["ErrorMessage"] = "Please select a CV file (PDF) to upload.";
+                TempData["ErrorMessage"] = "Vui lòng chọn tệp CV (PDF) để tải lên.";
                 return RedirectToPage(new { Tab = "CVS" });
             }
 
             if (!CvFile.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
             {
-                TempData["ErrorMessage"] = "Only PDF files are supported for CV upload.";
+                TempData["ErrorMessage"] = "Chỉ hỗ trợ tệp PDF để tải lên CV.";
                 return RedirectToPage(new { Tab = "CVS" });
             }
 
@@ -106,7 +107,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UploadCvAsync(stream, CvFile.FileName);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "CV uploaded and text extracted successfully.";
+                    TempData["SuccessMessage"] = "Tải lên CV và trích xuất văn bản thành công.";
                 }
             }
             catch (Exception ex)
@@ -121,7 +122,7 @@ namespace WebPortal.Pages
         {
             if (AvatarFile == null || AvatarFile.Length == 0)
             {
-                TempData["ErrorMessage"] = "Please select an image file to upload.";
+                TempData["ErrorMessage"] = "Vui lòng chọn một tệp hình ảnh để tải lên.";
                 return RedirectToPage(new { Tab });
             }
 
@@ -129,7 +130,7 @@ namespace WebPortal.Pages
             var extension = Path.GetExtension(AvatarFile.FileName).ToLowerInvariant();
             if (!allowedExtensions.Contains(extension))
             {
-                TempData["ErrorMessage"] = "Only JPG, PNG, or WEBP images are supported.";
+                TempData["ErrorMessage"] = "Chỉ hỗ trợ các định dạng ảnh JPG, PNG hoặc WEBP.";
                 return RedirectToPage(new { Tab });
             }
 
@@ -139,7 +140,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UploadAvatarAsync(stream, AvatarFile.FileName);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "Avatar updated successfully.";
+                    TempData["SuccessMessage"] = "Cập nhật ảnh đại diện thành công.";
                 }
             }
             catch (Exception ex)

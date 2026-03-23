@@ -32,7 +32,8 @@ namespace SmartRecruit.Application.Mappings
                     src.ModerationNote,
                     src.AppealMessage,
                     src.BoostExpiryTime != null && src.BoostExpiryTime > DateTime.UtcNow,
-                    src.DraftChanges
+                    src.DraftChanges,
+                    src.ExpireDate
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
         }
