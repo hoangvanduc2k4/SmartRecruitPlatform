@@ -34,7 +34,7 @@ namespace SmartRecruit.Controllers
             };
 
             var result = await _paymentService.CreatePaymentLinkAsync(finalRequest);
-            return Ok(result.Wrap("Tạo liên kết thanh toán thành công."));
+            return Ok(result.Wrap("Payment link created successfully."));
         }
 
         /// <summary>

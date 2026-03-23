@@ -23,5 +23,10 @@ namespace SmartRecruit.Infrastructure.Services
         {
             await _hubContext.Clients.Group($"User_{userId}").SendAsync("ReceiveApplicationScoreUpdate", update);
         }
+
+        public async Task SendApplicationStatusUpdateAsync(long userId, SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto update)
+        {
+            await _hubContext.Clients.Group($"User_{userId}").SendAsync("ReceiveApplicationStatusUpdate", update);
+        }
     }
 }

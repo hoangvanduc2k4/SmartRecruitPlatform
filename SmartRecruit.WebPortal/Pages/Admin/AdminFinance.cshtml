@@ -190,19 +190,19 @@
                                     <td class="px-10 py-8 text-sm">
                                         <div class="space-y-1">
                                             <p class="font-black text-slate-600">@tx.Description</p>
-                                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">LOẠI: @(tx.Type switch { "TOPUP" => "NẠP TIỀN", "JOB_POST" => "ĐĂNG BÀI", "BOOST" => "ĐẨY TIN", "VIP" => "NÂNG CẤP VIP", _ => tx.Type })</span>
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">TYPE: @tx.Type</span>
                                         </div>
                                     </td>
                                     <td class="px-10 py-8 text-center">
                                         @{
                                             var badgeStyle = tx.Status switch {
-                                                "SUCCESS" or "THÀNH CÔNG" => "bg-emerald-100 text-emerald-800",
-                                                "PENDING" or "ĐANG XỬ LÝ" => "bg-amber-100 text-amber-800",
-                                                "FAILED" or "THẤT BẠI" => "bg-red-100 text-red-800",
+                                                "SUCCESS" => "bg-emerald-100 text-emerald-800",
+                                                "PENDING" => "bg-amber-100 text-amber-800",
+                                                "FAILED" => "bg-red-100 text-red-800",
                                                 _ => "bg-slate-100 text-slate-800"
                                             };
                                         }
-                                        <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @badgeStyle">@(tx.Status switch { "SUCCESS" => "THÀNH CÔNG", "PENDING" => "ĐANG XỬ LÝ", "FAILED" => "THẤT BẠI", _ => tx.Status })</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest @badgeStyle">@tx.Status</span>
                                     </td>
                                     <td class="px-10 py-8 text-right">
                                         <p class="text-xl font-black tabular-nums @(tx.Type == "TOPUP" ? "text-emerald-600" : "text-slate-900")">

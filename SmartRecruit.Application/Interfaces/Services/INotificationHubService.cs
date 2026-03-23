@@ -7,5 +7,6 @@ namespace SmartRecruit.Application.Interfaces.Services
     {
         Task SendNotificationToUserAsync(long userId, NotificationResponse notification);
         Task SendApplicationScoreUpdateAsync(long userId, ApplicationScoreUpdateDto update);
+        Task SendApplicationStatusUpdateAsync(long userId, ApplicationStatusUpdateDto update);
     }
 }

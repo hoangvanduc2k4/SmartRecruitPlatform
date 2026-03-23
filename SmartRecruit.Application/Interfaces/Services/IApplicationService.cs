@@ -12,6 +12,9 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> ApplyJobAsync(ApplyJobRequest request);
         Task ScoreApplicationAsync(long applicationId);
         Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request);
+        Task<bool> AddNoteAsync(long id, string note);
+        Task<bool> ClearNotesAsync(long id);
+        Task<bool> RestoreStatusAsync(long id);
         Task<ApplicationResponse?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
         Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
 

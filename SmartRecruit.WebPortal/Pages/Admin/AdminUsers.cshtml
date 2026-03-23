@@ -49,7 +49,7 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(u.Role == "RECRUITER" ? "bg-indigo-100 text-indigo-800" : u.Role == "ADMIN" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@u.Role</span>
                         </td>
                         <td class="px-8 py-8">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(!u.IsActive ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@(u.IsActive ? "ĐANG HOẠT ĐỘNG" : "BỊ KHÓA")</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase @(!u.IsActive ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")">@(u.IsActive ? "ACTIVE" : "LOCKED")</span>
                         </td>
                         <td class="px-8 py-8">
                             <span class="text-[12px] font-bold text-slate-400">@u.CreatedAt.ToString("MMM dd, yyyy")</span>

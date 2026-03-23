@@ -25,17 +25,17 @@ namespace WebPortal.Services.Api
 
         public string? GetAccessToken()
         {
-            return _httpContextAccessor.HttpContext?.Request.Cookies[AccessTokenKey];
+            return _httpContextAccessor?.HttpContext?.Request.Cookies[AccessTokenKey];
         }
 
         public string? GetRefreshToken()
         {
-            return _httpContextAccessor.HttpContext?.Request.Cookies[RefreshTokenKey];
+            return _httpContextAccessor?.HttpContext?.Request.Cookies[RefreshTokenKey];
         }
 
         public void SetTokens(string accessToken, string refreshToken, int expiresInMinutes)
         {
-            if (_httpContextAccessor.HttpContext == null) return;
+            if (_httpContextAccessor?.HttpContext == null) return;
 
             var cookieOptions = new CookieOptions
             {
@@ -66,7 +66,7 @@ namespace WebPortal.Services.Api
 
         public void ClearTokens()
         {
-            if (_httpContextAccessor.HttpContext == null) return;
+            if (_httpContextAccessor?.HttpContext == null) return;
 
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(AccessTokenKey);
             _httpContextAccessor.HttpContext.Response.Cookies.Delete(RefreshTokenKey);

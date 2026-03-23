@@ -33,7 +33,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetAILogs called with search parameters: {@Request}", request);
             var logs = await _aiLogService.GetAILogsAsync(request);
-            var response = logs.WrapPaged("Tải nhật ký AI thành công");
+            var response = logs.WrapPaged("AI logs retrieved successfully");
             return Ok(response);
         }
 
@@ -42,7 +42,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetUsers called with parameters: {@Request}", request);
             var users = await _userService.GetUsersAsync(request);
-            return Ok(users.WrapPaged("Tải danh sách người dùng thành công"));
+            return Ok(users.WrapPaged("Users retrieved successfully"));
         }
 
         [HttpPatch("users/{id}/status")]
@@ -50,7 +50,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API UpdateUserStatus called for UserId: {UserId}, Status: {IsActive}", id, request.IsActive);
             var success = await _userService.UpdateUserStatusAsync(id, request);
-            string message = request.IsActive ? "Kích hoạt tài khoản người dùng thành công" : "Khóa tài khoản người dùng thành công";
+            string message = request.IsActive ? "User account activated successfully" : "User account locked successfully";
             return Ok(new { Success = success }.Wrap(message));
         }
 
@@ -59,7 +59,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetFinanceStats called");
             var stats = await _walletService.GetFinanceStatsAsync();
-            return Ok(stats.Wrap("Tải thống kê tài chính thành công"));
+            return Ok(stats.Wrap("Finance statistics retrieved successfully"));
         }
 
         [HttpGet("finance/logs")]
@@ -67,7 +67,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetFinanceLogs called with parameters: {@Request}", request);
             var logs = await _walletService.GetTransactionsAsync(request);
-            return Ok(logs.WrapPaged("Tải nhật ký tài chính thành công"));
+            return Ok(logs.WrapPaged("Financial logs retrieved successfully"));
         }
 
         [HttpGet("content/appeals")]
@@ -75,7 +75,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API GetAppeals called with page: {Page}", page);
             var appeals = await _jobService.GetAppealedJobsAsync(page, pageSize);
-            return Ok(appeals.WrapPaged("Tải danh sách khiếu nại thành công"));
+            return Ok(appeals.WrapPaged("AI appeals retrieved successfully"));
         }
 
         [HttpPost("content/jobs/{id}/override-ai")]
@@ -83,7 +83,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API OverrideAI called for JobId: {JobId}", id);
             var success = await _jobService.OverrideAIAsync(id);
-            return Ok(new { Success = success }.Wrap("Đã ghi đè kiểm duyệt và phê duyệt công việc thành công"));
+            return Ok(new { Success = success }.Wrap("Job moderation overridden and approved successfully"));
         }
 
         [HttpPost("content/jobs/{id}/reject-appeal")]
@@ -91,7 +91,7 @@ namespace SmartRecruit.API.Controllers
         {
             _logger.LogInformation("API RejectAppeal called for JobId: {JobId}", id);
             var success = await _jobService.RejectAppealAsync(id);
-            return Ok(new { Success = success }.Wrap("Từ chối khiếu nại thành công"));
+            return Ok(new { Success = success }.Wrap("Job appeal rejected successfully"));
         }
 
     }

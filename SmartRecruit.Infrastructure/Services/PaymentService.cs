@@ -56,7 +56,7 @@ namespace SmartRecruit.Infrastructure.Services
             _logger.LogInformation("Creating Payment Link for UserId: {UserId}, Amount: {Amount}", request.UserId, request.Amount);
             
             var wallet = await _walletRepository.GetWalletByUserIdAsync(request.UserId)
-                ?? throw new KeyNotFoundException($"Không tìm thấy ví cho người dùng {request.UserId}");
+                ?? throw new KeyNotFoundException($"Wallet not found for user {request.UserId}");
 
             long orderCode = GenerateOrderCode();
             
@@ -81,7 +81,7 @@ namespace SmartRecruit.Infrastructure.Services
             var checkoutUrl = await CreatePayOSRequestAsync(orderCode, amountInt, request.Description);
             if (string.IsNullOrEmpty(checkoutUrl))
             {
-                throw new Exception("Không thể tạo liên kết thanh toán với cổng PayOS.");
+                throw new Exception("Failed to create payment link with PayOS gateway.");
             }
 
             return new CreatePaymentResponse(orderCode, checkoutUrl, string.Empty, "PENDING");
@@ -144,7 +144,7 @@ namespace SmartRecruit.Infrastructure.Services
                 {
                     var valid = await VerifyWithSdkAsync(webhookBody);
                     if (!valid)
-                        throw new UnauthorizedAccessException("Chữ ký webhook PayOS không hợp lệ.");
+                        throw new UnauthorizedAccessException("Invalid PayOS webhook signature.");
                 }
             }
             else
@@ -188,8 +188,8 @@ namespace SmartRecruit.Infrastructure.Services
                 {
                     await _notificationService.SendNotificationAsync(
                         transaction.UserId,
-                        "Nạp tiền thành công",
-                        $"Nạp thành công {transaction.Amount:N0} VNĐ qua PayOS. Số dư mới của bạn là: {wallet.Balance:N0} VNĐ.",
+                        "Deposit Successful",
+                        $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
                         NotificationType.PAYMENT,
                         "/Wallet");
                 }
@@ -259,8 +259,8 @@ namespace SmartRecruit.Infrastructure.Services
                     {
                         await _notificationService.SendNotificationAsync(
                             transaction.UserId,
-                            "Nạp tiền thành công",
-                            $"Nạp thành công {transaction.Amount:N0} VNĐ qua PayOS. Số dư mới của bạn là: {wallet.Balance:N0} VNĐ.",
+                            "Deposit Successful",
+                            $"Successfully deposited {transaction.Amount:N0} VNĐ via PayOS. Your new balance is: {wallet.Balance:N0} VNĐ.",
                             NotificationType.PAYMENT,
                             "/Wallet");
                     }

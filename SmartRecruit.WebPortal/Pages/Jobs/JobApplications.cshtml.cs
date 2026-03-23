@@ -45,14 +45,14 @@ namespace WebPortal.Pages
             }
 
             var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
-            Applications = (List<Application>)pagedApps.Data;
+            Applications = pagedApps.Data != null ? pagedApps.Data.ToList() : new List<Application>();
             TotalApplicationCount = pagedApps.TotalCount;
             TotalPages = pagedApps.TotalPages;
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, ApplicationStatus status)
+        public async Task<IActionResult> OnPostUpdateStatusAsync(long applicationId, ApplicationStatus status, string? rejectionReason)
         {
             var request = new UpdateApplicationStatusRequest { Status = status };
 
@@ -62,7 +62,7 @@ namespace WebPortal.Pages
             }
             else if (status == ApplicationStatus.REJECTED)
             {
-                request.RejectionReason = "Not matching requirements.";
+                request.RejectionReason = rejectionReason ?? "Not matching requirements.";
             }
 
             await _applicationApiService.UpdateStatusAsync(applicationId, request);
@@ -81,6 +81,12 @@ namespace WebPortal.Pages
                 };
                 await _applicationApiService.BulkUpdateStatusAsync(request);
             }
+            return RedirectToPage(new { Id, CurrentPage });
+        }
+
+        public async Task<IActionResult> OnPostRestoreAsync(long applicationId)
+        {
+            await _applicationApiService.RestoreStatusAsync(applicationId);
             return RedirectToPage(new { Id, CurrentPage });
         }
     }
