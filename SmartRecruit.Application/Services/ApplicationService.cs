@@ -239,7 +239,7 @@ namespace SmartRecruit.Application.Services
                 {
                     throw new InvalidOperationException("Rejection reason should not be provided when moving to Interviewing status.");
                 }
-                application.Notes = $"Interview Date: {request.InterviewDate.Value:yyyy-MM-dd HH:mm}";
+                
             }
             else if (newStatus == ApplicationStatus.REJECTED)
             {
@@ -251,7 +251,7 @@ namespace SmartRecruit.Application.Services
                 {
                     throw new InvalidOperationException("Interview date should not be provided when rejecting an application.");
                 }
-                application.Notes = $"Rejection Reason: {request.RejectionReason}";
+                
             }
             else
             {
@@ -322,10 +322,12 @@ namespace SmartRecruit.Application.Services
                         // Real-time UI Update (SignalR)
                         try 
                         {
-                            await _notificationHubService.SendApplicationStatusUpdateAsync(appWithDetails.CandidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
+                            await _notificationHubService.SendApplicationStatusUpdateAsync(application.CandidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
                             {
                                 ApplicationId = id,
-                                Status = newStatus.ToString()
+                                Status = newStatus.ToString(),
+                                JobTitle = application.Job?.Title ?? "your application",
+                                UpdatedAt = application.UpdatedAt.GetValueOrDefault(DateTime.UtcNow)
                             });
                         }
                         catch (Exception ex)
@@ -480,12 +482,14 @@ namespace SmartRecruit.Application.Services
                                 await _notificationHubService.SendApplicationStatusUpdateAsync(candidateId, new SmartRecruit.Application.DTO.Application.ApplicationStatusUpdateDto
                                 {
                                     ApplicationId = id,
-                                    Status = restoredStatus.ToString()
+                                    Status = restoredStatus.ToString(),
+                                    JobTitle = application.Job?.Title ?? "your application",
+                                    UpdatedAt = application.UpdatedAt.GetValueOrDefault(DateTime.UtcNow)
                                 });
                             }
                             catch (Exception ex)
                             {
-                                _logger.LogWarning(ex, "Failed to send SignalR notification for restoration of app {Id}", id);
+                                _logger.LogWarning(ex, "Failed to send SignalR status update during restore for ApplicationId {ApplicationId}", id);
                             }
 
                             // Persistent Notification

@@ -1,3 +1,4 @@
+
 @page "/CandidatePreview/{id}"
 @model WebPortal.Pages.CandidatePreviewModel
 @using WebPortal.Models
@@ -79,31 +80,68 @@
         </div>
     </div>
 
-        <div class="space-y-6">
-            <div class="p-6 bg-white border border-slate-200 rounded-3xl shadow-sm">
-                <h4 class="font-bold text-slate-800 mb-4">Trạng Thái Tuyển Dụng</h4>
-                <div class="space-y-3">
-                    @{
-                        var pipelineSteps = new[]
-                        {
-                            new { S = ApplicationStatus.REVIEWING, Icon = "fa-search" },
-                            new { S = ApplicationStatus.INTERVIEWING, Icon = "fa-comments" },
-                            new { S = ApplicationStatus.OFFERED, Icon = "fa-gift" },
-                            new { S = ApplicationStatus.REJECTED, Icon = "fa-times-circle" }
-                        };
-                    }
-
-                    @foreach (var step in pipelineSteps)
-                    {
-                        <form method="post" asp-page-handler="UpdateStatus" class="m-0">
-                            <input type="hidden" name="id" value="@Model.Application.Id" />
-                            <input type="hidden" name="status" value="@step.S.ToString()" />
-                            <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all @(Model.Application.Status == step.S ? "bg-indigo-600 border-indigo-600 text-white shadow-lg" : "bg-white border-slate-100 text-slate-600 hover:border-indigo-200")">
-                                <i class="fas @step.Icon w-5"></i>
-                                <span class="font-bold text-sm">@step.S</span>
-                            </button>
-                        </form>
-                    }
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-8 space-y-8">
+            
+            <!-- Candidate & Job Hero -->
+            <div class="p-10 bg-white border border-slate-200 rounded-[2.5rem] shadow-sm animate-slide-in" style="animation-delay: 0.1s">
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="relative group">
+                        <img src="@(string.IsNullOrEmpty(profile?.AvatarUrl) ? $"https://i.pravatar.cc/150?u={app.Id}" : profile.AvatarUrl)" 
+                             class="w-32 h-32 rounded-3xl object-cover shadow-2xl shadow-indigo-100 group-hover:scale-105 transition-transform duration-500" alt="Avatar"/>
+                        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg border-4 border-white">
+                            <i class="fas fa-check-circle text-xs"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black text-slate-800 tracking-tight mb-1">@app.CandidateName</h3>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-black uppercase tracking-tight">@job.Title</span>
+                                    <span class="text-slate-300">•</span>
+                                    <span class="text-sm font-bold text-slate-500"><i class="fas fa-building mr-2"></i>@job.Company</span>
+                                </div>
+                            </div>
+                            
+                            @{
+                                var statusClass = app.Status switch {
+                                    ApplicationStatus.OFFERED => "bg-green-500 text-white shadow-green-100",
+                                    ApplicationStatus.REJECTED => "bg-red-500 text-white shadow-red-100",
+                                    ApplicationStatus.REVIEWING => "bg-indigo-600 text-white shadow-indigo-100",
+                                    ApplicationStatus.INTERVIEWING => "bg-amber-500 text-white shadow-amber-100",
+                                    _ => "bg-slate-500 text-white shadow-slate-100"
+                                };
+                            }
+                            <div id="status-badge-overall" class="px-6 py-2.5 @statusClass rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span class="status-text">@app.Status</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Email</p>
+                                    <p class="text-sm font-bold text-slate-700">@app.CandidateEmail</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Ngày Ứng Tuyển</p>
+                                    <p class="text-sm font-bold text-slate-700">@app.CreatedAt.ToString("MMM dd, yyyy")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -320,15 +358,12 @@
 
                         @foreach (var step in pipelineSteps)
                         {
-                            // If rejected, hide everything except the rejected button itself
-                            if (app.Status == ApplicationStatus.REJECTED && step.S != ApplicationStatus.REJECTED) continue;
+                            var isHidden = false;
+                            if (app.Status == ApplicationStatus.REJECTED && step.S != ApplicationStatus.REJECTED) isHidden = true;
+                            if (step.S == ApplicationStatus.REVIEWING && app.Status >= ApplicationStatus.INTERVIEWING) isHidden = true;
+                            if (step.S == ApplicationStatus.INTERVIEWING && app.Status >= ApplicationStatus.OFFERED) isHidden = true;
 
-                            // Hide Reviewing if status is Interviewing or higher
-                            if (step.S == ApplicationStatus.REVIEWING && app.Status >= ApplicationStatus.INTERVIEWING) continue;
-                            // Hide Interviewing if status is Offered or higher
-                            if (step.S == ApplicationStatus.INTERVIEWING && app.Status >= ApplicationStatus.OFFERED) continue;
-
-                            <form id="statusForm-@step.S" method="post" asp-page-handler="UpdateStatus" class="m-0">
+                            <form id="statusForm-@step.S" method="post" asp-page-handler="UpdateStatus" class="m-0 @(isHidden ? "hidden" : "")" data-status-step="@step.S">
                                 <input type="hidden" name="id" value="@app.Id" />
                                 <input type="hidden" name="status" value="@step.S.ToString()" />
                                 <input type="hidden" id="interviewDate-@step.S" name="interviewDate" value="" />
@@ -349,9 +384,9 @@
                         }
                     </div>
 
-                    @if (app.Status == ApplicationStatus.REJECTED)
+                    @if (isRecruiter)
                     {
-                        <div class="mt-8 pt-8 border-t border-slate-50">
+                        <div id="restore-wrapper" class="@(app.Status == ApplicationStatus.REJECTED ? "" : "hidden") mt-8 pt-8 border-t border-slate-50">
                             <form method="post" asp-page-handler="Restore">
                                 <input type="hidden" name="id" value="@app.Id" />
                                 <button type="submit" class="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-3">
@@ -563,31 +598,50 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        if (window.notificationHubConnection) {
-            const currentAppId = @app.Id;
+        const currentAppId = Number("@app.Id");
+        const currentJobId = Number("@app.JobId");
+        console.log("CandidatePreview loaded for App ID:", currentAppId, "Job ID:", currentJobId);
 
-            window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
-                if (!update) return;
+        function registerHandlers() {
+            if (window.notificationHubConnection) {
+                console.log("Registering SignalR handlers for CandidatePreview...");
                 
-                // Assuming update is for the Current Application since we're on details page
-                // But better to check appId if provided, though score update currently uses JobId
-                // Wait, ScoreUpdateDto currently has JobId, but let's assume it matches if we only have one app
-                // NO, we should probably add ApplicationId to ScoreUpdateDto too for precision.
-                // For now, let's just update if the jobId matches.
-                if (update.JobId == @app.JobId || update.jobId == @app.JobId) {
-                    updateScores(update.matchScore || update.MatchScore || 0, update.skillMatch || update.SkillMatch || 0, update.experienceMatch || update.ExperienceMatch || 0, update.ai_Summary || update.AI_Summary || "");
-                }
-            });
+                // Score Updates
+                window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
+                    console.log("CandidatePreview: Received Score Update:", update);
+                    if (!update) return;
+                    
+                    const jobId = update.jobId || update.JobId;
+                    if (jobId == currentJobId) {
+                        console.log("Job ID match! Updating scores UI.");
+                        updateScores(
+                            update.matchScore || update.MatchScore || 0,
+                            update.skillMatch || update.SkillMatch || 0,
+                            update.experienceMatch || update.ExperienceMatch || 0,
+                            update.ai_Summary || update.AI_Summary || ""
+                        );
+                    }
+                });
 
-            window.notificationHubConnection.on("ReceiveApplicationStatusUpdate", function (update) {
-                if (!update) return;
-                const appId = update.applicationId || update.ApplicationId;
-                if (appId == currentAppId) {
+                // Status Updates
+                window.notificationHubConnection.on("ReceiveApplicationStatusUpdate", function (update) {
+                    console.log("CandidatePreview: Received Status Update:", update);
+                    if (!update) return;
+                    
+                    const appId = update.applicationId || update.ApplicationId;
                     const newStatus = update.status || update.Status;
-                    updateStatus(newStatus);
-                }
-            });
+                    
+                    if (appId == currentAppId) {
+                        console.log("App ID match! Updating status UI to:", newStatus);
+                        updateStatus(newStatus);
+                    }
+                });
+            } else {
+                console.warn("CandidatePreview: notificationHubConnection not found, retrying in 500ms...");
+                setTimeout(registerHandlers, 500);
+            }
         }
+        registerHandlers();
     });
 
     function updateScores(match, skill, exp, summary) {
@@ -620,10 +674,45 @@
             let colorClass = "bg-slate-500 text-white shadow-slate-100";
             if (status === 'OFFERED') colorClass = "bg-green-500 text-white shadow-green-100";
             else if (status === 'REJECTED') colorClass = "bg-red-500 text-white shadow-red-100";
-            else if (status === 'REVIEWING') colorClass = "bg-indigo-600 text-white shadow-indigo-100";
+            else if (status === 'REVIEWING') colorClass = "bg-indigo-600 text-white shadow-indigo-100 transition-all";
             else if (status === 'INTERVIEWING') colorClass = "bg-amber-500 text-white shadow-amber-100";
             
             badge.className = "px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center gap-2 " + colorClass;
+        }
+
+        // Update sidebar visibility for recruiter
+        if (document.querySelectorAll('[data-status-step]').length > 0) {
+            const restoreWrapper = document.getElementById('restore-wrapper');
+            if (restoreWrapper) {
+                if (status === 'REJECTED') restoreWrapper.classList.remove('hidden');
+                else restoreWrapper.classList.add('hidden');
+            }
+
+            document.querySelectorAll('[data-status-step]').forEach(form => {
+                const step = form.getAttribute('data-status-step');
+                const badgeInner = form.querySelector('.rounded-2xl');
+                const descText = form.querySelector('.text-[10px]');
+                
+                // Hide/Show logic consistent with server-side
+                let shouldHide = false;
+                if (status === 'REJECTED' && step !== 'REJECTED') shouldHide = true;
+                if (step === 'REVIEWING' && (status === 'INTERVIEWING' || status === 'OFFERED' || status === 'REJECTED')) {
+                    if (status !== 'REJECTED') shouldHide = true;
+                }
+                if (step === 'INTERVIEWING' && status === 'OFFERED') shouldHide = true;
+
+                if (shouldHide) form.classList.add('hidden');
+                else form.classList.remove('hidden');
+
+                // Update active state class
+                if (step === status) {
+                    if (badgeInner) badgeInner.className = "flex items-center gap-4 p-4 rounded-2xl border transition-all bg-indigo-600 border-indigo-600 text-white shadow-lg";
+                    if (descText) descText.classList.replace('text-slate-400', 'text-indigo-100');
+                } else {
+                    if (badgeInner) badgeInner.className = "flex items-center gap-4 p-4 rounded-2xl border transition-all bg-white border-slate-100 text-slate-600 hover:border-indigo-200";
+                    if (descText) descText.classList.replace('text-indigo-100', 'text-slate-400');
+                }
+            });
         }
     }
 

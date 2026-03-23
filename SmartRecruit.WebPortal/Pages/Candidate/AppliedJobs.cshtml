@@ -144,7 +144,7 @@
                                     }
                                     <span id="status-badge-app-@app.Id" data-status="@app.Status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black">
                                         <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                                        @app.Status
+                                        <span class="status-text">@app.Status</span>
                                     </span>
                                 </td>
                                 <td class="px-8 py-8">
@@ -174,59 +174,71 @@
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            if (window.notificationHubConnection) {
-                window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
-                    if (!update) return;
-                    
-                    const jobId = update.jobId || update.JobId;
-                    const score = update.matchScore || update.MatchScore || 0;
-                    
-                    const evaluatingEl = document.getElementById("ai-evaluating-job-" + jobId);
-                    const scoreContainerEl = document.getElementById("score-container-job-" + jobId);
-                    
-                    if (evaluatingEl) {
-                        evaluatingEl.classList.add('hidden');
-                        evaluatingEl.classList.remove('flex');
-                    }
-                    if (scoreContainerEl) {
-                        scoreContainerEl.classList.remove('hidden');
-                        scoreContainerEl.classList.add('flex');
+            function registerHandlers() {
+                if (window.notificationHubConnection) {
+                    console.log("Registering handlers for AppliedJobs...");
+                    window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
+                        console.log("AppliedJobs: Received Score Update:", update);
+                        if (!update) return;
                         
-                        const circleEl = scoreContainerEl.querySelector('circle:nth-child(2)');
-                        const textEl = scoreContainerEl.querySelector('span.absolute');
-                        if (circleEl && textEl) {
-                            const offset = 2 * Math.PI * 20 * (1 - score / 100);
-                            circleEl.setAttribute('stroke-dashoffset', offset);
-                            circleEl.className.baseVal = score > 80 ? "text-green-500" : (score > 50 ? "text-indigo-500" : "text-amber-500");
-                            textEl.innerText = Math.round(score) + "%";
+                        const jobId = update.jobId || update.JobId;
+                        const score = update.matchScore || update.MatchScore || 0;
+                        
+                        const evaluatingEl = document.getElementById("ai-evaluating-job-" + jobId);
+                        const scoreContainerEl = document.getElementById("score-container-job-" + jobId);
+                        
+                        if (evaluatingEl) {
+                            evaluatingEl.classList.add('hidden');
+                            evaluatingEl.classList.remove('flex');
                         }
-                    }
+                        if (scoreContainerEl) {
+                            scoreContainerEl.classList.remove('hidden');
+                            scoreContainerEl.classList.add('flex');
+                            
+                            const circleEl = scoreContainerEl.querySelector('circle:nth-child(2)');
+                            const textEl = scoreContainerEl.querySelector('span.absolute');
+                            if (circleEl && textEl) {
+                                const offset = 2 * Math.PI * 20 * (1 - score / 100);
+                                circleEl.setAttribute('stroke-dashoffset', offset);
+                                circleEl.className.baseVal = score > 80 ? "text-green-500" : (score > 50 ? "text-indigo-500" : "text-amber-500");
+                                textEl.innerText = Math.round(score) + "%";
+                            }
+                        }
 
-                    // Recalculate average (simplified: just current items in view)
-                    updateAverageScore();
-                });
+                        // Recalculate average (simplified: just current items in view)
+                        updateAverageScore();
+                    });
 
-                window.notificationHubConnection.on("ReceiveApplicationStatusUpdate", function (update) {
-                    if (!update) return;
-                    
-                    const appId = update.applicationId || update.ApplicationId;
-                    const newStatus = update.status || update.Status;
-                    
-                    const badgeEl = document.getElementById("status-badge-app-" + appId);
-                    if (badgeEl) {
-                        const textEl = badgeEl.querySelector('.status-text');
-                        if (textEl) textEl.innerText = newStatus;
+                    window.notificationHubConnection.on("ReceiveApplicationStatusUpdate", function (update) {
+                        console.log("AppliedJobs: Received Status Update:", update);
+                        if (!update) return;
                         
-                        badgeEl.setAttribute('data-status', newStatus);
+                        const appId = update.applicationId || update.ApplicationId;
+                        const newStatus = update.status || update.Status;
                         
-                        // Update classes
-                        badgeEl.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm font-black " + getStatusClass(newStatus);
-                    }
+                        if (!appId || !newStatus) return;
+                        
+                        const badgeEl = document.getElementById("status-badge-app-" + appId);
+                        console.log(`Updating UI for App ID ${appId} to status ${newStatus}`);
+                        if (badgeEl) {
+                            const textEl = badgeEl.querySelector('.status-text');
+                            if (textEl) textEl.innerText = newStatus;
+                            
+                            badgeEl.setAttribute('data-status', newStatus);
+                            
+                            // Update classes
+                            badgeEl.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm font-black " + getStatusClass(newStatus);
+                        }
 
-                    // Update pending count
-                    updatePendingCount();
-                });
+                        // Update pending count
+                        updatePendingCount();
+                    });
+                } else {
+                    console.warn("AppliedJobs: notificationHubConnection not found, retrying...");
+                    setTimeout(registerHandlers, 500);
+                }
             }
+            registerHandlers();
 
             function getStatusClass(status) {
                 switch(status) {
