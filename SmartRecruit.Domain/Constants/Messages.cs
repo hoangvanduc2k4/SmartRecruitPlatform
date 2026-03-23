@@ -1,4 +1,5 @@
-﻿namespace SmartRecruit.Domain.Constants
+﻿
+namespace SmartRecruit.Domain.Constants
 {
     public static class Messages
     {

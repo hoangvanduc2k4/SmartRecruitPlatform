@@ -1,3 +1,4 @@
+
 @page "/Profile"
 @model WebPortal.Pages.ProfileModel
 @{
@@ -321,7 +322,7 @@
                                     <iframe id="cvIframe" 
                                             src="https://docs.google.com/gview?url=@(System.Net.WebUtility.UrlEncode(Model.CurrentUser.CandidateProfile.CVUrl))&embedded=true"
                                             class="relative z-10 w-full h-full border-none bg-transparent opacity-0 transition-opacity duration-500"
-                                            title="CV Preview"
+                                            title="Xem Trước CV"
                                             onload="handleCVLoad(this)">
                                     </iframe>
                                 </div>

@@ -10,9 +10,9 @@ namespace WebPortal.Models
         public string Description { get; set; } = string.Empty;
         public string Requirement { get; set; } = string.Empty;
         public string SkillsRequired { get; set; } = string.Empty;
-        public IEnumerable<string> SkillsRequiredList => 
-            string.IsNullOrWhiteSpace(SkillsRequired) 
-                ? Enumerable.Empty<string>() 
+        public IEnumerable<string> SkillsRequiredList =>
+            string.IsNullOrWhiteSpace(SkillsRequired)
+                ? Enumerable.Empty<string>()
                 : SkillsRequired.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
         public decimal SalaryMin { get; set; }
         public decimal SalaryMax { get; set; }
@@ -20,6 +20,7 @@ namespace WebPortal.Models
         public JobStatus Status { get; set; }
         public int ViewCount { get; set; }
         public DateTime CreatedTime { get; set; }
+        public DateTime? ExpireDate { get; set; } // Added to fix Index.cshtml build error
         public string Location { get; set; } = string.Empty;
         public long CategoryId { get; set; }
         public string Category { get; set; } = string.Empty;

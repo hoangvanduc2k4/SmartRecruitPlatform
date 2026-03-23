@@ -25,6 +25,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             var query = _context.Set<Applications>()
                 .Include(a => a.Job)
                 .Include(a => a.Candidate)
+                .AsNoTracking()
                 .AsQueryable();
 
             // Filter by CandidateId

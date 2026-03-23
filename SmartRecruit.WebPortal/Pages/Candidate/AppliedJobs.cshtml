@@ -81,7 +81,7 @@
                     {
                         @foreach (var app in Model.AppliedJobs)
                         {
-                            <tr class="group hover:bg-slate-50/50 transition-all duration-300">
+                            <tr class="group hover:bg-slate-50/50 transition-all duration-300" data-job-id="@app.JobId" data-app-id="@app.Id">
                                 <td class="px-10 py-8">
                                     <div class="flex flex-col gap-1">
                                         <a href="/CandidatePreview/@app.Id" class="text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">@app.JobTitle</a>
@@ -90,47 +90,33 @@
                                         </p>
                                     </div>
                                 </td>
-                                <td class="px-8 py-8" id="match-score-cell-job-@app.JobId">
-                                    @if (app.MatchScore == 0 && string.IsNullOrEmpty(app.AI_Summary))
-                                    {
-                                        <div id="ai-evaluating-job-@app.JobId" class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg border border-indigo-100 w-max">
-                                            <i class="fas fa-robot text-indigo-500 animate-bounce text-[10px]"></i>
-                                            <span class="text-[9px] font-black text-indigo-700 uppercase tracking-wider">Đang đánh giá độ phù hợp</span>
-                                        </div>
-                                        <div id="score-container-job-@app.JobId" class="hidden items-center gap-4">
-                                            <div class="relative w-12 h-12 flex items-center justify-center">
-                                                <svg class="w-full h-full transform -rotate-90">
-                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
-                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-amber-500" 
-                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
-                                                            stroke-dashoffset="@(2 * Math.PI * 20)" />
-                                                </svg>
-                                                <span class="absolute text-[10px] font-black text-slate-700">0%</span>
-                                            </div>
-                                            <div class="hidden sm:block">
-                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
-                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
-                                            </div>
-                                        </div>
+                                <td class="px-8 py-8" id="match-score-cell-app-@app.Id">
+                                    @{
+                                        // Hiển thị "Đang đánh giá" nếu cả Score là 0 VÀ Summary trống (chưa có kết quả AI)
+                                        // Sử dụng ID dựa trên Application ID để tránh xung đột
+                                        var isEvaluating = app.MatchScore <= 0 && string.IsNullOrEmpty(app.AI_Summary);
                                     }
-                                    else
-                                    {
-                                        <div id="score-container-job-@app.JobId" class="flex items-center gap-4">
-                                            <div class="relative w-12 h-12 flex items-center justify-center">
-                                                <svg class="w-full h-full transform -rotate-90">
-                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
-                                                    <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="@(app.MatchScore > 80 ? "text-green-500" : app.MatchScore > 50 ? "text-indigo-500" : "text-amber-500")" 
-                                                            stroke-dasharray="@(2 * Math.PI * 20)" 
-                                                            stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
-                                                </svg>
-                                                <span class="absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
-                                            </div>
-                                            <div class="hidden sm:block">
-                                                <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
-                                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
-                                            </div>
+                                    <div id="ai-evaluating-app-@app.Id" class="@(isEvaluating ? "flex" : "hidden") items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg border border-indigo-100 w-max">
+                                        <i class="fas fa-robot text-indigo-500 animate-bounce text-[10px]"></i>
+                                        <span class="text-[9px] font-black text-indigo-700 uppercase tracking-wider">Đang đánh giá độ phù hợp</span>
+                                    </div>
+                                    
+                                    <div id="score-container-app-@app.Id" class="@(isEvaluating ? "hidden" : "flex") items-center gap-4">
+                                        <div class="relative w-12 h-12 flex items-center justify-center">
+                                            <svg class="w-full h-full transform -rotate-90">
+                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-100" />
+                                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" fill="transparent" 
+                                                        class="score-circle @(app.MatchScore > 80 ? "text-green-500" : app.MatchScore > 50 ? "text-indigo-500" : "text-amber-500")" 
+                                                        stroke-dasharray="@(2 * Math.PI * 20)" 
+                                                        stroke-dashoffset="@(2 * Math.PI * 20 * (1 - (double)app.MatchScore / 100))" />
+                                            </svg>
+                                            <span class="score-text absolute text-[10px] font-black text-slate-700">@app.MatchScore.ToString("N0")%</span>
                                         </div>
-                                    }
+                                        <div class="hidden sm:block">
+                                            <p class="text-[10px] font-black text-slate-800 uppercase tracking-tighter">Độ Phù Hợp</p>
+                                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Phân Tích AI</p>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-8 py-8" id="status-cell-app-@app.Id">
                                     @{
@@ -142,18 +128,26 @@
                                             _ => "bg-slate-50 text-slate-600 border-slate-100"
                                         };
                                     }
-                                    <span id="status-badge-app-@app.Id" data-status="@app.Status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black">
+                                    <span id="status-badge-app-@app.Id" data-status="@app.Status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @statusClass shadow-sm font-black whitespace-nowrap shrink-0">
                                         <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                                        <span class="status-text">@app.Status</span>
+                                        <span class="status-text">
+                                            @(app.Status switch {
+                                                ApplicationStatus.REVIEWING => "Đang xem xét",
+                                                ApplicationStatus.INTERVIEWING => "Phỏng vấn",
+                                                ApplicationStatus.OFFERED => "Đã mời làm",
+                                                ApplicationStatus.REJECTED => "Đã từ chối",
+                                                _ => app.Status.ToString()
+                                            })
+                                        </span>
                                     </span>
                                 </td>
                                 <td class="px-8 py-8">
-                                    <p class="text-xs font-bold text-slate-800 tracking-tight">@app.CreatedAt.ToString("MMM dd, yyyy")</p>
+                                    <p class="text-xs font-bold text-slate-800 tracking-tight">@app.CreatedAt.ToString("dd/MM/yyyy")</p>
                                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-0.5">@app.CreatedAt.ToString("HH:mm") UTC</p>
                                 </td>
                                 <td class="px-10 py-8 text-right">
                                     <div class="flex justify-end items-center gap-3 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
-                                        <a href="/CandidatePreview/@app.Id" class="w-12 h-12 bg-white border border-slate-200 text-slate-600 flex items-center justify-center rounded-2xl hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all shadow-sm active:scale-90">
+                                        <a href="/CandidatePreview/@app.Id?ReturnUrl=@System.Net.WebUtility.UrlEncode(Request.Path + Request.QueryString)" class="w-12 h-12 bg-white border border-slate-200 text-slate-600 flex items-center justify-center rounded-2xl hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all shadow-sm active:scale-90">
                                             <i class="fas fa-arrow-right text-xs"></i>
                                         </a>
                                     </div>
@@ -184,28 +178,32 @@
                         const jobId = update.jobId || update.JobId;
                         const score = update.matchScore || update.MatchScore || 0;
                         
-                        const evaluatingEl = document.getElementById("ai-evaluating-job-" + jobId);
-                        const scoreContainerEl = document.getElementById("score-container-job-" + jobId);
-                        
-                        if (evaluatingEl) {
-                            evaluatingEl.classList.add('hidden');
-                            evaluatingEl.classList.remove('flex');
-                        }
-                        if (scoreContainerEl) {
-                            scoreContainerEl.classList.remove('hidden');
-                            scoreContainerEl.classList.add('flex');
+                        // Tìm tất cả các hàng có JobId này để cập nhật
+                        const rows = document.querySelectorAll('tr[data-job-id="' + jobId + '"]');
+                        rows.forEach(row => {
+                            const evaluatingEl = row.querySelector('[id^="ai-evaluating-app-"]');
+                            const scoreContainerEl = row.querySelector('[id^="score-container-app-"]');
                             
-                            const circleEl = scoreContainerEl.querySelector('circle:nth-child(2)');
-                            const textEl = scoreContainerEl.querySelector('span.absolute');
-                            if (circleEl && textEl) {
-                                const offset = 2 * Math.PI * 20 * (1 - score / 100);
-                                circleEl.setAttribute('stroke-dashoffset', offset);
-                                circleEl.className.baseVal = score > 80 ? "text-green-500" : (score > 50 ? "text-indigo-500" : "text-amber-500");
-                                textEl.innerText = Math.round(score) + "%";
+                            if (evaluatingEl) {
+                                evaluatingEl.classList.add('hidden');
+                                evaluatingEl.classList.remove('flex');
                             }
-                        }
+                            if (scoreContainerEl) {
+                                scoreContainerEl.classList.remove('hidden');
+                                scoreContainerEl.classList.add('flex');
+                                
+                                const circleEl = scoreContainerEl.querySelector('.score-circle');
+                                const textEl = scoreContainerEl.querySelector('.score-text');
+                                if (circleEl && textEl) {
+                                    const offset = 2 * Math.PI * 20 * (1 - score / 100);
+                                    circleEl.style.strokeDashoffset = offset;
+                                    circleEl.className.baseVal = "score-circle " + (score > 80 ? "text-green-500" : (score > 50 ? "text-indigo-500" : "text-amber-500"));
+                                    textEl.innerText = Math.round(score) + "%";
+                                }
+                            }
+                        });
 
-                        // Recalculate average (simplified: just current items in view)
+                        // Cập nhật lại trung bình
                         updateAverageScore();
                     });
 
@@ -222,7 +220,14 @@
                         console.log(`Updating UI for App ID ${appId} to status ${newStatus}`);
                         if (badgeEl) {
                             const textEl = badgeEl.querySelector('.status-text');
-                            if (textEl) textEl.innerText = newStatus;
+                            if (textEl) {
+                                let statusDisplay = newStatus;
+                                if (newStatus === 'REVIEWING') statusDisplay = 'Đang xem xét';
+                                else if (newStatus === 'INTERVIEWING') statusDisplay = 'Phỏng vấn';
+                                else if (newStatus === 'OFFERED') statusDisplay = 'Đã mời làm';
+                                else if (newStatus === 'REJECTED') statusDisplay = 'Đã từ chối';
+                                textEl.innerText = statusDisplay;
+                            }
                             
                             badgeEl.setAttribute('data-status', newStatus);
                             
@@ -260,7 +265,7 @@
             }
 
             function updateAverageScore() {
-                const scores = Array.from(document.querySelectorAll('[id^="score-container-job-"] span.absolute'))
+                const scores = Array.from(document.querySelectorAll('[id^="score-container-app-"] .score-text'))
                     .map(el => parseFloat(el.innerText))
                     .filter(s => !isNaN(s));
                 

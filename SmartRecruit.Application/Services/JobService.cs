@@ -1,3 +1,4 @@
+
 using AutoMapper;
 using System;
 using System.Text;
@@ -27,13 +28,13 @@ namespace SmartRecruit.Application.Services
         private readonly ILogger<JobService> _logger;
 
         public JobService(
-            IJobRepository jobRepository, 
-            IUnitOfWork unitOfWork, 
-            IMapper mapper, 
-            IGeminiService geminiService, 
-            IWalletRepository walletRepository, 
-            IAILogRepository aiLogRepository, 
-            Hangfire.IBackgroundJobClient backgroundJobClient, 
+            IJobRepository jobRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IGeminiService geminiService,
+            IWalletRepository walletRepository,
+            IAILogRepository aiLogRepository,
+            Hangfire.IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
             ILogger<JobService> logger)
         {
@@ -52,7 +53,7 @@ namespace SmartRecruit.Application.Services
         {
             var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true)
             {
-                RecruiterId = recruiterId
+                recruiterId = recruiterId
             };
             return await GetJobsAsync(request);
         }
@@ -95,7 +96,7 @@ namespace SmartRecruit.Application.Services
                 CategoryId = request.CategoryId,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
-                Status = JobStatus.DRAFT 
+                Status = JobStatus.DRAFT
             };
 
             await _jobRepository.AddAsync(job);
@@ -439,7 +440,7 @@ namespace SmartRecruit.Application.Services
                 }
 
                 _logger.LogError(ex, "Permanent error in ProcessJobPublishingAsync for JobId {JobId}", jobId);
-                
+
                 if (job.Status == JobStatus.CHECKING)
                 {
                     job.Status = JobStatus.DRAFT;
@@ -553,7 +554,7 @@ namespace SmartRecruit.Application.Services
             if (result)
             {
                 _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
-                
+
                 // Push Notification for Payment Transparency
                 try
                 {
@@ -575,7 +576,7 @@ namespace SmartRecruit.Application.Services
         public async Task<IEnumerable<string>> GetLocationsAsync()
         {
             var rawLocations = await _jobRepository.GetLocationsAsync();
-            
+
             // Clean & Normalize: "Hà Nội" vs "ha noi" or "HÀ NỘI"
             // We'll use a dictionary to keep track of the "pretty" version while deduplicating by normalized key
             var uniqueLocations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -606,7 +607,7 @@ namespace SmartRecruit.Application.Services
 
             job.IsAppealed = true;
             job.AppealMessage = message;
-            
+
             _jobRepository.Update(job);
             return await _unitOfWork.CompleteAsync() > 0;
         }

@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Profile;
@@ -52,13 +53,13 @@ namespace SmartRecruit.API.Controllers
         {
             var userId = CurrentUserId;
             _logger.LogInformation("API UploadCv called for User: {UserId}, FileName: {FileName}", userId, file?.FileName);
-            
+
             if (file == null) return BadRequest("No file uploaded.");
 
             using var stream = file.OpenReadStream();
             var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
-            
-            return Ok(profile.Wrap("CV uploaded and text extracted successfully"));
+
+            return Ok(profile.Wrap("Tải CV và trích xuất nội dung thành công"));
         }
 
         [HttpPost("upload-avatar")]

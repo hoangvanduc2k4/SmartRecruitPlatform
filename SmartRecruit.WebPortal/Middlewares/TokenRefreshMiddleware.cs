@@ -119,7 +119,7 @@ namespace SmartRecruitWeb.Middlewares
             public ICollection<string> Keys => _cookies.Keys;
             public bool ContainsKey(string key) => _cookies.ContainsKey(key);
             public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => _cookies.GetEnumerator();
-            public bool TryGetValue(string key, out string? value) => _cookies.TryGetValue(key, out value);
+            public bool TryGetValue(string key, out string value) => _cookies.TryGetValue(key, out value!);
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => _cookies.GetEnumerator();
         }
 

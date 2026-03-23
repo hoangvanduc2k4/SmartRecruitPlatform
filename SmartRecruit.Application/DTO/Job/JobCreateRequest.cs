@@ -1,4 +1,5 @@
-﻿using SmartRecruit.Domain.Enums;
+﻿
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Application.DTO.Job
 {
