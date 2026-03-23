@@ -1,3 +1,4 @@
+
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using SmartRecruit.Application.Utils;

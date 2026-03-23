@@ -1,8 +1,9 @@
+
 @page "/JobDetail"
 @model WebPortal.Pages.JobDetailModel
 @using WebPortal.Models
 @{
-    ViewData["Title"] = Model.Job?.Title ?? "Job Board";
+    ViewData["Title"] = Model.Job?.Title ?? "Bảng công việc";
 }
 
 @if (Model.Job == null)
@@ -477,7 +478,7 @@ else
         document.addEventListener("DOMContentLoaded", function () {
             if (window.notificationHubConnection) {
                 window.notificationHubConnection.on("ReceiveApplicationScoreUpdate", function (update) {
-                    if (update.jobId == @(Model.Job?.Id ?? 0)) {
+                    if (@(Model.Job != null ? "true" : "false") && update.jobId == @(Model.Job?.Id ?? 0)) {
                         const evalWrapper = document.getElementById('ai-evaluating-wrapper');
                         const resultWrapper = document.getElementById('ai-result-wrapper');
                         

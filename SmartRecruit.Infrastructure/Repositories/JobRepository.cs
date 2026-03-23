@@ -1,3 +1,4 @@
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Job;
@@ -32,19 +33,19 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             // 2. Visibility Filter
             // If NOT showing hidden, exclude HIDDEN status
-            if (!request.ShowHidden)
+            if (!request.showHidden)
             {
                 query = query.Where(x => x.Status != JobStatus.HIDDEN);
             }
 
             // If NOT showing blocked, exclude BLOCKED status
-            if (!request.ShowBlocked)
+            if (!request.showBlocked)
             {
                 query = query.Where(x => x.Status != JobStatus.BLOCKED);
             }
 
             // Exclude DRAFT status unless it's a specific recruiter's view (Manage Jobs)
-            if (!request.RecruiterId.HasValue)
+            if (!request.recruiterId.HasValue)
             {
                 query = query.Where(x => x.Status != JobStatus.DRAFT);
             }
@@ -54,9 +55,9 @@ namespace SmartRecruit.Infrastructure.Repositories
             // However, sticking to the explicit "ShowHidden/ShowBlocked" toggles requested.
 
             // 3. Keyword Search (Title, Description, Requirement, SkillsRequired)
-            if (!string.IsNullOrEmpty(request.Keyword))
+            if (!string.IsNullOrEmpty(request.keyword))
             {
-                var keyword = request.Keyword.Trim();
+                var keyword = request.keyword.Trim();
                 query = query.Where(x =>
                     EF.Functions.Collate(x.Title, "Vietnamese_CI_AI").Contains(keyword) ||
                     EF.Functions.Collate(x.Company, "Vietnamese_CI_AI").Contains(keyword) ||
@@ -66,38 +67,38 @@ namespace SmartRecruit.Infrastructure.Repositories
                     EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(keyword));
             }
 
-            // 4. Salary Range (Overlap Logic)
-            if (request.MinSalary.HasValue)
+            // 4. Salary Range Logic
+            if (request.minSalary.HasValue && request.minSalary > 0)
             {
-                // Job must be able to pay AT LEAST the min requested (JMax >= UMin)
-                query = query.Where(x => x.SalaryMax >= request.MinSalary.Value);
+                // Standard logic: The job's MIN salary must be at least the user's requested min.
+                query = query.Where(x => x.SalaryMin >= request.minSalary.Value);
             }
 
-            if (request.MaxSalary.HasValue)
+            if (request.maxSalary.HasValue && request.maxSalary > 0)
             {
-                // Job must NOT start higher than the max requested (JMin <= UMax)
-                query = query.Where(x => x.SalaryMin <= request.MaxSalary.Value);
+                // Standard logic: The job's MAX salary should not exceed the user's requested max.
+                query = query.Where(x => x.SalaryMax <= request.maxSalary.Value);
             }
 
             // 5. Specific Filters
-            if (!string.IsNullOrEmpty(request.Location))
+            if (!string.IsNullOrEmpty(request.location))
             {
-                query = query.Where(x => EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(request.Location));
+                query = query.Where(x => EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(request.location));
             }
 
-            if (request.CategoryId.HasValue)
+            if (request.categoryId.HasValue && request.categoryId.Value > 0)
             {
-                query = query.Where(x => x.CategoryId == request.CategoryId.Value);
+                query = query.Where(x => x.CategoryId == request.categoryId.Value);
             }
 
-            if (request.RecruiterId.HasValue)
+            if (request.recruiterId.HasValue)
             {
-                query = query.Where(x => x.RecruiterId == request.RecruiterId.Value);
+                query = query.Where(x => x.RecruiterId == request.recruiterId.Value);
             }
 
-            if (request.JobType.HasValue)
+            if (request.jobType.HasValue)
             {
-                query = query.Where(x => (int)x.JobType == request.JobType.Value);
+                query = query.Where(x => (int)x.JobType == request.jobType.Value);
             }
 
             // 6. Sorting
@@ -127,11 +128,11 @@ namespace SmartRecruit.Infrastructure.Repositories
                                 .ThenBy(x => x.CreatedAt); // Oldest created first as tie-breaker
 
             // After boosted jobs, apply the requested or default sorting for non-boosted jobs
-            bool isDesc = !string.Equals(request.SortOrder, "asc", StringComparison.OrdinalIgnoreCase);
+            bool isDesc = !string.Equals(request.sortOrder, "asc", StringComparison.OrdinalIgnoreCase);
 
-            if (!string.IsNullOrEmpty(request.SortBy))
+            if (!string.IsNullOrEmpty(request.sortBy))
             {
-                switch (request.SortBy.ToLower())
+                switch (request.sortBy.ToLower())
                 {
                     case "salary":
                         orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.SalaryMin) : orderedQuery.ThenBy(x => x.SalaryMin);
@@ -149,7 +150,7 @@ namespace SmartRecruit.Infrastructure.Repositories
                 orderedQuery = orderedQuery.ThenByDescending(x => x.CreatedAt);
             }
 
-            return await PagedList<Job>.CreateAsync(orderedQuery, request.Page, request.PageSize);
+            return await PagedList<Job>.CreateAsync(orderedQuery, request.page, request.pageSize);
         }
 
 
@@ -191,7 +192,7 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .Distinct()
                 .ToListAsync();
         }
-        
+
         public async Task<IEnumerable<string>> GetTopLocationsAsync(int count)
         {
             return await _context.Set<Job>()
@@ -239,8 +240,8 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 1. Get Candidate Profile Skills
             var profile = await _context.Set<CandidateProfile>()
                 .FirstOrDefaultAsync(p => p.UserId == userId);
-            
-            var userSkills = profile?.Skills?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) 
+
+            var userSkills = profile?.Skills?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                              ?? Array.Empty<string>();
 
             // 2. Get Past Application History (Categories and Skills from jobs applied to)

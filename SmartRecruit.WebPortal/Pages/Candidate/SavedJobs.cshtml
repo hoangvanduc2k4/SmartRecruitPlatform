@@ -70,7 +70,9 @@
 
                     <div class="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="inline-flex items-center px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest bg-slate-50 border border-slate-100 text-slate-600">@job.JobType</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest bg-slate-50 border border-slate-100 text-slate-600">
+                                @(job.JobType == JobType.FULL_TIME ? "TOÀN THỜI GIAN" : job.JobType == JobType.PART_TIME ? "BÁN THỜI GIAN" : "LÀM VIỆC TỪ XA")
+                            </span>
                         </div>
                         <a href="/JobDetail?id=@job.Id" class="inline-flex">
                             <button class="px-6 h-11 bg-indigo-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition">

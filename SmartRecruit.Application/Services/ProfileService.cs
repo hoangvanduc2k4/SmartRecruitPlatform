@@ -1,3 +1,4 @@
+
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Interfaces.Repositories;
@@ -16,9 +17,9 @@ namespace SmartRecruit.Application.Services
         private readonly ITokenService _tokenService;
 
         public ProfileService(
-            IUnitOfWork unitOfWork, 
-            ILogger<ProfileService> logger, 
-            ICloudinaryService cloudinaryService, 
+            IUnitOfWork unitOfWork,
+            ILogger<ProfileService> logger,
+            ICloudinaryService cloudinaryService,
             ICvService cvService,
             ITokenService tokenService)
         {
@@ -153,10 +154,10 @@ namespace SmartRecruit.Application.Services
 
             // Fetch updated profile
             var response = await GetCurrentUserProfileAsync(userId);
-            
+
             // Inject new token after profile update (in case FullName changed and is in claims)
             response.NewToken = await GenerateNewTokenAsync(userId);
-            
+
             return response;
         }
 
@@ -278,10 +279,10 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("Avatar uploaded for user {UserId}", userId);
-            
+
             var response = await GetCurrentUserProfileAsync(userId);
             response.NewToken = await GenerateNewTokenAsync(userId);
-            
+
             return response;
         }
 

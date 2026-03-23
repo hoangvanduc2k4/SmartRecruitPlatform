@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
@@ -76,7 +77,7 @@ namespace WebPortal.Pages
                 if (Job != null)
                 {
                     var currentUserId = CurrentUserId;
-                    
+
                     // Ownership check
                     IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
 
@@ -105,7 +106,7 @@ namespace WebPortal.Pages
 
                     // Fetch applications for this job
                     var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
-                    Applications = (List<Application>)pagedApps.Data;
+                    Applications = pagedApps.Data != null ? ((IEnumerable<Application>)pagedApps.Data).ToList() : new List<Application>();
                     TotalApplicationCount = pagedApps.TotalCount;
                     TotalPages = pagedApps.TotalPages;
                 }
@@ -247,7 +248,8 @@ namespace WebPortal.Pages
                 }
                 catch (Exception ex)
                 {
-                     TempData["Error"] = $"Publishing failed: {ex.Message}";
+                    TempData["Error"] = $"Xuất bản thất bại: {ex.Message}";
+
                 }
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });

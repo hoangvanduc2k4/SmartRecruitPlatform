@@ -1,3 +1,4 @@
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -99,17 +100,23 @@ namespace SmartRecruit.Infrastructure.Services
                 throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
             }
 
-            dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
+            dynamic? jsonResponse = JsonConvert.DeserializeObject(responseString);
             if (jsonResponse?.candidates == null || jsonResponse.candidates.Count == 0)
             {
                 throw new Exception($"No content returned. Raw: {responseString}");
             }
 
-            string aiText = jsonResponse.candidates[0].content.parts[0].text;
+            var candidate = jsonResponse.candidates[0];
+            if (candidate?.content?.parts == null || candidate.content.parts.Count == 0)
+            {
+                throw new Exception($"No parts returned in candidate content. Raw: {responseString}");
+            }
+
+            string aiText = candidate.content.parts[0].text ?? "";
             aiText = aiText.Replace("```json", "").Replace("```", "").Trim();
             try
             {
-                return JsonConvert.DeserializeObject<T>(aiText);
+                return JsonConvert.DeserializeObject<T>(aiText) ?? throw new Exception("Deserialized object is null");
             }
             catch (Exception ex)
             {

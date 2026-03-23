@@ -85,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @if (Model.Transactions == null || !Model.Transactions.Data.Any())
+                    @if (Model.Transactions?.Data == null || !Model.Transactions.Data.Any())
                     {
                         <tr>
                             <td colspan="6" class="px-6 py-20 text-center">
@@ -118,7 +118,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-medium">
-                                    @tx.CreatedAt.ToString("MMM dd, yyyy HH:mm")
+                                    @tx.CreatedAt.ToString("dd/MM/yyyy HH:mm")
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @switch (tx.Status?.ToUpper())
@@ -136,7 +136,9 @@
                                     }
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="text-[10px] font-black uppercase text-slate-400">@tx.Type</span>
+                                    <span class="text-[10px] font-black uppercase text-slate-400">
+                                        @(tx.Type == "TOPUP" ? "Nạp Tiền" : tx.Type == "JOB_POST" ? "Đăng Tin" : tx.Type == "BOOST" ? "Đẩy Tin" : tx.Type == "VIP" ? "Nâng Cấp VIP" : tx.Type)
+                                    </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-right @(isVisualTopUp ? "text-green-600" : "text-slate-800")">
                                     @(isVisualTopUp ? "+" : "")@displayAmount.ToString("N0") VNĐ
@@ -270,8 +272,8 @@
 
         function showTxDetails(tx) {
             const content = document.getElementById('txDetailsContent');
-            const date = new Date(tx.CreatedAt).toLocaleString('en-US', { 
-                month: 'short', day: '2-digit', year: 'numeric', 
+            const date = new Date(tx.CreatedAt).toLocaleString('vi-VN', { 
+                day: '2-digit', month: '2-digit', year: 'numeric', 
                 hour: '2-digit', minute: '2-digit' 
             });
             

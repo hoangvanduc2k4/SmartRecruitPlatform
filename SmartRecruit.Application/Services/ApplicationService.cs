@@ -326,7 +326,7 @@ namespace SmartRecruit.Application.Services
                             {
                                 ApplicationId = id,
                                 Status = newStatus.ToString(),
-                                JobTitle = application.Job?.Title ?? "your application",
+                                JobTitle = jobTitle,
                                 UpdatedAt = application.UpdatedAt.GetValueOrDefault(DateTime.UtcNow)
                             });
                         }
@@ -483,7 +483,7 @@ namespace SmartRecruit.Application.Services
                                 {
                                     ApplicationId = id,
                                     Status = restoredStatus.ToString(),
-                                    JobTitle = application.Job?.Title ?? "your application",
+                                    JobTitle = jobTitle,
                                     UpdatedAt = application.UpdatedAt.GetValueOrDefault(DateTime.UtcNow)
                                 });
                             }

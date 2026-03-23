@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -11,16 +12,16 @@ namespace WebPortal.Pages
     {
         public string Mode { get; set; } = "LOGIN"; // LOGIN, REGISTER, FORGOT_PASSWORD
 
-        [Required(ErrorMessage = "The Email field is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        [Required(ErrorMessage = "Email là bắt buộc.")]
+        [EmailAddress(ErrorMessage = "Định dạng email không hợp lệ.")]
         public string? Email { get; set; }
 
         public string? OTPCode { get; set; }
 
         public string? Password { get; set; }
-        
+
         public string? FullName { get; set; }
-        
+
         public UserRole Role { get; set; } = UserRole.CANDIDATE;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -29,7 +30,7 @@ namespace WebPortal.Pages
             {
                 if (string.IsNullOrWhiteSpace(Password))
                 {
-                    yield return new ValidationResult("The Password field is required.", new[] { nameof(Password) });
+                    yield return new ValidationResult("Mật khẩu là bắt buộc.", new[] { nameof(Password) });
                 }
             }
 
@@ -37,7 +38,7 @@ namespace WebPortal.Pages
             {
                 if (string.IsNullOrWhiteSpace(FullName))
                 {
-                    yield return new ValidationResult("The Full Name field is required.", new[] { nameof(FullName) });
+                    yield return new ValidationResult("Họ và tên là bắt buộc.", new[] { nameof(FullName) });
                 }
             }
 
@@ -45,7 +46,7 @@ namespace WebPortal.Pages
             {
                 if (string.IsNullOrWhiteSpace(OTPCode))
                 {
-                    yield return new ValidationResult("The Security Code is required.", new[] { nameof(OTPCode) });
+                    yield return new ValidationResult("Mã bảo mật là bắt buộc.", new[] { nameof(OTPCode) });
                 }
             }
 
@@ -53,7 +54,7 @@ namespace WebPortal.Pages
             {
                 if (string.IsNullOrWhiteSpace(Password))
                 {
-                    yield return new ValidationResult("The New Password field is required.", new[] { nameof(Password) });
+                    yield return new ValidationResult("Mật khẩu mới là bắt buộc.", new[] { nameof(Password) });
                 }
             }
         }
@@ -92,7 +93,7 @@ namespace WebPortal.Pages
                     {
                         return RedirectToPage("/Index");
                     }
-                    ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                    ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không hợp lệ.");
                 }
                 catch (Exception ex)
                 {
@@ -101,7 +102,7 @@ namespace WebPortal.Pages
                         // Intercept and redirect to the OTP screen!
                         ModelState.Remove("Input.Mode"); // MUST REMOVE FROM CACHE TO OVERRIDE THE VIEW
                         Input.Mode = "VERIFY_OTP";
-                        ModelState.AddModelError(string.Empty, "Please enter the security code sent to your email to verify your account.");
+                        ModelState.AddModelError(string.Empty, "Vui lòng nhập mã bảo mật đã được gửi đến email để xác thực tài khoản.");
                         return Page();
                     }
                     ModelState.AddModelError(string.Empty, ex.Message);
@@ -112,21 +113,22 @@ namespace WebPortal.Pages
             {
                 try
                 {
-                    var success = await _authApiService.RegisterAsync(new RegisterRequest { 
-                        Email = Input.Email!, 
-                        Password = Input.Password!, 
-                        FullName = Input.FullName!, 
-                        Role = Input.Role 
+                    var success = await _authApiService.RegisterAsync(new RegisterRequest
+                    {
+                        Email = Input.Email!,
+                        Password = Input.Password!,
+                        FullName = Input.FullName!,
+                        Role = Input.Role
                     });
 
                     if (success)
                     {
                         ModelState.Remove("Input.Mode"); // MUST REMOVE CACHE
                         Input.Mode = "VERIFY_OTP";
-                        TempData["SuccessMessage"] = "Registration successful! We've sent an OTP code to your email.";
+                        TempData["SuccessMessage"] = "Đăng ký thành công! Chúng tôi đã gửi mã OTP đến email của bạn.";
                         return Page();
                     }
-                    ModelState.AddModelError(string.Empty, "Registration failed. Email might already exist.");
+                    ModelState.AddModelError(string.Empty, "Đăng ký thất bại. Email có thể đã tồn tại.");
                 }
                 catch (Exception ex)
                 {
@@ -147,11 +149,11 @@ namespace WebPortal.Pages
                         Input.OTPCode = string.Empty; // Clear code
                         return Page();
                     }
-                    ModelState.AddModelError(string.Empty, "Verification failed. Invalid or expired OTP.");
+                    ModelState.AddModelError(string.Empty, "Xác thực thất bại. Mã OTP không hợp lệ hoặc đã hết hạn.");
                 }
                 catch (Exception ex)
                 {
-                     ModelState.AddModelError(string.Empty, ex.Message);
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 }
                 return Page();
             }
@@ -164,10 +166,10 @@ namespace WebPortal.Pages
                     {
                         ModelState.Remove("Input.Mode");
                         Input.Mode = "RESET_PASSWORD";
-                        TempData["SuccessMessage"] = "Password reset instructions sent! Please check your email.";
+                        TempData["SuccessMessage"] = "Hướng dẫn đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra email của bạn.";
                         return Page();
                     }
-                    ModelState.AddModelError(string.Empty, "Failed to initiate password reset.");
+                    ModelState.AddModelError(string.Empty, "Yêu cầu đặt lại mật khẩu thất bại.");
                 }
                 catch (Exception ex)
                 {
@@ -188,7 +190,7 @@ namespace WebPortal.Pages
                         Input.Password = string.Empty; // Clear password
                         return Page();
                     }
-                    ModelState.AddModelError(string.Empty, "Failed to reset password. Invalid code.");
+                    ModelState.AddModelError(string.Empty, "Đặt lại mật khẩu thất bại. Mã không hợp lệ.");
                 }
                 catch (Exception ex)
                 {
@@ -204,12 +206,12 @@ namespace WebPortal.Pages
         {
             if (string.IsNullOrEmpty(email))
             {
-                return new JsonResult(new { success = false, message = "Email is required to resend OTP." });
+                return new JsonResult(new { success = false, message = "Cần có email để gửi lại mã OTP." });
             }
             try
             {
                 var success = await _authApiService.ResendVerificationEmailAsync(email);
-                return new JsonResult(new { success = success, message = success ? "New security code sent!" : "Failed to send code." });
+                return new JsonResult(new { success = success, message = success ? "Mã bảo mật mới đã được gửi!" : "Gửi mã thất bại." });
             }
             catch (Exception ex)
             {
@@ -221,7 +223,7 @@ namespace WebPortal.Pages
         {
             if (string.IsNullOrEmpty(idToken))
             {
-                return new JsonResult(new { success = false, message = "Google identity token missing." });
+                return new JsonResult(new { success = false, message = "Thiếu token nhận dạng Google." });
             }
 
             try
@@ -231,7 +233,7 @@ namespace WebPortal.Pages
                 {
                     return new JsonResult(new { success = true, redirectUrl = "/Index" });
                 }
-                return new JsonResult(new { success = false, message = "Login failed. Profile could not be established." });
+                return new JsonResult(new { success = false, message = "Đăng nhập thất bại. Không thể thiết lập hồ sơ." });
             }
             catch (Exception ex)
             {

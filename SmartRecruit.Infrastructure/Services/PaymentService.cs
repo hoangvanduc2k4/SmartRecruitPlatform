@@ -1,3 +1,4 @@
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PayOS;
@@ -54,15 +55,15 @@ namespace SmartRecruit.Infrastructure.Services
         public async Task<CreatePaymentResponse> CreatePaymentLinkAsync(CreatePaymentRequest request)
         {
             _logger.LogInformation("Creating Payment Link for UserId: {UserId}, Amount: {Amount}", request.UserId, request.Amount);
-            
+
             var wallet = await _walletRepository.GetWalletByUserIdAsync(request.UserId)
                 ?? throw new KeyNotFoundException($"Wallet not found for user {request.UserId}");
 
             long orderCode = GenerateOrderCode();
-            
+
             // Fix signature calculation: amount MUST be integer string
             int amountInt = (int)request.Amount;
-            
+
             // Transaction pending
             var transaction = new Transaction
             {
@@ -94,7 +95,7 @@ namespace SmartRecruit.Infrastructure.Services
                 var returnUrl = $"{_settings.ReturnUrl}?orderCode={orderCode}";
                 var cancelUrl = $"{_settings.CancelUrl}?orderCode={orderCode}";
                 var sigData = $"amount={amountInt}&cancelUrl={cancelUrl}&description={description}&orderCode={orderCode}&returnUrl={returnUrl}";
-                
+
                 using var hmacSig = new HMACSHA256(Encoding.UTF8.GetBytes(_settings.ChecksumKey));
                 var sigBytes = hmacSig.ComputeHash(Encoding.UTF8.GetBytes(sigData));
                 var signature = BitConverter.ToString(sigBytes).Replace("-", "").ToLowerInvariant();
@@ -125,7 +126,7 @@ namespace SmartRecruit.Infrastructure.Services
                 {
                     return root.GetProperty("data").GetProperty("checkoutUrl").GetString();
                 }
-                
+
                 _logger.LogWarning("PayOS POST returned non-zero code for {OrderCode}: {Code}", orderCode, root.GetProperty("code").GetString());
                 return null;
             }
@@ -227,7 +228,7 @@ namespace SmartRecruit.Infrastructure.Services
                 var client = _httpClientFactory.CreateClient("PayOS");
                 var httpReq = new HttpRequestMessage(HttpMethod.Get, $"{PayOSApiBase}/v2/payment-requests/{orderCode}");
                 // Headers are in client
-                
+
                 var response = await client.SendAsync(httpReq);
                 var responseStr = await response.Content.ReadAsStringAsync();
 
@@ -298,7 +299,7 @@ namespace SmartRecruit.Infrastructure.Services
                         // Generate a NEW orderCode because PayOS won't allow re-creation with the same one
                         long newOrderCode = GenerateOrderCode();
                         _logger.LogInformation("Regenerating OrderCode for transaction {OldCode} -> {NewCode}", orderCode, newOrderCode);
-                        
+
                         transaction.OrderCode = newOrderCode;
                         _walletRepository.UpdateTransaction(transaction);
                         await _unitOfWork.CompleteAsync();
@@ -319,14 +320,14 @@ namespace SmartRecruit.Infrastructure.Services
                         return urlEl.GetString();
                     }
                 }
-                
+
                 // If code is not 00 but we have transaction, try re-creating anyway (maybe it was deleted on PayOS)
                 var fallbackTx = await _walletRepository.GetTransactionByOrderCodeAsync(orderCode);
                 if (fallbackTx != null && fallbackTx.Status == TransactionStatus.PENDING && fallbackTx.Type == TransactionType.TOPUP)
                 {
                     long newOrderCode = GenerateOrderCode();
                     _logger.LogInformation("Regenerating OrderCode (Fallback) for transaction {OldCode} -> {NewCode}", orderCode, newOrderCode);
-                    
+
                     fallbackTx.OrderCode = newOrderCode;
                     _walletRepository.UpdateTransaction(fallbackTx);
                     await _unitOfWork.CompleteAsync();
@@ -352,31 +353,31 @@ namespace SmartRecruit.Infrastructure.Services
 
                 var webhookData = new WebhookData
                 {
-                    OrderCode  = body.Data.OrderCode,
-                    Amount     = body.Data.Amount,
+                    OrderCode = body.Data.OrderCode,
+                    Amount = body.Data.Amount,
                     Description = body.Data.Description,
-                    AccountNumber       = body.Data.AccountNumber     ?? string.Empty,
-                    Reference           = body.Data.Reference         ?? string.Empty,
+                    AccountNumber = body.Data.AccountNumber ?? string.Empty,
+                    Reference = body.Data.Reference ?? string.Empty,
                     TransactionDateTime = body.Data.TransactionDateTime ?? string.Empty,
-                    Currency            = body.Data.Currency           ?? string.Empty,
-                    PaymentLinkId       = body.Data.PaymentLinkId      ?? string.Empty,
-                    Code                = body.Data.Code               ?? string.Empty,
-                    CounterAccountBankId   = body.Data.CounterAccountBankId   ?? string.Empty,
+                    Currency = body.Data.Currency ?? string.Empty,
+                    PaymentLinkId = body.Data.PaymentLinkId ?? string.Empty,
+                    Code = body.Data.Code ?? string.Empty,
+                    CounterAccountBankId = body.Data.CounterAccountBankId ?? string.Empty,
                     CounterAccountBankName = body.Data.CounterAccountBankName ?? string.Empty,
-                    CounterAccountName     = body.Data.CounterAccountName,
-                    CounterAccountNumber   = body.Data.CounterAccountNumber  ?? string.Empty,
-                    VirtualAccountName     = body.Data.VirtualAccountName    ?? string.Empty,
-                    VirtualAccountNumber   = body.Data.VirtualAccountNumber  ?? string.Empty,
+                    CounterAccountName = body.Data.CounterAccountName,
+                    CounterAccountNumber = body.Data.CounterAccountNumber ?? string.Empty,
+                    VirtualAccountName = body.Data.VirtualAccountName ?? string.Empty,
+                    VirtualAccountNumber = body.Data.VirtualAccountNumber ?? string.Empty,
                 };
 
                 typeof(WebhookData).GetProperty("Description2")?.SetValue(webhookData, body.Data.Desc ?? string.Empty);
 
                 var webhook = new Webhook
                 {
-                    Code      = body.Code,
-                    Success   = body.Success,
+                    Code = body.Code,
+                    Success = body.Success,
                     Signature = body.Signature,
-                    Data      = webhookData,
+                    Data = webhookData,
                 };
 
                 typeof(Webhook).GetProperty("Description")?.SetValue(webhook, body.Desc ?? string.Empty);
