@@ -10,11 +10,13 @@ namespace WebPortal.Pages
     {
         private readonly IJobApiService _jobApiService;
         private readonly IWalletApiService _walletApiService;
+        private readonly IAuthApiService _authApiService;
 
-        public PostJobModel(IJobApiService jobApiService, IWalletApiService walletApiService)
+        public PostJobModel(IJobApiService jobApiService, IWalletApiService walletApiService, IAuthApiService authApiService)
         {
             _jobApiService = jobApiService;
             _walletApiService = walletApiService;
+            _authApiService = authApiService;
         }
 
         [BindProperty]
@@ -41,6 +43,16 @@ namespace WebPortal.Pages
             {
                 WalletBalance = wallet.Balance;
             }
+
+            // Pre-fill Company Name from CompanyProfile
+            if (CurrentUserId.HasValue)
+            {
+                var profile = await _authApiService.GetProfileAsync(CurrentUserId.Value);
+                if (profile?.CompanyProfile != null && !string.IsNullOrEmpty(profile.CompanyProfile.CompanyName))
+                {
+                    JobInput.Company = profile.CompanyProfile.CompanyName;
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -55,6 +67,7 @@ namespace WebPortal.Pages
             {
                 RecruiterId = recruiterId.Value,
                 Title = JobInput.Title ?? "",
+                Company = JobInput.Company ?? "",
                 Description = JobInput.Description ?? "",
                 Requirement = JobInput.Requirement ?? "",
                 Benefits = JobInput.Benefits ?? "",
@@ -63,7 +76,8 @@ namespace WebPortal.Pages
                 SalaryMax = JobInput.SalaryMax,
                 JobType = JobInput.JobType,
                 Location = string.IsNullOrEmpty(JobInput.Location) ? "Remote" : JobInput.Location,
-                CategoryId = JobInput.CategoryId
+                CategoryId = JobInput.CategoryId,
+                ExpireDate = JobInput.ExpireDate
             });
 
             if (result != null)
@@ -71,7 +85,7 @@ namespace WebPortal.Pages
                 return RedirectToPage("/Recruiter/RecruiterJobs");
             }
 
-            ModelState.AddModelError(string.Empty, "Failed to create job. Please try again.");
+            ModelState.AddModelError(string.Empty, "Tạo công việc thất bại. Vui lòng thử lại.");
             Categories = await _jobApiService.GetCategoriesAsync();
             return Page();
         }
