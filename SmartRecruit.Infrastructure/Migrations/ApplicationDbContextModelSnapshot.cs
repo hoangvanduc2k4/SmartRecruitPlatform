@@ -8598,16 +8598,6 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Status = 1,
                             Title = "Chuyên viên tư vấn",
                             ViewCount = 0
-                        },
-                        new
-                        {
-                            Id = 100L,
-                            Benefits = "Bảo hiểm đầy đủ, Thưởng tháng 13, Du lịch hàng năm",
-                            CategoryId = 2L,
-                            Company = "Phạm, Lê and Trịnh",
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Mô tả công việc chi tiết sẽ được trao đổi khi phỏng vấn.",
-                            ExpireDate = new DateTime(2026, 3, 31, 14, 26, 47, 5, DateTimeKind.Utc).AddTicks(5527),
                             IsAppealed = false,
                             IsDeleted = false,
                             JobType = 0,
@@ -12031,10 +12021,6 @@ namespace SmartRecruit.Infrastructure.Migrations
                             Message = "Tài khoản của bạn vừa có cập nhật mới.",
                             Title = "Hệ thống",
                             Type = 0,
-                            UserId = 107L
-                        },
-                        new
-                        {
                             Id = 107L,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsDeleted = false,
