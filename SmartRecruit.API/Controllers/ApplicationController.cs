@@ -3,6 +3,7 @@ using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.API.Controllers;
 
 namespace SmartRecruit.Controllers
@@ -12,11 +13,13 @@ namespace SmartRecruit.Controllers
     public class ApplicationController : BaseController
     {
         private readonly IApplicationService _applicationService;
+        private readonly IJobService _jobService;
         private readonly ILogger<ApplicationController> _logger;
 
-        public ApplicationController(IApplicationService applicationService, ILogger<ApplicationController> logger)
+        public ApplicationController(IApplicationService applicationService, IJobService jobService, ILogger<ApplicationController> logger)
         {
             _applicationService = applicationService;
+            _jobService = jobService;
             _logger = logger;
         }
 
@@ -232,6 +235,38 @@ namespace SmartRecruit.Controllers
             {
                 _logger.LogError(ex, "An error occurred during BulkUpdateStatus");
                 return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
+        /// Xuất danh sách ứng viên của một Job ra file Excel
+        /// </summary>
+        [HttpGet("export-job/{jobId}")]
+        [Authorize(Roles = "RECRUITER, ADMIN")]
+        public async Task<IActionResult> ExportJobApplicants(long jobId)
+        {
+            try
+            {
+                var job = await _jobService.GetJobByIdAsync(jobId);
+                if (job == null) return NotFound(new { }.Wrap("Công việc không tồn tại"));
+
+                if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && job.RecruiterId != CurrentUserId)
+                {
+                    return Forbid();
+                }
+
+                var content = await _applicationService.ExportApplicantsToExcelAsync(jobId);
+                
+                // Thu gọn và làm sạch title để làm tên file
+                string safeTitle = string.Join("_", job.Title.Split(Path.GetInvalidFileNameChars()));
+                var fileName = $"Applicants_{safeTitle}_{DateTime.Now:yyyyMMddHHmm}.xlsx";
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi xuất danh sách ứng viên cho Job {JobId}", jobId);
+                return StatusCode(500, new { }.Wrap("Không thể xuất file lúc này."));
             }
         }
     }

@@ -168,7 +168,15 @@
 
                             <div class="pt-6 border-t border-slate-50 flex items-center justify-between">
                                 <span class="text-sm font-black text-slate-700">
-                                    @((job.SalaryMax / 1000).ToString("N0"))k <span class="text-[10px] font-medium text-slate-400">/ tháng</span>
+                                    @{
+                                        string FormatSalaryShort(decimal val) {
+                                            if (val >= 1000000000) return (val / 1000000000m).ToString("0.#") + "tỷ";
+                                            if (val >= 1000000) return (val / 1000000m).ToString("0.#") + "tr";
+                                            if (val >= 1000) return (val / 1000m).ToString("0.#") + "k";
+                                            return val.ToString("N0");
+                                        }
+                                    }
+                                    @FormatSalaryShort(job.SalaryMax) <span class="text-[10px] font-medium text-slate-400">/ tháng</span>
                                 </span>
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[100px]">
                                     <i class="fas fa-map-marker-alt mr-1"></i> @job.Location
@@ -177,7 +185,7 @@
                         </div>
                     </a>
 
-                    @if (Model.IsAuthenticated)
+                    @if (Model.IsAuthenticated && Model.IsCandidate)
                     {
                         bool isSaved = Model.SavedJobIds.Contains(job.Id);
                         <div class="absolute top-6 right-6 z-20">

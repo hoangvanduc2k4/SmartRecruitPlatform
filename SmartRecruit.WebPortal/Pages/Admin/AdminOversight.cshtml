@@ -13,10 +13,16 @@
             <p class="text-slate-500 font-medium">Theo dõi các quyết định và nhật ký hoạt động của trí tuệ nhân tạo trong hệ thống.</p>
         </div>
 
-        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
-            <a href="?Tab=AI_LOGS" class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest bg-white text-indigo-600 shadow-xl">
-                Nhật Ký AI
-            </a>
+        <div class="flex items-center gap-4 bg-white px-5 py-2.5 rounded-2xl border border-slate-200 shadow-sm transition-all hover:border-indigo-200 group">
+            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-400">Dòng hiển thị:</span>
+            <select onchange="window.location.href='?page=1&pageSize=' + this.value" 
+                    class="bg-transparent border-none text-xs font-black text-slate-700 focus:ring-0 cursor-pointer uppercase tracking-wider pr-8">
+                <option value="5" selected="@(Model.PageSize == 5)">5 dòng</option>
+                <option value="10" selected="@(Model.PageSize == 10)">10 dòng</option>
+                <option value="12" selected="@(Model.PageSize == 12)">12 dòng</option>
+                <option value="20" selected="@(Model.PageSize == 15)">15 dòng</option>
+                <option value="50" selected="@(Model.PageSize == 20)">20 dòng</option>
+            </select>
         </div>
     </div>
 
@@ -63,10 +69,13 @@
         </table>
     </div>
 
-    @if (Model.AILogs != null && Model.AILogs.TotalPages > 1)
-    {
-        <div class="flex justify-center mt-8">
-             <partial name="_Pagination" model='(Model.AILogs.Page, Model.AILogs.TotalPages, "?Tab=AI_LOGS&Page={0}")' />
-        </div>
-    }
+    <div class="flex flex-col md:flex-row justify-center items-center mt-12 gap-6 bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100">
+
+        @if (Model.AILogs != null && Model.AILogs.TotalPages > 1)
+        {
+            <div class="flex justify-center">
+                 <partial name="_Pagination" model='(Model.AILogs.Page, Model.AILogs.TotalPages, $"?page={{0}}&pageSize={Model.PageSize}")' />
+            </div>
+        }
+    </div>
 </div>

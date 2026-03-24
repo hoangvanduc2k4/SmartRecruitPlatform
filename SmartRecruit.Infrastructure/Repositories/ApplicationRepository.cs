@@ -88,5 +88,14 @@ namespace SmartRecruit.Infrastructure.Repositories
                     .ThenInclude(u => u.CandidateProfile)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
+        public async Task<List<Applications>> GetApplicationsByJobWithDetailsAsync(long jobId)
+        {
+            return await _context.Set<Applications>()
+                .Include(a => a.Candidate)
+                    .ThenInclude(u => u.CandidateProfile)
+                .Where(a => a.JobId == jobId)
+                .OrderByDescending(a => a.MatchScore)
+                .ToListAsync();
+        }
     }
 }

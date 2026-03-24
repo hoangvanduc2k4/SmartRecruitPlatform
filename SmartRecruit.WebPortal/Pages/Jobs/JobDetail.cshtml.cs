@@ -99,9 +99,7 @@ namespace WebPortal.Pages
                         }
                     }
 
-                    // Fetch Company Profile
-                    var profile = await _authApiService.GetProfileAsync(Job.RecruiterId);
-                    CompanyProfile = profile?.CompanyProfile;
+                    // CompanyProfile fields are now included in Job response directly
 
                     // Only the recruiter who owns this job can edit it
                     if (currentUserId.HasValue)

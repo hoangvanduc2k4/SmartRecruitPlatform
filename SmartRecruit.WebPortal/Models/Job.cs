@@ -29,5 +29,10 @@ namespace WebPortal.Models
         public bool IsAppealed { get; set; }
         public string? ModerationNote { get; set; }
         public string? DraftChanges { get; set; }
+        public string? CompanyName { get; set; }
+        public string? CompanyDescription { get; set; }
+        public string? WebsiteUrl { get; set; }
+        public string? Address { get; set; }
+        public string? LogoUrl { get; set; }
     }
 }

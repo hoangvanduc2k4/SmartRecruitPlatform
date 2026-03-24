@@ -7,6 +7,8 @@ using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Linq;
 
 namespace SmartRecruit.Application.Services
 {
@@ -20,6 +22,8 @@ namespace SmartRecruit.Application.Services
         private readonly INotificationService _notificationService;
         private readonly INotificationHubService _notificationHubService;
         private readonly IEmailService _emailService;
+        private readonly IJobRepository _jobRepository;
+        private readonly IExcelService _excelService;
         private readonly ILogger<ApplicationService> _logger;
 
         public ApplicationService(
@@ -31,6 +35,8 @@ namespace SmartRecruit.Application.Services
             INotificationService notificationService,
             INotificationHubService notificationHubService,
             IEmailService emailService,
+            IJobRepository jobRepository,
+            IExcelService excelService,
             ILogger<ApplicationService> logger)
         {
             _applicationRepository = applicationRepository;
@@ -41,6 +47,8 @@ namespace SmartRecruit.Application.Services
             _notificationService = notificationService;
             _notificationHubService = notificationHubService;
             _emailService = emailService;
+            _jobRepository = jobRepository;
+            _excelService = excelService;
             _logger = logger;
         }
 
@@ -267,7 +275,7 @@ namespace SmartRecruit.Application.Services
             string newNote = "";
             if (newStatus == ApplicationStatus.INTERVIEWING)
             {
-                newNote = $"Interview: {request.InterviewDate.Value.ToString("yyyy-MM-dd HH:mm")}";
+                newNote = $"Interview: {request.InterviewDate!.Value.ToString("yyyy-MM-dd HH:mm")}";
             }
             else if (newStatus == ApplicationStatus.OFFERED)
             {
@@ -572,6 +580,31 @@ namespace SmartRecruit.Application.Services
                 if (success) updatedCount++;
             }
             return updatedCount;
+        }
+
+        public async Task<byte[]> ExportApplicantsToExcelAsync(long jobId)
+        {
+            var applications = await _applicationRepository.GetApplicationsByJobWithDetailsAsync(jobId);
+            
+            var exportData = applications.Select(app => new ApplicantExportDto
+            {
+                HoTen = app.Candidate?.FullName ?? "N/A",
+                Email = app.Candidate?.Email ?? "N/A",
+                LinkCV = app.Candidate?.CandidateProfile?.CVUrl ?? "Chưa có",
+                DiemAI = app.MatchScore.ToString() + "%",
+                DanhGiaAI = app.AI_Summary ?? "",
+                TrangThai = app.Status switch
+                {
+                    ApplicationStatus.REVIEWING => "Đang xem xét",
+                    ApplicationStatus.INTERVIEWING => "Đang phỏng vấn",
+                    ApplicationStatus.OFFERED => "Đã mời làm việc",
+                    ApplicationStatus.REJECTED => "Đã từ chối",
+                    _ => app.Status.ToString()
+                },
+                NgayUngTuyen = app.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+            }).ToList();
+
+            return _excelService.ExportToExcel(exportData, "Danh sách ứng viên");
         }
     }
 }

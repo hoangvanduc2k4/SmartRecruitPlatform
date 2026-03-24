@@ -10,5 +10,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task<bool> IsAlreadyAppliedAsync(long jobId, long candidateId);
         Task<Applications?> GetApplicationWithDetailsAsync(long id);
         Task<Applications?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
+        Task<List<Applications>> GetApplicationsByJobWithDetailsAsync(long jobId);
     }
 }

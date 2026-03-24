@@ -83,7 +83,7 @@ else
                 }
                 <div class="flex items-center gap-6">
                     <h1 class="text-4xl font-black text-slate-900 tracking-tighter uppercase">@Model.Job.Title</h1>
-                    @if (Model.IsAuthenticated)
+                    @if (Model.IsAuthenticated && Model.IsCandidate)
                     {
                       <div class="flex items-center gap-3">
     <form method="post" asp-page-handler="ToggleSave" class="inline-flex m-0 items-center gap-2">
@@ -266,9 +266,9 @@ else
                 <div class="p-8 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg space-y-6">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 rounded-2xl border border-slate-100 p-2 flex items-center justify-center bg-slate-50 overflow-hidden">
-                            @if (!string.IsNullOrEmpty(Model.CompanyProfile?.LogoUrl))
+                            @if (!string.IsNullOrEmpty(Model.Job.LogoUrl))
                             {
-                                <img src="@Model.CompanyProfile.LogoUrl" alt="Logo" class="w-full h-full object-contain" />
+                                <img src="@Model.Job.LogoUrl" alt="Logo" class="w-full h-full object-contain" />
                             }
                             else
                             {
@@ -277,28 +277,36 @@ else
                         </div>
                         <div>
                             <h4 class="text-sm font-black text-slate-900 uppercase tracking-tight">Về chúng tôi</h4>
-                            <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mt-0.5">@(Model.CompanyProfile?.CompanyName ?? Model.Job.Company)</p>
+                            <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mt-0.5">@(Model.Job.CompanyName ?? Model.Job.Company)</p>
                         </div>
                     </div>
 
-                    @if (!string.IsNullOrEmpty(Model.CompanyProfile?.CompanyDescription))
+                    @if (!string.IsNullOrEmpty(Model.Job.CompanyDescription))
                     {
-                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-4">@Model.CompanyProfile.CompanyDescription</p>
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-4">@Model.Job.CompanyDescription</p>
                     }
 
                     <div class="space-y-3 pt-2">
-                        @if (!string.IsNullOrEmpty(Model.CompanyProfile?.WebsiteUrl))
+                        @if (!string.IsNullOrEmpty(Model.Job.WebsiteUrl))
                         {
-                            <a href="@(Model.CompanyProfile.WebsiteUrl.StartsWith("http") ? Model.CompanyProfile.WebsiteUrl : "https://" + Model.CompanyProfile.WebsiteUrl)" target="_blank" class="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors">
+                            <a href="@(Model.Job.WebsiteUrl.StartsWith("http") ? Model.Job.WebsiteUrl : "https://" + Model.Job.WebsiteUrl)" target="_blank" class="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-globe text-indigo-400 w-4"></i>
-                                <span class="text-[11px] font-bold truncate">@Model.CompanyProfile.WebsiteUrl.Replace("https://", "").Replace("http://", "").TrimEnd('/')</span>
+                                <span class="text-[11px] font-bold truncate">@Model.Job.WebsiteUrl.Replace("https://", "").Replace("http://", "").TrimEnd('/')</span>
                             </a>
                         }
-                        @if (!string.IsNullOrEmpty(Model.CompanyProfile?.Address))
+                        @if (!string.IsNullOrEmpty(Model.Job.Address))
                         {
                             <div class="flex items-start gap-3 text-slate-600">
                                 <i class="fas fa-map-marker-alt text-indigo-400 w-4 mt-0.5"></i>
-                                <span class="text-[11px] font-bold">@Model.CompanyProfile.Address</span>
+                                <span class="text-[11px] font-bold">@Model.Job.Address</span>
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(Model.Job.Location))
+                        {
+                            <div class="flex items-start gap-3 text-slate-600">
+                                <i class="fas fa-map-marker-alt text-indigo-400 w-4 mt-0.5"></i>
+                                <span class="text-[11px] font-bold">@Model.Job.Location</span>
+                                <span class="text-[10px] text-slate-400">(Địa điểm làm việc)</span>
                             </div>
                         }
                     </div>

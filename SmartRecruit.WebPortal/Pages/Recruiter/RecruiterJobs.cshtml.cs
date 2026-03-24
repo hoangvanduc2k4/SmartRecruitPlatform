@@ -24,6 +24,9 @@ namespace WebPortal.Pages
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
 
+        [BindProperty(SupportsGet = true)]
+        public int? Status { get; set; }
+
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 5;
 
@@ -34,7 +37,7 @@ namespace WebPortal.Pages
             if (recruiterId.HasValue)
             {
                 Stats = await _jobApiService.GetRecruiterStatsAsync() ?? new();
-                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize, Status);
                 if (response.Success && response.Data != null)
                 {
                     Jobs = response.Data.ToList();

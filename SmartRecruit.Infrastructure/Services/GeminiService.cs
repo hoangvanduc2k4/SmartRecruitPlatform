@@ -7,6 +7,7 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Infrastructure.Configurations;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace SmartRecruit.Infrastructure.Services
 {
@@ -102,19 +103,23 @@ namespace SmartRecruit.Infrastructure.Services
                 throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
             }
 
-            dynamic? jsonResponse = JsonConvert.DeserializeObject(responseString);
-            if (jsonResponse?.candidates == null || jsonResponse.candidates.Count == 0)
+            var jsonResponse = JObject.Parse(responseString);
+            var candidates = jsonResponse["candidates"] as JArray;
+            if (candidates == null || candidates.Count == 0)
             {
                 throw new Exception($"No content returned. Raw: {responseString}");
             }
 
-            var candidate = jsonResponse.candidates[0];
-            if (candidate?.content?.parts == null || candidate.content.parts.Count == 0)
+            var firstCandidate = candidates[0];
+            var content = firstCandidate?["content"];
+            var parts = content?["parts"] as JArray;
+
+            if (parts == null || parts.Count == 0)
             {
                 throw new Exception($"No parts returned in candidate content. Raw: {responseString}");
             }
 
-            string aiText = candidate.content.parts[0].text ?? "";
+            string aiText = parts[0]?["text"]?.ToString() ?? "";
             aiText = aiText.Replace("```json", "").Replace("```", "").Trim();
             try
             {

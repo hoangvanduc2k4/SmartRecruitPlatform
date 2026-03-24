@@ -159,6 +159,12 @@ namespace SmartRecruit.API
                 Cron.Daily
             );
 
+            RecurringJob.AddOrUpdate<SmartRecruit.Application.Interfaces.Services.IJobService>(
+                "job-expiration-hourly",
+                service => service.UpdateExpiredJobsAsync(),
+                Cron.Hourly
+            );
+
             app.MapControllers();
             app.MapHub<SmartRecruit.Infrastructure.Hubs.NotificationHub>("/notificationHub");
 
