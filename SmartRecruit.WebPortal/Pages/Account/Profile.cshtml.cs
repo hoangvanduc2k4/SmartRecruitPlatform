@@ -77,7 +77,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UpdateProfileAsync(UpdateInput);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "Profile synchronized successfully.";
+                    TempData["SuccessMessage"] = "Đồng bộ hồ sơ thành công.";
                 }
             }
             catch (Exception ex)
@@ -107,7 +107,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UploadCvAsync(stream, CvFile.FileName);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "CV uploaded and text extracted successfully.";
+                    TempData["SuccessMessage"] = "Tải lên CV và trích xuất văn bản thành công.";
                 }
             }
             catch (Exception ex)
@@ -140,7 +140,7 @@ namespace WebPortal.Pages
                 var success = await _authApiService.UploadAvatarAsync(stream, AvatarFile.FileName);
                 if (success)
                 {
-                    TempData["SuccessMessage"] = "Avatar updated successfully.";
+                    TempData["SuccessMessage"] = "Cập nhật ảnh đại diện thành công.";
                 }
             }
             catch (Exception ex)
