@@ -68,9 +68,9 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> GetJobByIdAsync(long id)
         {
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
+            if (job == null || job.IsDeleted) throw new KeyNotFoundException("Công việc không tồn tại hoặc đã bị xóa.");
 
-            // Increment ViewCount
+            // Increment ViewCount only if NOT deleted
             job.ViewCount++;
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
@@ -492,7 +492,8 @@ namespace SmartRecruit.Application.Services
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) return false;
 
-            _jobRepository.Delete(job);
+            job.IsDeleted = true;
+            _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
             return true;
         }
@@ -714,6 +715,61 @@ namespace SmartRecruit.Application.Services
         {
             var recommendedJobs = await _jobRepository.GetRecommendedJobsAsync(userId);
             return _mapper.Map<IEnumerable<JobResponse>>(recommendedJobs);
+        }
+
+        public async Task UpdateExpiredJobsAsync()
+        {
+            _logger.LogInformation("Hangfire Job: Checking for expired or expiring soon job postings...");
+
+            var now = DateTime.UtcNow;
+            var threeDaysFromNow = now.AddDays(3);
+
+            // 1. Tìm các Job đã hết hạn (ExpireDate < now)
+            var expiredJobs = await _jobRepository.FindAllAsync(j =>
+                (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON || j.Status == JobStatus.CHECKING) &&
+                j.ExpireDate.HasValue &&
+                j.ExpireDate.Value < now &&
+                !j.IsDeleted);
+
+            foreach (var job in expiredJobs)
+            {
+                job.Status = JobStatus.EXPIRED;
+                job.ModerationNote = $"Tự động đóng do hết hạn vào lúc {now:yyyy-MM-dd HH:mm:ss}";
+                _jobRepository.Update(job);
+                
+                // Gửi thông báo hết hạn
+                await _notificationService.SendNotificationAsync(
+                    job.RecruiterId,
+                    "Công việc đã hết hạn",
+                    $"Bài đăng '{job.Title}' của bạn đã hết hạn và không còn hiển thị công khai.",
+                    NotificationType.JOB,
+                    $"/JobDetail?Id={job.Id}");
+            }
+
+            // 2. Tìm các Job sắp hết hạn (Bên dưới 3 ngày và đang APPROVED)
+            var expiringSoonJobs = await _jobRepository.FindAllAsync(j =>
+                j.Status == JobStatus.APPROVED &&
+                j.ExpireDate.HasValue &&
+                j.ExpireDate.Value <= threeDaysFromNow &&
+                j.ExpireDate.Value >= now &&
+                !j.IsDeleted);
+
+            foreach (var job in expiringSoonJobs)
+            {
+                job.Status = JobStatus.EXPIRING_SOON;
+                _jobRepository.Update(job);
+
+                // Gửi thông báo sắp hết hạn
+                await _notificationService.SendNotificationAsync(
+                    job.RecruiterId,
+                    "Công việc sắp hết hạn",
+                    $"Bài đăng '{job.Title}' của bạn sẽ hết hạn trong vòng chưa đầy 3 ngày nữa ({job.ExpireDate:dd/MM/yyyy}).",
+                    NotificationType.JOB,
+                    $"/JobDetail?Id={job.Id}");
+            }
+
+            await _unitOfWork.CompleteAsync();
+            _logger.LogInformation("Hangfire Job: Finished processing job statuses.");
         }
 
         private string NormalizeString(string text)
