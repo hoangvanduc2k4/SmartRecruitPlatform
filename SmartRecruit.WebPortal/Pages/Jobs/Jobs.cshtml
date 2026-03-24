@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="sm:w-48 relative">
-                    <select name="LocationFilter" onchange="document.getElementById('searchForm').requestSubmit();" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
+                    <select name="LocationFilter" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
                         @foreach (var loc in Model.AvailableLocations)
                         {
                             <option value="@loc" selected="@(Model.LocationFilter == loc)">@loc.ToUpper()</option>
@@ -50,7 +50,7 @@
                 
                 <div class="space-y-4">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Lĩnh Vực Ngành Nghề</h4>
-                    <select name="CategoryFilter" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <select name="CategoryFilter" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none">
                         <option value="0" selected="@(Model.CategoryFilter == null || Model.CategoryFilter == 0)">TẤT CẢ LĨNH VỰC</option>
                         @foreach (var cat in Model.Categories)
                         {
@@ -69,7 +69,7 @@
                         @foreach (var t in types)
                         {
                             <label class="flex items-center gap-3 p-3 bg-slate-50/50 rounded-xl border border-slate-100 cursor-pointer hover:bg-white hover:border-indigo-400 transition-all group">
-                                <input type="radio" name="TypeFilter" value="@t" onchange="document.getElementById('filterForm').requestSubmit();" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
+                                <input type="radio" name="TypeFilter" value="@t" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-0" @(Model.TypeFilter == t ? "checked" : "") />
                                 <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900">@(t == "ALL" ? "TẤT CẢ" : (t == "FULL_TIME" ? "TOÀN THỜI GIAN" : (t == "PART_TIME" ? "BÁN THỜI GIAN" : (t == "REMOTE" ? "LÀM VIỆC TỪ XA" : t))))</span>
                             </label>
                         }
@@ -81,16 +81,19 @@
                     <div class="space-y-4">
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Thiểu (VNĐ)</label>
-                             <input type="text" name="MinSalary" value="@Model.MinSalary" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="0" />
+                             <input type="text" name="MinSalary" value="@Model.MinSalary" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="0" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tối Đa (VNĐ)</label>
-                            <input type="text" name="MaxSalary" value="@Model.MaxSalary" onchange="document.getElementById('filterForm').requestSubmit();" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="Không G.hạn" />
+                            <input type="text" name="MaxSalary" value="@Model.MaxSalary" class="w-full h-11 bg-slate-50 border border-slate-100 rounded-xl px-4 text-xs font-black text-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none currency-input" placeholder="Không G.hạn" />
                         </div>
                     </div>
                 </div>
 
-                <button type="button" onclick="clearFilters()" class="block w-full text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 mt-4 bg-transparent border-0 outline-none cursor-pointer">Xóa Bộ Lọc</button>
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="flex-1 h-12 bg-indigo-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg active:scale-95">Áp Dụng Lọc</button>
+                    <button type="button" onclick="clearFilters()" class="h-12 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 bg-transparent border border-slate-200 rounded-xl outline-none cursor-pointer hover:border-indigo-300 transition-all">Xóa</button>
+                </div>
             </form>
         </aside>
 
@@ -244,5 +247,48 @@
             // Note: We don't submit the form here as requested.
             // The user will enter/submit manually.
         }
+
+        // Add Enter key support for filter form inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filterForm');
+            const searchForm = document.getElementById('searchForm');
+            
+            // Handle Enter key for filter form inputs
+            if (filterForm) {
+                const inputs = filterForm.querySelectorAll('input[type="text"], select');
+                inputs.forEach(input => {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            filterForm.submit();
+                        }
+                    });
+                });
+            }
+            
+            // Handle Enter key for search form inputs
+            if (searchForm) {
+                const searchInput = searchForm.querySelector('input[name="SearchTerm"]');
+                const locationSelect = searchForm.querySelector('select[name="LocationFilter"]');
+                
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            searchForm.submit();
+                        }
+                    });
+                }
+                
+                if (locationSelect) {
+                    locationSelect.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            searchForm.submit();
+                        }
+                    });
+                }
+            }
+        });
     </script>
 </div>
