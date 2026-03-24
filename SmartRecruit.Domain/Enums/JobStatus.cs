@@ -6,6 +6,8 @@ namespace SmartRecruit.Domain.Enums
         APPROVED = 1,
         BLOCKED = 2,
         HIDDEN = 3,
-        DRAFT = 4
+        DRAFT = 4,
+        EXPIRED = 5,
+        EXPIRING_SOON = 6
     }
 }

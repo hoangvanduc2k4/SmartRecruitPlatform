@@ -8,7 +8,7 @@ namespace SmartRecruit.Application.Interfaces.Services
     public interface IJobService
     {
         Task<PagedList<JobResponse>> GetJobsAsync(JobSearchRequest request);
-        Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
+        Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null);
         Task<JobResponse> GetJobByIdAsync(long id);
         Task<JobResponse> CreateJobAsync(JobCreateRequest request);
         Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, SmartRecruit.Domain.Enums.UserRole currentUserRole);
@@ -28,5 +28,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> RejectAppealAsync(long jobId);
         Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
         Task<IEnumerable<JobResponse>> GetRecommendedJobsAsync(long userId);
+        Task UpdateExpiredJobsAsync();
     }
 }

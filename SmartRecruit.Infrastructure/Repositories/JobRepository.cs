@@ -44,12 +44,10 @@ namespace SmartRecruit.Infrastructure.Repositories
                 query = query.Where(x => x.Status != JobStatus.BLOCKED);
             }
 
-            // Exclude DRAFT status unless it's a specific recruiter's view (Manage Jobs)
+            // Exclude non-active statuses for public search
             if (!request.recruiterId.HasValue)
             {
-                query = query.Where(x => x.Status != JobStatus.DRAFT);
-                // Exclude expired jobs from public search
-                query = query.Where(x => x.ExpireDate == null || x.ExpireDate.Value >= DateTime.UtcNow);
+                query = query.Where(x => x.Status == JobStatus.APPROVED || x.Status == JobStatus.EXPIRING_SOON);
             }
 
             // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
@@ -101,6 +99,11 @@ namespace SmartRecruit.Infrastructure.Repositories
             if (request.jobType.HasValue)
             {
                 query = query.Where(x => (int)x.JobType == request.jobType.Value);
+            }
+
+            if (request.status.HasValue)
+            {
+                query = query.Where(x => (int)x.Status == request.status.Value);
             }
 
             // 6. Sorting
@@ -186,7 +189,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public async Task<IEnumerable<string>> GetLocationsAsync()
         {
             return await _context.Set<Job>()
-                .Where(j => !string.IsNullOrEmpty(j.Location))
+                .Where(j => !string.IsNullOrEmpty(j.Location) && !j.IsDeleted)
                 .Select(j => j.Location)
                 .Distinct()
                 .ToListAsync();
@@ -269,8 +272,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
-                .Where(j => !j.IsDeleted && j.Status == JobStatus.APPROVED && !appliedJobIds.Contains(j.Id))
-                .Where(j => j.ExpireDate == null || j.ExpireDate.Value >= DateTime.UtcNow)
+                .Where(j => !j.IsDeleted && (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON) && !appliedJobIds.Contains(j.Id))
                 .ToListAsync();
 
             // 4. Score jobs based on rules
