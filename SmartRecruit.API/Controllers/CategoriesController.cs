@@ -29,7 +29,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> GetPaged([FromQuery] CategoryFilter filter)
         {
             var pagedCategories = await _categoryService.GetCategoriesPagedAsync(filter);
-            return Ok(pagedCategories);
+            return Ok(pagedCategories.WrapPaged());
         }
 
         [HttpPost]

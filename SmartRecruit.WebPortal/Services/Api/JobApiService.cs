@@ -199,7 +199,7 @@ namespace WebPortal.Services.Api
         {
             try
             {
-                var response = await _httpClient.GetAsync("categories");
+                var response = await _httpClient.GetAsync("categories/all");
                 if (response.IsSuccessStatusCode)
                 {
                     var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };

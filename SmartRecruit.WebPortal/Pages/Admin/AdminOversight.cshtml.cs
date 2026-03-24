@@ -12,7 +12,7 @@ namespace WebPortal.Pages
             _adminApiService = adminApiService;
         }
 
-        public WebPortal.Models.Api.PagedResponse<WebPortal.Models.Api.Admin.AILogResponse> AILogs { get; set; }
+        public WebPortal.Models.Api.PagedResponse<WebPortal.Models.Api.Admin.AILogResponse> AILogs { get; set; } = default!;
 
         public async Task OnGetAsync(int page = 1)
         {
