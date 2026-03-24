@@ -30,9 +30,10 @@ namespace SmartRecruit.API.Controllers
         }
 
         [HttpGet("content/ai-logs")]
-        public async Task<IActionResult> GetAILogs([FromQuery] AILogRequest request)
+        public async Task<IActionResult> GetAILogs([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] long? jobId = null)
         {
-            _logger.LogInformation("API GetAILogs called with search parameters: {@Request}", request);
+            _logger.LogInformation("API GetAILogs called with page: {Page}, pageSize: {PageSize}, jobId: {JobId}", page, pageSize, jobId);
+            var request = new AILogRequest { Page = page, PageSize = pageSize, JobId = jobId };
             var logs = await _aiLogService.GetAILogsAsync(request);
             var response = logs.WrapPaged("Tải nhật ký AI thành công");
             return Ok(response);

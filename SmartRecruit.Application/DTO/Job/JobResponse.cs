@@ -26,6 +26,11 @@ namespace SmartRecruit.Application.DTO.Job
         string? AppealMessage,
         bool IsBoosted,
         string? DraftChanges,
-        DateTime? ExpireDate
+        DateTime? ExpireDate,
+        string? CompanyName,
+        string? CompanyDescription,
+        string? WebsiteUrl,
+        string? Address,
+        string? LogoUrl
     );
 }

@@ -126,9 +126,12 @@
                         <a href="/Profile" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-[10px] font-black uppercase text-slate-500 hover:text-indigo-600 transition-all">
                             <i class="fas fa-fingerprint opacity-50 w-4 text-center"></i> Hồ sơ cá nhân
                         </a>
-                        <a href="/SavedJobs" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-[10px] font-black uppercase text-slate-500 hover:text-indigo-600 transition-all">
-                            <i class="fas fa-heart opacity-50 w-4 text-center"></i> Việc làm đã lưu
-                        </a>
+                        @if (userRole == "CANDIDATE")
+                        {
+                            <a href="/SavedJobs" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-[10px] font-black uppercase text-slate-500 hover:text-indigo-600 transition-all">
+                                <i class="fas fa-heart opacity-50 w-4 text-center"></i> Việc làm đã lưu
+                            </a>
+                        }
                         <a href="/Auth?handler=Logout" class="flex w-full items-center gap-3 px-4 py-3 hover:bg-red-50 text-red-500 rounded-xl text-[10px] font-black uppercase transition-all text-left">
                             <i class="fas fa-power-off opacity-50 w-4 text-center"></i> Đăng xuất hệ thống
                         </a>

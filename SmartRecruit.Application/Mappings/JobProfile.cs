@@ -33,7 +33,12 @@ namespace SmartRecruit.Application.Mappings
                     src.AppealMessage,
                     src.BoostExpiryTime != null && src.BoostExpiryTime > DateTime.UtcNow,
                     src.DraftChanges,
-                    src.ExpireDate
+                    src.ExpireDate,
+                    src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.CompanyName : null,
+                    src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.CompanyDescription : null,
+                    src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.WebsiteUrl : null,
+                    src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.Address : null,
+                    src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.LogoUrl : null
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
         }
