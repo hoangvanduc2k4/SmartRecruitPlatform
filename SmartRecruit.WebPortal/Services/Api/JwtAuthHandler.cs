@@ -55,6 +55,14 @@ namespace WebPortal.Services.Api
                     }
                 }
             }
+            // 4. Handle 429 Too Many Requests (Rate Limiting)
+            else if (response.StatusCode == (HttpStatusCode)429)
+            {
+                if (_httpContextAccessor.HttpContext != null)
+                {
+                    _httpContextAccessor.HttpContext.Items["RateLimitExceeded"] = true;
+                }
+            }
 
             return response;
         }
