@@ -151,6 +151,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             return await _context.Set<Job>()
                 .Include(x => x.Category)
                 .Include(x => x.Recruiter)
+                    .ThenInclude(r => r.CompanyProfile)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
