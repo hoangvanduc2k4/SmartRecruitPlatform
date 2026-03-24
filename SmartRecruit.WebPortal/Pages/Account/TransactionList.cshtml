@@ -60,10 +60,10 @@
                 </select>
             </div>
             <div class="flex flex-col sm:flex-row gap-2">
-                <button type="submit" class="flex-1 h-11 bg-indigo-600 text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">
+                <button type="submit" class="flex-1 h-11 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all whitespace-nowrap px-4">
                     Lọc Kết Quả
                 </button>
-                <a asp-page-handler="Export" asp-route-Type="@Model.Type" asp-route-Status="@Model.Status" class="flex-1 h-11 bg-emerald-600 text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-lg shadow-emerald-100 hover:bg-emerald-700 transition-all flex items-center justify-center gap-2">
+                <a asp-page-handler="Export" asp-route-Type="@Model.Type" asp-route-Status="@Model.Status" class="flex-1 h-11 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-emerald-100 hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 whitespace-nowrap px-4">
                     <i class="fas fa-file-excel"></i> Xuất Excel
                 </a>
                 <a asp-page="/Account/Transactions" class="w-11 h-11 flex items-center justify-center bg-slate-100 text-slate-500 rounded-xl hover:bg-slate-200 transition-all">
