@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +18,7 @@ namespace SmartRecruit.Application.DTO.Application
         decimal MatchScore,
         decimal SkillMatch,
         decimal ExperienceMatch,
-        string? AI_Summary,
+        string? AISummary,
         string Status,       // ApplicationStatus enum → string
         string? Notes,
         DateTime CreatedAt

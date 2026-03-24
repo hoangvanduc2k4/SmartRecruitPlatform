@@ -1,15 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebPortal.Services.Api;
+using WebPortal.Models;
 
 namespace WebPortal.Pages
 {
     public class AdminTransactionsModel : PageModel
     {
+        private readonly IWalletApiService _walletApiService;
+
+        public AdminTransactionsModel(IWalletApiService walletApiService)
+        {
+            _walletApiService = walletApiService;
+        }
+
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
 
         public int TotalPages { get; set; }
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 10;
 
         public class TransactionViewModel
         {
@@ -17,29 +26,45 @@ namespace WebPortal.Pages
             public required string User { get; set; }
             public required string Type { get; set; }
             public decimal Amount { get; set; }
-            public required string Method { get; set; }
             public required string Date { get; set; }
             public required string Status { get; set; }
         }
 
-        public System.Collections.Generic.IList<TransactionViewModel> Transactions { get; set; } = new System.Collections.Generic.List<TransactionViewModel>();
+        public IList<TransactionViewModel> Transactions { get; set; } = new List<TransactionViewModel>();
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var allTransactions = new[] {
-                new TransactionViewModel { Id = "TXN-9021", User = "TechCorp HR", Type = "WALLET_TOPUP", Amount = 5000000m, Method = "PAYOS", Date = "2023-11-21 14:30", Status = "SUCCESS" },
-                new TransactionViewModel { Id = "TXN-9022", User = "Alice Developer", Type = "VIP_UPGRADE", Amount = -200000m, Method = "WALLET", Date = "2023-11-21 15:10", Status = "SUCCESS" },
-                new TransactionViewModel { Id = "TXN-9023", User = "TechCorp HR", Type = "JOB_POST", Amount = -50000m, Method = "WALLET", Date = "2023-11-21 16:00", Status = "SUCCESS" },
-                new TransactionViewModel { Id = "TXN-9024", User = "Global Startup", Type = "JOB_BOOST", Amount = -20000m, Method = "WALLET", Date = "2023-11-21 16:45", Status = "SUCCESS" },
-                new TransactionViewModel { Id = "TXN-9025", User = "John Recruiter", Type = "WALLET_TOPUP", Amount = 1000000m, Method = "PAYOS", Date = "2023-11-21 17:30", Status = "SUCCESS" },
-                new TransactionViewModel { Id = "TXN-9026", User = "Bob Backend", Type = "VIP_UPGRADE", Amount = -200000m, Method = "WALLET", Date = "2023-11-22 10:00", Status = "SUCCESS" }
-            }.AsQueryable();
-
-            var count = allTransactions.Count();
-            TotalPages = (int)System.Math.Ceiling(count / (double)PageSize);
             if (CurrentPage < 1) CurrentPage = 1;
 
-            Transactions = allTransactions.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            var response = await _walletApiService.GetTransactionsAsync(null, CurrentPage, PageSize);
+            if (response?.Data != null)
+            {
+                Transactions = response.Data.Select(t => new TransactionViewModel
+                {
+                    Id = t.Id.ToString(),
+                    User = $"User {t.UserId}", // Ideally fetch username, but for now using ID
+                    Type = t.Type ?? "UNKNOWN",
+                    Amount = t.Amount,
+                    Date = t.CreatedAt.ToString("yyyy-MM-dd HH:mm"),
+                    Status = t.Status ?? "SUCCESS"
+                }).ToList();
+
+                TotalPages = response.TotalPages;
+            }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetExport()
+        {
+            var fileBytes = await _walletApiService.DownloadTransactionsExcelAsync();
+            if (fileBytes == null)
+            {
+                return RedirectToPage();
+            }
+
+            var fileName = $"SystemTransactions_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }

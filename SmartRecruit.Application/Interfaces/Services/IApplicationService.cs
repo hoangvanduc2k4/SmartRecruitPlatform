@@ -18,5 +18,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<ApplicationResponse?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
         Task<int> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
         Task<byte[]> ExportApplicantsToExcelAsync(long jobId);
+        Task<bool> ReAnalyzeAsync(long applicationId);
     }
 }

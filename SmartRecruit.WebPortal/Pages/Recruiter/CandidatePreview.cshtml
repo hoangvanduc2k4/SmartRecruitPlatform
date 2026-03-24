@@ -232,7 +232,7 @@
                     <div class="space-y-6">
                         <div class="p-6 bg-slate-800/50 rounded-2xl border border-white/5 backdrop-blur-sm">
                             <p id="ai-summary-text" class="text-lg font-medium text-slate-200 leading-relaxed italic">
-                                "@(string.IsNullOrEmpty(app?.AI_Summary) ? "Đang cập nhật phân tích AI cho ứng viên này..." : app.AI_Summary)"
+                                 "@((string.IsNullOrEmpty(app?.AISummary) ? "Đang cập nhật phân tích AI cho ứng viên này..." : app.AISummary))"
                             </p>
                         </div>
                         
@@ -533,6 +533,18 @@
                             </div>
                             <a href="/JobDetail?Id=@(job?.Id ?? 0)" class="block w-full text-center py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-600 hover:text-white transition-all shadow-sm">Xem Chi Tiết Bài Đăng</a>
                         </div>
+                        
+                        @if (!isRecruiter)
+                        {
+                            <form method="post" asp-page-handler="ReAnalyzeCV" class="mt-4">
+                                <input type="hidden" name="id" value="@app.Id" />
+                                <button type="submit" class="w-full flex items-center justify-center gap-2 py-4 bg-amber-50 border border-amber-200 text-amber-600 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-amber-600 hover:text-white transition-all shadow-sm group">
+                                    <i class="fas fa-sync-alt group-hover:rotate-180 transition-transform duration-500"></i>
+                                    Phân tích lại CV bằng AI
+                                </button>
+                                <p class="mt-2 text-[9px] text-amber-500 font-medium text-center uppercase tracking-tighter">* Sử dụng khi bạn vừa cập nhật CV mới để tối ưu điểm số</p>
+                            </form>
+                        }
                     </div>
                 </div>
             }
@@ -627,14 +639,14 @@
                     console.log("CandidatePreview: Received Score Update:", update);
                     if (!update) return;
                     
-                    const jobId = update.jobId || update.JobId;
-                    if (jobId == currentJobId) {
-                        console.log("Job ID match! Updating scores UI.");
+                    const appId = update.applicationId || update.ApplicationId;
+                    if (appId == currentAppId) {
+                        console.log("App ID match! Updating scores UI.");
                         updateScores(
                             update.matchScore || update.MatchScore || 0,
                             update.skillMatch || update.SkillMatch || 0,
                             update.experienceMatch || update.ExperienceMatch || 0,
-                            update.ai_Summary || update.AI_Summary || ""
+                            update.aiSummary || update.ai_Summary || update.aI_Summary || update.AI_Summary || ""
                         );
                     }
                 });
@@ -664,7 +676,13 @@
         setAnimateValue('match-score-main', match);
         setAnimateValue('skill-score-main', skill);
         setAnimateValue('experience-score-main', exp);
-        if (summary) document.getElementById('ai-summary-text').innerText = '"' + summary + '"';
+        if (summary) {
+            const summaryEl = document.getElementById('ai-summary-text');
+            if (summaryEl) {
+                // Preserve newlines if any
+                summaryEl.innerText = '"' + summary + '"';
+            }
+        }
         
         // Update progress bars
         const bars = document.querySelectorAll('.bg-indigo-600.h-full, .bg-white.h-full');
