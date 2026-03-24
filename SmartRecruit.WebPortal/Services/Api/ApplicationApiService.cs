@@ -17,6 +17,7 @@ namespace WebPortal.Services.Api
         Task<bool> BulkUpdateStatusAsync(BulkUpdateApplicationStatusRequest request);
         Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId);
         Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
+        Task<byte[]?> ExportJobApplicantsToExcelAsync(long jobId);
     }
 
     public class ApplicationApiService : IApplicationApiService
@@ -182,6 +183,23 @@ namespace WebPortal.Services.Api
             catch (Exception ex)
             {
                 Console.WriteLine($"[ApplicationApiService] Error fetching application for job {jobId} and candidate {candidateId}: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<byte[]?> ExportJobApplicantsToExcelAsync(long jobId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"applications/export-job/{jobId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsByteArrayAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ApplicationApiService] Error exporting applicants for job {jobId}: {ex.Message}");
             }
             return null;
         }

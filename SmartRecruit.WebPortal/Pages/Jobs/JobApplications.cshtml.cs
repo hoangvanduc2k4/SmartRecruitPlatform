@@ -89,5 +89,25 @@ namespace WebPortal.Pages
             await _applicationApiService.RestoreStatusAsync(applicationId);
             return RedirectToPage(new { Id, CurrentPage });
         }
+
+        public async Task<IActionResult> OnGetExportExcelAsync()
+        {
+            if (!long.TryParse(Id, out var longId)) return NotFound();
+            
+            // Lấy thông tin Job để lấy Title cho tên file
+            var job = await _jobApiService.GetJobByIdAsync(Id);
+            string jobTitle = job?.Title ?? Id;
+
+            var content = await _applicationApiService.ExportJobApplicantsToExcelAsync(longId);
+            if (content == null)
+            {
+                return RedirectToPage(new { Id, CurrentPage });
+            }
+
+            // Làm sạch Title để làm tên file
+            string safeTitle = string.Join("_", jobTitle.Split(Path.GetInvalidFileNameChars()));
+            var fileName = $"Applicants_{safeTitle}_{DateTime.Now:yyyyMMddHHmm}.xlsx";
+            return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
     }
 }
