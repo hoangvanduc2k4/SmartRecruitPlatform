@@ -1,4 +1,4 @@
-﻿using SmartRecruit.Domain.Commons;
+using SmartRecruit.Domain.Commons;
 using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Domain.Entities

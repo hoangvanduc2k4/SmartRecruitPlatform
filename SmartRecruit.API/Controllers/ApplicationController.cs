@@ -265,8 +265,39 @@ namespace SmartRecruit.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi xuất danh sách ứng viên cho Job {JobId}", jobId);
                 return StatusCode(500, new { }.Wrap("Không thể xuất file lúc này."));
+            }
+        }
+
+        /// <summary>
+        /// Phân tích lại CV bằng AI (dùng khi ứng viên cập nhật CV mới)
+        /// </summary>
+        [HttpPost("{id}/re-analyze")]
+        public async Task<IActionResult> ReAnalyzeApplication(long id)
+        {
+            _logger.LogInformation("API ReAnalyzeApplication called for Id: {Id}", id);
+            try
+            {
+                var application = await _applicationService.GetApplicationByIdAsync(id);
+                if (application == null) return NotFound(new { }.Wrap("Đơn ứng tuyển không tồn tại"));
+
+                // Kiểm tra quyền: Chỉ Candidate của chính Application đó hoặc Admin mới được trigger
+                if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && application.CandidateId != CurrentUserId)
+                {
+                    return Forbid();
+                }
+
+                var success = await _applicationService.ReAnalyzeAsync(id);
+                if (success)
+                {
+                    return Ok(true.Wrap("Đã bắt đầu quá trình phân tích lại. Kết quả sẽ được cập nhật trong giây lát."));
+                }
+                return BadRequest(false.Wrap("Không thể thực hiện phân tích lại lúc này."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi phân tích lại CV cho Application {Id}", id);
+                return StatusCode(500, false.Wrap(ex.Message));
             }
         }
     }

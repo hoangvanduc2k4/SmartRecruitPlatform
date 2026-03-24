@@ -94,7 +94,7 @@
                                     @{
                                         // Hiển thị "Đang đánh giá" nếu cả Score là 0 VÀ Summary trống (chưa có kết quả AI)
                                         // Sử dụng ID dựa trên Application ID để tránh xung đột
-                                        var isEvaluating = app.MatchScore <= 0 && string.IsNullOrEmpty(app.AI_Summary);
+                                        var isEvaluating = app.MatchScore <= 0 && string.IsNullOrEmpty(app.AISummary);
                                     }
                                     <div id="ai-evaluating-app-@app.Id" class="@(isEvaluating ? "flex" : "hidden") items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg border border-indigo-100 w-max">
                                         <i class="fas fa-robot text-indigo-500 animate-bounce text-[10px]"></i>
@@ -175,12 +175,12 @@
                         console.log("AppliedJobs: Received Score Update:", update);
                         if (!update) return;
                         
-                        const jobId = update.jobId || update.JobId;
+                        const appId = update.applicationId || update.ApplicationId;
                         const score = update.matchScore || update.MatchScore || 0;
                         
-                        // Tìm tất cả các hàng có JobId này để cập nhật
-                        const rows = document.querySelectorAll('tr[data-job-id="' + jobId + '"]');
-                        rows.forEach(row => {
+                        // Tìm hàng cụ thể theo Application ID
+                        const row = document.querySelector('tr[data-app-id="' + appId + '"]');
+                        if (row) {
                             const evaluatingEl = row.querySelector('[id^="ai-evaluating-app-"]');
                             const scoreContainerEl = row.querySelector('[id^="score-container-app-"]');
                             
@@ -201,7 +201,7 @@
                                     textEl.innerText = Math.round(score) + "%";
                                 }
                             }
-                        });
+                        }
 
                         // Cập nhật lại trung bình
                         updateAverageScore();

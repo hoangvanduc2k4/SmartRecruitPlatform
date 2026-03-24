@@ -192,21 +192,22 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostApplyAsync()
         {
-            var currentUserId = CurrentUserId;
-
-            if (long.TryParse(Id, out var longId) && currentUserId.HasValue)
+            if (long.TryParse(Id, out var longId) && IsAuthenticated)
             {
-                try
-                {
-                    var response = await _applicationApiService.ApplyAsync(longId, currentUserId.Value);
-                    if (response.Success) TempData["Message"] = response.Message;
-                    else TempData["Error"] = response.Message;
-                }
-                catch (Exception ex)
-                {
-                    TempData["Error"] = $"Ứng tuyển thất bại: {ex.Message}";
+                var result = await _applicationApiService.ApplyAsync(longId, CurrentUserId!.Value);
+                if (result.Success) TempData["Message"] = result.Message;
+                else TempData["Error"] = result.Message;
+            }
+            return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
+        }
 
-                }
+        public async Task<IActionResult> OnPostReAnalyzeCVAsync(long applicationId)
+        {
+            if (IsAuthenticated)
+            {
+                var result = await _applicationApiService.ReAnalyzeAsync(applicationId);
+                if (result.Success) TempData["Message"] = result.Message;
+                else TempData["Error"] = result.Message;
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }

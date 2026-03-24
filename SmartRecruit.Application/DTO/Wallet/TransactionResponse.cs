@@ -3,6 +3,7 @@ namespace SmartRecruit.Application.DTO.Wallet
     public record TransactionResponse(
         long Id,
         long UserId,
+        string UserName,
         long WalletId,
         decimal Amount,
         string Type,

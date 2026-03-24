@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Domain.Entities;
 

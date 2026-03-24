@@ -23,6 +23,7 @@ namespace SmartRecruit.Application.Mappings
                 .ConstructUsing(src => new TransactionResponse(
                     src.Id,
                     src.UserId,
+                    src.User != null ? src.User.FullName : "Unknown",
                     src.WalletId,
                     src.Amount,
                     src.Type.ToString(),

@@ -72,5 +72,24 @@ namespace SmartRecruit.Controllers
             var transactions = await _walletService.GetTransactionsAsync(request);
             return Ok(transactions.WrapPaged());
         }
+
+        /// <summary>
+        /// Xuất danh sách Transaction ra file Excel
+        /// </summary>
+        [HttpGet("transactions/export")]
+        public async Task<IActionResult> ExportTransactions([FromQuery] TransactionSearchRequest request)
+        {
+            _logger.LogInformation("API ExportTransactions called with parameters: {@Request}", request);
+
+            // Security: If not admin, can only export own transactions
+            if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN)
+            {
+                request.UserId = CurrentUserId;
+            }
+
+            var fileContent = await _walletService.ExportTransactionsToExcelAsync(request);
+            var fileName = $"Transactions_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
     }
 }

@@ -177,7 +177,7 @@ namespace SmartRecruit.Application.Services
                 application.MatchScore = result.MatchScore;
                 application.SkillMatch = result.SkillMatch;
                 application.ExperienceMatch = result.ExperienceMatch;
-                application.AI_Summary = result.AI_Summary;
+                application.AI_Summary = result.AISummary;
             }
             catch (Exception ex)
             {
@@ -199,13 +199,22 @@ namespace SmartRecruit.Application.Services
             {
                 var updateDto = new SmartRecruit.Application.DTO.Application.ApplicationScoreUpdateDto
                 {
+                    ApplicationId = applicationId,
                     JobId = application.JobId,
                     MatchScore = application.MatchScore,
                     SkillMatch = application.SkillMatch,
                     ExperienceMatch = application.ExperienceMatch,
-                    AI_Summary = application.AI_Summary
+                    AISummary = application.AI_Summary
                 };
+                
+                // Notify Candidate
                 await _notificationHubService.SendApplicationScoreUpdateAsync(application.CandidateId, updateDto);
+                
+                // Notify Recruiter
+                if (application.Job != null)
+                {
+                    await _notificationHubService.SendApplicationScoreUpdateAsync(application.Job.RecruiterId, updateDto);
+                }
             }
             catch (Exception ex)
             {
@@ -605,6 +614,53 @@ namespace SmartRecruit.Application.Services
             }).ToList();
 
             return _excelService.ExportToExcel(exportData, "Danh sách ứng viên");
+        }
+
+        public async Task<bool> ReAnalyzeAsync(long applicationId)
+        {
+            var application = await _applicationRepository.GetApplicationWithDetailsAsync(applicationId);
+            if (application == null) return false;
+
+            _logger.LogInformation("Re-analyzing application {ApplicationId} for Job {JobId}", applicationId, application.JobId);
+
+            // Reset scores
+            application.MatchScore = 0;
+            application.SkillMatch = 0;
+            application.ExperienceMatch = 0;
+            application.AI_Summary = "Hệ thống đang thực hiện phân tích lại CV của bạn. Vui lòng đợi trong giây lát...";
+            application.UpdatedAt = DateTime.UtcNow;
+
+            _applicationRepository.Update(application);
+            await _unitOfWork.CompleteAsync();
+
+            // Notify initial state
+            try
+            {
+                var updateDto = new SmartRecruit.Application.DTO.Application.ApplicationScoreUpdateDto
+                {
+                    ApplicationId = applicationId,
+                    JobId = application.JobId,
+                    MatchScore = 0,
+                    SkillMatch = 0,
+                    ExperienceMatch = 0,
+                    AISummary = application.AI_Summary
+                };
+                
+                await _notificationHubService.SendApplicationScoreUpdateAsync(application.CandidateId, updateDto);
+                if (application.Job != null)
+                {
+                    await _notificationHubService.SendApplicationScoreUpdateAsync(application.Job.RecruiterId, updateDto);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to send initial SignalR update during re-analysis for AppId {Id}", applicationId);
+            }
+
+            // Enqueue new scoring job
+            _backgroundJobClient.Enqueue<IApplicationService>(x => x.ScoreApplicationAsync(applicationId));
+
+            return true;
         }
     }
 }
