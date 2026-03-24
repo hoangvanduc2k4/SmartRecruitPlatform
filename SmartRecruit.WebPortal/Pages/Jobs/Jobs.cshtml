@@ -47,6 +47,8 @@
             <form method="get" class="p-8 space-y-8 sticky top-28 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg" id="filterForm">
                 <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
                 <input type="hidden" name="LocationFilter" value="@Model.LocationFilter" />
+                <input type="hidden" name="sortBy" value="@Model.SortBy" />
+                <input type="hidden" name="sortOrder" value="@Model.SortOrder" />
                 
                 <div class="space-y-4">
                     <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Lĩnh Vực Ngành Nghề</h4>
@@ -99,6 +101,24 @@
 
         <!-- Job List -->
         <div class="lg:col-span-9 space-y-6">
+            @if (Model.Jobs.Count > 0)
+            {
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-md p-6 rounded-[2rem] border border-slate-100 shadow-sm mb-2">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                        <i class="fas fa-search mr-2 text-indigo-500"></i>Tìm thấy <span class="text-slate-900">@Model.Jobs.Count</span> công việc
+                    </p>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">Sắp xếp:</label>
+                        <select onchange="applySort(this.value)" class="flex-1 sm:flex-none h-11 bg-white border border-slate-200 rounded-xl px-4 text-[10px] font-black uppercase text-slate-600 outline-none focus:ring-2 focus:ring-indigo-500 hover:border-indigo-300 transition-all cursor-pointer shadow-sm">
+                            <option value="" selected='@(string.IsNullOrEmpty(Model.SortBy))'>Phù hợp nhất</option>
+                            <option value="date_desc" selected='@(Model.SortBy == "date" && Model.SortOrder == "desc")'>Mới nhất</option>
+                            <option value="date_asc" selected='@(Model.SortBy == "date" && Model.SortOrder == "asc")'>Cũ nhất</option>
+                            <option value="salary_desc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "desc")'>Lương: Cao - Thấp</option>
+                            <option value="salary_asc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "asc")'>Lương: Thấp - Cao</option>
+                        </select>
+                    </div>
+                </div>
+            }
             @if (Model.Jobs.Count == 0)
             {
                 <div class="py-32 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
@@ -233,6 +253,12 @@
                 
                 const maxSal = filterForm.querySelector('input[name="MaxSalary"]');
                 if (maxSal) maxSal.value = "";
+
+                // Clear Sorting
+                const sortBy = filterForm.querySelector('input[name="sortBy"]');
+                if (sortBy) sortBy.value = "";
+                const sortOrder = filterForm.querySelector('input[name="sortOrder"]');
+                if (sortOrder) sortOrder.value = "";
             }
 
             if (searchForm) {
@@ -249,6 +275,23 @@
             // The user will enter/submit manually.
         }
 
+        function applySort(val) {
+            const parts = val.split('_');
+            const sortBy = parts[0];
+            const sortOrder = parts[1];
+            
+            const filterForm = document.getElementById('filterForm');
+            if (filterForm) {
+                const sortByInput = filterForm.querySelector('input[name="sortBy"]');
+                const sortOrderInput = filterForm.querySelector('input[name="sortOrder"]');
+                
+                if (sortByInput) sortByInput.value = sortBy;
+                if (sortOrderInput) sortOrderInput.value = sortOrder;
+                
+                filterForm.requestSubmit();
+            }
+        }
+
         // Add Enter key support for filter form inputs
         document.addEventListener('DOMContentLoaded', function() {
             const filterForm = document.getElementById('filterForm');
@@ -261,7 +304,7 @@
                     input.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             e.preventDefault();
-                            filterForm.submit();
+                            filterForm.requestSubmit();
                         }
                     });
                 });
@@ -276,7 +319,7 @@
                     searchInput.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             e.preventDefault();
-                            searchForm.submit();
+                            searchForm.requestSubmit();
                         }
                     });
                 }
@@ -285,7 +328,7 @@
                     locationSelect.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             e.preventDefault();
-                            searchForm.submit();
+                            searchForm.requestSubmit();
                         }
                     });
                 }

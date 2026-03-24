@@ -105,50 +105,47 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             // 6. Sorting
             var now = DateTime.UtcNow;
-
             IOrderedQueryable<Job> orderedQuery;
 
-            // For recruiter-specific queries, always sort by most recent activity first
             if (request.recruiterId.HasValue)
             {
-                // For recruiter jobs, prioritize by most recent activity (created or updated)
                 orderedQuery = query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt);
             }
             else
             {
-                // We always prioritize Boosted jobs regardless of the requested SortBy
-                // But within those boosted jobs, we follow the requirements:
-                // "Tin nào vừa được thanh toán Boost thành công sẽ ngay lập tức chiếm vị trí Top 1"
-                // This means we should sort boosted jobs by BoostExpiryTime DESC (since boost duration is fixed at 20 mins, newest boost will have latest expiry)
-
-                // 1. Boosted jobs first: we sort by BoostExpiryTime DESC.
-                // If BoostExpiryTime is null or in the past, they will naturally be sorted after currently boosted jobs if we use a default value for nulls,
-                // or we can sort by HasBoost first, then ExpiryTime.
-
-                // To ensure "Boosted jobs appear on top, ordered by most recently boosted (which means latest expiry time)",
-                // we first order by whether they are currently boosted:
-                orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
-                                    .ThenByDescending(x => x.BoostExpiryTime) // Within boosted, newest boost (latest expiry) first. For non-boosted, this puts previously boosted jobs higher.
-                                    .ThenByDescending(x => x.ViewCount)
-                                    .ThenByDescending(x => x.SalaryMax)
-                                    .ThenBy(x => x.CreatedAt); // Oldest created first as tie-breaker
-
-                // After boosted jobs, apply the requested or default sorting for non-boosted jobs
                 bool isDesc = !string.Equals(request.sortOrder, "asc", StringComparison.OrdinalIgnoreCase);
 
                 if (!string.IsNullOrEmpty(request.sortBy))
                 {
+                    // User Sort is PRIMARY
                     switch (request.sortBy.ToLower())
                     {
                         case "salary":
-                            orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.SalaryMin) : orderedQuery.ThenBy(x => x.SalaryMin);
+                            orderedQuery = isDesc ? query.OrderByDescending(x => x.SalaryMax) : query.OrderBy(x => x.SalaryMin);
                             break;
                         case "date":
-                            // Use UpdatedAt ?? CreatedAt for "date" sorting
-                            orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.UpdatedAt ?? x.CreatedAt) : orderedQuery.ThenBy(x => x.UpdatedAt ?? x.CreatedAt);
+                            orderedQuery = isDesc ? query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt) : query.OrderBy(x => x.UpdatedAt ?? x.CreatedAt);
+                            break;
+                        default:
+                            orderedQuery = query.OrderByDescending(x => x.ViewCount);
                             break;
                     }
+
+                    // Boosted status as SECONDARY priority
+                    orderedQuery = orderedQuery.ThenByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
+                                                .ThenByDescending(x => x.BoostExpiryTime);
                 }
+                else
+                {
+                    // Default View: Boosted is PRIMARY
+                    orderedQuery = query.OrderByDescending(x => x.BoostExpiryTime.HasValue && x.BoostExpiryTime.Value > now)
+                                        .ThenByDescending(x => x.BoostExpiryTime)
+                                        .ThenByDescending(x => x.ViewCount)
+                                        .ThenByDescending(x => x.UpdatedAt ?? x.CreatedAt);
+                }
+
+                // Final Tie-breaker
+                orderedQuery = orderedQuery.ThenByDescending(x => x.Id);
             }
 
             return await PagedList<Job>.CreateAsync(orderedQuery, request.page, request.pageSize);

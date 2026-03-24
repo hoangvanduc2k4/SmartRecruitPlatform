@@ -45,6 +45,12 @@ namespace WebPortal.Pages
         public int PageSize { get; set; } = 6;
         public HashSet<long> SavedJobIds { get; set; } = new HashSet<long>();
 
+        [BindProperty(SupportsGet = true)]
+        public string? SortBy { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SortOrder { get; set; }
+
         public async Task OnGetAsync()
         {
             Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
@@ -69,7 +75,9 @@ namespace WebPortal.Pages
                 MinSalary,
                 MaxSalary,
                 CurrentPage,
-                PageSize
+                PageSize,
+                SortBy,
+                SortOrder
             );
 
             if (response.Success && response.Data != null)
