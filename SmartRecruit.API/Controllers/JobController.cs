@@ -24,8 +24,26 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobs([FromQuery] JobSearchRequest request)
+        public async Task<IActionResult> GetJobs(
+            [FromQuery] string? keyword,
+            [FromQuery] decimal? minSalary,
+            [FromQuery] decimal? maxSalary,
+            [FromQuery] string? location,
+            [FromQuery] long? categoryId,
+            [FromQuery] long? recruiterId,
+            [FromQuery] int? jobType,
+            [FromQuery] string? skills,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] bool showHidden = false,
+            [FromQuery] bool showBlocked = false,
+            [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortOrder = null)
         {
+            var request = new JobSearchRequest(
+                keyword, minSalary, maxSalary, location, categoryId, recruiterId, jobType, skills, 
+                page, pageSize, showHidden, showBlocked, sortBy, sortOrder);
+            
             _logger.LogInformation("API GetJobs called with search parameters: {@Request}", request);
             var jobs = await _jobService.GetJobsAsync(request);
             var response = jobs.WrapPaged();
