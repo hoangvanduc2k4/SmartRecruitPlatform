@@ -108,7 +108,7 @@ namespace WebPortal.Services.Api
 
         public async Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"admin/finance/logs?page={page}&pageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"admin/finance/logs?Page={page}&PageSize={pageSize}");
             return await HandlePagedResponseAsync<TransactionResponse>(response) ?? new PagedResponse<TransactionResponse>();
         }
 

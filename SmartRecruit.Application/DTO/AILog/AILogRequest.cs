@@ -1,8 +1,9 @@
-﻿namespace SmartRecruit.Application.DTO.AILog
+namespace SmartRecruit.Application.DTO.AILog
 {
-    public record AILogRequest(
-        long? JobId = null,
-        int Page = 1,
-        int PageSize = 10
-    );
+    public class AILogRequest
+    {
+        public long? JobId { get; set; } = null;
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+    }
 }

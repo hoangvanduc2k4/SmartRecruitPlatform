@@ -28,7 +28,7 @@ namespace SmartRecruit.Infrastructure.Repositories
                 baseQuery = baseQuery.Where(x => x.JobId == request.JobId.Value);
             }
 
-            var orderedQuery = baseQuery.OrderByDescending(x => x.CreatedAt);
+            var orderedQuery = baseQuery.OrderByDescending(x => x.CreatedAt).ThenByDescending(x => x.Id);
             return await PagedList<AILog>.CreateAsync(orderedQuery, request.Page, request.PageSize);
         }
     }
