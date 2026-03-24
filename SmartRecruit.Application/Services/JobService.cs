@@ -49,12 +49,9 @@ namespace SmartRecruit.Application.Services
             _logger = logger;
         }
 
-        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
+        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
         {
-            var request = new JobSearchRequest(null, null, null, null, null, null, null, null, page, pageSize, true, true, "date", "desc")
-            {
-                recruiterId = recruiterId
-            };
+            var request = new JobSearchRequest(null, null, null, null, null, recruiterId, null, null, page, pageSize, true, true, null, null, status);
             return await GetJobsAsync(request);
         }
 

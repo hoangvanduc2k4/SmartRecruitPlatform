@@ -38,11 +38,12 @@ namespace SmartRecruit.Controllers
             [FromQuery] bool showHidden = false,
             [FromQuery] bool showBlocked = false,
             [FromQuery] string? sortBy = null,
-            [FromQuery] string? sortOrder = null)
+            [FromQuery] string? sortOrder = null,
+            [FromQuery] int? status = null)
         {
             var request = new JobSearchRequest(
                 keyword, minSalary, maxSalary, location, categoryId, recruiterId, jobType, skills, 
-                page, pageSize, showHidden, showBlocked, sortBy, sortOrder);
+                page, pageSize, showHidden, showBlocked, sortBy, sortOrder, status);
             
             _logger.LogInformation("API GetJobs called with search parameters: {@Request}", request);
             var jobs = await _jobService.GetJobsAsync(request);
@@ -51,9 +52,9 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("recruiter/{recruiterId}")]
-        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId, page, pageSize);
+            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId, page, pageSize, status);
             return Ok(jobs.WrapPaged());
         }
 
@@ -80,9 +81,9 @@ namespace SmartRecruit.Controllers
 
         [HttpGet("my-jobs")]
         [Authorize(Roles = "RECRUITER")]
-        public async Task<IActionResult> GetMyJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetMyJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(CurrentUserId, page, pageSize);
+            var jobs = await _jobService.GetJobsByRecruiterAsync(CurrentUserId, page, pageSize, status);
             return Ok(jobs.WrapPaged());
         }
 

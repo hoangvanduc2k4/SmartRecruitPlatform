@@ -14,6 +14,7 @@ namespace SmartRecruit.Application.DTO.Job
             bool showHidden = false,
             bool showBlocked = false,
             string? sortBy = null,
-            string? sortOrder = null
+            string? sortOrder = null,
+            int? status = null
         );
 }

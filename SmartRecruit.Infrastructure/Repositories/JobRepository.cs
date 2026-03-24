@@ -101,6 +101,11 @@ namespace SmartRecruit.Infrastructure.Repositories
                 query = query.Where(x => (int)x.JobType == request.jobType.Value);
             }
 
+            if (request.status.HasValue)
+            {
+                query = query.Where(x => (int)x.Status == request.status.Value);
+            }
+
             // 6. Sorting
             var now = DateTime.UtcNow;
             IOrderedQueryable<Job> orderedQuery;

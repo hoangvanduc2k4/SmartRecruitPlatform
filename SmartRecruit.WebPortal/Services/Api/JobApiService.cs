@@ -7,7 +7,7 @@ namespace WebPortal.Services.Api
     public interface IJobApiService
     {
         Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10, string? sortBy = null, string? sortOrder = null);
-        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10);
+        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null);
         Task<Job?> GetJobForEditAsync(string id);
         Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job);
         Task<ApiResponse<Job>> PublishJobAsync(string id);
@@ -71,9 +71,12 @@ namespace WebPortal.Services.Api
             return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
         }
 
-        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10)
+        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
         {
-            var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}?page={page}&pageSize={pageSize}");
+            var query = $"?page={page}&pageSize={pageSize}";
+            if (status.HasValue) query += $"&status={status.Value}";
+
+            var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}{query}");
             if (response.IsSuccessStatusCode)
             {
                 var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };

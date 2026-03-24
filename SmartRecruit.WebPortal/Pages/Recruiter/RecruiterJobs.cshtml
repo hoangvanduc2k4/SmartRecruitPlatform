@@ -13,9 +13,24 @@
             <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Trung Tâm Tuyển Dụng</h2>
             <p class="text-slate-500 text-sm font-medium mt-1">Quản lý bài đăng và theo dõi hiệu suất tuyển dụng theo thời gian thực.</p>
         </div>
-        <a href="/PostJob" class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition inline-flex items-center justify-center">
-            <i class="fas fa-plus-circle mr-2"></i> Tạo Bài Đăng Mới
-        </a>
+        <div class="flex items-center gap-4">
+            <form method="get" class="flex items-center gap-3">
+                <label for="Status" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Lọc theo:</label>
+                <select name="Status" id="Status" onchange="this.form.submit()" class="h-14 pl-6 pr-10 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50 transition-all outline-none appearance-none cursor-pointer shadow-sm min-w-[200px]">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="0" selected="@(Model.Status == 0)">Đang chờ duyệt</option>
+                    <option value="1" selected="@(Model.Status == 1)">Đã duyệt</option>
+                    <option value="6" selected="@(Model.Status == 6)">Sắp hết hạn</option>
+                    <option value="5" selected="@(Model.Status == 5)">Đã hết hạn</option>
+                    <option value="2" selected="@(Model.Status == 2)">Đã chặn</option>
+                    <option value="4" selected="@(Model.Status == 4)">Bản nháp</option>
+                    <option value="3" selected="@(Model.Status == 3)">Đã ẩn</option>
+                </select>
+            </form>
+            <a href="/PostJob" class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition inline-flex items-center justify-center">
+                <i class="fas fa-plus-circle mr-2"></i> Tạo Bài Đăng Mới
+            </a>
+        </div>
     </div>
 
     <!-- Stats -->
@@ -88,7 +103,7 @@
                                     </p>
                                 </td>
                                 <td class="px-6 py-8">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @(job.Status == JobStatus.APPROVED ? "bg-green-100 text-green-800" : job.Status == JobStatus.CHECKING ? "bg-yellow-100 text-yellow-800" : job.Status == JobStatus.BLOCKED ? "bg-red-100 text-red-800" : job.Status == JobStatus.DRAFT ? "bg-indigo-50 text-indigo-400 border border-indigo-100" : "bg-slate-100 text-slate-800")">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold @(job.Status == JobStatus.APPROVED ? "bg-green-100 text-green-800" : job.Status == JobStatus.CHECKING ? "bg-yellow-100 text-yellow-800" : job.Status == JobStatus.BLOCKED ? "bg-red-100 text-red-800" : job.Status == JobStatus.DRAFT ? "bg-indigo-50 text-indigo-400 border border-indigo-100" : job.Status == JobStatus.EXPIRING_SOON ? "bg-amber-100 text-amber-800 border border-amber-200" : job.Status == JobStatus.EXPIRED ? "bg-slate-100 text-slate-500 border border-slate-200" : "bg-slate-100 text-slate-800")">
                                         @(job.Status switch
                                         {
                                             JobStatus.APPROVED => "Đã duyệt",
@@ -96,6 +111,8 @@
                                             JobStatus.BLOCKED => "Đã chặn (AI)",
                                             JobStatus.HIDDEN => "Đã ẩn",
                                             JobStatus.DRAFT => "Bản nháp",
+                                            JobStatus.EXPIRED => "Hết hạn",
+                                            JobStatus.EXPIRING_SOON => "Sắp hết hạn",
                                             _ => job.Status.ToString()
                                         })
                                     </span>
@@ -165,7 +182,10 @@
         </div>
     </div>
 
-    <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, "?CurrentPage={0}")' />
+    @{
+        var statusQuery = Model.Status.HasValue ? $"&Status={Model.Status}" : "";
+    }
+    <partial name="_Pagination" model='(Model.CurrentPage, Model.TotalPages, "?CurrentPage={0}" + statusQuery)' />
 </div>
 
 <!-- Appeal Modal -->
