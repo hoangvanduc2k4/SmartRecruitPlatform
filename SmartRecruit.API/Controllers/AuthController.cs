@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Auth;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using Microsoft.AspNetCore.RateLimiting;
 namespace SmartRecruit.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("strict")]
     public class AuthController : BaseController
     {
         private readonly IAuthService _authService;

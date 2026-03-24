@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
     <header class="sticky top-0 z-[100] h-20 bg-white/70 backdrop-blur-2xl border-b border-slate-200/50 px-8 flex items-center justify-between">
@@ -219,6 +220,24 @@
                 }
             }
             updateHeaderBalance();
+        </script>
+    }
+
+    @if (Context.Items.ContainsKey("RateLimitExceeded"))
+    {
+        <script>
+            Swal.fire({
+                title: 'Thao tác quá nhanh!',
+                text: 'Bạn đang gửi quá nhiều yêu cầu. Vui lòng thử lại sau 1 phút để đảm bảo an toàn hệ thống.',
+                icon: 'warning',
+                confirmButtonText: 'Đã hiểu',
+                confirmButtonColor: '#4f46e5',
+                background: '#ffffff',
+                customClass: {
+                    popup: 'rounded-3xl',
+                    confirmButton: 'rounded-xl font-bold uppercase text-[10px] tracking-widest px-8 py-4'
+                }
+            });
         </script>
     }
 </body>
