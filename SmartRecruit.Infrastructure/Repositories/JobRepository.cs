@@ -48,6 +48,8 @@ namespace SmartRecruit.Infrastructure.Repositories
             if (!request.recruiterId.HasValue)
             {
                 query = query.Where(x => x.Status != JobStatus.DRAFT);
+                // Exclude expired jobs from public search
+                query = query.Where(x => x.ExpireDate == null || x.ExpireDate.Value >= DateTime.UtcNow);
             }
 
             // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
@@ -104,10 +106,6 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 6. Sorting
             var now = DateTime.UtcNow;
 
-            // Priority 1: Boosted jobs (BoostExpiryTime > Now)
-            // Priority 2: Tie-breaking for boosted jobs (ViewCount DESC, SalaryMax DESC, CreatedAt ASC)
-            // Priority 3: Normal jobs (SortBy/SortOrder or Default)
-
             IOrderedQueryable<Job> orderedQuery;
 
             // We always prioritize Boosted jobs regardless of the requested SortBy
@@ -138,16 +136,10 @@ namespace SmartRecruit.Infrastructure.Repositories
                         orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.SalaryMin) : orderedQuery.ThenBy(x => x.SalaryMin);
                         break;
                     case "date":
-                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.CreatedAt) : orderedQuery.ThenBy(x => x.CreatedAt);
-                        break;
-                    default:
-                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.CreatedAt) : orderedQuery.ThenBy(x => x.CreatedAt);
+                        // Use UpdatedAt ?? CreatedAt for "date" sorting
+                        orderedQuery = isDesc ? orderedQuery.ThenByDescending(x => x.UpdatedAt ?? x.CreatedAt) : orderedQuery.ThenBy(x => x.UpdatedAt ?? x.CreatedAt);
                         break;
                 }
-            }
-            else
-            {
-                orderedQuery = orderedQuery.ThenByDescending(x => x.CreatedAt);
             }
 
             return await PagedList<Job>.CreateAsync(orderedQuery, request.page, request.pageSize);
@@ -267,9 +259,11 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 3. Fetch potentially matching jobs 
             // - Exclude already applied jobs
             // - Only APPROVED and NOT deleted/blocked/hidden
+            // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
                 .Where(j => !j.IsDeleted && j.Status == JobStatus.APPROVED && !appliedJobIds.Contains(j.Id))
+                .Where(j => j.ExpireDate == null || j.ExpireDate.Value >= DateTime.UtcNow)
                 .ToListAsync();
 
             // 4. Score jobs based on rules

@@ -19,6 +19,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             return await _context.Categories
+                .Where(c => !c.IsDeleted)
                 .OrderBy(c => c.Name)
                 .ToListAsync();
         }

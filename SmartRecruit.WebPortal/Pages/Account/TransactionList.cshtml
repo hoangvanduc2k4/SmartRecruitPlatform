@@ -124,14 +124,14 @@
                                     @switch (tx.Status?.ToUpper())
                                     {
                                         case "SUCCESS":
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-green-100 text-green-800">SUCCESS</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-green-100 text-green-800">THÀNH CÔNG</span>
                                             break;
                                         case "FAILED":
                                         case "CANCELLED":
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800">FAILED</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800">THẤT BẠI</span>
                                             break;
                                         default:
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800">@(string.IsNullOrEmpty(tx.Status) ? "PENDING" : tx.Status)</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-100 text-amber-800">@(string.IsNullOrEmpty(tx.Status) || tx.Status == "PENDING" ? "ĐANG XỬ LÝ" : tx.Status)</span>
                                             break;
                                     }
                                 </td>
@@ -299,7 +299,7 @@
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
                         <span class="text-[10px] font-black text-slate-400 uppercase">Trạng Thái</span>
-                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status || 'PENDING'}</span>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${statusColor}">${tx.Status === 'SUCCESS' ? 'THÀNH CÔNG' : (tx.Status === 'FAILED' || tx.Status === 'CANCELLED' ? 'THẤT BẠI' : 'ĐANG XỬ LÝ')}</span>
                     </div>
                     <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-slate-100">
                         <span class="text-[10px] font-black text-slate-400 uppercase">Mã Thanh Toán</span>

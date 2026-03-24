@@ -123,7 +123,7 @@ namespace WebPortal.Services.Api
 
             foreach (var prop in request.Options)
             {
-                clone.Options.Set(new HttpRequestOptionsKey<object>(prop.Key), prop.Value);
+                clone.Options.Set(new HttpRequestOptionsKey<object?>(prop.Key), prop.Value);
             }
 
             return clone;
