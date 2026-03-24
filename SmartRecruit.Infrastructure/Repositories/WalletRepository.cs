@@ -33,6 +33,7 @@ namespace SmartRecruit.Infrastructure.Repositories
         {
             _logger.LogTrace("Executing SQL query to fetch transactions with parameters: {@Request}", request);
             var query = _context.Set<Transaction>()
+                .Include(t => t.User)
                 .AsQueryable();
 
             // Filter by UserId

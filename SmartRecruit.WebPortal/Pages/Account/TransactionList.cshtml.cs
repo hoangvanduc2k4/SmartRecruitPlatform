@@ -41,5 +41,17 @@ namespace WebPortal.Pages
             Transactions = await _walletApiService.GetTransactionsAsync(null, PageNumber, PageSize, Type, Status);
             return Page();
         }
+
+        public async Task<IActionResult> OnGetExport()
+        {
+            var fileBytes = await _walletApiService.DownloadTransactionsExcelAsync(Type, Status);
+            if (fileBytes == null)
+            {
+                return Page();
+            }
+
+            var fileName = $"Transactions_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
     }
 }

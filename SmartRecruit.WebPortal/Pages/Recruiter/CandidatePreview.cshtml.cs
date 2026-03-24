@@ -90,5 +90,18 @@ namespace WebPortal.Pages
             return RedirectToPage(new { id, ReturnUrl });
         }
 
+        public async Task<IActionResult> OnPostReAnalyzeCVAsync(long id)
+        {
+            var result = await _applicationApiService.ReAnalyzeAsync(id);
+            if (result.Success)
+            {
+                TempData["Message"] = result.Message;
+            }
+            else
+            {
+                TempData["Error"] = result.Message;
+            }
+            return RedirectToPage(new { id, ReturnUrl });
+        }
     }
 }

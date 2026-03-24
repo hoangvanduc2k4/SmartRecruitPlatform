@@ -9,5 +9,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<WalletResponse> GetWalletByUserIdAsync(long userId);
         Task<PagedList<TransactionResponse>> GetTransactionsAsync(TransactionSearchRequest request);
         Task<FinanceStatsResponse> GetFinanceStatsAsync();
+        Task<byte[]> ExportTransactionsToExcelAsync(TransactionSearchRequest request);
     }
 }

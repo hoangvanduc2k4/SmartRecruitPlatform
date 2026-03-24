@@ -18,6 +18,7 @@ namespace WebPortal.Services.Api
         Task<ApiResponse<bool>> ApplyAsync(long jobId, long candidateId);
         Task<Application?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
         Task<byte[]?> ExportJobApplicantsToExcelAsync(long jobId);
+        Task<ApiResponse<bool>> ReAnalyzeAsync(long id);
     }
 
     public class ApplicationApiService : IApplicationApiService
@@ -202,6 +203,20 @@ namespace WebPortal.Services.Api
                 Console.WriteLine($"[ApplicationApiService] Error exporting applicants for job {jobId}: {ex.Message}");
             }
             return null;
+        }
+
+        public async Task<ApiResponse<bool>> ReAnalyzeAsync(long id)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"applications/{id}/re-analyze", null);
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>(_jsonOptions);
+                return result ?? new ApiResponse<bool> { Success = false, Message = "Unknown error" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool> { Success = false, Message = ex.Message };
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ namespace SmartRecruit.Infrastructure.Services
                 1. Đánh giá MatchScore (Tổng quan) từ 0-100.
                 2. Đánh giá SkillMatch (Kỹ năng) từ 0-100.
                 3. Đánh giá ExperienceMatch (Kinh nghiệm) từ 0-100.
-                4. Tóm tắt ngắn gọn (AI_Summary).
+                4. Tóm tắt ngắn gọn (AISummary).
                 5. Liệt kê kỹ năng thiếu (MissingSkills).
                 6. Lời khuyên (Recommendation).
 
@@ -78,7 +78,7 @@ namespace SmartRecruit.Infrastructure.Services
                     ""MatchScore"": (decimal),
                     ""SkillMatch"": (decimal),
                     ""ExperienceMatch"": (decimal),
-                    ""AI_Summary"": ""(string)"",
+                    ""AISummary"": ""(string)"",
                     ""MissingSkills"": [""(string)"", ""(string)""],
                     ""Recommendation"": ""(string)""
                 }}";

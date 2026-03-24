@@ -10,6 +10,7 @@ namespace WebPortal.Services.Api
         Task<(string? CheckoutUrl, string? Error)> CreateDepositLinkAsync(decimal amount);
         Task<string?> GetPaymentLinkAsync(long orderCode);
         Task<PagedResponse<Transaction>?> GetTransactionsAsync(long? userId = null, int page = 1, int pageSize = 10, int? type = null, int? status = null);
+        Task<byte[]?> DownloadTransactionsExcelAsync(int? type = null, int? status = null);
     }
 
     public class WalletData
@@ -108,6 +109,26 @@ namespace WebPortal.Services.Api
             {
                 var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 return await response.Content.ReadFromJsonAsync<PagedResponse<Transaction>>(options);
+            }
+            return null;
+        }
+
+        public async Task<byte[]?> DownloadTransactionsExcelAsync(int? type = null, int? status = null)
+        {
+            var url = $"wallet/transactions/export?";
+            if (type.HasValue)
+            {
+                url += $"&Type={type.Value}";
+            }
+            if (status.HasValue)
+            {
+                url += $"&Status={status.Value}";
+            }
+            
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
             }
             return null;
         }
