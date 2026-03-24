@@ -5,11 +5,13 @@ using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.API.Controllers;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/applications")]
+    [EnableRateLimiting("default")]
     public class ApplicationController : BaseController
     {
         private readonly IApplicationService _applicationService;
@@ -84,6 +86,7 @@ namespace SmartRecruit.Controllers
         /// AI scoring sẽ được xử lý bất đồng bộ bởi Hangfire
         /// </summary>
         [HttpPost]
+        [EnableRateLimiting("heavy")]
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
         {
             _logger.LogInformation("API ApplyJob called by CandidateId: {CandidateId} for JobId: {JobId}", request.CandidateId, request.JobId);
@@ -243,6 +246,7 @@ namespace SmartRecruit.Controllers
         /// </summary>
         [HttpGet("export-job/{jobId}")]
         [Authorize(Roles = "RECRUITER, ADMIN")]
+        [EnableRateLimiting("heavy")]
         public async Task<IActionResult> ExportJobApplicants(long jobId)
         {
             try
