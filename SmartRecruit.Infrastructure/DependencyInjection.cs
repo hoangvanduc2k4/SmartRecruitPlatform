@@ -18,6 +18,7 @@ namespace SmartRecruit.Infrastructure
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IExcelService, ExcelService>();
             services.AddScoped<IUserService, UserService>(); // Added
             services.AddScoped<ISavedJobService, SavedJobService>();
             services.AddScoped<IOtpService, OtpService>();
