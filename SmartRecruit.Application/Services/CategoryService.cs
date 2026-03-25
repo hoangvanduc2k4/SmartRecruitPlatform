@@ -40,6 +40,13 @@ namespace SmartRecruit.Application.Services
 
         public async Task<CategoryResponse> CreateCategoryAsync(CreateCategoryDTO request)
         {
+            // Check for duplicate name (case-insensitive)
+            var existing = await _categoryRepository.FindAsync(c => c.Name.ToLower() == request.Name.ToLower() && !c.IsDeleted);
+            if (existing != null)
+            {
+                throw new InvalidOperationException("Tên danh mục đã tồn tại.");
+            }
+
             var category = new Category
             {
                 Name = request.Name
@@ -55,7 +62,14 @@ namespace SmartRecruit.Application.Services
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null || category.IsDeleted)
-                throw new KeyNotFoundException("Category not found");
+                throw new KeyNotFoundException("Không tìm thấy danh mục");
+
+            // Check for duplicate name (excluding itself)
+            var existing = await _categoryRepository.FindAsync(c => c.Name.ToLower() == request.Name.ToLower() && c.Id != id && !c.IsDeleted);
+            if (existing != null)
+            {
+                throw new InvalidOperationException("Tên danh mục đã tồn tại.");
+            }
 
             category.Name = request.Name;
             category.UpdatedAt = DateTime.UtcNow;

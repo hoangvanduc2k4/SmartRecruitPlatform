@@ -2,6 +2,7 @@
 @page "/Jobs"
 @model WebPortal.Pages.JobsModel
 @using WebPortal.Models
+@using System.Globalization
 @{
     ViewData["Title"] = "Tìm Việc Làm";
 }
@@ -10,10 +11,9 @@
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div class="space-y-2">
             <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Khám Phá Cơ Hội</span>
-            <h2 class="text-5xl font-black text-slate-900 tracking-tighter">Tìm Kiếm Việc Làm</h2>
-            <p class="text-slate-500 font-medium">Tìm thấy @Model.Jobs.Count cơ hội việc làm phù hợp với bạn.</p>
+            <h2 class="text-5xl font-black text-slate-900 tracking-tighter">Khám phá cơ hội</h2>
         </div>
-        <div class="flex-1 max-w-2xl">
+        <div class="flex-1 max-w-5xl">
             <form method="get" class="flex flex-col sm:flex-row gap-3" id="searchForm">
                 <!-- Keep other filters in state -->
                 <input type="hidden" name="CategoryFilter" value="@Model.CategoryFilter" />
@@ -27,13 +27,24 @@
                 </div>
 
                 <div class="sm:w-48 relative">
-                    <select name="LocationFilter" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-xs font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
+                    <select name="LocationFilter" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-[10px] font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none">
                         @foreach (var loc in Model.AvailableLocations)
                         {
-                            <option value="@loc" selected="@(Model.LocationFilter == loc)">@loc.ToUpper()</option>
+                            <option value="@loc" selected="@(Model.LocationFilter == loc)">@(loc == "ALL" ? "Tất cả địa điểm" : loc.ToUpper())</option>
                         }
                     </select>
                     <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none text-[10px]"></i>
+                </div>
+
+                <div class="sm:w-48 relative">
+                    <select name="sortBy" onchange="this.form.submit()" class="h-14 w-full bg-white border border-slate-200 rounded-2xl px-5 text-[10px] font-black uppercase tracking-widest text-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all shadow-sm appearance-none cursor-pointer">
+                        <option value="" selected='@(string.IsNullOrEmpty(Model.SortBy))'>Mặc định</option>
+                        <option value="date_desc" selected='@(Model.SortBy == "date" && Model.SortOrder == "desc")'>Mới nhất</option>
+                        <option value="date_asc" selected='@(Model.SortBy == "date" && Model.SortOrder == "asc")'>Cũ nhất</option>
+                        <option value="salary_desc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "desc")'>Lương: Cao - Thấp</option>
+                        <option value="salary_asc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "asc")'>Lương: Thấp - Cao</option>
+                    </select>
+                    <i class="fas fa-sort absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none text-[10px]"></i>
                 </div>
 
                 <button type="submit" class="h-14 px-8 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-600 transition-all shadow-lg active:scale-95">Tìm Kiếm</button>
@@ -103,21 +114,7 @@
         <div class="lg:col-span-9 space-y-6">
             @if (Model.Jobs.Count > 0)
             {
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 backdrop-blur-md p-6 rounded-[2rem] border border-slate-100 shadow-sm mb-2">
-                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        <i class="fas fa-search mr-2 text-indigo-500"></i>Tìm thấy <span class="text-slate-900">@Model.Jobs.Count</span> công việc
-                    </p>
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">Sắp xếp:</label>
-                        <select onchange="applySort(this.value)" class="flex-1 sm:flex-none h-11 bg-white border border-slate-200 rounded-xl px-4 text-[10px] font-black uppercase text-slate-600 outline-none focus:ring-2 focus:ring-indigo-500 hover:border-indigo-300 transition-all cursor-pointer shadow-sm">
-                            <option value="" selected='@(string.IsNullOrEmpty(Model.SortBy))'>Phù hợp nhất</option>
-                            <option value="date_desc" selected='@(Model.SortBy == "date" && Model.SortOrder == "desc")'>Mới nhất</option>
-                            <option value="date_asc" selected='@(Model.SortBy == "date" && Model.SortOrder == "asc")'>Cũ nhất</option>
-                            <option value="salary_desc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "desc")'>Lương: Cao - Thấp</option>
-                            <option value="salary_asc" selected='@(Model.SortBy == "salary" && Model.SortOrder == "asc")'>Lương: Thấp - Cao</option>
-                        </select>
-                    </div>
-                </div>
+                <div class="mb-2"></div>
             }
             @if (Model.Jobs.Count == 0)
             {
@@ -132,7 +129,7 @@
                     @foreach (var job in Model.Jobs)
                     {
                         <div class="block group relative">
-                            <a href="/JobDetail?id=@job.Id" class="block p-8 bg-white rounded-[2.5rem] border border-slate-200/60 transition-all duration-500 @(job.IsBoosted ? "bg-white shadow-[0_0_40px_rgba(99,102,241,0.15)] border-indigo-100 hover:shadow-[0_0_60px_rgba(99,102,241,0.25)] hover:border-indigo-300 transform hover:-translate-y-1" : "hover:translate-x-2 hover:shadow-2xl hover:shadow-indigo-100/50")">
+                            <a href="/JobDetail?id=@job.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)" class="block p-8 bg-white rounded-[2.5rem] border border-slate-200/60 transition-all duration-500 @(job.IsBoosted ? "bg-white shadow-[0_0_40px_rgba(99,102,241,0.15)] border-indigo-100 hover:shadow-[0_0_60px_rgba(99,102,241,0.25)] hover:border-indigo-300 transform hover:-translate-y-1" : "hover:translate-x-2 hover:shadow-2xl hover:shadow-indigo-100/50")">
                                 @if (job.IsBoosted)
                                 {
                                     <div class="absolute top-0 right-10">
@@ -280,15 +277,13 @@
             const sortBy = parts[0];
             const sortOrder = parts[1];
             
-            const filterForm = document.getElementById('filterForm');
-            if (filterForm) {
-                const sortByInput = filterForm.querySelector('input[name="sortBy"]');
-                const sortOrderInput = filterForm.querySelector('input[name="sortOrder"]');
-                
-                if (sortByInput) sortByInput.value = sortBy;
-                if (sortOrderInput) sortOrderInput.value = sortOrder;
-                
-                filterForm.requestSubmit();
+            const searchForm = document.getElementById('searchForm');
+            if (searchForm) {
+                const sortByInput = searchForm.querySelector('select[name="sortBy"]');
+                if (sortByInput) {
+                    sortByInput.value = val;
+                }
+                searchForm.submit();
             }
         }
 

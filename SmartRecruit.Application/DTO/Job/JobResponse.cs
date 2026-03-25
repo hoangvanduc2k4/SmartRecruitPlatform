@@ -12,7 +12,7 @@ namespace SmartRecruit.Application.DTO.Job
         decimal SalaryMin,
         decimal SalaryMax,
         string Location,
-        long CategoryId,
+        long? CategoryId,
         string JobType,
         DateTime CreatedTime,
         string Category,

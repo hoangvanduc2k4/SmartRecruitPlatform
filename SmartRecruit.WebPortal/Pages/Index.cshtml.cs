@@ -30,7 +30,7 @@ public class IndexModel : BasePageModel
                 var recommendations = await _jobApiService.GetRecommendedJobsAsync();
                 RecommendedJobs = recommendations.Take(5);
 
-                var savedJobs = await _jobApiService.GetSavedJobsAsync(CurrentUserId.Value, 1, 100);
+                var savedJobs = await _jobApiService.GetSavedJobsAsync(CurrentUserId!.Value, 1, 100);
                 if (savedJobs.Success && savedJobs.Data != null)
                 {
                     SavedJobIds = new HashSet<long>(savedJobs.Data.Select(j => j.Id));
@@ -48,7 +48,7 @@ public class IndexModel : BasePageModel
     public async Task<IActionResult> OnPostToggleSaveAsync(long jobId)
     {
         var currentUserId = CurrentUserId;
-        if (!currentUserId.HasValue) return RedirectToPage("/Account/Login");
+        if (!currentUserId.HasValue) return RedirectToPage("/Account/Auth");
 
         await _jobApiService.ToggleSaveJobAsync(jobId, currentUserId.Value);
         return RedirectToPage();

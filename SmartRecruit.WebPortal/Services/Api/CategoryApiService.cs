@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using WebPortal.Models.Api;
@@ -10,8 +10,8 @@ namespace WebPortal.Services.Api
     {
         Task<PagedResponse<CategoryResponse>> GetCategoriesPagedAsync(CategoryFilter filter);
         Task<IEnumerable<CategoryResponse>> GetAllCategoriesAsync();
-        Task<CategoryResponse?> CreateCategoryAsync(CreateCategoryDTO request);
-        Task<CategoryResponse?> UpdateCategoryAsync(long id, UpdateCategoryDTO request);
+        Task<ApiResponse<CategoryResponse>> CreateCategoryAsync(CreateCategoryDTO request);
+        Task<ApiResponse<CategoryResponse>> UpdateCategoryAsync(long id, UpdateCategoryDTO request);
         Task<bool> DeleteCategoryAsync(long id);
     }
 
@@ -63,28 +63,30 @@ namespace WebPortal.Services.Api
             return pagedResponse ?? new PagedResponse<CategoryResponse> { Success = false, Message = "Invalid response format" };
         }
 
-        public async Task<CategoryResponse?> CreateCategoryAsync(CreateCategoryDTO request)
+        public async Task<ApiResponse<CategoryResponse>> CreateCategoryAsync(CreateCategoryDTO request)
         {
             var response = await _httpClient.PostAsJsonAsync("categories", request);
-            if (response.IsSuccessStatusCode)
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryResponse>>();
+            
+            if (!response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryResponse>>();
-                return apiResponse?.Data;
+                _logger.LogError("Error creating category. Status: {StatusCode}, Message: {Message}", response.StatusCode, apiResponse?.Message);
             }
-            _logger.LogError("Error creating category. Status: {StatusCode}", response.StatusCode);
-            return null;
+            
+            return apiResponse ?? new ApiResponse<CategoryResponse> { Success = false, Message = "Failed to create category." };
         }
 
-        public async Task<CategoryResponse?> UpdateCategoryAsync(long id, UpdateCategoryDTO request)
+        public async Task<ApiResponse<CategoryResponse>> UpdateCategoryAsync(long id, UpdateCategoryDTO request)
         {
             var response = await _httpClient.PutAsJsonAsync($"categories/{id}", request);
-            if (response.IsSuccessStatusCode)
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryResponse>>();
+
+            if (!response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryResponse>>();
-                return apiResponse?.Data;
+                _logger.LogError("Error updating category {Id}. Status: {StatusCode}, Message: {Message}", id, response.StatusCode, apiResponse?.Message);
             }
-            _logger.LogError("Error updating category {Id}. Status: {StatusCode}", id, response.StatusCode);
-            return null;
+
+            return apiResponse ?? new ApiResponse<CategoryResponse> { Success = false, Message = "Failed to update category." };
         }
 
         public async Task<bool> DeleteCategoryAsync(long id)

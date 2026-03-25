@@ -24,27 +24,8 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobs(
-            [FromQuery] string? keyword,
-            [FromQuery] decimal? minSalary,
-            [FromQuery] decimal? maxSalary,
-            [FromQuery] string? location,
-            [FromQuery] long? categoryId,
-            [FromQuery] long? recruiterId,
-            [FromQuery] int? jobType,
-            [FromQuery] string? skills,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] bool showHidden = false,
-            [FromQuery] bool showBlocked = false,
-            [FromQuery] string? sortBy = null,
-            [FromQuery] string? sortOrder = null,
-            [FromQuery] int? status = null)
+        public async Task<IActionResult> GetJobs([FromQuery] JobSearchRequest request)
         {
-            var request = new JobSearchRequest(
-                keyword, minSalary, maxSalary, location, categoryId, recruiterId, jobType, skills, 
-                page, pageSize, showHidden, showBlocked, sortBy, sortOrder, status);
-            
             _logger.LogInformation("API GetJobs called with search parameters: {@Request}", request);
             var jobs = await _jobService.GetJobsAsync(request);
             var response = jobs.WrapPaged();
@@ -52,9 +33,13 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("recruiter/{recruiterId}")]
-        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
+        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] JobSearchRequest request)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId, page, pageSize, status);
+            // Ensure recruiterId from route takes precedence
+            var finalRequest = request with { recruiterId = recruiterId, showHidden = true, showBlocked = true };
+            
+            _logger.LogInformation("API GetJobsByRecruiter called for Recruiter {RecruiterId} with parameters: {@Request}", recruiterId, finalRequest);
+            var jobs = await _jobService.GetJobsAsync(finalRequest);
             return Ok(jobs.WrapPaged());
         }
 
@@ -81,9 +66,10 @@ namespace SmartRecruit.Controllers
 
         [HttpGet("my-jobs")]
         [Authorize(Roles = "RECRUITER")]
-        public async Task<IActionResult> GetMyJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
+        public async Task<IActionResult> GetMyJobs([FromQuery] JobSearchRequest request)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(CurrentUserId, page, pageSize, status);
+            var finalRequest = request with { recruiterId = CurrentUserId, showHidden = true, showBlocked = true };
+            var jobs = await _jobService.GetJobsAsync(finalRequest);
             return Ok(jobs.WrapPaged());
         }
 
@@ -97,7 +83,7 @@ namespace SmartRecruit.Controllers
                 var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
                 return Ok(job.Wrap("Đã lưu thay đổi. Nếu công việc đang hiển thị, các thay đổi sẽ được cập nhật sau khi đăng lại."));
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 return Forbid();
             }

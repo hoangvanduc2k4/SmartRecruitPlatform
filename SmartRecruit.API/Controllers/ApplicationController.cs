@@ -267,7 +267,7 @@ namespace SmartRecruit.Controllers
 
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, new { }.Wrap("Không thể xuất file lúc này."));
             }

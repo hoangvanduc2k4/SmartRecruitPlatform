@@ -27,13 +27,9 @@ namespace WebPortal.Pages
             SalaryMax = 3000
         };
 
-        [BindProperty]
-        public string SkillsInput { get; set; } = string.Empty;
-
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
         public decimal WalletBalance { get; set; }
         public int PageSize { get; set; } = 5;
-
 
         public async Task OnGetAsync()
         {
@@ -57,10 +53,16 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                Categories = await _jobApiService.GetCategoriesAsync();
+                return Page();
+            }
+
             var recruiterId = CurrentUserId;
             if (!recruiterId.HasValue)
             {
-                return RedirectToPage("/Account/Login");
+                return RedirectToPage("/Account/Auth");
             }
 
             var result = await _jobApiService.CreateJobAsync(new Job
@@ -71,7 +73,7 @@ namespace WebPortal.Pages
                 Description = JobInput.Description ?? "",
                 Requirement = JobInput.Requirement ?? "",
                 Benefits = JobInput.Benefits ?? "",
-                SkillsRequired = SkillsInput ?? "",
+                SkillsRequired = JobInput.SkillsRequired ?? "",
                 SalaryMin = JobInput.SalaryMin,
                 SalaryMax = JobInput.SalaryMax,
                 JobType = JobInput.JobType,
@@ -80,12 +82,14 @@ namespace WebPortal.Pages
                 ExpireDate = JobInput.ExpireDate
             });
 
-            if (result != null)
+            if (result.Success)
             {
                 return RedirectToPage("/Recruiter/RecruiterJobs");
             }
 
-            ModelState.AddModelError(string.Empty, "Tạo công việc thất bại. Vui lòng thử lại.");
+            TempData["Error"] = result.Errors.Any() 
+                ? "- " + string.Join("<br/>- ", result.Errors) 
+                : result.Message;
             Categories = await _jobApiService.GetCategoriesAsync();
             return Page();
         }
