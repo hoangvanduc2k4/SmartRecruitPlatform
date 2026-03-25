@@ -49,6 +49,8 @@ namespace WebPortal.Models
         public DateTime CreatedTime { get; set; }
 
         [Required(ErrorMessage = "Ngày hết hạn là bắt buộc")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? ExpireDate { get; set; }
 
         [Required(ErrorMessage = "Địa điểm làm việc là bắt buộc")]
@@ -56,7 +58,7 @@ namespace WebPortal.Models
 
         [Required(ErrorMessage = "Danh mục công việc là bắt buộc")]
         [Range(1, long.MaxValue, ErrorMessage = "Vui lòng chọn danh mục hợp lệ")]
-        public long CategoryId { get; set; }
+        public long? CategoryId { get; set; }
 
         public string Category { get; set; } = string.Empty;
         public bool IsBoosted { get; set; }

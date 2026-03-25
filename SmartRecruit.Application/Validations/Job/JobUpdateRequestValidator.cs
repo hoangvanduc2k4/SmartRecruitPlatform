@@ -43,6 +43,7 @@ namespace SmartRecruit.Application.Validations.Job
                 .IsInEnum().WithMessage("Loại hình công việc không hợp lệ");
 
             RuleFor(x => x.CategoryId)
+                .NotEmpty().WithMessage("Vui lòng chọn danh mục công việc")
                 .GreaterThan(0).WithMessage("Vui lòng chọn danh mục hợp lệ");
             
             RuleFor(x => x.ExpireDate)

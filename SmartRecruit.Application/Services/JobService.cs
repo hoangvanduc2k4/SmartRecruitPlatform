@@ -98,7 +98,7 @@ namespace SmartRecruit.Application.Services
                 SalaryMax = request.SalaryMax,
                 JobType = request.JobType,
                 Location = request.Location,
-                CategoryId = request.CategoryId,
+                CategoryId = request.CategoryId!.Value,
                 ExpireDate = request.ExpireDate,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
@@ -293,7 +293,7 @@ namespace SmartRecruit.Application.Services
                 job.SalaryMax = request.SalaryMax;
                 job.JobType = request.JobType;
                 job.Location = request.Location;
-                job.CategoryId = request.CategoryId;
+                job.CategoryId = request.CategoryId ?? job.CategoryId;
                 job.ExpireDate = request.ExpireDate;
                 job.DraftChanges = null; // Clear any existing draft since we're updating main
             }
@@ -416,7 +416,7 @@ namespace SmartRecruit.Application.Services
                         job.SalaryMax = draft.SalaryMax;
                         job.JobType = draft.JobType;
                         job.Location = draft.Location;
-                        job.CategoryId = draft.CategoryId;
+                        job.CategoryId = draft.CategoryId ?? job.CategoryId;
                         job.ExpireDate = draft.ExpireDate;
                         job.DraftChanges = null;
                     }

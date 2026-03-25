@@ -69,13 +69,13 @@ namespace WebPortal.Pages.Admin
             }
 
             var result = await _categoryApiService.CreateCategoryAsync(CreateModel);
-            if (result != null)
+            if (result.Success)
             {
-                TempData["SuccessMessage"] = "Thêm danh mục mới thành công.";
+                TempData["SuccessMessage"] = result.Message ?? "Thêm danh mục mới thành công.";
             }
             else
             {
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi thêm danh mục.";
+                TempData["ErrorMessage"] = result.Message ?? "Có lỗi xảy ra khi thêm danh mục.";
             }
 
             return RedirectToPage(new { CurrentPage, SearchTerm });
@@ -92,13 +92,13 @@ namespace WebPortal.Pages.Admin
             }
 
             var result = await _categoryApiService.UpdateCategoryAsync(EditCategoryId, EditModel);
-            if (result != null)
+            if (result.Success)
             {
-                TempData["SuccessMessage"] = "Cập nhật danh mục thành công.";
+                TempData["SuccessMessage"] = result.Message ?? "Cập nhật danh mục thành công.";
             }
             else
             {
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi cập nhật danh mục.";
+                TempData["ErrorMessage"] = result.Message ?? "Có lỗi xảy ra khi cập nhật danh mục.";
             }
 
             return RedirectToPage(new { CurrentPage, SearchTerm });

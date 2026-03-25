@@ -27,8 +27,8 @@ namespace WebPortal.Pages
         public Job? Job { get; set; }
         public List<Application> Applications { get; set; } = new List<Application>();
 
-        [BindProperty(SupportsGet = true)]
-        public string Id { get; set; } = string.Empty;
+        [BindProperty(SupportsGet = true, Name = "id")]
+        public string? Id { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string Tab { get; set; } = "DETAILS"; // DETAILS, APPLICANTS, PIPELINE
@@ -53,75 +53,79 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Categories = await _jobApiService.GetCategoriesAsync();
-            // Populate basic user info from base properties for the view
-            if (IsAuthenticated)
+            try 
             {
-                CurrentUserDto = new UserDto
+                Categories = await _jobApiService.GetCategoriesAsync();
+                
+                if (IsAuthenticated)
                 {
-                    Id = CurrentUserId?.ToString() ?? "",
-                    Role = CurrentUserRole ?? UserRole.CANDIDATE
-                };
+                    CurrentUserDto = new UserDto
+                    {
+                        Id = CurrentUserId?.ToString() ?? "",
+                        Role = CurrentUserRole ?? UserRole.CANDIDATE
+                    };
 
-                // Fetch full profile for CV check
-                var profile = await _authApiService.GetProfileAsync();
-                if (profile?.CandidateProfile != null)
+                    var profile = await _authApiService.GetProfileAsync();
+                    if (profile?.CandidateProfile != null)
+                    {
+                        HasCV = !string.IsNullOrWhiteSpace(profile.CandidateProfile.CVText);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(Id) && long.TryParse(Id, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var longId))
                 {
-                    HasCV = !string.IsNullOrWhiteSpace(profile.CandidateProfile.CVText);
+                    var baseJob = await _jobApiService.GetJobByIdAsync(longId.ToString());
+                    if (baseJob != null)
+                    {
+                        Job = baseJob;
+                        EditJob = baseJob; // Load basic job into everyone's view
+                        
+                        var currentUserId = CurrentUserId;
+                        IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && baseJob.RecruiterId == currentUserId.Value);
+
+                        if (IsOwner)
+                        {
+                            var draftJob = await _jobApiService.GetJobForEditAsync(longId.ToString());
+                            if (draftJob != null)
+                            {
+                                Job = draftJob;
+                                EditJob = draftJob; // Overwrite with draft if owner
+                            }
+                        }
+
+                        if (currentUserId.HasValue)
+                        {
+                            IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
+
+                            if (CurrentUserRole == UserRole.CANDIDATE)
+                            {
+                                MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
+                            }
+                        }
+
+                        var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
+                        Applications = pagedApps.Data != null ? ((IEnumerable<Application>)pagedApps.Data).ToList() : new List<Application>();
+                        TotalApplicationCount = pagedApps.TotalCount;
+                        TotalPages = pagedApps.TotalPages;
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Không tìm thấy công việc này (ID: " + Id + ")";
+                        return Page();
+                    }
+                }
+                else if (!string.IsNullOrEmpty(Id))
+                {
+                    // If parsing failed but Id wasn't empty
+                    TempData["Error"] = "Mã công việc không hợp lệ: " + Id;
                 }
             }
-
-            if (long.TryParse(Id, out var longId))
+            catch (Exception ex)
             {
-                // First get the basic job to check ownership
-                Job = await _jobApiService.GetJobByIdAsync(longId.ToString());
-                if (Job != null)
-                {
-                    var currentUserId = CurrentUserId;
-
-                    // Ownership check
-                    IsOwner = (currentUserId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
-
-                    // If owner, reload with draft changes if they exist
-                    if (IsOwner)
-                    {
-                        var editJob = await _jobApiService.GetJobForEditAsync(longId.ToString());
-                        if (editJob != null)
-                        {
-                            Job = editJob;
-                            EditJob = editJob; // Populate for Tag Helpers
-                        }
-                    }
-
-                    if (currentUserId.HasValue)
-                    {
-                        IsSaved = await _jobApiService.IsJobSavedAsync(longId, currentUserId.Value);
-
-                        if (CurrentUserRole == UserRole.CANDIDATE)
-                        {
-                            MyApplication = await _applicationApiService.GetApplicationByJobAndCandidateAsync(longId, currentUserId.Value);
-                        }
-                    }
-
-                    // CompanyProfile fields are now included in Job response directly
-
-                    // Only the recruiter who owns this job can edit it
-                    if (currentUserId.HasValue)
-                    {
-                        IsOwner = (CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == currentUserId.Value);
-                    }
-
-                    // Fetch applications for this job
-                    var pagedApps = await _applicationApiService.GetApplicationsByJobAsync(longId, CurrentPage, PageSize, true);
-                    Applications = pagedApps.Data != null ? ((IEnumerable<Application>)pagedApps.Data).ToList() : new List<Application>();
-                    TotalApplicationCount = pagedApps.TotalCount;
-                    TotalPages = pagedApps.TotalPages;
-                }
-                else
-                {
-                    return NotFound();
-                }
+                System.Console.WriteLine($"[JobDetail] Fatal Error in OnGetAsync: {ex}");
+                TempData["Error"] = "Đã xảy ra lỗi hệ thống khi tải thông tin công việc.";
             }
+
             return Page();
         }
 

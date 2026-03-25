@@ -40,7 +40,8 @@ namespace SmartRecruit.Middlewares
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
-                    case ArgumentException e:
+                    case ArgumentException:
+                    case InvalidOperationException:
                         // bad request error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
