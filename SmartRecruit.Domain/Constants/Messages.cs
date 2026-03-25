@@ -92,18 +92,46 @@ namespace SmartRecruit.Domain.Constants
         // ================================
         public static class NotificationMsg
         {
+            // Job Notifications
             public const string JOB_APPROVED_TITLE = "Công việc đã được duyệt";
             public const string JOB_APPROVED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn đã được AI duyệt và hiện đang hiển thị công khai.";
             public const string JOB_BLOCKED_TITLE = "Công việc bị chặn";
             public const string JOB_BLOCKED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn bị chặn do: {1}. Bạn có thể khiếu nại quyết định này.";
             
+            public const string JOB_EDIT_REJECTED_TITLE = "Chỉnh sửa Job bị từ chối";
+            public const string JOB_EDIT_REJECTED_CONTENT = "Nội dung chỉnh sửa của job '{0}' vi phạm chính sách và đã bị từ chối. Job của bạn vẫn đang hoạt động bình thường với nội dung cũ.";
+            
+            public const string JOB_PUBLISHED_TITLE = "Phát hành Job thành công";
+            public const string JOB_PUBLISHED_CONTENT = "Công việc '{0}' đã được duyệt và đăng tải.";
+            
+            public const string JOB_REJECTED_TITLE = "Job bị từ chối";
+            public const string JOB_REJECTED_CONTENT = "Công việc '{0}' không vượt qua kiểm duyệt AI.";
+            
+            // Payment Notifications
             public const string PAYMENT_SUCCESS_TITLE = "Giao dịch thành công";
             public const string PAYMENT_SUCCESS_CONTENT = "Đã thanh toán {0:N0} VNĐ cho dịch vụ: {1}.";
 
+            public const string DEPOSIT_SUCCESS_TITLE = "Nạp tiền thành công";
+            public const string DEPOSIT_SUCCESS_CONTENT = "Nạp thành công {0:N0} VNĐ qua PayOS. Số dư mới của bạn là: {1:N0} VNĐ.";
+
+            // Application Notifications
             public const string APPLICATION_NEW_TITLE = "Đơn ứng tuyển mới";
             public const string APPLICATION_NEW_CONTENT = "{0} đã ứng tuyển vào vị trí: {1}.";
             public const string APPLICATION_SUBMITTED_TITLE = "Ứng tuyển thành công";
             public const string APPLICATION_SUBMITTED_CONTENT = "Bạn đã ứng tuyển thành công vào vị trí '{0}'. Chúc bạn may mắn!";
+
+            public const string APPLICATION_STATUS_UPDATE_TITLE = "Cập nhật hồ sơ";
+            public const string APPLICATION_STATUS_UPDATE_CONTENT = "Hồ sơ của bạn cho vị trí '{0}' đã được cập nhật thành: {1}.";
+            
+            public const string APPLICATION_INTERVIEW_TITLE = "Mời phỏng vấn";
+            public const string APPLICATION_INTERVIEW_CONTENT = "Chúc mừng! Bạn đã được mời phỏng vấn cho vị trí '{0}'. Vui lòng kiểm tra email để biết chi tiết.";
+            
+            public const string APPLICATION_OFFER_TITLE = "Nhận lời mời làm việc";
+            public const string APPLICATION_OFFER_CONTENT = "Tin vui! Bạn đã nhận được lời mời làm việc cho vị trí '{0}'. Chúc mừng!";
+            
+            public const string APPLICATION_RESTORE_TITLE = "Khôi phục hồ sơ";
+            public const string APPLICATION_RESTORE_CONTENT = "Hồ sơ của bạn cho vị trí '{0}' đã được khôi phục về trạng thái: {1}.";
+            public const string APPLICATION_RESTORE_OFFER_CONTENT = "Tin vui! Đề nghị nhận việc của bạn cho vị trí '{0}' đã được khôi phục. Vui lòng kiểm tra lại.";
         }
 
         // ================================

@@ -322,18 +322,25 @@ namespace SmartRecruit.Application.Services
                     var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(id);
                     if (appWithDetails != null)
                     {
-                        string jobTitle = appWithDetails.Job?.Title ?? "your application";
+                        string jobTitle = appWithDetails.Job?.Title ?? "vị trí ứng tuyển";
                         string statusText = newStatus.ToString().Replace("_", " ").ToLower();
-                        string message = $"Your application for '{jobTitle}' has been updated to: {statusText}.";
+                        string title = Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_TITLE;
+                        string message = string.Format(Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_CONTENT, jobTitle, statusText);
                         
                         if (newStatus == ApplicationStatus.INTERVIEWING)
-                            message = $"Congratulations! You've been invited for an interview for '{jobTitle}'. Check your email for details.";
+                        {
+                            title = Messages.NotificationMsg.APPLICATION_INTERVIEW_TITLE;
+                            message = string.Format(Messages.NotificationMsg.APPLICATION_INTERVIEW_CONTENT, jobTitle);
+                        }
                         else if (newStatus == ApplicationStatus.OFFERED)
-                            message = $"Great news! You received a job offer for '{jobTitle}'. Congratulations!";
+                        {
+                            title = Messages.NotificationMsg.APPLICATION_OFFER_TITLE;
+                            message = string.Format(Messages.NotificationMsg.APPLICATION_OFFER_CONTENT, jobTitle);
+                        }
 
                         await _notificationService.SendNotificationAsync(
                             appWithDetails.CandidateId,
-                            "Application Update",
+                            title,
                             message,
                             NotificationType.APPLICATION,
                             "/JobApplications"); // Candidate views their apps here
@@ -515,13 +522,15 @@ namespace SmartRecruit.Application.Services
                             try
                             {
                                 string statusText = restoredStatus.ToString().Replace("_", " ").ToLower();
-                                string message = $"Hồ sơ của bạn cho vị trí '{jobTitle}' đã được khôi phục về trạng thái: {statusText}.";
+                                string title = Messages.NotificationMsg.APPLICATION_RESTORE_TITLE;
+                                string message = string.Format(Messages.NotificationMsg.APPLICATION_RESTORE_CONTENT, jobTitle, statusText);
+                                
                                 if (restoredStatus == ApplicationStatus.OFFERED)
-                                    message = $"Tin vui! Đề nghị nhận việc của bạn cho vị trí '{jobTitle}' đã được khôi phục. Vui lòng kiểm tra lại.";
+                                    message = string.Format(Messages.NotificationMsg.APPLICATION_RESTORE_OFFER_CONTENT, jobTitle);
 
                                 await _notificationService.SendNotificationAsync(
                                     candidateId,
-                                    "Khôi phục hồ sơ",
+                                    title,
                                     message,
                                     NotificationType.APPLICATION,
                                     "/JobApplications");

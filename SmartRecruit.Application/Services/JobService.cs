@@ -474,18 +474,18 @@ namespace SmartRecruit.Application.Services
                 if (job.Status == JobStatus.APPROVED && job.ModerationNote?.StartsWith("Edit blocked") == true)
                 {
                     // Re-publish blocked, job still live
-                    notifTitle = "Chỉnh sửa Job bị từ chối";
-                    notifBody = $"Nội dung chỉnh sửa của job '{job.Title}' vi phạm chính sách và đã bị từ chối. Job của bạn vẫn đang hoạt động bình thường với nội dung cũ.";
+                    notifTitle = Messages.NotificationMsg.JOB_EDIT_REJECTED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_EDIT_REJECTED_CONTENT, job.Title);
                 }
                 else if (job.Status == JobStatus.APPROVED)
                 {
-                    notifTitle = "Phát hành Job thành công";
-                    notifBody = $"Công việc '{job.Title}' đã được duyệt và đăng tải.";
+                    notifTitle = Messages.NotificationMsg.JOB_PUBLISHED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_PUBLISHED_CONTENT, job.Title);
                 }
                 else
                 {
-                    notifTitle = "Job bị từ chối";
-                    notifBody = $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.";
+                    notifTitle = Messages.NotificationMsg.JOB_REJECTED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_REJECTED_CONTENT, job.Title);
                 }
 
                 await _notificationService.SendNotificationAsync(

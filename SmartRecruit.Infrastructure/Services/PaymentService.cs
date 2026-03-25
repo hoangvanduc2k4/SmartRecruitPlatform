@@ -6,6 +6,7 @@ using PayOS.Models.Webhooks;
 using SmartRecruit.Application.DTO.Payment;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Constants;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
 using SmartRecruit.Infrastructure.Configurations;
@@ -189,8 +190,8 @@ namespace SmartRecruit.Infrastructure.Services
                 {
                     await _notificationService.SendNotificationAsync(
                         transaction.UserId,
-                        "Nạp tiền thành công",
-                        $"Nạp thành công {transaction.Amount:N0} VNĐ qua PayOS. Số dư mới của bạn là: {wallet.Balance:N0} VNĐ.",
+                        Messages.NotificationMsg.DEPOSIT_SUCCESS_TITLE,
+                        string.Format(Messages.NotificationMsg.DEPOSIT_SUCCESS_CONTENT, transaction.Amount, wallet.Balance),
                         NotificationType.PAYMENT,
                         "/Wallet");
                 }
@@ -260,8 +261,8 @@ namespace SmartRecruit.Infrastructure.Services
                     {
                         await _notificationService.SendNotificationAsync(
                             transaction.UserId,
-                            "Nạp tiền thành công",
-                            $"Nạp thành công {transaction.Amount:N0} VNĐ qua PayOS. Số dư mới của bạn là: {wallet.Balance:N0} VNĐ.",
+                            Messages.NotificationMsg.DEPOSIT_SUCCESS_TITLE,
+                            string.Format(Messages.NotificationMsg.DEPOSIT_SUCCESS_CONTENT, transaction.Amount, wallet.Balance),
                             NotificationType.PAYMENT,
                             "/Wallet");
                     }
