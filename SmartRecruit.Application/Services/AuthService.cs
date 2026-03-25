@@ -3,6 +3,8 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Application.Utils;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Exceptions;
+using SmartRecruit.Domain.Constants;
 using Microsoft.Extensions.Configuration;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Logging;
