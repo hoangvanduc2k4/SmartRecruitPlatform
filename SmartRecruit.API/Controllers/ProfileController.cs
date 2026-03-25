@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartRecruit.Application.DTO.Profile;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Exceptions;
 
 namespace SmartRecruit.API.Controllers
 {
@@ -51,28 +52,14 @@ namespace SmartRecruit.API.Controllers
         [HttpPost("upload-cv")]
         public async Task<IActionResult> UploadCv(IFormFile file)
         {
-            var userId = CurrentUserId;
-            _logger.LogInformation("API UploadCv called for User: {UserId}, FileName: {FileName}", userId, file?.FileName);
-
-            if (file == null) return BadRequest("No file uploaded.");
-
-            using var stream = file.OpenReadStream();
-            var profile = await _profileService.UploadCvAsync(userId, stream, file.FileName);
-
+            var profile = await _profileService.UploadCvAsync(CurrentUserId, file);
             return Ok(profile.Wrap("Tải CV và trích xuất nội dung thành công"));
         }
 
         [HttpPost("upload-avatar")]
         public async Task<IActionResult> UploadAvatar(IFormFile file)
         {
-            var userId = CurrentUserId;
-            _logger.LogInformation("API UploadAvatar called for User: {UserId}, FileName: {FileName}", userId, file?.FileName);
-
-            if (file == null) return BadRequest("No file uploaded.");
-
-            using var stream = file.OpenReadStream();
-            var profile = await _profileService.UploadAvatarAsync(userId, stream, file.FileName);
-
+            var profile = await _profileService.UploadAvatarAsync(CurrentUserId, file);
             return Ok(profile.Wrap("Tải ảnh đại diện thành công"));
         }
     }

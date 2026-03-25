@@ -24,27 +24,8 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobs(
-            [FromQuery] string? keyword,
-            [FromQuery] decimal? minSalary,
-            [FromQuery] decimal? maxSalary,
-            [FromQuery] string? location,
-            [FromQuery] long? categoryId,
-            [FromQuery] long? recruiterId,
-            [FromQuery] int? jobType,
-            [FromQuery] string? skills,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] bool showHidden = false,
-            [FromQuery] bool showBlocked = false,
-            [FromQuery] string? sortBy = null,
-            [FromQuery] string? sortOrder = null,
-            [FromQuery] int? status = null)
+        public async Task<IActionResult> GetJobs([FromQuery] JobSearchRequest request)
         {
-            var request = new JobSearchRequest(
-                keyword, minSalary, maxSalary, location, categoryId, recruiterId, jobType, skills, 
-                page, pageSize, showHidden, showBlocked, sortBy, sortOrder, status);
-            
             _logger.LogInformation("API GetJobs called with search parameters: {@Request}", request);
             var jobs = await _jobService.GetJobsAsync(request);
             var response = jobs.WrapPaged();
@@ -52,9 +33,13 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("recruiter/{recruiterId}")]
-        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
+        public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] JobSearchRequest request)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(recruiterId, page, pageSize, status);
+            // Ensure recruiterId from route takes precedence
+            var finalRequest = request with { recruiterId = recruiterId, showHidden = true, showBlocked = true };
+            
+            _logger.LogInformation("API GetJobsByRecruiter called for Recruiter {RecruiterId} with parameters: {@Request}", recruiterId, finalRequest);
+            var jobs = await _jobService.GetJobsAsync(finalRequest);
             return Ok(jobs.WrapPaged());
         }
 
@@ -81,9 +66,10 @@ namespace SmartRecruit.Controllers
 
         [HttpGet("my-jobs")]
         [Authorize(Roles = "RECRUITER")]
-        public async Task<IActionResult> GetMyJobs([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? status = null)
+        public async Task<IActionResult> GetMyJobs([FromQuery] JobSearchRequest request)
         {
-            var jobs = await _jobService.GetJobsByRecruiterAsync(CurrentUserId, page, pageSize, status);
+            var finalRequest = request with { recruiterId = CurrentUserId, showHidden = true, showBlocked = true };
+            var jobs = await _jobService.GetJobsAsync(finalRequest);
             return Ok(jobs.WrapPaged());
         }
 
@@ -91,74 +77,45 @@ namespace SmartRecruit.Controllers
         [Authorize(Roles = "RECRUITER, ADMIN")]
         public async Task<IActionResult> UpdateJob(long id, [FromBody] JobUpdateRequest request)
         {
-            try
-            {
-                // Note: In new flow, this will update draft if live, or main if not live
-                var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
-                return Ok(job.Wrap("Đã lưu thay đổi. Nếu công việc đang hiển thị, các thay đổi sẽ được cập nhật sau khi đăng lại."));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Forbid();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
+            var job = await _jobService.UpdateJobAsync(id, request, CurrentUserId, CurrentUserRole);
+            return Ok(job.Wrap("Đã lưu thay đổi. Nếu công việc đang hiển thị, các thay đổi sẽ được cập nhật sau khi đăng lại."));
         }
 
         [HttpGet("{id}/edit")]
         [Authorize(Roles = "RECRUITER")]
         public async Task<IActionResult> GetJobForEdit(long id)
         {
-            try
-            {
-                var job = await _jobService.GetJobForEditAsync(id, CurrentUserId);
-                return Ok(job.Wrap());
-            }
-            catch (UnauthorizedAccessException) { return Forbid(); }
-            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
+            var job = await _jobService.GetJobForEditAsync(id, CurrentUserId);
+            return Ok(job.Wrap());
         }
 
         [HttpPut("{id}/draft")]
         [Authorize(Roles = "RECRUITER")]
         public async Task<IActionResult> SaveDraft(long id, [FromBody] JobDraftRequest request)
         {
-            try
-            {
-                var job = await _jobService.SaveDraftAsync(id, request, CurrentUserId);
-                return Ok(job.Wrap("Đã lưu bản nháp thành công"));
-            }
-            catch (UnauthorizedAccessException) { return Forbid(); }
-            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
+            var job = await _jobService.SaveDraftAsync(id, request, CurrentUserId);
+            return Ok(job.Wrap("Đã lưu bản nháp thành công"));
         }
 
         [HttpPost("{id}/publish")]
         [Authorize(Roles = "RECRUITER")]
         public async Task<IActionResult> PublishJob(long id)
         {
-            try
+            var job = await _jobService.PublishJobAsync(id, CurrentUserId);
+            string message;
+            if (job.Status == SmartRecruit.Domain.Enums.JobStatus.CHECKING)
             {
-                var job = await _jobService.PublishJobAsync(id, CurrentUserId);
-                string message;
-                if (job.Status == SmartRecruit.Domain.Enums.JobStatus.CHECKING)
-                {
-                    message = "Công việc đang được kiểm duyệt bởi AI. Bạn sẽ nhận được thông báo khi bài đăng được duyệt.";
-                }
-                else if (job.Status == SmartRecruit.Domain.Enums.JobStatus.APPROVED)
-                {
-                    message = "Đăng bài tuyển dụng thành công!";
-                }
-                else
-                {
-                    message = "Công việc đã bị chặn hoặc cần xem xét thêm.";
-                }
-                return Ok(job.Wrap(message));
+                message = "Công việc đang được kiểm duyệt bởi AI. Bạn sẽ nhận được thông báo khi bài đăng được duyệt.";
             }
-            catch (UnauthorizedAccessException) { return Forbid(); }
-            catch (KeyNotFoundException ex) { return NotFound(new { }.Wrap(ex.Message)); }
-            catch (InvalidOperationException ex) { return BadRequest(new { }.Wrap(ex.Message)); }
-            catch (Exception ex) { return StatusCode(500, new { }.Wrap(ex.Message)); }
+            else if (job.Status == SmartRecruit.Domain.Enums.JobStatus.APPROVED)
+            {
+                message = "Đăng bài tuyển dụng thành công!";
+            }
+            else
+            {
+                message = "Công việc đã bị chặn hoặc cần xem xét thêm.";
+            }
+            return Ok(job.Wrap(message));
         }
 
         [HttpDelete("{id}")]
@@ -182,32 +139,8 @@ namespace SmartRecruit.Controllers
         [Authorize(Roles = "RECRUITER")]
         public async Task<IActionResult> BoostJob(long id)
         {
-            try
-            {
-                var success = await _jobService.BoostJobAsync(id, CurrentUserId);
-                if (success)
-                {
-                    return Ok(new { }.Wrap("Đẩy tin thành công! Tin tuyển dụng của bạn sẽ xuất hiện ở đầu danh sách."));
-                }
-                return BadRequest(new { }.Wrap("Đẩy tin thất bại."));
-            }
-
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { }.Wrap(ex.Message));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            await _jobService.BoostJobAsync(id, CurrentUserId);
+            return Ok(new { }.Wrap("Đẩy tin thành công! Tin tuyển dụng của bạn sẽ xuất hiện ở đầu danh sách."));
         }
 
         [HttpGet("locations")]
@@ -228,20 +161,9 @@ namespace SmartRecruit.Controllers
         [Authorize]
         public async Task<IActionResult> ToggleSaveJob(long id)
         {
-            try
-            {
-                var isSaved = await _savedJobService.ToggleSaveJobAsync(id, CurrentUserId);
-                var message = isSaved ? "Đã lưu công việc thành công" : "Đã bỏ lưu công việc thành công";
-                return Ok(new { IsSaved = isSaved }.Wrap(message));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            var isSaved = await _savedJobService.ToggleSaveJobAsync(id, CurrentUserId);
+            var message = isSaved ? "Đã lưu công việc thành công" : "Đã bỏ lưu công việc thành công";
+            return Ok(new { IsSaved = isSaved }.Wrap(message));
         }
 
         [HttpGet("{id}/is-saved")]

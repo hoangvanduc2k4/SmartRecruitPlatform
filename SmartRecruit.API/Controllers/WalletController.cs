@@ -26,9 +26,8 @@ namespace SmartRecruit.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyWallet()
         {
-            _logger.LogInformation("API GetMyWallet called for UserId: {UserId}", CurrentUserId);
             var wallet = await _walletService.GetWalletByUserIdAsync(CurrentUserId);
-            return Ok(wallet.Wrap());
+            return Ok(wallet.Wrap("Tải thông tin ví thành công"));
         }
 
         /// <summary>
@@ -37,9 +36,8 @@ namespace SmartRecruit.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetWalletByUserId(long userId)
         {
-            _logger.LogInformation("API GetWalletByUserId called for UserId: {UserId}", userId);
             var wallet = await _walletService.GetWalletByUserIdAsync(userId);
-            return Ok(wallet.Wrap());
+            return Ok(wallet.Wrap("Tải thông tin ví của người dùng thành công"));
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace SmartRecruit.Controllers
             }
 
             var transactions = await _walletService.GetTransactionsAsync(request);
-            return Ok(transactions.WrapPaged());
+            return Ok(transactions.WrapPaged("Tải danh sách giao dịch thành công"));
         }
 
         /// <summary>
@@ -70,7 +68,26 @@ namespace SmartRecruit.Controllers
             // Overwrite UserId in request with the one from route
             request.UserId = userId;
             var transactions = await _walletService.GetTransactionsAsync(request);
-            return Ok(transactions.WrapPaged());
+            return Ok(transactions.WrapPaged("Tải danh sách giao dịch của người dùng thành công"));
+        }
+
+        /// <summary>
+        /// Xuất danh sách Transaction ra file Excel
+        /// </summary>
+        [HttpGet("transactions/export")]
+        public async Task<IActionResult> ExportTransactions([FromQuery] TransactionSearchRequest request)
+        {
+            _logger.LogInformation("API ExportTransactions called with parameters: {@Request}", request);
+
+            // Security: If not admin, can only export own transactions
+            if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN)
+            {
+                request.UserId = CurrentUserId;
+            }
+
+            var fileContent = await _walletService.ExportTransactionsToExcelAsync(request);
+            var fileName = $"Transactions_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
         /// <summary>

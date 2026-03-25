@@ -14,7 +14,7 @@ namespace WebPortal.Pages
             _mockDataService = mockDataService;
         }
 
-        public User CurrentUser { get; set; }
+        public User? CurrentUser { get; set; }
         public List<Application> UserApplications { get; set; } = new List<Application>();
         public List<Job> RelatedJobs { get; set; } = new List<Job>();
 

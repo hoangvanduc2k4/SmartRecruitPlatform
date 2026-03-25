@@ -11,7 +11,11 @@ using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
 using Hangfire;
+using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
+
+using FluentValidation;
 
 namespace SmartRecruit.Application.Services
 {
@@ -26,6 +30,9 @@ namespace SmartRecruit.Application.Services
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
         private readonly ILogger<JobService> _logger;
+        private readonly IValidator<JobCreateRequest> _createValidator;
+        private readonly IValidator<JobUpdateRequest> _updateValidator;
+        private readonly IValidator<JobDraftRequest> _draftValidator;
 
         public JobService(
             IJobRepository jobRepository,
@@ -36,7 +43,10 @@ namespace SmartRecruit.Application.Services
             IAILogRepository aiLogRepository,
             Hangfire.IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
-            ILogger<JobService> logger)
+            ILogger<JobService> logger,
+            IValidator<JobCreateRequest> createValidator,
+            IValidator<JobUpdateRequest> updateValidator,
+            IValidator<JobDraftRequest> draftValidator)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
@@ -47,13 +57,11 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
             _logger = logger;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+            _draftValidator = draftValidator;
         }
 
-        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
-        {
-            var request = new JobSearchRequest(null, null, null, null, null, recruiterId, null, null, page, pageSize, true, true, null, null, status);
-            return await GetJobsAsync(request);
-        }
 
         public async Task<PagedList<JobResponse>> GetJobsAsync(JobSearchRequest request)
         {
@@ -65,7 +73,7 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> GetJobByIdAsync(long id)
         {
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null || job.IsDeleted) throw new KeyNotFoundException("Công việc không tồn tại hoặc đã bị xóa.");
+            if (job == null || job.IsDeleted) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             // Increment ViewCount only if NOT deleted
             job.ViewCount++;
@@ -77,6 +85,8 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
+            await _createValidator.ValidateAndThrowAsync(request);
+
             // 1. Create Job with DRAFT status - No charging, no AI
             var job = new Job
             {
@@ -90,7 +100,7 @@ namespace SmartRecruit.Application.Services
                 SalaryMax = request.SalaryMax,
                 JobType = request.JobType,
                 Location = request.Location,
-                CategoryId = request.CategoryId,
+                CategoryId = request.CategoryId!.Value,
                 ExpireDate = request.ExpireDate,
                 RecruiterId = request.RecruiterId,
                 CreatedAt = DateTime.UtcNow,
@@ -131,7 +141,7 @@ namespace SmartRecruit.Application.Services
                 if (screeningResult.IsSafe)
                 {
                     job.Status = JobStatus.APPROVED;
-                    job.ModerationNote = "Đã được duyệt bởi AI.";
+                    job.ModerationNote = Messages.AiMsg.APPROVED_BY_AI;
                     _logger.LogInformation("ModerateJob use-case: Job {JobId} APPROVED by AI", jobId);
 
                     // Real-time Notification for AI Approval
@@ -139,8 +149,8 @@ namespace SmartRecruit.Application.Services
                     {
                         await _notificationService.SendNotificationAsync(
                             job.RecruiterId,
-                            "Công việc đã được duyệt",
-                            $"Bài đăng tuyển dụng '{job.Title}' của bạn đã được AI duyệt và hiện đang hiển thị công khai.",
+                            Messages.NotificationMsg.JOB_APPROVED_TITLE,
+                            string.Format(Messages.NotificationMsg.JOB_APPROVED_CONTENT, job.Title),
                             NotificationType.JOB,
                             $"/JobDetail?Id={job.Id}");
                     }
@@ -160,8 +170,8 @@ namespace SmartRecruit.Application.Services
                     {
                         await _notificationService.SendNotificationAsync(
                             job.RecruiterId,
-                            "Công việc bị chặn",
-                            $"Bài đăng tuyển dụng '{job.Title}' của bạn bị chặn do: {screeningResult.ViolationType}. Bạn có thể khiếu nại quyết định này.",
+                            Messages.NotificationMsg.JOB_BLOCKED_TITLE,
+                            string.Format(Messages.NotificationMsg.JOB_BLOCKED_CONTENT, job.Title, screeningResult.ViolationType),
                             NotificationType.JOB,
                             $"/JobDetail?Id={job.Id}");
                     }
@@ -190,14 +200,16 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole currentUserRole)
+        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole userRole)
         {
+            await _updateValidator.ValidateAndThrowAsync(request);
+
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
-            if (currentUserRole != UserRole.ADMIN && job.RecruiterId != currentUserId)
+            if (userRole != UserRole.ADMIN && job.RecruiterId != currentUserId)
             {
-                throw new UnauthorizedAccessException("Bạn không có quyền chỉnh sửa công việc này.");
+                throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
             }
 
             // For backward compatibility, this updates the draft if it's a DRAFT/CHECKING job, 
@@ -224,8 +236,8 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> GetJobForEditAsync(long id, long userId)
         {
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
-            if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
+            if (job.RecruiterId != userId) throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
 
             if (!string.IsNullOrEmpty(job.DraftChanges))
             {
@@ -264,9 +276,11 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId)
         {
+            await _draftValidator.ValidateAndThrowAsync(request);
+            
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
-            if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
+            if (job.RecruiterId != userId) throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
 
             if (job.Status == JobStatus.DRAFT || job.Status == JobStatus.CHECKING || job.Status == JobStatus.BLOCKED)
             {
@@ -281,7 +295,7 @@ namespace SmartRecruit.Application.Services
                 job.SalaryMax = request.SalaryMax;
                 job.JobType = request.JobType;
                 job.Location = request.Location;
-                job.CategoryId = request.CategoryId;
+                job.CategoryId = request.CategoryId ?? job.CategoryId;
                 job.ExpireDate = request.ExpireDate;
                 job.DraftChanges = null; // Clear any existing draft since we're updating main
             }
@@ -304,11 +318,11 @@ namespace SmartRecruit.Application.Services
             if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
 
             var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
-            if (wallet == null) throw new KeyNotFoundException("Không tìm thấy ví.");
+            if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             // 1. Determine Cost
             decimal cost = (job.Status == JobStatus.APPROVED) ? 25000 : 50000;
-            if (wallet.Balance < cost) throw new InvalidOperationException("Số dư không đủ để đăng bài.");
+            if (wallet.Balance < cost) throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
 
             // 2. Charge Wallet
             wallet.Balance -= cost;
@@ -322,7 +336,7 @@ namespace SmartRecruit.Application.Services
                 Amount = -cost,
                 Type = TransactionType.JOB_POST,
                 Status = TransactionStatus.SUCCESS,
-                Description = $"Đăng bài tuyển dụng: {job.Title}",
+                Description = string.Format(Messages.JobMsg.POST_JOB_DESC, job.Title),
                 CreatedAt = DateTime.UtcNow
             };
             await _walletRepository.AddTransactionAsync(transaction);
@@ -337,8 +351,8 @@ namespace SmartRecruit.Application.Services
             {
                 await _notificationService.SendNotificationAsync(
                     userId,
-                    "Giao dịch thành công",
-                    $"Đã thanh toán {cost:N0} VNĐ để đăng bài tuyển dụng: {job.Title}.",
+                    Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                    string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, cost, job.Title),
                     NotificationType.PAYMENT,
                     "/Wallet");
             }
@@ -404,7 +418,7 @@ namespace SmartRecruit.Application.Services
                         job.SalaryMax = draft.SalaryMax;
                         job.JobType = draft.JobType;
                         job.Location = draft.Location;
-                        job.CategoryId = draft.CategoryId;
+                        job.CategoryId = draft.CategoryId ?? job.CategoryId;
                         job.ExpireDate = draft.ExpireDate;
                         job.DraftChanges = null;
                     }
@@ -460,18 +474,18 @@ namespace SmartRecruit.Application.Services
                 if (job.Status == JobStatus.APPROVED && job.ModerationNote?.StartsWith("Edit blocked") == true)
                 {
                     // Re-publish blocked, job still live
-                    notifTitle = "Chỉnh sửa Job bị từ chối";
-                    notifBody = $"Nội dung chỉnh sửa của job '{job.Title}' vi phạm chính sách và đã bị từ chối. Job của bạn vẫn đang hoạt động bình thường với nội dung cũ.";
+                    notifTitle = Messages.NotificationMsg.JOB_EDIT_REJECTED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_EDIT_REJECTED_CONTENT, job.Title);
                 }
                 else if (job.Status == JobStatus.APPROVED)
                 {
-                    notifTitle = "Phát hành Job thành công";
-                    notifBody = $"Công việc '{job.Title}' đã được duyệt và đăng tải.";
+                    notifTitle = Messages.NotificationMsg.JOB_PUBLISHED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_PUBLISHED_CONTENT, job.Title);
                 }
                 else
                 {
-                    notifTitle = "Job bị từ chối";
-                    notifBody = $"Công việc '{job.Title}' không vượt qua kiểm duyệt AI.";
+                    notifTitle = Messages.NotificationMsg.JOB_REJECTED_TITLE;
+                    notifBody = string.Format(Messages.NotificationMsg.JOB_REJECTED_CONTENT, job.Title);
                 }
 
                 await _notificationService.SendNotificationAsync(
@@ -487,7 +501,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> DeleteJobAsync(long id)
         {
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null) return false;
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             job.IsDeleted = true;
             _jobRepository.Update(job);
@@ -498,7 +512,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> ToggleVisibilityAsync(long id)
         {
             var job = await _jobRepository.GetByIdAsync(id);
-            if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             bool isVisible = job.Status != JobStatus.HIDDEN; // Current state
             await _jobRepository.UpdateVisibilityAsync(id, !isVisible); // Toggle
@@ -513,22 +527,22 @@ namespace SmartRecruit.Application.Services
             // 1. Validation
             if (job.IsAppealed)
             {
-                throw new InvalidOperationException("Không thể đẩy tin cho công việc đang khiếu nại.");
+                throw new BadRequestException(Messages.JobMsg.JOB_UNDER_APPEAL);
             }
 
             if (job.RecruiterId != userId)
             {
-                throw new UnauthorizedAccessException("Bạn chỉ có thể đẩy tin cho công việc của chính mình.");
+                throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
             }
 
             // 2. Wallet & Balance Check
             var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
-            if (wallet == null) throw new KeyNotFoundException("Không tìm thấy ví người dùng.");
+            if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             const decimal boostCost = 20000;
             if (wallet.Balance < boostCost)
             {
-                throw new InvalidOperationException("Số dư không đủ để đẩy tin.");
+                throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
             }
 
             // 3. Process Payment
@@ -547,7 +561,7 @@ namespace SmartRecruit.Application.Services
                 Amount = -boostCost,
                 Type = TransactionType.BOOST,
                 Status = TransactionStatus.SUCCESS,
-                Description = $"Đẩy tin công việc {job.Id}: {job.Title}",
+                Description = string.Format(Messages.JobMsg.BOOST_JOB_DESC, job.Id, job.Title),
                 CreatedAt = DateTime.UtcNow
             };
             await _walletRepository.AddTransactionAsync(transaction);
@@ -563,8 +577,8 @@ namespace SmartRecruit.Application.Services
                 {
                     await _notificationService.SendNotificationAsync(
                         userId,
-                        "Giao dịch thành công",
-                        $"Đã thanh toán {boostCost:N0} VNĐ để đẩy tin công việc: {job.Title}.",
+                        Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                        string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, boostCost, job.Title),
                         NotificationType.PAYMENT,
                         "/Wallet");
                 }
@@ -606,7 +620,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> AppealJobAsync(long jobId, string message)
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             job.IsAppealed = true;
             job.AppealMessage = message;
@@ -645,7 +659,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> OverrideAIAsync(long jobId)
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             job.Status = JobStatus.APPROVED;
             job.IsAppealed = false; // Reset appeal state
@@ -676,7 +690,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> RejectAppealAsync(long jobId)
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) throw new KeyNotFoundException("Job not found");
+            if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             job.IsAppealed = false;
             job.ModerationNote = $"Khiếu nại bị Admin từ chối vào lúc {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}";

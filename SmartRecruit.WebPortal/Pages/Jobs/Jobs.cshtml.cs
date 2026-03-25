@@ -45,14 +45,25 @@ namespace WebPortal.Pages
         public int PageSize { get; set; } = 6;
         public HashSet<long> SavedJobIds { get; set; } = new HashSet<long>();
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty(SupportsGet = true, Name = "sortBy")]
         public string? SortBy { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? SortOrder { get; set; }
 
+        private void ParseSortParams()
+        {
+            if (!string.IsNullOrEmpty(SortBy) && SortBy.Contains('_'))
+            {
+                var parts = SortBy.Split('_');
+                SortBy = parts[0];
+                SortOrder = parts[1];
+            }
+        }
+
         public async Task OnGetAsync()
         {
+            ParseSortParams();
             Categories = (await _jobApiService.GetCategoriesAsync()).ToList();
             var locations = await _jobApiService.GetTopLocationsAsync();
             AvailableLocations = new List<string> { "ALL" };

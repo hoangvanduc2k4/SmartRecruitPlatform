@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace SmartRecruit.API.Controllers
 {
+    [EnableRateLimiting("default")]
     public abstract class BaseController : ControllerBase
     {
         protected long CurrentUserId

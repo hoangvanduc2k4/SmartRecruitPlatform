@@ -49,7 +49,7 @@ namespace SmartRecruit.Application.Services
 
         public async Task<byte[]> ExportTransactionsToExcelAsync(TransactionSearchRequest request)
         {
-            // Fetch all matching transactions (large PageSize)
+            // Fetch all matching transactions (large PageSize to simulate "All")
             request.Page = 1;
             request.PageSize = 1000000; 
             var transactions = await _walletRepository.GetTransactionsAsync(request);
