@@ -26,9 +26,8 @@ namespace SmartRecruit.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyWallet()
         {
-            _logger.LogInformation("API GetMyWallet called for UserId: {UserId}", CurrentUserId);
             var wallet = await _walletService.GetWalletByUserIdAsync(CurrentUserId);
-            return Ok(wallet.Wrap());
+            return Ok(wallet.Wrap("Tải thông tin ví thành công"));
         }
 
         /// <summary>
@@ -37,9 +36,8 @@ namespace SmartRecruit.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetWalletByUserId(long userId)
         {
-            _logger.LogInformation("API GetWalletByUserId called for UserId: {UserId}", userId);
             var wallet = await _walletService.GetWalletByUserIdAsync(userId);
-            return Ok(wallet.Wrap());
+            return Ok(wallet.Wrap("Tải thông tin ví của người dùng thành công"));
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace SmartRecruit.Controllers
             }
 
             var transactions = await _walletService.GetTransactionsAsync(request);
-            return Ok(transactions.WrapPaged());
+            return Ok(transactions.WrapPaged("Tải danh sách giao dịch thành công"));
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace SmartRecruit.Controllers
             // Overwrite UserId in request with the one from route
             request.UserId = userId;
             var transactions = await _walletService.GetTransactionsAsync(request);
-            return Ok(transactions.WrapPaged());
+            return Ok(transactions.WrapPaged("Tải danh sách giao dịch của người dùng thành công"));
         }
 
         /// <summary>

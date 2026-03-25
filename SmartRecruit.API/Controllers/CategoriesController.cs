@@ -42,24 +42,14 @@ namespace SmartRecruit.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, [FromBody] UpdateCategoryDTO request)
         {
-            try
-            {
-                var category = await _categoryService.UpdateCategoryAsync(id, request);
-                return Ok(category.Wrap("Cập nhật danh mục thành công."));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { Success = false, Message = ex.Message });
-            }
+            var category = await _categoryService.UpdateCategoryAsync(id, request);
+            return Ok(category.Wrap("Cập nhật danh mục thành công."));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var result = await _categoryService.DeleteCategoryAsync(id);
-            if (!result)
-                return NotFound(new { Success = false, Message = "Không tìm thấy danh mục hoặc đã bị xóa." });
-
+            await _categoryService.DeleteCategoryAsync(id);
             return Ok(new { Success = true, Message = "Xóa danh mục thành công." });
         }
     }
