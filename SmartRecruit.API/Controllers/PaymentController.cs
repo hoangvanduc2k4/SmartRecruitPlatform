@@ -32,7 +32,7 @@ namespace SmartRecruit.Controllers
             var finalRequest = request with
             {
                 UserId = CurrentUserId,
-                Description = string.IsNullOrEmpty(request.Description) ? $"Deposit {request.Amount:N0} VNĐ" : request.Description
+                Description = string.IsNullOrEmpty(request.Description) ? $"Nạp {request.Amount:N0} VNĐ" : request.Description
             };
 
             var result = await _paymentService.CreatePaymentLinkAsync(finalRequest);
@@ -56,7 +56,7 @@ namespace SmartRecruit.Controllers
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var webhookBody = JsonSerializer.Deserialize<PayOSWebhookBody>(rawBody, options);
 
-            if (webhookBody == null) throw new BadRequestException("Cannot deserialize webhook body.");
+            if (webhookBody == null) throw new BadRequestException("Không thể giải mã nội dung webhook.");
 
             await _paymentService.HandleWebhookAsync(webhookBody);
             return Ok(new { success = true });

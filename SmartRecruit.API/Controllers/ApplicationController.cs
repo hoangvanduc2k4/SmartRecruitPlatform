@@ -89,7 +89,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
         {
             var success = await _applicationService.ApplyJobAsync(request);
-            return Ok(success.Wrap("Application submitted successfully"));
+            return Ok(success.Wrap("Nộp hồ sơ ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateApplicationStatusRequest request)
         {
             await _applicationService.UpdateStatusAsync(id, request);
-            return Ok(new { }.Wrap("Application status updated successfully"));
+            return Ok(new { }.Wrap("Cập nhật trạng thái ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> AddNote(long id, [FromBody] string note)
         {
             await _applicationService.AddNoteAsync(id, note);
-            return Ok(new { }.Wrap("Note added successfully"));
+            return Ok(new { }.Wrap("Thêm ghi chú thành công"));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> DeleteNotes(long id)
         {
             await _applicationService.ClearNotesAsync(id);
-            return Ok(new { }.Wrap("Notes cleared successfully"));
+            return Ok(new { }.Wrap("Xóa tất cả ghi chú thành công"));
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> RestoreApplication(long id)
         {
             await _applicationService.RestoreStatusAsync(id);
-            return Ok(new { }.Wrap("Application restored successfully"));
+            return Ok(new { }.Wrap("Khôi phục hồ sơ ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace SmartRecruit.Controllers
         public async Task<IActionResult> BulkUpdateStatus([FromBody] BulkUpdateApplicationStatusRequest request)
         {
             var count = await _applicationService.BulkUpdateStatusAsync(request);
-            return Ok(new { UpdatedCount = count }.Wrap($"Successfully updated status for {count} applications"));
+            return Ok(new { UpdatedCount = count }.Wrap($"Cập nhật trạng thái thành công cho {count} hồ sơ"));
         }
 
         /// <summary>
