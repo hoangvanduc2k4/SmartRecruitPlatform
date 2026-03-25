@@ -31,11 +31,11 @@ namespace WebPortal.Pages.Candidate
             {
                 CurrentUser = new UserDto
                 {
-                    Id = CurrentUserId.Value.ToString(),
-                    Role = CurrentUserRole.Value
+                    Id = CurrentUserId!.Value.ToString(),
+                    Role = CurrentUserRole!.Value
                 };
 
-                var response = await _jobApiService.GetSavedJobsAsync(CurrentUserId.Value, CurrentPage, PageSize);
+                var response = await _jobApiService.GetSavedJobsAsync(CurrentUserId!.Value, CurrentPage, PageSize);
                 if (response.Success)
                 {
                     SavedJobs = response.Data?.ToList() ?? new List<Job>();

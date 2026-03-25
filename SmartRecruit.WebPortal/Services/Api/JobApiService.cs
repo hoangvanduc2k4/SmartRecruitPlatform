@@ -12,8 +12,8 @@ namespace WebPortal.Services.Api
         Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job);
         Task<ApiResponse<Job>> PublishJobAsync(string id);
         Task<Job?> GetJobByIdAsync(string id);
-        Task<Job?> CreateJobAsync(Job job);
-        Task<bool> UpdateJobAsync(string id, Job job);
+        Task<ApiResponse<Job>> CreateJobAsync(Job job);
+        Task<ApiResponse> UpdateJobAsync(string id, Job job);
         Task<bool> DeleteJobAsync(string id);
         Task<bool> ToggleVisibilityAsync(string id);
         Task<bool> BoostJobAsync(long jobId, long userId);
@@ -100,32 +100,33 @@ namespace WebPortal.Services.Api
             return null;
         }
 
-        public async Task<Job?> CreateJobAsync(Job job)
+        public async Task<ApiResponse<Job>> CreateJobAsync(Job job)
         {
             var response = await _httpClient.PostAsJsonAsync("jobs", job);
-            if (response.IsSuccessStatusCode)
-            {
-                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
-                return apiResponse?.Data;
-            }
-            return null;
+            var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
+            return result ?? new ApiResponse<Job> { Success = false, Message = "Kết nối máy chủ thất bại." };
         }
 
-        public async Task<bool> UpdateJobAsync(string id, Job job)
+        public async Task<ApiResponse> UpdateJobAsync(string id, Job job)
         {
-            if (!long.TryParse(id, out var longId)) return false;
+            if (!long.TryParse(id, out var longId)) return new ApiResponse { Success = false, Message = "ID không hợp lệ" };
 
             try
             {
                 var response = await _httpClient.PutAsJsonAsync($"jobs/{longId}", job);
-                return response.IsSuccessStatusCode;
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse>(options);
+                return result ?? new ApiResponse { Success = false, Message = "Kết nối máy chủ thất bại." };
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine($"[JobApiService] Exception in UpdateJobAsync: {ex}");
-                return false;
+                return new ApiResponse { Success = false, Message = "Lỗi hệ thống khi cập nhật." };
             }
         }
 

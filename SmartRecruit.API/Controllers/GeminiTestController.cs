@@ -75,8 +75,8 @@ namespace SmartRecruit.Controllers
 
         public class ScoreCvRequest
         {
-            public string CvContent { get; set; }
-            public string JobDescription { get; set; }
+            public string CvContent { get; set; } = string.Empty;
+            public string JobDescription { get; set; } = string.Empty;
         }
     }
 }

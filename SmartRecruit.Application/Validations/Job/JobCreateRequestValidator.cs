@@ -8,39 +8,46 @@ namespace SmartRecruit.Application.Validations.Job
         public JobCreateRequestValidator()
         {
             RuleFor(x => x.Title)
-                .NotEmpty().WithMessage("Job title is required")
-                .MinimumLength(5).WithMessage("Job title must be at least 5 characters")
-                .MaximumLength(200).WithMessage("Job title cannot exceed 200 characters");
+                .NotEmpty().WithMessage("Tiêu đề công việc là bắt buộc")
+                .MinimumLength(5).WithMessage("Tiêu đề phải từ 5 đến 100 ký tự")
+                .MaximumLength(100).WithMessage("Tiêu đề không được vượt quá 100 ký tự");
             
-            RuleFor(x => x.Company).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.Benefits).NotEmpty().MaximumLength(2000);
+            RuleFor(x => x.Company)
+                .NotEmpty().WithMessage("Tên công ty là bắt buộc")
+                .MaximumLength(100).WithMessage("Tên công ty không được quá 100 ký tự");
 
-            RuleFor(x => x.RecruiterId)
-                .GreaterThan(0).WithMessage("RecruiterId is required");
+            RuleFor(x => x.Benefits)
+                .NotEmpty().WithMessage("Phúc lợi là bắt buộc")
+                .MaximumLength(2000);
 
             RuleFor(x => x.Description)
-                .NotEmpty().WithMessage("Job description is required")
-                .MinimumLength(50).WithMessage("Job description must be at least 50 characters")
-                .MaximumLength(5000).WithMessage("Job description cannot exceed 5000 characters");
-
-            RuleFor(x => x.SalaryMin)
-                .GreaterThanOrEqualTo(0).WithMessage("Minimum salary cannot be negative");
-
-            RuleFor(x => x.SalaryMax)
-                .GreaterThanOrEqualTo(x => x.SalaryMin).WithMessage("Maximum salary must be greater than or equal to minimum salary");
+                .NotEmpty().WithMessage("Mô tả công việc là bắt buộc")
+                .MinimumLength(50).WithMessage("Mô tả công việc phải có ít nhất 50 ký tự")
+                .MaximumLength(5000);
 
             RuleFor(x => x.Requirement)
-                .MaximumLength(4000).WithMessage("Requirement cannot exceed 4000 characters");
+                .NotEmpty().WithMessage("Yêu cầu công việc là bắt buộc")
+                .MaximumLength(4000);
+
+            RuleFor(x => x.SalaryMin)
+                .GreaterThanOrEqualTo(0).WithMessage("Lương tối thiểu không được âm");
+
+            RuleFor(x => x.SalaryMax)
+                .GreaterThanOrEqualTo(x => x.SalaryMin).WithMessage("Lương tối đa phải lớn hơn hoặc bằng lương tối thiểu");
 
             RuleFor(x => x.Location)
-                .NotEmpty().WithMessage("Location is required")
-                .MaximumLength(500).WithMessage("Location cannot exceed 500 characters");
+                .NotEmpty().WithMessage("Địa điểm là bắt buộc")
+                .MaximumLength(500);
 
             RuleFor(x => x.JobType)
-                .IsInEnum().WithMessage("Invalid Job Type");
+                .IsInEnum().WithMessage("Loại hình công việc không hợp lệ");
 
             RuleFor(x => x.CategoryId)
-                .GreaterThan(0).WithMessage("Category is required");
+                .GreaterThan(0).WithMessage("Vui lòng chọn danh mục hợp lệ");
+
+            RuleFor(x => x.ExpireDate)
+                .NotEmpty().WithMessage("Ngày hết hạn là bắt buộc")
+                .Must(date => date > DateTime.UtcNow).WithMessage("Ngày hết hạn phải ở trong tương lai");
         }
     }
 }

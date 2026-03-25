@@ -86,7 +86,11 @@ namespace WebPortal.Pages
                     if (IsOwner)
                     {
                         var editJob = await _jobApiService.GetJobForEditAsync(longId.ToString());
-                        if (editJob != null) Job = editJob;
+                        if (editJob != null)
+                        {
+                            Job = editJob;
+                            EditJob = editJob; // Populate for Tag Helpers
+                        }
                     }
 
                     if (currentUserId.HasValue)
@@ -214,11 +218,31 @@ namespace WebPortal.Pages
 
         public async Task<IActionResult> OnPostUpdateAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                Tab = "DETAILS";
+                Categories = await _jobApiService.GetCategoriesAsync();
+                
+                // We must reload Model.Job for the view to render parts that depend on it
+                // but we DON'T overwrite EditJob because it contains the user's input
+                if (long.TryParse(Id, out var longId)) 
+                {
+                    Job = await _jobApiService.GetJobByIdAsync(Id);
+                    if (Job != null)
+                    {
+                        var userId = CurrentUserId;
+                        IsOwner = (userId.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == userId.Value);
+                    }
+                }
+                
+                return Page();
+            }
+
             var currentUserId = CurrentUserId;
 
             if (!currentUserId.HasValue || (CurrentUserRole != UserRole.RECRUITER && CurrentUserRole != UserRole.ADMIN))
             {
-                return RedirectToPage("/Account/Login");
+                return RedirectToPage("/Account/Auth");
             }
 
             if (EditJob != null && EditJob.Id > 0)
@@ -226,21 +250,44 @@ namespace WebPortal.Pages
                 Id = EditJob.Id.ToString();
             }
 
-            if (long.TryParse(Id, out var longId))
+            if (long.TryParse(Id, out var jobId))
             {
                 try
                 {
                     // This will now handle draft logic in the backend
+                    if (EditJob == null) throw new ArgumentException("Dữ liệu chỉnh sửa không hợp lệ.");
                     var response = await _jobApiService.SaveDraftAsync(Id, EditJob);
-                    if (response.Success) TempData["Message"] = response.Message;
-                    else TempData["Error"] = response.Message;
+                    if (response.Success) 
+                    {
+                        TempData["Message"] = response.Message;
+                        return RedirectToPage(new { Id = Id, Tab = Tab });
+                    }
+                    
+                    TempData["Error"] = response.Errors.Any() 
+                        ? "- " + string.Join("<br/>- ", response.Errors) 
+                        : response.Message;
                 }
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"[JobDetail] Exception in OnPostUpdateAsync: {ex}");
+                    TempData["Error"] = "Đã xảy ra lỗi khi lưu bản nháp.";
                 }
             }
-            return RedirectToPage(new { Id = Id, Tab = Tab });
+
+            // If we reach here, it's either an error or non-redirect success path
+            // Must reload basic Job state for UI but NOT overwrite EditJob
+            if (long.TryParse(Id, out var longIdForReload)) 
+            {
+                Job = await _jobApiService.GetJobByIdAsync(Id);
+                if (Job != null)
+                {
+                    var userIdReload = CurrentUserId;
+                    IsOwner = (userIdReload.HasValue && CurrentUserRole == UserRole.RECRUITER && Job.RecruiterId == userIdReload.Value);
+                    Categories = await _jobApiService.GetCategoriesAsync(); // Important for selects
+                }
+            }
+            
+            return Page();
         }
 
         public async Task<IActionResult> OnPostPublishAsync()

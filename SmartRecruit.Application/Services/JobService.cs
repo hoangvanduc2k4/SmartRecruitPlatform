@@ -13,6 +13,8 @@ using SmartRecruit.Domain.Enums;
 using Hangfire;
 using Microsoft.Extensions.Logging;
 
+using FluentValidation;
+
 namespace SmartRecruit.Application.Services
 {
     public class JobService : IJobService
@@ -26,6 +28,9 @@ namespace SmartRecruit.Application.Services
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
         private readonly ILogger<JobService> _logger;
+        private readonly IValidator<JobCreateRequest> _createValidator;
+        private readonly IValidator<JobUpdateRequest> _updateValidator;
+        private readonly IValidator<JobDraftRequest> _draftValidator;
 
         public JobService(
             IJobRepository jobRepository,
@@ -36,7 +41,10 @@ namespace SmartRecruit.Application.Services
             IAILogRepository aiLogRepository,
             Hangfire.IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
-            ILogger<JobService> logger)
+            ILogger<JobService> logger,
+            IValidator<JobCreateRequest> createValidator,
+            IValidator<JobUpdateRequest> updateValidator,
+            IValidator<JobDraftRequest> draftValidator)
         {
             _jobRepository = jobRepository;
             _unitOfWork = unitOfWork;
@@ -47,13 +55,11 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
             _logger = logger;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+            _draftValidator = draftValidator;
         }
 
-        public async Task<PagedList<JobResponse>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
-        {
-            var request = new JobSearchRequest(null, null, null, null, null, recruiterId, null, null, page, pageSize, true, true, null, null, status);
-            return await GetJobsAsync(request);
-        }
 
         public async Task<PagedList<JobResponse>> GetJobsAsync(JobSearchRequest request)
         {
@@ -77,6 +83,8 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
+            await _createValidator.ValidateAndThrowAsync(request);
+
             // 1. Create Job with DRAFT status - No charging, no AI
             var job = new Job
             {
@@ -190,12 +198,14 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole currentUserRole)
+        public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole userRole)
         {
+            await _updateValidator.ValidateAndThrowAsync(request);
+
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
-            if (currentUserRole != UserRole.ADMIN && job.RecruiterId != currentUserId)
+            if (userRole != UserRole.ADMIN && job.RecruiterId != currentUserId)
             {
                 throw new UnauthorizedAccessException("Bạn không có quyền chỉnh sửa công việc này.");
             }
@@ -264,6 +274,8 @@ namespace SmartRecruit.Application.Services
 
         public async Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId)
         {
+            await _draftValidator.ValidateAndThrowAsync(request);
+            
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
             if (job.RecruiterId != userId) throw new UnauthorizedAccessException();

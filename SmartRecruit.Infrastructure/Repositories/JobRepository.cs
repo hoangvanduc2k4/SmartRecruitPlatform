@@ -31,28 +31,36 @@ namespace SmartRecruit.Infrastructure.Repositories
             // 1. Initial Filter: Always exclude deleted jobs
             query = query.Where(x => !x.IsDeleted);
 
-            // 2. Visibility Filter
-            // If NOT showing hidden, exclude HIDDEN status
-            if (!request.showHidden)
+            // 2. Status & Visibility Filter
+            if (request.recruiterId.HasValue)
             {
-                query = query.Where(x => x.Status != JobStatus.HIDDEN);
+                // RECRUITER VIEW: Show their own jobs with many statuses, but respect explicit status filter if provided
+                query = query.Where(x => x.RecruiterId == request.recruiterId.Value);
+                if (request.status.HasValue)
+                {
+                    query = query.Where(x => (int)x.Status == request.status.Value);
+                }
             }
-
-            // If NOT showing blocked, exclude BLOCKED status
-            if (!request.showBlocked)
+            else if (request.status.HasValue)
             {
-                query = query.Where(x => x.Status != JobStatus.BLOCKED);
+                // ADMIN OR SPECIFIC PUBLIC VIEW: Filter by specific status
+                query = query.Where(x => (int)x.Status == request.status.Value);
             }
-
-            // Exclude non-active statuses for public search
-            if (!request.recruiterId.HasValue)
+            else
             {
+                // PUBLIC SEARCH: Only APPROVED or EXPIRING_SOON
                 query = query.Where(x => x.Status == JobStatus.APPROVED || x.Status == JobStatus.EXPIRING_SOON);
             }
 
-            // Note: If both are false (default), it shows everything else (CHECKING, APPROVED, REJECTED, EXPIRED, CLOSED). 
-            // Often "Public" implies only APPROVED. 
-            // However, sticking to the explicit "ShowHidden/ShowBlocked" toggles requested.
+            // Exclude Hidden/Blocked unless explicitly requested (for Admin/Recruiter)
+            if (!request.showHidden && !request.recruiterId.HasValue && !request.status.HasValue)
+            {
+                query = query.Where(x => x.Status != JobStatus.HIDDEN);
+            }
+            if (!request.showBlocked && !request.recruiterId.HasValue && !request.status.HasValue)
+            {
+                query = query.Where(x => x.Status != JobStatus.BLOCKED);
+            }
 
             // 3. Keyword Search (Title, Description, Requirement, SkillsRequired)
             if (!string.IsNullOrEmpty(request.keyword))
