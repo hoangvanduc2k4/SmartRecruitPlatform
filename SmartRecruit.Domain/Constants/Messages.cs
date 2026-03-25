@@ -1,4 +1,4 @@
-﻿
+
 namespace SmartRecruit.Domain.Constants
 {
     public static class Messages
@@ -64,6 +64,51 @@ namespace SmartRecruit.Domain.Constants
             public const string SALARY_RANGE_INVALID = "Lương tối đa phải lớn hơn lương tối thiểu";
         }
 
+        public static class AiMsg
+        {
+            public const string APPROVED_BY_AI = "Đã được duyệt bởi AI.";
+            public const string BLOCKED_BY_AI = "Bị AI chặn: {0} - {1}";
+            public const string MODERATION_FAILED = "Kiểm tra AI thất bại: {0}";
+            public const string SAFE_CONTENT = "An toàn";
+            public const string VIOLATION_DETECTED = "Chỉnh sửa bị chặn bởi AI: {0} - {1}";
+        }
+
+        public static class NotificationMsg
+        {
+            public const string JOB_APPROVED_TITLE = "Công việc đã được duyệt";
+            public const string JOB_APPROVED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn đã được AI duyệt và hiện đang hiển thị công khai.";
+            public const string JOB_BLOCKED_TITLE = "Công việc bị chặn";
+            public const string JOB_BLOCKED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn bị chặn do: {1}. Bạn có thể khiếu nại quyết định này.";
+            public const string PAYMENT_SUCCESS_TITLE = "Giao dịch thành công";
+            public const string PAYMENT_SUCCESS_CONTENT = "Đã thanh toán {0:N0} VNĐ để đăng bài tuyển dụng: {1}.";
+            
+            public const string NEW_APP_TITLE = "Ứng tuyển mới";
+            public const string NEW_APP_CONTENT = "{0} đã ứng tuyển vào công việc: {1}";
+            public const string APP_SUBMITTED_TITLE = "Nộp đơn thành công";
+            public const string APP_SUBMITTED_CONTENT = "Bạn đã ứng tuyển thành công vào: {0}. Chúc bạn may mắn!";
+        }
+
+        public static class ApplicationMsg
+        {
+            public const string NOT_FOUND = "Không tìm thấy hồ sơ ứng tuyển.";
+            public const string ALREADY_APPLIED = "Bạn đã ứng tuyển vào công việc này rồi.";
+            public const string CV_REQUIRED = "Vui lòng cập nhật CV trong trang cá nhân trước khi ứng tuyển.";
+            public const string INVALID_TRANSITION = "Chuyển đổi trạng thái không hợp lệ: {0} sang {1}.";
+            public const string ALREADY_REJECTED = "Hồ sơ này đã bị từ chối rồi.";
+            public const string INTERVIEW_DATE_REQUIRED = "Phải có ngày phỏng vấn khi chuyển sang trạng thái Phỏng vấn.";
+            public const string REJECTION_REASON_REQUIRED = "Phải có lý do từ chối khi loại hồ sơ.";
+            public const string DATA_NOT_REQUIRED = "Ngày phỏng vấn hoặc lý do từ chối không cần thiết cho trạng thái này.";
+        }
+
+        public static class CategoryMsg
+        {
+            public const string NOT_FOUND = "Không tìm thấy danh mục";
+            public const string NAME_EXISTED = "Tên danh mục đã tồn tại.";
+            public const string CREATED = "Tạo danh mục thành công";
+            public const string UPDATED = "Cập nhật danh mục thành công";
+            public const string DELETED = "Xóa danh mục thành công";
+        }
+
         // ================================
         // SUCCESS MESSAGES
         // ================================
@@ -79,6 +124,8 @@ namespace SmartRecruit.Domain.Constants
             public const string CREATE_SUCCESS = "Thành công";
             public const string UPDATE_SUCCESS = "Cập nhật thành công";
             public const string DELETE_SUCCESS = "Xóa thành công";
+            public const string PAYMENT_SUCCESS = "Giao dịch thành công";
+            public const string PUBLISH_SUCCESS = "Đăng bài tuyển dụng thành công";
         }
     }
 }

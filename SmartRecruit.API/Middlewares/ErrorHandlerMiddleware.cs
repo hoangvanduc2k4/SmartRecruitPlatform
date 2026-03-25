@@ -36,18 +36,27 @@ namespace SmartRecruit.Middlewares
                         responseModel.Message = ""; // Let the Errors collection speak
                         responseModel.Errors = e.Errors.Select(x => x.ErrorMessage).ToList();
                         break;
-                    case KeyNotFoundException e:
+                    case NotFoundException:
+                    case KeyNotFoundException:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
+                    case BadRequestException:
+                    case InsufficientFundException:
                     case ArgumentException:
                     case InvalidOperationException:
                         // bad request error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
-                    case UnauthorizedAccessException e:
+                    case UnauthorizedException:
+                    case UnauthorizedAccessException:
                         // unauthorized error
                         response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        break;
+                    case DomainException e:
+                        // custom domain error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        responseModel.Message = e.Message;
                         break;
                     case DbUpdateException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;

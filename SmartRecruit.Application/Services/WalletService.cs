@@ -5,6 +5,8 @@ using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
+using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Exceptions;
 
 namespace SmartRecruit.Application.Services
 {
@@ -28,7 +30,7 @@ namespace SmartRecruit.Application.Services
             if (wallet == null) 
             {
                 _logger.LogWarning("GetWalletByUserId use-case failed: Wallet not found for userId: {UserId}", userId);
-                throw new KeyNotFoundException($"Wallet not found for user {userId}");
+                throw new NotFoundException(Messages.GeneralMsg.NOT_FOUND);
             }
             return _mapper.Map<WalletResponse>(wallet);
         }

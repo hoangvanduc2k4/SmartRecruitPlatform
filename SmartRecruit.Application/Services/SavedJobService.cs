@@ -4,6 +4,8 @@ using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Exceptions;
 
 namespace SmartRecruit.Application.Services
 {
@@ -23,7 +25,7 @@ namespace SmartRecruit.Application.Services
             // First, check if job exists
             var job = await _unitOfWork.Jobs.GetByIdAsync(jobId);
             if (job == null) 
-                throw new KeyNotFoundException("Job not found");
+                throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
 
             // Try to find existing saved job
             var existing = await _unitOfWork.SavedJobs.FindAsync(sj => sj.JobId == jobId && sj.UserId == userId);
