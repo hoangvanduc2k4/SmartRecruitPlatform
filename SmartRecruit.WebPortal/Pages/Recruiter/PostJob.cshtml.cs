@@ -22,9 +22,7 @@ namespace WebPortal.Pages
         [BindProperty]
         public Job JobInput { get; set; } = new Job
         {
-            JobType = JobType.FULL_TIME,
-            SalaryMin = 1000,
-            SalaryMax = 3000
+            JobType = JobType.FULL_TIME
         };
 
         public IEnumerable<Category> Categories { get; set; } = new List<Category>();
