@@ -13,12 +13,14 @@ namespace SmartRecruit.Application.Services
         private readonly IWalletRepository _walletRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<WalletService> _logger;
+        private readonly IExcelService _excelService;
 
-        public WalletService(IWalletRepository walletRepository, IMapper mapper, ILogger<WalletService> logger)
+        public WalletService(IWalletRepository walletRepository, IMapper mapper, ILogger<WalletService> logger, IExcelService excelService)
         {
             _walletRepository = walletRepository;
             _mapper = mapper;
             _logger = logger;
+            _excelService = excelService;
         }
 
         public async Task<WalletResponse> GetWalletByUserIdAsync(long userId)
@@ -47,73 +49,38 @@ namespace SmartRecruit.Application.Services
 
         public async Task<byte[]> ExportTransactionsToExcelAsync(TransactionSearchRequest request)
         {
-            // Fetch all matching transactions (large PageSize to simulate "All")
+            // Fetch all matching transactions (large PageSize)
             request.Page = 1;
             request.PageSize = 1000000; 
             var transactions = await _walletRepository.GetTransactionsAsync(request);
             var dtos = _mapper.Map<List<TransactionResponse>>(transactions);
 
-            using (var workbook = new ClosedXML.Excel.XLWorkbook())
+            var exportData = dtos.Select(t => new TransactionExportDto
             {
-                var worksheet = workbook.Worksheets.Add("Transactions");
-                
-                // Headers (Vietnamese)
-                worksheet.Cell(1, 1).Value = "Mã GD";
-                worksheet.Cell(1, 2).Value = "Người dùng";
-                worksheet.Cell(1, 3).Value = "Số tiền (VND)";
-                worksheet.Cell(1, 4).Value = "Loại giao dịch";
-                worksheet.Cell(1, 5).Value = "Trạng thái";
-                worksheet.Cell(1, 6).Value = "Mã đơn hàng";
-                worksheet.Cell(1, 7).Value = "Mô tả";
-                worksheet.Cell(1, 8).Value = "Thời gian tạo";
-
-                // Format Headers
-                var headerRange = worksheet.Range(1, 1, 1, 8);
-                headerRange.Style.Font.Bold = true;
-                headerRange.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.LightGray;
-
-                // Data
-                for (int i = 0; i < dtos.Count; i++)
+                MaGD = t.Id,
+                NguoiDung = t.UserName,
+                SoTien = t.Amount,
+                LoaiGiaoDich = t.Type switch
                 {
-                    var t = dtos[i];
-                    int row = i + 2;
-                    
-                    // Translation logic
-                    string viType = t.Type switch
-                    {
-                        "TOPUP" => "Nạp tiền",
-                        "JOB_POST" => "Đăng tin",
-                        "BOOST" => "Đẩy tin",
-                        "VIP" => "Nâng cấp VIP",
-                        _ => t.Type
-                    };
-
-                    string viStatus = t.Status switch
-                    {
-                        "PENDING" => "Đang chờ",
-                        "SUCCESS" => "Thành công",
-                        "FAILED" => "Thất bại",
-                        _ => t.Status
-                    };
-
-                    worksheet.Cell(row, 1).Value = t.Id;
-                    worksheet.Cell(row, 2).Value = t.UserName; // Using UserName
-                    worksheet.Cell(row, 3).Value = t.Amount;
-                    worksheet.Cell(row, 4).Value = viType; // Translated Type
-                    worksheet.Cell(row, 5).Value = viStatus; // Translated Status
-                    worksheet.Cell(row, 6).Value = t.OrderCode?.ToString() ?? "N/A";
-                    worksheet.Cell(row, 7).Value = t.Description;
-                    worksheet.Cell(row, 8).Value = t.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss");
-                }
-
-                worksheet.Columns().AdjustToContents();
-
-                using (var stream = new System.IO.MemoryStream())
+                    "TOPUP" => "Nạp tiền",
+                    "JOB_POST" => "Đăng tin",
+                    "BOOST" => "Đẩy tin",
+                    "VIP" => "Nâng cấp VIP",
+                    _ => t.Type
+                },
+                TrangThai = t.Status switch
                 {
-                    workbook.SaveAs(stream);
-                    return stream.ToArray();
-                }
-            }
+                    "PENDING" => "Đang chờ",
+                    "SUCCESS" => "Thành công",
+                    "FAILED" => "Thất bại",
+                    _ => t.Status
+                },
+                MaDonHang = t.OrderCode?.ToString() ?? "N/A",
+                MoTa = t.Description,
+                ThoiGian = t.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")
+            }).ToList();
+
+            return _excelService.ExportToExcel(exportData, "Transactions");
         }
     }
 }
