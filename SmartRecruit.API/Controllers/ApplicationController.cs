@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.API.Controllers;
 using Microsoft.AspNetCore.RateLimiting;
+using SmartRecruit.Domain.Exceptions;
 
 namespace SmartRecruit.Controllers
 {
@@ -64,9 +65,7 @@ namespace SmartRecruit.Controllers
         [HttpGet("job/{jobId}/candidate/{candidateId}")]
         public async Task<IActionResult> GetByJobAndCandidate(long jobId, long candidateId)
         {
-            _logger.LogInformation("API GetByJobAndCandidate called for JobId: {JobId}, CandidateId: {CandidateId}", jobId, candidateId);
             var application = await _applicationService.GetApplicationByJobAndCandidateAsync(jobId, candidateId);
-            if (application == null) return NotFound(new { }.Wrap("Application not found"));
             return Ok(application.Wrap());
         }
 
@@ -89,21 +88,8 @@ namespace SmartRecruit.Controllers
         [EnableRateLimiting("heavy")]
         public async Task<IActionResult> ApplyJob([FromBody] ApplyJobRequest request)
         {
-            _logger.LogInformation("API ApplyJob called by CandidateId: {CandidateId} for JobId: {JobId}", request.CandidateId, request.JobId);
-            try 
-            {
-                var success = await _applicationService.ApplyJobAsync(request);
-                return Ok(success.Wrap("Application submitted successfully"));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { success = false }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error applying for job");
-                return StatusCode(500, new { success = false }.Wrap(ex.Message));
-            }
+            var success = await _applicationService.ApplyJobAsync(request);
+            return Ok(success.Wrap("Nộp hồ sơ ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -112,29 +98,8 @@ namespace SmartRecruit.Controllers
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateApplicationStatusRequest request)
         {
-            _logger.LogInformation("API UpdateStatus called for ApplicationId: {Id} with Status: {Status}", id, request.Status);
-            try
-            {
-                var success = await _applicationService.UpdateStatusAsync(id, request);
-                if (success)
-                {
-                    return Ok(new { }.Wrap("Application status updated successfully"));
-                }
-                return BadRequest(new { }.Wrap("Failed to update application status"));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { }.Wrap(ex.Message));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred during UpdateStatus for ApplicationId: {Id}", id);
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            await _applicationService.UpdateStatusAsync(id, request);
+            return Ok(new { }.Wrap("Cập nhật trạng thái ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -143,25 +108,8 @@ namespace SmartRecruit.Controllers
         [HttpPost("{id}/notes")]
         public async Task<IActionResult> AddNote(long id, [FromBody] string note)
         {
-            _logger.LogInformation("API AddNote called for ApplicationId: {Id}", id);
-            try
-            {
-                var success = await _applicationService.AddNoteAsync(id, note);
-                if (success)
-                {
-                    return Ok(new { }.Wrap("Note added successfully"));
-                }
-                return BadRequest(new { }.Wrap("Failed to add note"));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred during AddNote for ApplicationId: {Id}", id);
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            await _applicationService.AddNoteAsync(id, note);
+            return Ok(new { }.Wrap("Thêm ghi chú thành công"));
         }
 
         /// <summary>
@@ -170,25 +118,8 @@ namespace SmartRecruit.Controllers
         [HttpDelete("{id}/notes")]
         public async Task<IActionResult> DeleteNotes(long id)
         {
-            _logger.LogInformation("API DeleteNotes called for ApplicationId: {Id}", id);
-            try
-            {
-                var success = await _applicationService.ClearNotesAsync(id);
-                if (success)
-                {
-                    return Ok(new { }.Wrap("Notes cleared successfully"));
-                }
-                return BadRequest(new { }.Wrap("Failed to clear notes"));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred during DeleteNotes for ApplicationId: {Id}", id);
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            await _applicationService.ClearNotesAsync(id);
+            return Ok(new { }.Wrap("Xóa tất cả ghi chú thành công"));
         }
 
         /// <summary>
@@ -197,25 +128,8 @@ namespace SmartRecruit.Controllers
         [HttpPost("{id}/restore")]
         public async Task<IActionResult> RestoreApplication(long id)
         {
-            _logger.LogInformation("API RestoreApplication called for ApplicationId: {Id}", id);
-            try
-            {
-                var success = await _applicationService.RestoreStatusAsync(id);
-                if (success)
-                {
-                    return Ok(new { }.Wrap("Application restored successfully"));
-                }
-                return BadRequest(new { }.Wrap("Failed to restore application"));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred during RestoreApplication for ApplicationId: {Id}", id);
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            await _applicationService.RestoreStatusAsync(id);
+            return Ok(new { }.Wrap("Khôi phục hồ sơ ứng tuyển thành công"));
         }
 
         /// <summary>
@@ -224,21 +138,8 @@ namespace SmartRecruit.Controllers
         [HttpPut("bulk-status")]
         public async Task<IActionResult> BulkUpdateStatus([FromBody] BulkUpdateApplicationStatusRequest request)
         {
-            _logger.LogInformation("API BulkUpdateStatus called for {Count} applications to Status: {Status}", request.ApplicationIds.Count, request.Status);
-            try
-            {
-                var count = await _applicationService.BulkUpdateStatusAsync(request);
-                return Ok(new { UpdatedCount = count }.Wrap($"Successfully updated status for {count} applications"));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { }.Wrap(ex.Message));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred during BulkUpdateStatus");
-                return StatusCode(500, new { }.Wrap($"An error occurred: {ex.Message}"));
-            }
+            var count = await _applicationService.BulkUpdateStatusAsync(request);
+            return Ok(new { UpdatedCount = count }.Wrap($"Cập nhật trạng thái thành công cho {count} hồ sơ"));
         }
 
         /// <summary>
@@ -249,28 +150,19 @@ namespace SmartRecruit.Controllers
         [EnableRateLimiting("heavy")]
         public async Task<IActionResult> ExportJobApplicants(long jobId)
         {
-            try
+            var job = await _jobService.GetJobByIdAsync(jobId);
+
+            if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && job.RecruiterId != CurrentUserId)
             {
-                var job = await _jobService.GetJobByIdAsync(jobId);
-                if (job == null) return NotFound(new { }.Wrap("Công việc không tồn tại"));
-
-                if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && job.RecruiterId != CurrentUserId)
-                {
-                    return Forbid();
-                }
-
-                var content = await _applicationService.ExportApplicantsToExcelAsync(jobId);
-                
-                // Thu gọn và làm sạch title để làm tên file
-                string safeTitle = string.Join("_", job.Title.Split(Path.GetInvalidFileNameChars()));
-                var fileName = $"Applicants_{safeTitle}_{DateTime.Now:yyyyMMddHHmm}.xlsx";
-
-                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                return Forbid();
             }
-            catch (Exception)
-            {
-                return StatusCode(500, new { }.Wrap("Không thể xuất file lúc này."));
-            }
+
+            var content = await _applicationService.ExportApplicantsToExcelAsync(jobId);
+            
+            string safeTitle = string.Join("_", job.Title.Split(Path.GetInvalidFileNameChars()));
+            var fileName = $"Applicants_{safeTitle}_{DateTime.Now:yyyyMMddHHmm}.xlsx";
+
+            return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
         /// <summary>
@@ -279,30 +171,16 @@ namespace SmartRecruit.Controllers
         [HttpPost("{id}/re-analyze")]
         public async Task<IActionResult> ReAnalyzeApplication(long id)
         {
-            _logger.LogInformation("API ReAnalyzeApplication called for Id: {Id}", id);
-            try
-            {
-                var application = await _applicationService.GetApplicationByIdAsync(id);
-                if (application == null) return NotFound(new { }.Wrap("Đơn ứng tuyển không tồn tại"));
+            var application = await _applicationService.GetApplicationByIdAsync(id);
 
-                // Kiểm tra quyền: Chỉ Candidate của chính Application đó hoặc Admin mới được trigger
-                if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && application.CandidateId != CurrentUserId)
-                {
-                    return Forbid();
-                }
-
-                var success = await _applicationService.ReAnalyzeAsync(id);
-                if (success)
-                {
-                    return Ok(true.Wrap("Đã bắt đầu quá trình phân tích lại. Kết quả sẽ được cập nhật trong giây lát."));
-                }
-                return BadRequest(false.Wrap("Không thể thực hiện phân tích lại lúc này."));
-            }
-            catch (Exception ex)
+            // Kiểm tra quyền: Chỉ Candidate của chính Application đó hoặc Admin mới được trigger
+            if (CurrentUserRole != SmartRecruit.Domain.Enums.UserRole.ADMIN && application.CandidateId != CurrentUserId)
             {
-                _logger.LogError(ex, "Lỗi khi phân tích lại CV cho Application {Id}", id);
-                return StatusCode(500, false.Wrap(ex.Message));
+                return Forbid();
             }
+
+            await _applicationService.ReAnalyzeAsync(id);
+            return Ok(true.Wrap("Đã bắt đầu quá trình phân tích lại. Kết quả sẽ được cập nhật trong giây lát."));
         }
     }
 }

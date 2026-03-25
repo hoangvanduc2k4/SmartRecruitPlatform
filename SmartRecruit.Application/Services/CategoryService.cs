@@ -4,6 +4,8 @@ using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Exceptions;
+using SmartRecruit.Domain.Constants;
 
 namespace SmartRecruit.Application.Services
 {
@@ -44,7 +46,7 @@ namespace SmartRecruit.Application.Services
             var existing = await _categoryRepository.FindAsync(c => c.Name.ToLower() == request.Name.ToLower() && !c.IsDeleted);
             if (existing != null)
             {
-                throw new InvalidOperationException("Tên danh mục đã tồn tại.");
+                throw new BadRequestException(Messages.CategoryMsg.ALREADY_EXISTS);
             }
 
             var category = new Category
@@ -62,7 +64,7 @@ namespace SmartRecruit.Application.Services
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null || category.IsDeleted)
-                throw new KeyNotFoundException("Không tìm thấy danh mục");
+                throw new NotFoundException(Messages.CategoryMsg.NOT_FOUND);
 
             // Check for duplicate name (excluding itself)
             var existing = await _categoryRepository.FindAsync(c => c.Name.ToLower() == request.Name.ToLower() && c.Id != id && !c.IsDeleted);
@@ -84,7 +86,7 @@ namespace SmartRecruit.Application.Services
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null || category.IsDeleted)
-                return false;
+                throw new NotFoundException(Messages.CategoryMsg.NOT_FOUND);
 
             category.IsDeleted = true;
             category.UpdatedAt = DateTime.UtcNow;
