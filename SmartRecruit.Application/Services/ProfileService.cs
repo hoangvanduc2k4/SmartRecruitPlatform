@@ -5,6 +5,8 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace SmartRecruit.Application.Services
 {
@@ -161,31 +163,28 @@ namespace SmartRecruit.Application.Services
             return response;
         }
 
-        public async Task<UserProfileResponse> UploadCvAsync(long userId, Stream fileStream, string fileName)
+        public async Task<UserProfileResponse> UploadCvAsync(long userId, IFormFile file)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            if (user == null)
+            if (file == null || file.Length == 0)
             {
-                throw new KeyNotFoundException("User not found.");
+                throw new BadRequestException("Tệp CV tải lên không hợp lệ hoặc trống.");
             }
+
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null) throw new NotFoundException("User not found.");
 
             if (user.Role != Domain.Enums.UserRole.CANDIDATE)
             {
-                throw new InvalidOperationException("Chỉ ứng viên mới có thể tải lên CV.");
+                throw new BadRequestException("Chỉ ứng viên mới có thể tải lên CV.");
             }
 
-            // Validation: Size
-            if (fileStream.Length == 0)
+            if (file.Length > Policies.MaxCvFileSize)
             {
-                throw new ArgumentException("Tệp CV tải lên trống.");
-            }
-            if (fileStream.Length > Policies.MaxCvFileSize)
-            {
-                throw new ArgumentException($"Dung lượng CV phải <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
+                throw new BadRequestException($"Dung lượng CV phải <= {Policies.MaxCvFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
-            var ext = Path.GetExtension(fileName).ToLowerInvariant();
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
             if (ext != ".pdf")
             {
                 throw new ArgumentException("Chỉ hỗ trợ tệp định dạng PDF cho CV.");
@@ -198,8 +197,10 @@ namespace SmartRecruit.Application.Services
             byte[] fileBytes;
             using (var ms = new MemoryStream())
             {
-                if (fileStream.CanSeek) fileStream.Position = 0;
-                await fileStream.CopyToAsync(ms);
+                using (var fileStream = file.OpenReadStream())
+                {
+                    await fileStream.CopyToAsync(ms);
+                }
                 fileBytes = ms.ToArray();
             }
 
@@ -216,7 +217,7 @@ namespace SmartRecruit.Application.Services
             string cvUrl;
             using (var uploadStream = new MemoryStream(fileBytes))
             {
-                cvUrl = await _cloudinaryService.ManageFileAsync(uploadStream, fileName, oldUrl);
+                cvUrl = await _cloudinaryService.ManageFileAsync(uploadStream, file.FileName, oldUrl);
             }
 
             // 3. Update Profile
@@ -243,36 +244,36 @@ namespace SmartRecruit.Application.Services
             return await GetCurrentUserProfileAsync(userId);
         }
 
-        public async Task<UserProfileResponse> UploadAvatarAsync(long userId, Stream fileStream, string fileName)
+        public async Task<UserProfileResponse> UploadAvatarAsync(long userId, IFormFile file)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            if (user == null)
+            if (file == null || file.Length == 0)
             {
-                throw new KeyNotFoundException("User not found.");
+                throw new BadRequestException("Tệp ảnh đại diện tải lên trống.");
             }
 
-            // Validation: Size
-            if (fileStream == null || fileStream.Length == 0)
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null) throw new NotFoundException("User not found.");
+
+            if (file.Length > Policies.MaxAvatarFileSize)
             {
-                throw new ArgumentException("Tệp ảnh đại diện tải lên trống.");
-            }
-            if (fileStream.Length > Policies.MaxAvatarFileSize)
-            {
-                throw new ArgumentException($"Dung lượng ảnh đại diện phải <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
+                throw new BadRequestException($"Dung lượng ảnh đại diện phải <= {Policies.MaxAvatarFileSize / (1024 * 1024)}MB.");
             }
 
             // Validation: Extension
-            var ext = Path.GetExtension(fileName).ToLowerInvariant();
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
             var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             if (!allowed.Contains(ext))
             {
-                throw new ArgumentException("Chỉ hỗ trợ các định dạng ảnh JPG, PNG hoặc WEBP.");
+                throw new BadRequestException("Chỉ hỗ trợ các định dạng ảnh JPG, PNG hoặc WEBP.");
             }
 
-            if (fileStream.CanSeek) fileStream.Position = 0;
-
             var oldUrl = IsCloudinaryAvatarUrl(user.AvatarUrl) ? user.AvatarUrl : null;
-            var avatarUrl = await _cloudinaryService.ManageFileAsync(fileStream, fileName, oldUrl);
+            
+            string avatarUrl;
+            using (var fileStream = file.OpenReadStream())
+            {
+                avatarUrl = await _cloudinaryService.ManageFileAsync(fileStream, file.FileName, oldUrl);
+            }
 
             user.AvatarUrl = avatarUrl;
             _unitOfWork.Users.Update(user);

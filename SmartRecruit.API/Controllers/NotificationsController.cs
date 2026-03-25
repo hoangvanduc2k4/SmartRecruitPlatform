@@ -45,13 +45,7 @@ namespace SmartRecruit.API.Controllers
         [HttpPatch("{id}/read")]
         public async Task<IActionResult> MarkAsRead(long id)
         {
-            var userId = CurrentUserId;
-            _logger.LogInformation("API MarkAsRead called for User: {UserId}, NotificationId: {NotificationId}", userId, id);
-            var success = await _notificationService.MarkAsReadAsync(userId, id);
-            if (!success)
-            {
-                return BadRequest(new { Success = false }.Wrap("Đánh dấu thông báo đã đọc thất bại. Thông báo không tồn tại hoặc không thuộc về bạn."));
-            }
+            await _notificationService.MarkAsReadAsync(CurrentUserId, id);
             return Ok(new { Success = true }.Wrap("Đánh dấu thông báo đã đọc thành công"));
         }
     }

@@ -6,6 +6,8 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
+using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Linq;
@@ -90,7 +92,7 @@ namespace SmartRecruit.Application.Services
             // ĐỔI THÀNH: Gọi hàm có Details để lấy đủ dữ liệu từ các bảng liên quan
             var application = await _applicationRepository.GetApplicationWithDetailsAsync(id);
 
-            if (application == null) throw new KeyNotFoundException("Application not found");
+            if (application == null) throw new NotFoundException(Messages.ApplicationMsg.NOT_FOUND);
 
             return _mapper.Map<ApplicationResponse>(application);
         }
@@ -104,7 +106,7 @@ namespace SmartRecruit.Application.Services
             if (alreadyApplied)
             {
                 _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has already applied for Job {JobId}", request.CandidateId, request.JobId);
-                throw new InvalidOperationException("You have already applied for this job.");
+                throw new BadRequestException(Messages.ApplicationMsg.ALREADY_APPLIED);
             }
 
             // 2. Kiểm tra xem candidate đã có CVText chưa
@@ -112,7 +114,7 @@ namespace SmartRecruit.Application.Services
             if (candidateProfile == null || string.IsNullOrWhiteSpace(candidateProfile.CVText))
             {
                 _logger.LogWarning("ApplyJob use-case failed: Candidate {CandidateId} has not uploaded a CV", request.CandidateId);
-                throw new InvalidOperationException("Please upload your CV in your profile before applying.");
+                throw new BadRequestException(Messages.ApplicationMsg.CV_REQUIRED);
             }
 
             // 3. Tạo bản ghi đơn giản
@@ -140,16 +142,16 @@ namespace SmartRecruit.Application.Services
                     string candidateName = appWithDetails.Candidate?.FullName ?? "A candidate";
                     await _notificationService.SendNotificationAsync(
                         appWithDetails.Job.RecruiterId,
-                        "New Application",
-                        $"{candidateName} has applied for your job: {appWithDetails.Job.Title}",
+                        Messages.NotificationMsg.APPLICATION_NEW_TITLE,
+                        string.Format(Messages.NotificationMsg.APPLICATION_NEW_CONTENT, candidateName, appWithDetails.Job.Title),
                         NotificationType.APPLICATION,
                         $"/JobDetail?Id={appWithDetails.Job.Id}");
-
+ 
                     // 4b. Real-time Notification for Candidate (Confirmation)
                     await _notificationService.SendNotificationAsync(
                         request.CandidateId,
-                        "Application Submitted",
-                        $"You have successfully applied for: {appWithDetails.Job.Title}. Good luck!",
+                        Messages.NotificationMsg.APPLICATION_SUBMITTED_TITLE,
+                        string.Format(Messages.NotificationMsg.APPLICATION_SUBMITTED_CONTENT, appWithDetails.Job.Title),
                         NotificationType.APPLICATION,
                         $"/JobDetail?Id={appWithDetails.Job.Id}");
                 }
@@ -242,7 +244,7 @@ namespace SmartRecruit.Application.Services
             // Rejected có thể chuyển từ bất kỳ đâu, trừ khi đã là Rejected
             else if (currentStatus == ApplicationStatus.REJECTED)
             {
-                throw new InvalidOperationException("Application is already rejected.");
+                throw new BadRequestException(Messages.ApplicationMsg.ALREADY_REJECTED);
             }
 
             // 2. Ràng buộc dữ liệu & Tận dụng cột Notes
@@ -250,7 +252,7 @@ namespace SmartRecruit.Application.Services
             {
                 if (!request.InterviewDate.HasValue)
                 {
-                    throw new InvalidOperationException("Interview date is required when moving to Interviewing status.");
+                    throw new BadRequestException(Messages.ApplicationMsg.INTERVIEW_DATE_REQUIRED);
                 }
                 if (!string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
@@ -262,7 +264,7 @@ namespace SmartRecruit.Application.Services
             {
                 if (string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("Rejection reason is required when rejecting an application.");
+                    throw new BadRequestException(Messages.ApplicationMsg.REJECTION_REASON_REQUIRED);
                 }
                 if (request.InterviewDate.HasValue)
                 {
@@ -619,7 +621,7 @@ namespace SmartRecruit.Application.Services
         public async Task<bool> ReAnalyzeAsync(long applicationId)
         {
             var application = await _applicationRepository.GetApplicationWithDetailsAsync(applicationId);
-            if (application == null) return false;
+            if (application == null) throw new NotFoundException(Messages.ApplicationMsg.NOT_FOUND);
 
             _logger.LogInformation("Re-analyzing application {ApplicationId} for Job {JobId}", applicationId, application.JobId);
 

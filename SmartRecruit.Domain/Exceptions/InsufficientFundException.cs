@@ -1,10 +1,10 @@
-﻿using SmartRecruit.Domain.Constants;
+using SmartRecruit.Domain.Constants;
 
 namespace SmartRecruit.Domain.Exceptions
 {
     public class InsufficientFundException : Exception
     {
         public InsufficientFundException()
-            : base(Messages.WalletMsg.INSUFFICIENT_BALANCE) { }
+            : base(Messages.WalletMsg.INSUFFICIENT_FUNDS) { }
     }
 }

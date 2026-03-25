@@ -26,7 +26,6 @@ namespace SmartRecruit.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyWallet()
         {
-            _logger.LogInformation("API GetMyWallet called for UserId: {UserId}", CurrentUserId);
             var wallet = await _walletService.GetWalletByUserIdAsync(CurrentUserId);
             return Ok(wallet.Wrap());
         }
@@ -37,7 +36,6 @@ namespace SmartRecruit.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetWalletByUserId(long userId)
         {
-            _logger.LogInformation("API GetWalletByUserId called for UserId: {UserId}", userId);
             var wallet = await _walletService.GetWalletByUserIdAsync(userId);
             return Ok(wallet.Wrap());
         }

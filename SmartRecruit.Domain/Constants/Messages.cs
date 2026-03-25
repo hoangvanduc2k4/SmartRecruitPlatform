@@ -1,4 +1,4 @@
-﻿
+
 namespace SmartRecruit.Domain.Constants
 {
     public static class Messages
@@ -38,7 +38,8 @@ namespace SmartRecruit.Domain.Constants
         // ================================
         public static class WalletMsg
         {
-            public const string INSUFFICIENT_BALANCE = "Số dư ví của bạn không đủ để thực hiện giao dịch này.";
+            public const string NOT_FOUND = "Không tìm thấy thông tin ví.";
+            public const string INSUFFICIENT_FUNDS = "Số dư ví của bạn không đủ để thực hiện giao dịch này.";
             public const string INVALID_AMOUNT = "Số tiền giao dịch phải lớn hơn không.";
             public const string BELOW_MINIMUM = "Số tiền thấp hơn hạn mức tối thiểu yêu cầu.";
             public const string DAILY_LIMIT_EXCEEDED = "Bạn đã đạt giới hạn giao dịch hàng ngày.";
@@ -60,8 +61,63 @@ namespace SmartRecruit.Domain.Constants
             public const string JOB_DELETED = "Xóa bài tuyển dụng thành công";
             public const string JOB_RESTORED = "Khôi phục bài tuyển dụng thành công";
             public const string JOB_BLOCKED = "Bài đăng bị chặn và không thể sửa đổi";
-            public const string JOB_NOT_OWNED = "Bạn không sở hữu bài đăng này";
+            public const string NOT_OWNER = "Bạn không có quyền thao tác trên công việc này.";
             public const string SALARY_RANGE_INVALID = "Lương tối đa phải lớn hơn lương tối thiểu";
+            public const string JOB_UNDER_APPEAL = "Không thể thực hiện hành động này khi công việc đang trong quá trình khiếu nại.";
+            public const string POST_JOB_DESC = "Đăng bài tuyển dụng: {0}";
+            public const string BOOST_JOB_DESC = "Đẩy tin công việc {0}: {1}";
+        }
+
+        // ================================
+        // CATEGORY
+        // ================================
+        public static class CategoryMsg
+        {
+            public const string NOT_FOUND = "Không tìm thấy danh mục.";
+            public const string ALREADY_EXISTS = "Tên danh mục đã tồn tại.";
+        }
+
+        // ================================
+        // AI & SCREENING
+        // ================================
+        public static class AiMsg
+        {
+            public const string APPROVED_BY_AI = "Đã được duyệt bởi AI.";
+            public const string BLOCKED_BY_AI = "Bị chặn bởi AI: {0}";
+            public const string SCORING_FAILED = "Phân tích AI thất bại: {0}";
+        }
+
+        // ================================
+        // NOTIFICATIONS
+        // ================================
+        public static class NotificationMsg
+        {
+            public const string JOB_APPROVED_TITLE = "Công việc đã được duyệt";
+            public const string JOB_APPROVED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn đã được AI duyệt và hiện đang hiển thị công khai.";
+            public const string JOB_BLOCKED_TITLE = "Công việc bị chặn";
+            public const string JOB_BLOCKED_CONTENT = "Bài đăng tuyển dụng '{0}' của bạn bị chặn do: {1}. Bạn có thể khiếu nại quyết định này.";
+            
+            public const string PAYMENT_SUCCESS_TITLE = "Giao dịch thành công";
+            public const string PAYMENT_SUCCESS_CONTENT = "Đã thanh toán {0:N0} VNĐ cho dịch vụ: {1}.";
+
+            public const string APPLICATION_NEW_TITLE = "Đơn ứng tuyển mới";
+            public const string APPLICATION_NEW_CONTENT = "{0} đã ứng tuyển vào vị trí: {1}.";
+            public const string APPLICATION_SUBMITTED_TITLE = "Ứng tuyển thành công";
+            public const string APPLICATION_SUBMITTED_CONTENT = "Bạn đã ứng tuyển thành công vào vị trí '{0}'. Chúc bạn may mắn!";
+        }
+
+        // ================================
+        // APPLICATION
+        // ================================
+        public static class ApplicationMsg
+        {
+            public const string NOT_FOUND = "Không tìm thấy đơn ứng tuyển.";
+            public const string ALREADY_APPLIED = "Bạn đã ứng tuyển vào vị trí này rồi.";
+            public const string CV_REQUIRED = "Vui lòng tải lên CV trước khi ứng tuyển.";
+            public const string ALREADY_REJECTED = "Đơn ứng tuyển này đã bị từ chối trước đó.";
+            public const string INTERVIEW_DATE_REQUIRED = "Vui lòng cung cấp thời gian phỏng vấn.";
+            public const string REJECTION_REASON_REQUIRED = "Vui lòng cung cấp lý do từ chối.";
+            public const string ONLY_REJECT_RESTORE = "Chỉ có thể khôi phục các đơn đã bị từ chối.";
         }
 
         // ================================

@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using SmartRecruit.API.Controllers;
 using SmartRecruit.Application.Wrappers;
+using SmartRecruit.Domain.Exceptions;
 namespace SmartRecruit.Controllers
 {
     [ApiController]
@@ -45,31 +46,20 @@ namespace SmartRecruit.Controllers
         [HttpPost("webhook")]
         public async Task<IActionResult> Webhook()
         {
-            try
-            {
-                // Đọc raw body
-                Request.EnableBuffering();
-                using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
-                var rawBody = await reader.ReadToEndAsync();
-                Request.Body.Position = 0;
+            // Đọc raw body
+            Request.EnableBuffering();
+            using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
+            var rawBody = await reader.ReadToEndAsync();
+            Request.Body.Position = 0;
 
-                _logger.LogInformation("API Webhook called, BodyLength={Len}", rawBody.Length);
+            // Parse thành DTO
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var webhookBody = JsonSerializer.Deserialize<PayOSWebhookBody>(rawBody, options);
 
-                // Parse thành DTO
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var webhookBody = JsonSerializer.Deserialize<PayOSWebhookBody>(rawBody, options);
+            if (webhookBody == null) throw new BadRequestException("Cannot deserialize webhook body.");
 
-                if (webhookBody == null)
-                    return Ok(new { success = false, message = "Cannot deserialize webhook body." });
-
-                await _paymentService.HandleWebhookAsync(webhookBody);
-                return Ok(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "PayOS Webhook handling failed.");
-                return Ok(new { success = false, message = ex.Message });
-            }
+            await _paymentService.HandleWebhookAsync(webhookBody);
+            return Ok(new { success = true });
         }
 
         /// <summary>
@@ -101,11 +91,7 @@ namespace SmartRecruit.Controllers
         [HttpGet("{orderCode}/link")]
         public async Task<IActionResult> GetPaymentLink(long orderCode)
         {
-            _logger.LogInformation("API GetPaymentLink called for orderCode={OrderCode}", orderCode);
             var link = await _paymentService.GetPaymentLinkByOrderCodeAsync(orderCode);
-            if (string.IsNullOrEmpty(link))
-                return BadRequest(ApiResponse.Fail("Payment link not found or could not be re-created via PayOS. Check system logs."));
-
             return Ok(new { paymentUrl = link }.Wrap());
         }
     }
