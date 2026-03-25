@@ -20,13 +20,7 @@ else
                 @TempData["Message"]
             </div>
         }
-        @if (TempData["Error"] != null)
-        {
-            <div class="p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-bold uppercase tracking-tight flex items-center gap-3">
-                <i class="fas fa-exclamation-circle text-base"></i>
-                @TempData["Error"]
-            </div>
-        }
+
 
         @if (Model.IsOwner)
         {
@@ -43,14 +37,18 @@ else
                     </a>
                 </div>
 
-                @if (!string.IsNullOrEmpty(Model.Job.DraftChanges))
+                @if (!string.IsNullOrEmpty(Model.Job.DraftChanges) || Model.Job.Status == JobStatus.DRAFT || Model.Job.Status == JobStatus.CHECKING)
                 {
                     <div class="mt-2 p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-3 text-amber-700">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span class="text-xs font-bold uppercase tracking-tight">Bản Nháp Đang Chờ Duyệt</span>
+                            <i class="fas fa-exclamation-triangle text-base"></i>
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-tight">1 bản nháp chưa được công khai cho công việc này.</p>
+                            </div>
                         </div>
-                        <p class="text-[10px] font-bold text-amber-600 uppercase">Chỉ Hiển Thị Với Bạn</p>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black px-2.5 py-1 bg-amber-100 text-amber-600 rounded-lg uppercase tracking-widest">Chỉ bạn thấy</span>
+                        </div>
                     </div>
                 }
             </div>
@@ -151,6 +149,15 @@ else
                             }
                         </div>
 
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold animate-in slide-in-from-top duration-300">
+                                <i class="fas fa-exclamation-circle mr-2"></i> @Html.Raw(TempData["Error"])
+                            </div>
+                        }
+                        
+                        <div asp-validation-summary="ModelOnly" class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold"></div>
+
                         <form class="space-y-6" id="jobEditForm" method="post" asp-page-handler="Update">
                             <input type="hidden" name="Id" value="@Model.Job.Id" />
                             <input type="hidden" name="EditJob.Id" value="@Model.Job.Id" />
@@ -159,49 +166,57 @@ else
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tiêu Đề Công Việc</label>
-                                    <input type="text" name="EditJob.Title" value="@Model.Job.Title" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                    <input type="text" asp-for="EditJob.Title" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)" />
+                                    <span asp-validation-for="EditJob.Title" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tên Công Ty</label>
-                                    <input type="text" name="EditJob.Company" value="@Model.Job.Company" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                    <input type="text" asp-for="EditJob.Company" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)" />
+                                    <span asp-validation-for="EditJob.Company" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Loại Công Việc</label>
-                                    <select name="EditJob.JobType" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "")>
-                                        <option value="0" selected="@(Model.Job.JobType == JobType.FULL_TIME)">Toàn Thời Gian</option>
-                                        <option value="1" selected="@(Model.Job.JobType == JobType.PART_TIME)">Bán Thời Gian</option>
-                                        <option value="2" selected="@(Model.Job.JobType == JobType.REMOTE)">Làm Việc Từ Xa</option>
+                                    <select asp-for="EditJob.JobType" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)">
+                                        <option value="FULL_TIME">Toàn Thời Gian</option>
+                                        <option value="PART_TIME">Bán Thời Gian</option>
+                                        <option value="REMOTE">Làm Việc Từ Xa</option>
                                     </select>
+                                    <span asp-validation-for="EditJob.JobType" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Ngày Hết Hạn Ứng Tuyển</label>
-                                    <input type="date" name="EditJob.ExpireDate" value="@(Model.Job.ExpireDate?.ToString("yyyy-MM-dd"))" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                    <input type="date" asp-for="EditJob.ExpireDate" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)" />
+                                    <span asp-validation-for="EditJob.ExpireDate" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-1 gap-6 mt-4">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Kỹ Năng Yêu Cầu (cách nhau bởi dấu phẩy)</label>
-                                    <input type="text" name="EditJob.SkillsRequired" value="@Model.Job.SkillsRequired" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                    <input type="text" asp-for="EditJob.SkillsRequired" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)" />
+                                    <span asp-validation-for="EditJob.SkillsRequired" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Địa Điểm</label>
-                                    <input type="text" name="EditJob.Location" value="@Model.Job.Location" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "") />
+                                    <input type="text" asp-for="EditJob.Location" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)" />
+                                    <span asp-validation-for="EditJob.Location" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Danh Mục</label>
-                                    <select name="EditJob.CategoryId" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" @(!Model.IsOwner ? "disabled" : "")>
+                                    <select asp-for="EditJob.CategoryId" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" disabled="@(!Model.IsOwner)">
+                                        <option value="">-- Chọn Danh Mục --</option>
                                         @foreach (var cat in Model.Categories)
                                         {
-                                            <option value="@cat.Id" selected="@(Model.Job.CategoryId == cat.Id)">@cat.Name</option>
+                                            <option value="@cat.Id">@cat.Name</option>
                                         }
                                     </select>
+                                    <span asp-validation-for="EditJob.CategoryId" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                 </div>
                             </div>
 
@@ -209,27 +224,32 @@ else
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Lương Tối Thiểu</label>
-                                         <input type="text" name="EditJob.SalaryMin" value="@Model.Job.SalaryMin" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" @(!Model.IsOwner ? "disabled" : "") />
+                                         <input type="text" asp-for="EditJob.SalaryMin" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" disabled="@(!Model.IsOwner)" />
+                                         <span asp-validation-for="EditJob.SalaryMin" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Lương Tối Đa</label>
-                                         <input type="text" name="EditJob.SalaryMax" value="@Model.Job.SalaryMax" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" @(!Model.IsOwner ? "disabled" : "") />
+                                         <input type="text" asp-for="EditJob.SalaryMax" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" disabled="@(!Model.IsOwner)" />
+                                         <span asp-validation-for="EditJob.SalaryMax" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Quyền Lợi</label>
-                                <textarea name="EditJob.Benefits" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" @(!Model.IsOwner ? "disabled" : "")>@Model.Job.Benefits</textarea>
+                                <textarea asp-for="EditJob.Benefits" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" disabled="@(!Model.IsOwner)"></textarea>
+                                <span asp-validation-for="EditJob.Benefits" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                             </div>
 
                             <div>
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Yêu Cầu Công Việc</label>
-                                <textarea name="EditJob.Requirement" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" @(!Model.IsOwner ? "disabled" : "")>@Model.Job.Requirement</textarea>
+                                <textarea asp-for="EditJob.Requirement" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[100px]" disabled="@(!Model.IsOwner)"></textarea>
+                                <span asp-validation-for="EditJob.Requirement" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Mô Tả Công Việc</label>
-                                <textarea name="EditJob.Description" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[250px]" @(!Model.IsOwner ? "disabled" : "")>@Model.Job.Description</textarea>
+                                <textarea asp-for="EditJob.Description" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none min-h-[250px]" disabled="@(!Model.IsOwner)"></textarea>
+                                <span asp-validation-for="EditJob.Description" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                             </div>
                         </form>
 
@@ -490,7 +510,14 @@ else
 }
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script>
+        // Form validation before submit
+        document.getElementById('jobEditForm').onsubmit = function() {
+            if (!$(this).valid()) return false;
+            return true;
+        };
+
         function simulateMatch() {
             const btn = event.currentTarget;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang Phân Tích...';

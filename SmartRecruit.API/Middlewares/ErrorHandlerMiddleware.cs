@@ -30,11 +30,18 @@ namespace SmartRecruit.Middlewares
 
                 switch (error)
                 {
+                    case FluentValidation.ValidationException e:
+                        // validation error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        responseModel.Message = ""; // Let the Errors collection speak
+                        responseModel.Errors = e.Errors.Select(x => x.ErrorMessage).ToList();
+                        break;
                     case KeyNotFoundException e:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
-                    case ArgumentException e:
+                    case ArgumentException:
+                    case InvalidOperationException:
                         // bad request error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;

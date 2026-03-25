@@ -21,43 +21,51 @@
         </div>
     </div>
 
-    @if (!ViewData.ModelState.IsValid)
+
+    @if (TempData["Error"] != null)
     {
-        <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-medium">
-            <div asp-validation-summary="All"></div>
+        <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold animate-in slide-in-from-top duration-300">
+            <i class="fas fa-exclamation-circle mr-2"></i> @Html.Raw(TempData["Error"])
         </div>
     }
+    
+    <div asp-validation-summary="ModelOnly" class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold"></div>
 
     <form method="post" class="space-y-6" onsubmit="return submitJob()">
         <div class="p-8 space-y-6 bg-white rounded-[2rem] border border-slate-200/60 shadow-lg">
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tiêu Đề Công Việc</label>
-                <input type="text" asp-for="JobInput.Title" required placeholder="vd: Kỹ Sư Phần Mềm, Chuyên Viên Kinh Doanh..." class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                <input type="text" asp-for="JobInput.Title" placeholder="vd: Kỹ Sư Phần Mềm, Chuyên Viên Kinh Doanh..." class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                <span asp-validation-for="JobInput.Title" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tên Công Ty</label>
-                    <input type="text" asp-for="JobInput.Company" required placeholder="vd: Tập đoàn Vingroup, FPT Software..." class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <input type="text" asp-for="JobInput.Company" placeholder="vd: Tập đoàn Vingroup, FPT Software..." class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <span asp-validation-for="JobInput.Company" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Ngày Hết Hạn Ứng Tuyển</label>
                     <input type="date" asp-for="JobInput.ExpireDate" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <span asp-validation-for="JobInput.ExpireDate" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Hình Thức Khai Thác</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Hình Thức Làm Việc</label>
                     <select asp-for="JobInput.JobType" class="px-3 py-2 h-12 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium text-slate-700 text-sm">
                         <option value="0">Toàn Thời Gian</option>
                         <option value="1">Bán Thời Gian</option>
                         <option value="2">Làm Việc Từ Xa</option>
                     </select>
+                    <span asp-validation-for="JobInput.JobType" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Kỹ Năng Yêu Cầu (cách nhau bởi phẩy)</label>
-                    <input type="text" asp-for="SkillsInput" placeholder="React, .NET, SQL, Docker" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <input type="text" asp-for="JobInput.SkillsRequired" placeholder="React, .NET, SQL, Docker" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <span asp-validation-for="JobInput.SkillsRequired" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
             </div>
 
@@ -65,6 +73,7 @@
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Địa Điểm</label>
                     <input type="text" asp-for="JobInput.Location" placeholder="vd: HCM hoặc Làm Việc Từ Xa" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none" />
+                    <span asp-validation-for="JobInput.Location" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Danh Mục</label>
@@ -75,6 +84,7 @@
                             <option value="@cat.Id">@cat.Name</option>
                         }
                     </select>
+                    <span asp-validation-for="JobInput.CategoryId" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
             </div>
 
@@ -82,26 +92,31 @@
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Lương Tối Thiểu</label>
                     <input type="text" asp-for="JobInput.SalaryMin" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" />
+                    <span asp-validation-for="JobInput.SalaryMin" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Lương Tối Đa</label>
                     <input type="text" asp-for="JobInput.SalaryMax" class="w-full h-12 bg-slate-50 border border-slate-100 rounded-xl px-4 text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none currency-input" />
+                    <span asp-validation-for="JobInput.SalaryMax" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
                 </div>
             </div>
 
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Mô Tả Công Việc</label>
                 <textarea asp-for="JobInput.Description" placeholder="Mô tả vai trò và trách nhiệm hàng ngày..." class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <span asp-validation-for="JobInput.Description" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
             </div>
 
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Yêu Cầu Công Việc</label>
                 <textarea asp-for="JobInput.Requirement" placeholder="Ứng viên cần có những yêu cầu như thế nào? (vd: Kinh nghiệm tối thiểu 5 năm...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <span asp-validation-for="JobInput.Requirement" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
             </div>
             
             <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Quyền Lợi</label>
                 <textarea asp-for="JobInput.Benefits" placeholder="Công ty mang lại những quyền lợi gì cho ứng viên? (vd: Làm việc từ xa, thưởng lương tháng 13...)" class="w-full p-4 min-h-[100px] bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-900 focus:bg-white focus:border-indigo-400 transition-all outline-none"></textarea>
+                <span asp-validation-for="JobInput.Benefits" class="text-red-500 text-[10px] font-bold mt-1 block"></span>
             </div>
         </div>
 
@@ -113,8 +128,12 @@
 </div>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script>
         function submitJob() {
+            // Check if form is valid using jQuery validation
+            if (!$('form').valid()) return false;
+
             var btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang Xử Lý...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
