@@ -87,25 +87,9 @@ namespace SmartRecruit.Application.Services
         {
             await _createValidator.ValidateAndThrowAsync(request);
 
-            // 1. Create Job with DRAFT status - No charging, no AI
-            var job = new Job
-            {
-                Title = request.Title,
-                Company = request.Company,
-                Benefits = request.Benefits,
-                Description = request.Description,
-                Requirement = request.Requirement,
-                SkillsRequired = request.SkillsRequired,
-                SalaryMin = request.SalaryMin,
-                SalaryMax = request.SalaryMax,
-                JobType = request.JobType,
-                Location = request.Location,
-                CategoryId = request.CategoryId!.Value,
-                ExpireDate = request.ExpireDate,
-                RecruiterId = request.RecruiterId,
-                CreatedAt = DateTime.UtcNow,
-                Status = JobStatus.DRAFT
-            };
+            // 1. Create Job with DRAFT status using AutoMapper
+            var job = _mapper.Map<Job>(request);
+            job.RecruiterId = request.RecruiterId; // Ensure RecruiterId is set if not in mapping or needed explicitly
 
             await _jobRepository.AddAsync(job);
             await _unitOfWork.CompleteAsync();
@@ -123,17 +107,7 @@ namespace SmartRecruit.Application.Services
 
             try
             {
-                var fullContent = GetFullJobInfo(
-                    job.Title, 
-                    job.Company, 
-                    job.Location, 
-                    job.JobType.ToString(), 
-                    job.SalaryMin, 
-                    job.SalaryMax, 
-                    job.Benefits, 
-                    job.Description, 
-                    job.Requirement, 
-                    job.SkillsRequired);
+                var fullContent = GetFullJobInfo(job);
 
                 var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, fullContent);
 
@@ -391,35 +365,7 @@ namespace SmartRecruit.Application.Services
             // 2. AI Screening
             try
             {
-                string fullContent = "";
-                if (draft != null)
-                {
-                    fullContent = GetFullJobInfo(
-                        draft.Title,
-                        draft.Company,
-                        draft.Location,
-                        draft.JobType.ToString(),
-                        draft.SalaryMin,
-                        draft.SalaryMax,
-                        draft.Benefits,
-                        draft.Description,
-                        draft.Requirement,
-                        draft.SkillsRequired);
-                }
-                else
-                {
-                    fullContent = GetFullJobInfo(
-                        job.Title,
-                        job.Company,
-                        job.Location,
-                        job.JobType.ToString(),
-                        job.SalaryMin,
-                        job.SalaryMax,
-                        job.Benefits,
-                        job.Description,
-                        job.Requirement,
-                        job.SkillsRequired);
-                }
+                string fullContent = draft != null ? GetFullJobInfo(draft) : GetFullJobInfo(job);
 
                 var screeningResult = await _geminiService.CheckJobContentAsync(draft?.Title ?? job.Title, fullContent);
 
@@ -438,21 +384,10 @@ namespace SmartRecruit.Application.Services
 
                 if (screeningResult.IsSafe)
                 {
-                    // Merge draft changes if they exist
+                    // Merge draft changes if they exist using AutoMapper
                     if (draft != null)
                     {
-                        job.Title = draft.Title;
-                        job.Company = draft.Company;
-                        job.Benefits = draft.Benefits;
-                        job.Description = draft.Description;
-                        job.Requirement = draft.Requirement;
-                        job.SkillsRequired = draft.SkillsRequired;
-                        job.SalaryMin = draft.SalaryMin;
-                        job.SalaryMax = draft.SalaryMax;
-                        job.JobType = draft.JobType;
-                        job.Location = draft.Location;
-                        job.CategoryId = draft.CategoryId ?? job.CategoryId;
-                        job.ExpireDate = draft.ExpireDate;
+                        _mapper.Map(draft, job);
                         job.DraftChanges = null;
                     }
                     job.Status = JobStatus.APPROVED;
@@ -846,6 +781,16 @@ Benefits: {benefits}
 Description: {description}
 Requirements: {requirements}
 Skills Required: {skills}";
+        }
+
+        private string GetFullJobInfo(Job job)
+        {
+            return GetFullJobInfo(job.Title, job.Company, job.Location, job.JobType.ToString(), job.SalaryMin, job.SalaryMax, job.Benefits, job.Description, job.Requirement, job.SkillsRequired);
+        }
+
+        private string GetFullJobInfo(JobDraftRequest draft)
+        {
+            return GetFullJobInfo(draft.Title, draft.Company, draft.Location, draft.JobType.ToString(), draft.SalaryMin, draft.SalaryMax, draft.Benefits, draft.Description, draft.Requirement, draft.SkillsRequired);
         }
     }
 }

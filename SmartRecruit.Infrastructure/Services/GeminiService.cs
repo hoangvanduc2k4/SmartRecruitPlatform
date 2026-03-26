@@ -94,12 +94,10 @@ namespace SmartRecruit.Infrastructure.Services
             var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(_apiUrl, jsonContent);
             var responseString = await response.Content.ReadAsStringAsync();
-
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
-            }
-
+            }         
             var jsonResponse = JObject.Parse(responseString);
             var candidates = jsonResponse["candidates"] as JArray;
             if (candidates == null || candidates.Count == 0)
