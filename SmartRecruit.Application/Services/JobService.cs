@@ -307,7 +307,7 @@ namespace SmartRecruit.Application.Services
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             // 1. Determine Cost
-            decimal cost = (job.Status == JobStatus.APPROVED) ? 25000 : 50000;
+            decimal cost = (job.Status == JobStatus.APPROVED) ? Fees.JOB_REPUBLISH_FEE : Fees.JOB_PUBLISH_FEE;
             if (wallet.Balance < cost) throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
 
             // 2. Charge Wallet
@@ -507,7 +507,7 @@ namespace SmartRecruit.Application.Services
             var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
-            const decimal boostCost = 20000;
+            decimal boostCost = Fees.JOB_BOOST_FEE;
             if (wallet.Balance < boostCost)
             {
                 throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
@@ -518,7 +518,7 @@ namespace SmartRecruit.Application.Services
             _walletRepository.Update(wallet);
 
             // 4. Update Job Boost Time
-            job.BoostExpiryTime = DateTime.UtcNow.AddMinutes(20);
+            job.BoostExpiryTime = DateTime.UtcNow.AddMinutes(Fees.JOB_BOOST_DURATION_MINUTES);
             _jobRepository.Update(job);
 
             // 5. Create Transaction
