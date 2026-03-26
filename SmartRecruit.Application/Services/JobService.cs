@@ -200,21 +200,7 @@ namespace SmartRecruit.Application.Services
 
             // For backward compatibility, this updates the draft if it's a DRAFT/CHECKING job, 
             // or redirects to DraftChanges if it's already APPROVED.
-            var draftReq = new JobDraftRequest
-            {
-                Title = request.Title,
-                Company = request.Company,
-                Benefits = request.Benefits,
-                Description = request.Description,
-                Requirement = request.Requirement,
-                SkillsRequired = request.SkillsRequired,
-                SalaryMin = request.SalaryMin,
-                SalaryMax = request.SalaryMax,
-                JobType = request.JobType,
-                Location = request.Location,
-                CategoryId = request.CategoryId,
-                ExpireDate = request.ExpireDate
-            };
+            var draftReq = _mapper.Map<JobDraftRequest>(request);
 
             return await SaveDraftAsync(id, draftReq, currentUserId);
         }
@@ -232,23 +218,10 @@ namespace SmartRecruit.Application.Services
                     var draft = System.Text.Json.JsonSerializer.Deserialize<JobDraftRequest>(job.DraftChanges);
                     if (draft != null)
                     {
-                        var response = _mapper.Map<JobResponse>(job);
-                        // Merge draft values into response for the UI to show current changes
-                        return response with
-                        {
-                            Title = draft.Title,
-                            Company = draft.Company,
-                            Benefits = draft.Benefits,
-                            Description = draft.Description,
-                            Requirement = draft.Requirement,
-                            SkillsRequired = draft.SkillsRequired,
-                            SalaryMin = draft.SalaryMin,
-                            SalaryMax = draft.SalaryMax,
-                            JobType = draft.JobType.ToString(),
-                            Location = draft.Location,
-                            CategoryId = draft.CategoryId,
-                            ExpireDate = draft.ExpireDate
-                        };
+                        // Create a copy to avoid modifying the tracked entity
+                        var jobForPreview = _mapper.Map<Job>(job);
+                        _mapper.Map(draft, jobForPreview);
+                        return _mapper.Map<JobResponse>(jobForPreview);
                     }
                 }
                 catch (Exception ex)
@@ -270,19 +243,8 @@ namespace SmartRecruit.Application.Services
 
             if (job.Status == JobStatus.DRAFT || job.Status == JobStatus.CHECKING || job.Status == JobStatus.BLOCKED)
             {
-                // Update main fields directly if not yet live or blocked
-                job.Title = request.Title;
-                job.Company = request.Company;
-                job.Benefits = request.Benefits;
-                job.Description = request.Description;
-                job.Requirement = request.Requirement;
-                job.SkillsRequired = request.SkillsRequired;
-                job.SalaryMin = request.SalaryMin;
-                job.SalaryMax = request.SalaryMax;
-                job.JobType = request.JobType;
-                job.Location = request.Location;
-                job.CategoryId = request.CategoryId ?? job.CategoryId;
-                job.ExpireDate = request.ExpireDate;
+                // Update main fields directly if not yet live or blocked using AutoMapper
+                _mapper.Map(request, job);
                 job.DraftChanges = null; // Clear any existing draft since we're updating main
             }
             else if (job.Status == JobStatus.APPROVED)
@@ -303,7 +265,7 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
             if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
 
-            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            var wallet = await _walletRepository.GetWalletForUpdateAsync(userId);
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             // 1. Determine Cost
@@ -331,21 +293,33 @@ namespace SmartRecruit.Application.Services
             job.Status = JobStatus.CHECKING;
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
-
-            // 5. Notify Transaction Success
+            
+            // Post-commit side effects: Should NOT throw to user if they fail, 
+            // as data is already committed.
             try
             {
-                await _notificationService.SendNotificationAsync(
-                    userId,
-                    Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
-                    string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, cost, job.Title),
-                    NotificationType.PAYMENT,
-                    "/Wallet");
-            }
-            catch { /* Ignore notification failures */ }
+                // 5. Notify Transaction Success
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        userId,
+                        Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                        string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, cost, job.Title),
+                        NotificationType.PAYMENT,
+                        "/Wallet");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Non-critical: Failed to send payment notification for JobId {JobId}", id);
+                }
 
-            // Enqueue the background processing
-            BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+                // Enqueue the background processing
+                Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "CRITICAL: Post-commit processing failed for JobId {JobId}. Money deducted but background job might not have started.", id);
+            }
 
             return _mapper.Map<JobResponse>(job);
         }
@@ -493,6 +467,11 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
             // 1. Validation
+            if (job.Status != JobStatus.APPROVED)
+            {
+                throw new BadRequestException("Chỉ có thể đẩy bài cho các công việc đã được duyệt.");
+            }
+
             if (job.IsAppealed)
             {
                 throw new BadRequestException(Messages.JobMsg.JOB_UNDER_APPEAL);
@@ -503,8 +482,8 @@ namespace SmartRecruit.Application.Services
                 throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
             }
 
-            // 2. Wallet & Balance Check
-            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            // 2. Wallet & Balance Check (Pessimistic Lock for Race Condition Prevention)
+            var wallet = await _walletRepository.GetWalletForUpdateAsync(userId);
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             decimal boostCost = Fees.JOB_BOOST_FEE;
@@ -540,19 +519,27 @@ namespace SmartRecruit.Application.Services
             {
                 _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
 
-                // Push Notification for Payment Transparency
+                // Post-commit side effects
                 try
                 {
-                    await _notificationService.SendNotificationAsync(
-                        userId,
-                        Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
-                        string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, boostCost, job.Title),
-                        NotificationType.PAYMENT,
-                        "/Wallet");
+                    // Push Notification for Payment Transparency
+                    try
+                    {
+                        await _notificationService.SendNotificationAsync(
+                            userId,
+                            Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                            string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, boostCost, job.Title),
+                            NotificationType.PAYMENT,
+                            "/Wallet");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Non-critical: Failed to send boost payment notification for JobId {JobId}", jobId);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Failed to send job boost fee notification for User {UserId}", userId);
+                    _logger.LogError(ex, "Error in post-boost side effects for JobId {JobId}", jobId);
                 }
             }
             return result;

@@ -79,13 +79,13 @@ namespace SmartRecruit.Infrastructure.Repositories
             if (request.minSalary.HasValue && request.minSalary > 0)
             {
                 // Standard logic: The job's MIN salary must be at least the user's requested min.
-                query = query.Where(x => x.SalaryMin >= request.minSalary.Value);
+                query = query.Where(x => x.SalaryMax >= request.minSalary.Value);
             }
 
             if (request.maxSalary.HasValue && request.maxSalary > 0)
             {
                 // Standard logic: The job's MAX salary should not exceed the user's requested max.
-                query = query.Where(x => x.SalaryMax <= request.maxSalary.Value);
+                query = query.Where(x => x.SalaryMin <= request.maxSalary.Value);
             }
 
             // 5. Specific Filters
@@ -136,6 +136,9 @@ namespace SmartRecruit.Infrastructure.Repositories
                             break;
                         case "date":
                             orderedQuery = isDesc ? query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt) : query.OrderBy(x => x.UpdatedAt ?? x.CreatedAt);
+                            break;
+                        case "views":
+                            orderedQuery = isDesc ? query.OrderByDescending(x => x.ViewCount) : query.OrderBy(x => x.ViewCount);
                             break;
                         default:
                             orderedQuery = query.OrderByDescending(x => x.ViewCount);
