@@ -24,6 +24,7 @@ namespace WebPortal.Services.Api
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
         Task<bool> AppealJobAsync(long jobId, string message);
+        Task<ApiResponse<Job>> CloneJobAsync(long id);
         Task<RecruiterStatsResponse?> GetRecruiterStatsAsync();
         Task<IEnumerable<Job>> GetRecommendedJobsAsync();
     }
@@ -347,6 +348,23 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error appealing job {jobId}: {ex.Message}");
             }
             return false;
+        }
+
+        public async Task<ApiResponse<Job>> CloneJobAsync(long id)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"jobs/{id}/clone", null);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
+                return result ?? new ApiResponse<Job> { Success = false, Message = "Kết nối máy chủ thất bại." };
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error cloning job {id}: {ex.Message}");
+                return new ApiResponse<Job> { Success = false, Message = "Lỗi hệ thống khi sao chép." };
+            }
         }
 
         public async Task<RecruiterStatsResponse?> GetRecruiterStatsAsync()

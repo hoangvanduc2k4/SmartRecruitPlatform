@@ -153,10 +153,16 @@
                                             <a asp-page="/Jobs/JobApplications" asp-route-Id="@job.Id" title="Xem Ứng Viên" class="w-10 h-10 bg-white text-green-600 hover:bg-green-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
                                                 <i class="fas fa-users text-sm"></i>
                                             </a>
-                                            <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="Quản Lý Quy Trình" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
-                                                <i class="fas fa-layer-group text-xs"></i>
-                                            </a>
-                                        </div>
+                                             <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="Quản Lý Quy Trình" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
+                                                 <i class="fas fa-layer-group text-xs"></i>
+                                             </a>
+                                             <form method="post" asp-page-handler="Clone" class="inline-flex m-0" onsubmit="return confirm('Bạn có muốn sao chép công việc này thành bản nháp mới không?')">
+                                                 <input type="hidden" name="jobId" value="@job.Id" />
+                                                 <button type="submit" title="Sao Chép (Clone)" class="w-10 h-10 bg-white text-amber-600 hover:bg-amber-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
+                                                     <i class="fas fa-copy text-sm"></i>
+                                                 </button>
+                                             </form>
+                                         </div>
                                         @if (job.Status != JobStatus.BLOCKED)
                                         {
                                             <form method="post" asp-page-handler="ToggleStatus" class="inline-flex m-0">

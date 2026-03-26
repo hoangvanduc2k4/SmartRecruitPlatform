@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using SmartRecruit.Application.DTO.Job;
@@ -257,6 +258,39 @@ namespace SmartRecruit.Application.Services
             await _unitOfWork.CompleteAsync();
 
             return _mapper.Map<JobResponse>(job);
+        }
+
+        public async Task<JobResponse> CloneJobAsync(long jobId, long userId)
+        {
+            var sourceJob = await _jobRepository.GetByIdAsync(jobId);
+            if (sourceJob == null) throw new KeyNotFoundException("Không tìm thấy công việc gốc");
+            if (sourceJob.RecruiterId != userId) throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
+
+            // Use AutoMapper for a deep copy of the entity
+            var clonedJob = _mapper.Map<Job>(sourceJob);
+
+            // Reset specific fields for the new clone
+            clonedJob.Id = 0; // Ensure it's treated as new
+            clonedJob.Title = $"[Bản sao] {sourceJob.Title}";
+            clonedJob.Status = JobStatus.DRAFT;
+            clonedJob.CreatedAt = DateTime.UtcNow;
+            clonedJob.UpdatedAt = null;
+            clonedJob.ExpireDate = null;
+            clonedJob.ViewCount = 0;
+            clonedJob.IsAppealed = false;
+            clonedJob.ModerationNote = null;
+            clonedJob.AppealMessage = null;
+            clonedJob.DraftChanges = null;
+            clonedJob.BoostExpiryTime = null;
+            
+            // Clear navigation collections to prevent unwanted side effects
+            clonedJob.Applications = new List<Applications>();
+            clonedJob.SavedJobs = new List<SavedJob>();
+
+            await _jobRepository.AddAsync(clonedJob);
+            await _unitOfWork.CompleteAsync();
+
+            return _mapper.Map<JobResponse>(clonedJob);
         }
 
         public async Task<JobResponse> PublishJobAsync(long id, long userId)
