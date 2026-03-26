@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using FluentValidation;
+using Hangfire;
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.DTO.Job;
@@ -93,93 +94,6 @@ namespace SmartRecruit.Application.Services
 
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);
             return _mapper.Map<JobResponse>(createdJob!);
-        }
-
-        public async Task ModerateJobAsync(long jobId)
-        {
-            var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) return;
-
-            try
-            {
-                var fullContent = GetFullJobInfo(job);
-
-                var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, fullContent);
-
-                var aiLog = new AILog
-                {
-                    JobId = job.Id,
-                    AIType = AIType.SCREENING,
-                    InputText = fullContent,
-                    OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
-                    Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
-                    Reason = screeningResult.IsSafe ? "Không phát hiện vi phạm chính sách." : $"{screeningResult.ViolationType} - {screeningResult.Analysis}",
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                await _aiLogRepository.AddAsync(aiLog);
-
-                if (screeningResult.IsSafe)
-                {
-                    job.Status = JobStatus.APPROVED;
-                    job.ModerationNote = Messages.AiMsg.APPROVED_BY_AI;
-                    _logger.LogInformation("ModerateJob use-case: Job {JobId} APPROVED by AI", jobId);
-
-                    // Real-time Notification for AI Approval
-                    try
-                    {
-                        await _notificationService.SendNotificationAsync(
-                            job.RecruiterId,
-                            Messages.NotificationMsg.JOB_APPROVED_TITLE,
-                            string.Format(Messages.NotificationMsg.JOB_APPROVED_CONTENT, job.Title),
-                            NotificationType.JOB,
-                            $"/JobDetail?Id={job.Id}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Failed to send AI approval notification for JobId {JobId}", jobId);
-                    }
-                }
-                else
-                {
-                    job.Status = JobStatus.BLOCKED;
-                    job.ModerationNote = $"Bị AI chặn: {screeningResult.ViolationType} - {screeningResult.Analysis}";
-                    _logger.LogWarning("ModerateJob use-case: Job {JobId} BLOCKED by AI. Reason: {Violations}", jobId, job.ModerationNote);
-
-                    // Real-time Notification for AI Blocking
-                    try
-                    {
-                        await _notificationService.SendNotificationAsync(
-                            job.RecruiterId,
-                            Messages.NotificationMsg.JOB_BLOCKED_TITLE,
-                            string.Format(Messages.NotificationMsg.JOB_BLOCKED_CONTENT, job.Title, screeningResult.ViolationType),
-                            NotificationType.JOB,
-                            $"/JobDetail?Id={job.Id}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Failed to send AI blocking notification for JobId {JobId}", jobId);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Check for transient errors to allow Hangfire to retry
-                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("500") || 
-                    ex.Message.Contains("502") || ex.Message.Contains("504") || ex.Message.Contains("The model is overloaded"))
-                {
-                    _logger.LogWarning(ex, "ModerateJob use-case transient error for JobId {JobId}, retrying...", jobId);
-                    throw; // Re-throw to let Hangfire retry with exponential backoff
-                }
-
-                // Permanent errors (config missing, validation, etc.) -> Block job
-                _logger.LogError(ex, "ModerateJob use-case failed for JobId {JobId}", jobId);
-                job.Status = JobStatus.BLOCKED;
-                job.ModerationNote = $"Kiểm tra AI thất bại: {ex.Message}";
-            }
-
-            _jobRepository.Update(job);
-            await _unitOfWork.CompleteAsync();
         }
 
         public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole userRole)
@@ -522,39 +436,39 @@ namespace SmartRecruit.Application.Services
                 throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
             }
 
-            // 3. Process Payment
-            wallet.Balance -= boostCost;
-            _walletRepository.Update(wallet);
-
-            // 4. Update Job Boost Time
-            job.BoostExpiryTime = DateTime.UtcNow.AddDays(Fees.JOB_BOOST_DURATION_DAYS);
-            _jobRepository.Update(job);
-
-            // 5. Create Transaction
-            var transaction = new Transaction
+            // 3. Process Payment - All operations in single UnitOfWork for atomicity
+            try
             {
-                UserId = userId,
-                WalletId = wallet.Id,
-                Amount = -boostCost,
-                Type = TransactionType.BOOST,
-                Status = TransactionStatus.SUCCESS,
-                Description = string.Format(Messages.JobMsg.BOOST_JOB_DESC, job.Id, job.Title),
-                CreatedAt = DateTime.UtcNow
-            };
-            await _walletRepository.AddTransactionAsync(transaction);
+                wallet.Balance -= boostCost;
+                _walletRepository.Update(wallet);
 
-            // 6. Complete Unit of Work
-            var result = await _unitOfWork.CompleteAsync() > 0;
-            if (result)
-            {
-                _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+                // 4. Update Job Boost Time
+                job.BoostExpiryTime = DateTime.UtcNow.AddDays(Fees.JOB_BOOST_DURATION_DAYS);
+                _jobRepository.Update(job);
 
-                // Post-commit side effects
-                try
+                // 5. Create Transaction
+                var transactionRecord = new Transaction
                 {
-                    // Push Notification for Payment Transparency
+                    UserId = userId,
+                    WalletId = wallet.Id,
+                    Amount = -boostCost,
+                    Type = TransactionType.BOOST,
+                    Status = TransactionStatus.SUCCESS,
+                    Description = string.Format(Messages.JobMsg.BOOST_JOB_DESC, job.Id, job.Title),
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _walletRepository.AddTransactionAsync(transactionRecord);
+
+                // 6. Complete Unit of Work - All or nothing
+                var result = await _unitOfWork.CompleteAsync() > 0;
+                if (result)
+                {
+                    _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+
+                    // Post-commit side effects
                     try
                     {
+                        // Push Notification for Payment Transparency
                         await _notificationService.SendNotificationAsync(
                             userId,
                             Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
@@ -567,12 +481,13 @@ namespace SmartRecruit.Application.Services
                         _logger.LogWarning(ex, "Non-critical: Failed to send boost payment notification for JobId {JobId}", jobId);
                     }
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error in post-boost side effects for JobId {JobId}", jobId);
-                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during boost operation for JobId {JobId}, UserId {UserId}", jobId, userId);
+                throw; // Re-throw to let caller handle
+            }
         }
 
         public async Task<IEnumerable<string>> GetLocationsAsync()
@@ -719,6 +634,7 @@ namespace SmartRecruit.Application.Services
             return _mapper.Map<IEnumerable<JobResponse>>(recommendedJobs);
         }
 
+        [AutomaticRetry(Attempts = 3)]
         public async Task UpdateExpiredJobsAsync()
         {
             _logger.LogInformation("Hangfire Job: Checking for expired or expiring soon job postings...");

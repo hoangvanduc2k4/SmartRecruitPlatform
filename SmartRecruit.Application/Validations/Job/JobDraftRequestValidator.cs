@@ -30,9 +30,8 @@ namespace SmartRecruit.Application.Validations.Job
                 .When(x => !string.IsNullOrEmpty(x.SkillsRequired));
 
             RuleFor(x => x.ExpireDate)
-                .GreaterThan(DateTime.UtcNow)
-                .WithMessage("Ngày hết hạn phải ở trong tương lai")
-                .When(x => x.ExpireDate.HasValue);
+                .NotEmpty().WithMessage("Ngày hết hạn là bắt buộc")
+                .Must(date => date > DateTime.UtcNow).WithMessage("Ngày hết hạn phải ở trong tương lai");
         }
     }
 }

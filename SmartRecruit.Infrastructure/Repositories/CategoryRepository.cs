@@ -32,7 +32,7 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.SearchTerm))
             {
-                query = query.Where(c => c.Name.Contains(filter.SearchTerm));
+                query = query.Where(c => EF.Functions.Collate(c.Name, "Vietnamese_CI_AI").Contains(filter.SearchTerm));
             }
 
             query = query.OrderBy(c => c.Name);
