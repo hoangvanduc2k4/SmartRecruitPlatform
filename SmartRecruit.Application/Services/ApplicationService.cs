@@ -172,7 +172,19 @@ namespace SmartRecruit.Application.Services
             try
             {
                 var cvContent = application.Candidate?.CandidateProfile?.CVText ?? string.Empty;
-                var jobDescription = $"{application.Job?.Description}\nRequirements: {application.Job?.Requirement}\nSkills: {application.Job?.SkillsRequired}";
+                
+                var jobDescription = GetFullJobInfo(
+                    application.Job?.Title ?? "",
+                    application.Job?.Company ?? "",
+                    application.Job?.Location ?? "",
+                    application.Job?.JobType.ToString() ?? "",
+                    application.Job?.SalaryMin ?? 0,
+                    application.Job?.SalaryMax ?? 0,
+                    application.Job?.Benefits ?? "",
+                    application.Job?.Description ?? "",
+                    application.Job?.Requirement ?? "",
+                    application.Job?.SkillsRequired ?? ""
+                );
 
                 var result = await _geminiService.ScoreCvAsync(cvContent, jobDescription);
 
@@ -672,6 +684,19 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient.Enqueue<IApplicationService>(x => x.ScoreApplicationAsync(applicationId));
 
             return true;
+        }
+
+        private string GetFullJobInfo(string title, string company, string location, string jobType, decimal salaryMin, decimal salaryMax, string benefits, string description, string requirements, string skills)
+        {
+            return $@"Job Title: {title}
+Company: {company}
+Location: {location}
+Job Type: {jobType}
+Salary Range: {salaryMin:N0} - {salaryMax:N0} VNĐ
+Benefits: {benefits}
+Description: {description}
+Requirements: {requirements}
+Skills Required: {skills}";
         }
     }
 }
