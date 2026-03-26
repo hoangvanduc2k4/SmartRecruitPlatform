@@ -123,13 +123,25 @@ namespace SmartRecruit.Application.Services
 
             try
             {
-                var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, job.Description);
+                var fullContent = GetFullJobInfo(
+                    job.Title, 
+                    job.Company, 
+                    job.Location, 
+                    job.JobType.ToString(), 
+                    job.SalaryMin, 
+                    job.SalaryMax, 
+                    job.Benefits, 
+                    job.Description, 
+                    job.Requirement, 
+                    job.SkillsRequired);
+
+                var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, fullContent);
 
                 var aiLog = new AILog
                 {
                     JobId = job.Id,
                     AIType = AIType.SCREENING,
-                    InputText = $"Title: {job.Title}\nDescription: {job.Description}",
+                    InputText = fullContent,
                     OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
                     Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
                     Reason = screeningResult.IsSafe ? "Không phát hiện vi phạm chính sách." : $"{screeningResult.ViolationType} - {screeningResult.Analysis}",
@@ -370,32 +382,53 @@ namespace SmartRecruit.Application.Services
             if (job == null) return;
 
             // 1. Content to Screen
-            string title = job.Title, desc = job.Description, req = job.Requirement, skills = job.SkillsRequired;
             JobDraftRequest? draft = null;
             if (!string.IsNullOrEmpty(job.DraftChanges))
             {
                 draft = System.Text.Json.JsonSerializer.Deserialize<JobDraftRequest>(job.DraftChanges);
-                if (draft != null)
-                {
-                    title = draft.Title;
-                    desc = draft.Description;
-                    req = draft.Requirement;
-                    skills = draft.SkillsRequired;
-                }
             }
 
             // 2. AI Screening
             try
             {
-                var combinedContent = $"{desc}\nRequirements: {req}\nSkills: {skills}";
-                var screeningResult = await _geminiService.CheckJobContentAsync(title, combinedContent);
+                string fullContent = "";
+                if (draft != null)
+                {
+                    fullContent = GetFullJobInfo(
+                        draft.Title,
+                        draft.Company,
+                        draft.Location,
+                        draft.JobType.ToString(),
+                        draft.SalaryMin,
+                        draft.SalaryMax,
+                        draft.Benefits,
+                        draft.Description,
+                        draft.Requirement,
+                        draft.SkillsRequired);
+                }
+                else
+                {
+                    fullContent = GetFullJobInfo(
+                        job.Title,
+                        job.Company,
+                        job.Location,
+                        job.JobType.ToString(),
+                        job.SalaryMin,
+                        job.SalaryMax,
+                        job.Benefits,
+                        job.Description,
+                        job.Requirement,
+                        job.SkillsRequired);
+                }
+
+                var screeningResult = await _geminiService.CheckJobContentAsync(draft?.Title ?? job.Title, fullContent);
 
                 // Logging AI Decision
                 var aiLog = new AILog
                 {
                     JobId = job.Id,
                     AIType = AIType.SCREENING,
-                    InputText = $"Title: {title}\nContent: {combinedContent}",
+                    InputText = fullContent,
                     OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
                     Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
                     Reason = screeningResult.IsSafe ? "An toàn" : screeningResult.Analysis,
@@ -800,6 +833,19 @@ namespace SmartRecruit.Application.Services
             }
 
             return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC).ToLowerInvariant().Trim();
+        }
+
+        private string GetFullJobInfo(string title, string company, string location, string jobType, decimal salaryMin, decimal salaryMax, string benefits, string description, string requirements, string skills)
+        {
+            return $@"Job Title: {title}
+Company: {company}
+Location: {location}
+Job Type: {jobType}
+Salary Range: {salaryMin:N0} - {salaryMax:N0} VNĐ
+Benefits: {benefits}
+Description: {description}
+Requirements: {requirements}
+Skills Required: {skills}";
         }
     }
 }
