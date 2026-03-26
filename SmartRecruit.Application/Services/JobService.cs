@@ -23,6 +23,7 @@ namespace SmartRecruit.Application.Services
         private readonly IGeminiService _geminiService;
         private readonly IWalletRepository _walletRepository;
         private readonly IAILogRepository _aiLogRepository;
+        private readonly ICategoryRepository _categoryRepository;  // ✅ Add category repository
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
         private readonly ILogger<JobService> _logger;
@@ -37,6 +38,7 @@ namespace SmartRecruit.Application.Services
             IGeminiService geminiService,
             IWalletRepository walletRepository,
             IAILogRepository aiLogRepository,
+            ICategoryRepository categoryRepository,
             Hangfire.IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
             ILogger<JobService> logger,
@@ -50,6 +52,7 @@ namespace SmartRecruit.Application.Services
             _geminiService = geminiService;
             _walletRepository = walletRepository;
             _aiLogRepository = aiLogRepository;
+            _categoryRepository = categoryRepository;
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
             _logger = logger;
@@ -82,6 +85,13 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> CreateJobAsync(JobCreateRequest request)
         {
             await _createValidator.ValidateAndThrowAsync(request);
+
+            // ✅ H3 FIX: Use CategoryRepository to verify CategoryId exists
+            var categoryExists = await _categoryRepository.ExistsByIdAsync(request.CategoryId);
+            if (!categoryExists)
+            {
+                throw new BadRequestException($"Danh mục công việc với ID {request.CategoryId} không tồn tại");
+            }
 
             // 1. Create Job with DRAFT status using AutoMapper
             var job = _mapper.Map<Job>(request);
@@ -235,6 +245,27 @@ namespace SmartRecruit.Application.Services
             // 4. Update Status and Enqueue Background Job
             job.Status = JobStatus.CHECKING;
             _jobRepository.Update(job);
+            
+            // ✅ C4 FIX: Enqueue Hangfire BEFORE completing unit of work to avoid money loss if enqueue fails
+            string? hangfireJobId = null;
+            try
+            {
+                hangfireJobId = Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+                if (string.IsNullOrEmpty(hangfireJobId))
+                {
+                    throw new InvalidOperationException("Hangfire failed to enqueue job");
+                }
+                _logger.LogInformation("Hangfire job enqueued successfully: {HangfireJobId} for Job {JobId}", hangfireJobId, job.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to enqueue Hangfire job for JobId {JobId}. Reverting transaction...", id);
+                // Rollback: Restore wallet balance since Hangfire enqueue failed
+                wallet.Balance += cost;
+                _walletRepository.Update(wallet);
+                throw new BadRequestException("Không thể xếp hàng công việc xử lý. Vui lòng thử lại.");
+            }
+            
             await _unitOfWork.CompleteAsync();
 
             // Post-commit side effects: Should NOT throw to user if they fail, 
@@ -255,13 +286,10 @@ namespace SmartRecruit.Application.Services
                 {
                     _logger.LogWarning(ex, "Non-critical: Failed to send payment notification for JobId {JobId}", id);
                 }
-
-                // Enqueue the background processing
-                Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "CRITICAL: Post-commit processing failed for JobId {JobId}. Money deducted but background job might not have started.", id);
+                _logger.LogWarning(ex, "Post-commit notification failed for JobId {JobId}, but payment already processed", id);
             }
 
             return _mapper.Map<JobResponse>(job);

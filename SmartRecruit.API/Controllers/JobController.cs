@@ -33,8 +33,18 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("recruiter/{recruiterId}")]
+        [Authorize]
         public async Task<IActionResult> GetJobsByRecruiter(long recruiterId, [FromQuery] JobSearchRequest request)
         {
+            // ✅ C2 FIX: Verify user is authorized to view this recruiter's jobs
+            var currentUserId = CurrentUserId;
+            var userRole = CurrentUserRole;
+            
+            if (recruiterId != currentUserId && userRole != SmartRecruit.Domain.Enums.UserRole.ADMIN)
+            {
+                return Unauthorized(new { message = "Bạn không có quyền xem danh sách công việc của người tuyển dụng khác" });
+            }
+            
             // Ensure recruiterId from route takes precedence
             var finalRequest = request with { recruiterId = recruiterId, showHidden = true, showBlocked = true };
             

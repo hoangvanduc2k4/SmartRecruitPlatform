@@ -8,5 +8,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
     {
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<PagedList<Category>> GetCategoriesPagedAsync(CategoryFilter filter);
+        Task<bool> ExistsByIdAsync(long? id);  // ✅ Check if category exists (accepts nullable id)
     }
 }
