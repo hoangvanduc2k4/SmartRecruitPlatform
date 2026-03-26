@@ -455,6 +455,11 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
             // 1. Validation
+            if (job.Status != JobStatus.APPROVED)
+            {
+                throw new BadRequestException("Chỉ có thể đẩy bài cho các công việc đã được duyệt.");
+            }
+
             if (job.IsAppealed)
             {
                 throw new BadRequestException(Messages.JobMsg.JOB_UNDER_APPEAL);
