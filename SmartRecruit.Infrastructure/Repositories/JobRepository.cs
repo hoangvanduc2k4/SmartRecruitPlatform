@@ -234,15 +234,16 @@ namespace SmartRecruit.Infrastructure.Repositories
                 {
                     Views = j.ViewCount,
                     Saves = j.SavedJobs.Count(),
-                    Applications = j.Applications.Count()
+                    Applications = j.Applications.Count(),
+                    SavedAndApplied = j.SavedJobs.Where(s => j.Applications.Any(a => a.CandidateId == s.UserId)).Count()
                 })
                 .ToListAsync();
 
             int totalViews = jobStats.Sum(s => s.Views);
             int totalSaves = jobStats.Sum(s => s.Saves);
             int totalApplications = jobStats.Sum(s => s.Applications);
-
-            double ratio = totalSaves > 0 ? (double)totalApplications / totalSaves : 0;
+            int totalSavedAndApplied = jobStats.Sum(s => s.SavedAndApplied);
+            double ratio = totalSaves > 0 ? (double)totalSavedAndApplied / totalSaves : 0;
 
             return new RecruiterStatsResponse(totalViews, totalSaves, totalApplications, ratio);
         }
