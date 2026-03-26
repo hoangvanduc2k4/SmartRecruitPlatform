@@ -293,21 +293,33 @@ namespace SmartRecruit.Application.Services
             job.Status = JobStatus.CHECKING;
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
-
-            // 5. Notify Transaction Success
+            
+            // Post-commit side effects: Should NOT throw to user if they fail, 
+            // as data is already committed.
             try
             {
-                await _notificationService.SendNotificationAsync(
-                    userId,
-                    Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
-                    string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, cost, job.Title),
-                    NotificationType.PAYMENT,
-                    "/Wallet");
-            }
-            catch { /* Ignore notification failures */ }
+                // 5. Notify Transaction Success
+                try
+                {
+                    await _notificationService.SendNotificationAsync(
+                        userId,
+                        Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                        string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, cost, job.Title),
+                        NotificationType.PAYMENT,
+                        "/Wallet");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Non-critical: Failed to send payment notification for JobId {JobId}", id);
+                }
 
-            // Enqueue the background processing
-            BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+                // Enqueue the background processing
+                Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "CRITICAL: Post-commit processing failed for JobId {JobId}. Money deducted but background job might not have started.", id);
+            }
 
             return _mapper.Map<JobResponse>(job);
         }
@@ -507,19 +519,27 @@ namespace SmartRecruit.Application.Services
             {
                 _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
 
-                // Push Notification for Payment Transparency
+                // Post-commit side effects
                 try
                 {
-                    await _notificationService.SendNotificationAsync(
-                        userId,
-                        Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
-                        string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, boostCost, job.Title),
-                        NotificationType.PAYMENT,
-                        "/Wallet");
+                    // Push Notification for Payment Transparency
+                    try
+                    {
+                        await _notificationService.SendNotificationAsync(
+                            userId,
+                            Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
+                            string.Format(Messages.NotificationMsg.PAYMENT_SUCCESS_CONTENT, boostCost, job.Title),
+                            NotificationType.PAYMENT,
+                            "/Wallet");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Non-critical: Failed to send boost payment notification for JobId {JobId}", jobId);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Failed to send job boost fee notification for User {UserId}", userId);
+                    _logger.LogError(ex, "Error in post-boost side effects for JobId {JobId}", jobId);
                 }
             }
             return result;
