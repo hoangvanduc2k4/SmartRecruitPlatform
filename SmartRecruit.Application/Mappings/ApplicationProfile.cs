@@ -1,6 +1,7 @@
 using AutoMapper;
 using SmartRecruit.Application.DTO.Application;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Application.Mappings
 {
@@ -25,6 +26,10 @@ namespace SmartRecruit.Application.Mappings
                     src.Notes,
                     src.CreatedAt
                 ));
+
+            CreateMap<ApplyJobRequest, Applications>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(_ => ApplicationStatus.REVIEWING))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
         }
     }
 }

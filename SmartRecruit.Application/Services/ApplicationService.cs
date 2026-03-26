@@ -117,14 +117,8 @@ namespace SmartRecruit.Application.Services
                 throw new BadRequestException(Messages.ApplicationMsg.CV_REQUIRED);
             }
 
-            // 3. Tạo bản ghi đơn giản
-            var application = new Applications
-            {
-                JobId = request.JobId,
-                CandidateId = request.CandidateId,
-                Status = ApplicationStatus.REVIEWING,
-                CreatedAt = DateTime.UtcNow
-            };
+            // 3. Tạo bản ghi đơn giản using AutoMapper
+            var application = _mapper.Map<Applications>(request);
 
             await _applicationRepository.AddAsync(application);
             await _unitOfWork.CompleteAsync();
@@ -173,18 +167,7 @@ namespace SmartRecruit.Application.Services
             {
                 var cvContent = application.Candidate?.CandidateProfile?.CVText ?? string.Empty;
                 
-                var jobDescription = GetFullJobInfo(
-                    application.Job?.Title ?? "",
-                    application.Job?.Company ?? "",
-                    application.Job?.Location ?? "",
-                    application.Job?.JobType.ToString() ?? "",
-                    application.Job?.SalaryMin ?? 0,
-                    application.Job?.SalaryMax ?? 0,
-                    application.Job?.Benefits ?? "",
-                    application.Job?.Description ?? "",
-                    application.Job?.Requirement ?? "",
-                    application.Job?.SkillsRequired ?? ""
-                );
+                var jobDescription = application.Job != null ? GetFullJobInfo(application.Job) : string.Empty;
 
                 var result = await _geminiService.ScoreCvAsync(cvContent, jobDescription);
 
@@ -697,6 +680,11 @@ Benefits: {benefits}
 Description: {description}
 Requirements: {requirements}
 Skills Required: {skills}";
+        }
+
+        private string GetFullJobInfo(Job job)
+        {
+            return GetFullJobInfo(job.Title, job.Company, job.Location, job.JobType.ToString(), job.SalaryMin, job.SalaryMax, job.Benefits, job.Description, job.Requirement, job.SkillsRequired);
         }
     }
 }
