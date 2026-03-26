@@ -137,6 +137,9 @@ namespace SmartRecruit.Infrastructure.Repositories
                         case "date":
                             orderedQuery = isDesc ? query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt) : query.OrderBy(x => x.UpdatedAt ?? x.CreatedAt);
                             break;
+                        case "views":
+                            orderedQuery = isDesc ? query.OrderByDescending(x => x.ViewCount) : query.OrderBy(x => x.ViewCount);
+                            break;
                         default:
                             orderedQuery = query.OrderByDescending(x => x.ViewCount);
                             break;
