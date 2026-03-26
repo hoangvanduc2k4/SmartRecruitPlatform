@@ -265,7 +265,7 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
             if (job.RecruiterId != userId) throw new UnauthorizedAccessException();
 
-            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            var wallet = await _walletRepository.GetWalletForUpdateAsync(userId);
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             // 1. Determine Cost
@@ -482,8 +482,8 @@ namespace SmartRecruit.Application.Services
                 throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
             }
 
-            // 2. Wallet & Balance Check
-            var wallet = await _walletRepository.GetWalletByUserIdAsync(userId);
+            // 2. Wallet & Balance Check (Pessimistic Lock for Race Condition Prevention)
+            var wallet = await _walletRepository.GetWalletForUpdateAsync(userId);
             if (wallet == null) throw new NotFoundException(Messages.WalletMsg.NOT_FOUND);
 
             decimal boostCost = Fees.JOB_BOOST_FEE;
