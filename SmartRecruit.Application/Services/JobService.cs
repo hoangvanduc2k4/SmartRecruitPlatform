@@ -267,10 +267,15 @@ namespace SmartRecruit.Application.Services
             return _mapper.Map<JobResponse>(job);
         }
 
+        [AutomaticRetry(Attempts = 3)]
         public async Task ProcessJobPublishingAsync(long jobId, long userId)
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) return;
+            if (job == null) 
+            {
+                _logger.LogWarning("ProcessJobPublishingAsync: Job {JobId} not found, possibly deleted during processing", jobId);
+                return;
+            }
 
             // 1. Content to Screen
             JobDraftRequest? draft = null;
@@ -411,6 +416,11 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
             // 1. Validation
+            if (job.IsDeleted) throw new BadRequestException("Không thể đẩy bài cho công việc đã bị xóa");
+            
+            if (job.ExpireDate.HasValue && job.ExpireDate.Value <= DateTime.UtcNow)
+                throw new BadRequestException("Không thể đẩy bài cho công việc đã hết hạn");
+
             if (job.Status != JobStatus.APPROVED)
             {
                 throw new BadRequestException("Chỉ có thể đẩy bài cho các công việc đã được duyệt.");

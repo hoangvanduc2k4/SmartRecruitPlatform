@@ -75,16 +75,18 @@ namespace SmartRecruit.Infrastructure.Repositories
                     EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(keyword));
             }
 
-            // 4. Salary Range Logic - Fixed overlap logic
+            // 4. Salary Range Logic - Fixed overlap logic with edge case handling
             if (request.minSalary.HasValue && request.minSalary > 0)
             {
                 // Job's max salary must be >= user's min (job range overlaps user's min)
                 query = query.Where(x => x.SalaryMax >= request.minSalary.Value);
             }
 
-            if (request.maxSalary.HasValue && request.maxSalary > 0)
+            if (request.maxSalary.HasValue && request.maxSalary > 0 && 
+                (!request.minSalary.HasValue || request.maxSalary >= request.minSalary))
             {
                 // Job's min salary must be <= user's max (job range overlaps user's max)
+                // Only apply if maxSalary >= minSalary to avoid invalid ranges
                 query = query.Where(x => x.SalaryMin <= request.maxSalary.Value);
             }
 

@@ -52,7 +52,7 @@ namespace SmartRecruit.Application.Validations.Job
 
             RuleFor(x => x.ExpireDate)
                 .NotEmpty().WithMessage("Ngày hết hạn là bắt buộc")
-                .Must(date => date > DateTime.UtcNow).WithMessage("Ngày hết hạn phải ở trong tương lai");
+                .Must(date => date > DateTime.UtcNow.AddSeconds(1)).WithMessage("Ngày hết hạn phải ở trong tương lai");
         }
     }
 }
