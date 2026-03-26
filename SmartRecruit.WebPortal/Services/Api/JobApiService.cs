@@ -7,7 +7,7 @@ namespace WebPortal.Services.Api
     public interface IJobApiService
     {
         Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10, string? sortBy = null, string? sortOrder = null);
-        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null);
+        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null, string? keyword = null);
         Task<Job?> GetJobForEditAsync(string id);
         Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job);
         Task<ApiResponse<Job>> PublishJobAsync(string id);
@@ -72,10 +72,11 @@ namespace WebPortal.Services.Api
             return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
         }
 
-        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
+        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null, string? keyword = null)
         {
             var query = $"?page={page}&pageSize={pageSize}";
             if (status.HasValue) query += $"&status={status.Value}";
+            if (!string.IsNullOrEmpty(keyword)) query += $"&keyword={Uri.EscapeDataString(keyword)}";
 
             var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}{query}");
             if (response.IsSuccessStatusCode)
