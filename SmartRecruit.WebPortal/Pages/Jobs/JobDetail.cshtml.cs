@@ -312,5 +312,20 @@ namespace WebPortal.Pages
             }
             return RedirectToPage(new { Id = Id, Tab = "DETAILS" });
         }
+
+        public async Task<IActionResult> OnPostCloneAsync()
+        {
+            if (long.TryParse(Id, out var longId))
+            {
+                var result = await _jobApiService.CloneJobAsync(longId);
+                if (result.Success && result.Data != null)
+                {
+                    TempData["Message"] = "Sao chép công việc thành công. Bạn đang ở bản nháp mới.";
+                    return RedirectToPage("/Jobs/JobDetail", new { Id = result.Data.Id });
+                }
+                TempData["Error"] = result.Message ?? "Không thể sao chép công việc.";
+            }
+            return RedirectToPage(new { Id = Id, Tab = Tab });
+        }
     }
 }

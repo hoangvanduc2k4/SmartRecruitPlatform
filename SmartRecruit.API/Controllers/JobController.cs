@@ -135,6 +135,14 @@ namespace SmartRecruit.Controllers
             return Ok(new { IsVisible = isVisible }.Wrap($"Công việc hiện đang {status}"));
         }
 
+        [HttpPost("{id}/clone")]
+        [Authorize(Roles = "RECRUITER")]
+        public async Task<IActionResult> CloneJob(long id)
+        {
+            var job = await _jobService.CloneJobAsync(id, CurrentUserId);
+            return Ok(job.Wrap("Phát hiện clone job thành công. Hệ thống đang chuyển hướng..."));
+        }
+
         [HttpPost("{id}/boost")]
         [Authorize(Roles = "RECRUITER")]
         public async Task<IActionResult> BoostJob(long id)

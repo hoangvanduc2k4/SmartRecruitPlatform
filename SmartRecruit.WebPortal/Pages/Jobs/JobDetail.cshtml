@@ -270,6 +270,14 @@ else
                                     <i class="fas fa-save mr-2"></i> Lưu Bản Nháp
                                 </button>
 
+                                <!-- Clone Button -->
+                                <form method="post" asp-page-handler="Clone" class="w-full sm:w-auto" onsubmit="return confirm('Bạn có muốn sao chép công việc này thành bản nháp mới không?')">
+                                    <input type="hidden" name="Id" value="@Model.Job.Id" />
+                                    <button type="submit" class="w-full sm:w-auto h-14 px-8 bg-white border border-amber-200 text-amber-600 font-bold rounded-2xl flex justify-center items-center hover:bg-amber-50 shadow-sm transition-all">
+                                        <i class="fas fa-copy mr-2"></i> Sao Chép
+                                    </button>
+                                </form>
+
                                 <!-- Publish Button -->
                                 <form method="post" asp-page-handler="Publish" class="w-full sm:w-auto">
                                     <input type="hidden" name="Id" value="@Model.Job.Id" />

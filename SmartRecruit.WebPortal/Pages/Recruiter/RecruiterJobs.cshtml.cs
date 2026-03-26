@@ -75,5 +75,17 @@ namespace WebPortal.Pages
             await _jobApiService.AppealJobAsync(jobId, message);
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostCloneAsync(long jobId)
+        {
+            var result = await _jobApiService.CloneJobAsync(jobId);
+            if (result.Success && result.Data != null)
+            {
+                TempData["Message"] = "Sao chép công việc thành công. Bạn đang ở bản nháp mới.";
+                return RedirectToPage("/Jobs/JobDetail", new { Id = result.Data.Id });
+            }
+            TempData["Error"] = result.Message ?? "Không thể sao chép công việc.";
+            return RedirectToPage();
+        }
     }
 }
