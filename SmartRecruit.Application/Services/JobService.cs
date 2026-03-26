@@ -1,22 +1,17 @@
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using SmartRecruit.Application.DTO.Job;
+using FluentValidation;
+using Hangfire;
+using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Admin;
+using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Constants;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
-using Hangfire;
-using SmartRecruit.Domain.Constants;
 using SmartRecruit.Domain.Exceptions;
-using Microsoft.Extensions.Logging;
-
-using FluentValidation;
 
 namespace SmartRecruit.Application.Services
 {
@@ -28,6 +23,7 @@ namespace SmartRecruit.Application.Services
         private readonly IGeminiService _geminiService;
         private readonly IWalletRepository _walletRepository;
         private readonly IAILogRepository _aiLogRepository;
+        private readonly ICategoryRepository _categoryRepository;  // ✅ Add category repository
         private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
         private readonly INotificationService _notificationService;
         private readonly ILogger<JobService> _logger;
@@ -42,6 +38,7 @@ namespace SmartRecruit.Application.Services
             IGeminiService geminiService,
             IWalletRepository walletRepository,
             IAILogRepository aiLogRepository,
+            ICategoryRepository categoryRepository,
             Hangfire.IBackgroundJobClient backgroundJobClient,
             INotificationService notificationService,
             ILogger<JobService> logger,
@@ -55,6 +52,7 @@ namespace SmartRecruit.Application.Services
             _geminiService = geminiService;
             _walletRepository = walletRepository;
             _aiLogRepository = aiLogRepository;
+            _categoryRepository = categoryRepository;
             _backgroundJobClient = backgroundJobClient;
             _notificationService = notificationService;
             _logger = logger;
@@ -88,6 +86,13 @@ namespace SmartRecruit.Application.Services
         {
             await _createValidator.ValidateAndThrowAsync(request);
 
+            // ✅ H3 FIX: Use CategoryRepository to verify CategoryId exists
+            var categoryExists = await _categoryRepository.ExistsByIdAsync(request.CategoryId);
+            if (!categoryExists)
+            {
+                throw new BadRequestException($"Danh mục công việc với ID {request.CategoryId} không tồn tại");
+            }
+
             // 1. Create Job with DRAFT status using AutoMapper
             var job = _mapper.Map<Job>(request);
             job.RecruiterId = request.RecruiterId; // Ensure RecruiterId is set if not in mapping or needed explicitly
@@ -99,92 +104,6 @@ namespace SmartRecruit.Application.Services
 
             var createdJob = await _jobRepository.GetByIdAsync(job.Id);
             return _mapper.Map<JobResponse>(createdJob!);
-        }
-
-        public async Task ModerateJobAsync(long jobId)
-        {
-            var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) return;
-
-            try
-            {
-                var fullContent = GetFullJobInfo(job);
-
-                var screeningResult = await _geminiService.CheckJobContentAsync(job.Title, fullContent);
-
-                var aiLog = new AILog
-                {
-                    JobId = job.Id,
-                    AIType = AIType.SCREENING,
-                    InputText = fullContent,
-                    OutputResult = System.Text.Json.JsonSerializer.Serialize(screeningResult),
-                    Decision = screeningResult.IsSafe ? "Approved" : "Blocked",
-                    Reason = screeningResult.IsSafe ? "Không phát hiện vi phạm chính sách." : $"{screeningResult.ViolationType} - {screeningResult.Analysis}",
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                await _aiLogRepository.AddAsync(aiLog);
-
-                if (screeningResult.IsSafe)
-                {
-                    job.Status = JobStatus.APPROVED;
-                    job.ModerationNote = Messages.AiMsg.APPROVED_BY_AI;
-                    _logger.LogInformation("ModerateJob use-case: Job {JobId} APPROVED by AI", jobId);
-
-                    // Real-time Notification for AI Approval
-                    try
-                    {
-                        await _notificationService.SendNotificationAsync(
-                            job.RecruiterId,
-                            Messages.NotificationMsg.JOB_APPROVED_TITLE,
-                            string.Format(Messages.NotificationMsg.JOB_APPROVED_CONTENT, job.Title),
-                            NotificationType.JOB,
-                            $"/JobDetail?Id={job.Id}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Failed to send AI approval notification for JobId {JobId}", jobId);
-                    }
-                }
-                else
-                {
-                    job.Status = JobStatus.BLOCKED;
-                    job.ModerationNote = $"Bị AI chặn: {screeningResult.ViolationType} - {screeningResult.Analysis}";
-                    _logger.LogWarning("ModerateJob use-case: Job {JobId} BLOCKED by AI. Reason: {Violations}", jobId, job.ModerationNote);
-
-                    // Real-time Notification for AI Blocking
-                    try
-                    {
-                        await _notificationService.SendNotificationAsync(
-                            job.RecruiterId,
-                            Messages.NotificationMsg.JOB_BLOCKED_TITLE,
-                            string.Format(Messages.NotificationMsg.JOB_BLOCKED_CONTENT, job.Title, screeningResult.ViolationType),
-                            NotificationType.JOB,
-                            $"/JobDetail?Id={job.Id}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Failed to send AI blocking notification for JobId {JobId}", jobId);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Check for transient errors to allow Hangfire to retry
-                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("The model is overloaded"))
-                {
-                    _logger.LogWarning(ex, "ModerateJob use-case transient error for JobId {JobId}, retrying...", jobId);
-                    throw; // Re-throw to let Hangfire retry with exponential backoff
-                }
-
-                // Permanent errors (config missing, validation, etc.) -> Block job
-                _logger.LogError(ex, "ModerateJob use-case failed for JobId {JobId}", jobId);
-                job.Status = JobStatus.BLOCKED;
-                job.ModerationNote = $"Kiểm tra AI thất bại: {ex.Message}";
-            }
-
-            _jobRepository.Update(job);
-            await _unitOfWork.CompleteAsync();
         }
 
         public async Task<JobResponse> UpdateJobAsync(long id, JobUpdateRequest request, long currentUserId, UserRole userRole)
@@ -237,7 +156,7 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId)
         {
             await _draftValidator.ValidateAndThrowAsync(request);
-            
+
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
             if (job.RecruiterId != userId) throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
@@ -282,7 +201,7 @@ namespace SmartRecruit.Application.Services
             clonedJob.AppealMessage = null;
             clonedJob.DraftChanges = null;
             clonedJob.BoostExpiryTime = null;
-            
+
             // Clear navigation collections to prevent unwanted side effects
             clonedJob.Applications = new List<Applications>();
             clonedJob.SavedJobs = new List<SavedJob>();
@@ -326,8 +245,29 @@ namespace SmartRecruit.Application.Services
             // 4. Update Status and Enqueue Background Job
             job.Status = JobStatus.CHECKING;
             _jobRepository.Update(job);
-            await _unitOfWork.CompleteAsync();
             
+            // ✅ C4 FIX: Enqueue Hangfire BEFORE completing unit of work to avoid money loss if enqueue fails
+            string? hangfireJobId = null;
+            try
+            {
+                hangfireJobId = Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
+                if (string.IsNullOrEmpty(hangfireJobId))
+                {
+                    throw new InvalidOperationException("Hangfire failed to enqueue job");
+                }
+                _logger.LogInformation("Hangfire job enqueued successfully: {HangfireJobId} for Job {JobId}", hangfireJobId, job.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to enqueue Hangfire job for JobId {JobId}. Reverting transaction...", id);
+                // Rollback: Restore wallet balance since Hangfire enqueue failed
+                wallet.Balance += cost;
+                _walletRepository.Update(wallet);
+                throw new BadRequestException("Không thể xếp hàng công việc xử lý. Vui lòng thử lại.");
+            }
+            
+            await _unitOfWork.CompleteAsync();
+
             // Post-commit side effects: Should NOT throw to user if they fail, 
             // as data is already committed.
             try
@@ -346,22 +286,24 @@ namespace SmartRecruit.Application.Services
                 {
                     _logger.LogWarning(ex, "Non-critical: Failed to send payment notification for JobId {JobId}", id);
                 }
-
-                // Enqueue the background processing
-                Hangfire.BackgroundJob.Enqueue<IJobService>(x => x.ProcessJobPublishingAsync(job.Id, userId));
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "CRITICAL: Post-commit processing failed for JobId {JobId}. Money deducted but background job might not have started.", id);
+                _logger.LogWarning(ex, "Post-commit notification failed for JobId {JobId}, but payment already processed", id);
             }
 
             return _mapper.Map<JobResponse>(job);
         }
 
+        [AutomaticRetry(Attempts = 3)]
         public async Task ProcessJobPublishingAsync(long jobId, long userId)
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
-            if (job == null) return;
+            if (job == null) 
+            {
+                _logger.LogWarning("ProcessJobPublishingAsync: Job {JobId} not found, possibly deleted during processing", jobId);
+                return;
+            }
 
             // 1. Content to Screen
             JobDraftRequest? draft = null;
@@ -425,7 +367,8 @@ namespace SmartRecruit.Application.Services
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("overloaded"))
+                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("500") || 
+                    ex.Message.Contains("502") || ex.Message.Contains("504") || ex.Message.Contains("overloaded"))
                 {
                     _logger.LogWarning(ex, "Transient error in ProcessJobPublishingAsync for JobId {JobId}, retrying...", jobId);
                     throw; // Re-throw for Hangfire retry
@@ -501,6 +444,11 @@ namespace SmartRecruit.Application.Services
             if (job == null) throw new KeyNotFoundException("Không tìm thấy công việc");
 
             // 1. Validation
+            if (job.IsDeleted) throw new BadRequestException("Không thể đẩy bài cho công việc đã bị xóa");
+            
+            if (job.ExpireDate.HasValue && job.ExpireDate.Value <= DateTime.UtcNow)
+                throw new BadRequestException("Không thể đẩy bài cho công việc đã hết hạn");
+
             if (job.Status != JobStatus.APPROVED)
             {
                 throw new BadRequestException("Chỉ có thể đẩy bài cho các công việc đã được duyệt.");
@@ -526,39 +474,39 @@ namespace SmartRecruit.Application.Services
                 throw new BadRequestException(Messages.WalletMsg.INSUFFICIENT_FUNDS);
             }
 
-            // 3. Process Payment
-            wallet.Balance -= boostCost;
-            _walletRepository.Update(wallet);
-
-            // 4. Update Job Boost Time
-            job.BoostExpiryTime = DateTime.UtcNow.AddMinutes(Fees.JOB_BOOST_DURATION_MINUTES);
-            _jobRepository.Update(job);
-
-            // 5. Create Transaction
-            var transaction = new Transaction
+            // 3. Process Payment - All operations in single UnitOfWork for atomicity
+            try
             {
-                UserId = userId,
-                WalletId = wallet.Id,
-                Amount = -boostCost,
-                Type = TransactionType.BOOST,
-                Status = TransactionStatus.SUCCESS,
-                Description = string.Format(Messages.JobMsg.BOOST_JOB_DESC, job.Id, job.Title),
-                CreatedAt = DateTime.UtcNow
-            };
-            await _walletRepository.AddTransactionAsync(transaction);
+                wallet.Balance -= boostCost;
+                _walletRepository.Update(wallet);
 
-            // 6. Complete Unit of Work
-            var result = await _unitOfWork.CompleteAsync() > 0;
-            if (result)
-            {
-                _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+                // 4. Update Job Boost Time
+                job.BoostExpiryTime = DateTime.UtcNow.AddDays(Fees.JOB_BOOST_DURATION_DAYS);
+                _jobRepository.Update(job);
 
-                // Post-commit side effects
-                try
+                // 5. Create Transaction
+                var transactionRecord = new Transaction
                 {
-                    // Push Notification for Payment Transparency
+                    UserId = userId,
+                    WalletId = wallet.Id,
+                    Amount = -boostCost,
+                    Type = TransactionType.BOOST,
+                    Status = TransactionStatus.SUCCESS,
+                    Description = string.Format(Messages.JobMsg.BOOST_JOB_DESC, job.Id, job.Title),
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _walletRepository.AddTransactionAsync(transactionRecord);
+
+                // 6. Complete Unit of Work - All or nothing
+                var result = await _unitOfWork.CompleteAsync() > 0;
+                if (result)
+                {
+                    _logger.LogInformation("BoostJob use-case success: Job {JobId} successfully boosted by User {UserId}", jobId, userId);
+
+                    // Post-commit side effects
                     try
                     {
+                        // Push Notification for Payment Transparency
                         await _notificationService.SendNotificationAsync(
                             userId,
                             Messages.NotificationMsg.PAYMENT_SUCCESS_TITLE,
@@ -571,12 +519,13 @@ namespace SmartRecruit.Application.Services
                         _logger.LogWarning(ex, "Non-critical: Failed to send boost payment notification for JobId {JobId}", jobId);
                     }
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error in post-boost side effects for JobId {JobId}", jobId);
-                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during boost operation for JobId {JobId}, UserId {UserId}", jobId, userId);
+                throw; // Re-throw to let caller handle
+            }
         }
 
         public async Task<IEnumerable<string>> GetLocationsAsync()
@@ -610,6 +559,12 @@ namespace SmartRecruit.Application.Services
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
             if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
+
+            // Validate appeal message length
+            if (string.IsNullOrWhiteSpace(message) || message.Length < 10)
+                throw new BadRequestException("Lý do phúc thẩm phải có ít nhất 10 ký tự");
+            if (message.Length > 1000)
+                throw new BadRequestException("Lý do phúc thẩm không được vượt quá 1000 ký tự");
 
             job.IsAppealed = true;
             job.AppealMessage = message;
@@ -717,12 +672,13 @@ namespace SmartRecruit.Application.Services
             return _mapper.Map<IEnumerable<JobResponse>>(recommendedJobs);
         }
 
+        [AutomaticRetry(Attempts = 3)]
         public async Task UpdateExpiredJobsAsync()
         {
             _logger.LogInformation("Hangfire Job: Checking for expired or expiring soon job postings...");
 
             var now = DateTime.UtcNow;
-            var threeDaysFromNow = now.AddDays(3);
+            var threeDaysFromNow = now.AddDays(Fees.JOB_EXPIRE_WARNING_DAYS);
 
             // 1. Tìm các Job đã hết hạn (ExpireDate < now)
             var expiredJobs = await _jobRepository.FindAllAsync(j =>
@@ -736,7 +692,7 @@ namespace SmartRecruit.Application.Services
                 job.Status = JobStatus.EXPIRED;
                 job.ModerationNote = $"Tự động đóng do hết hạn vào lúc {now:yyyy-MM-dd HH:mm:ss}";
                 _jobRepository.Update(job);
-                
+
                 // Gửi thông báo hết hạn
                 await _notificationService.SendNotificationAsync(
                     job.RecruiterId,

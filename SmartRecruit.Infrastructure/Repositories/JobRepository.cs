@@ -75,16 +75,18 @@ namespace SmartRecruit.Infrastructure.Repositories
                     EF.Functions.Collate(x.Location, "Vietnamese_CI_AI").Contains(keyword));
             }
 
-            // 4. Salary Range Logic
+            // 4. Salary Range Logic - Fixed overlap logic with edge case handling
             if (request.minSalary.HasValue && request.minSalary > 0)
             {
-                // Standard logic: The job's MIN salary must be at least the user's requested min.
+                // Job's max salary must be >= user's min (job range overlaps user's min)
                 query = query.Where(x => x.SalaryMax >= request.minSalary.Value);
             }
 
-            if (request.maxSalary.HasValue && request.maxSalary > 0)
+            if (request.maxSalary.HasValue && request.maxSalary > 0 && 
+                (!request.minSalary.HasValue || request.maxSalary >= request.minSalary))
             {
-                // Standard logic: The job's MAX salary should not exceed the user's requested max.
+                // Job's min salary must be <= user's max (job range overlaps user's max)
+                // Only apply if maxSalary >= minSalary to avoid invalid ranges
                 query = query.Where(x => x.SalaryMin <= request.maxSalary.Value);
             }
 
@@ -284,7 +286,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
-                .Where(j => !j.IsDeleted && (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON) && !appliedJobIds.Contains(j.Id))
+                .Where(j => !j.IsDeleted && (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON) && !appliedJobIds.Contains(j.Id) && (!j.ExpireDate.HasValue || j.ExpireDate.Value > DateTime.UtcNow))
                 .ToListAsync();
 
             // 4. Score jobs based on rules

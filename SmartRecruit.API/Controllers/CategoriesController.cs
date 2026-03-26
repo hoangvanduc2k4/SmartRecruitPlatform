@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using SmartRecruit.Application.DTO.Category;
 using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Interfaces.Services;
@@ -9,6 +10,7 @@ namespace SmartRecruit.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "ADMIN")]
     public class CategoriesController : BaseController
     {
         private readonly ICategoryService _categoryService;
@@ -19,6 +21,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet("all")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
@@ -26,6 +29,7 @@ namespace SmartRecruit.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPaged([FromQuery] CategoryFilter filter)
         {
             var pagedCategories = await _categoryService.GetCategoriesPagedAsync(filter);
