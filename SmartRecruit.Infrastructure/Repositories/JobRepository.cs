@@ -284,7 +284,7 @@ namespace SmartRecruit.Infrastructure.Repositories
             // - Exclude expired jobs
             var candidateJobs = await _context.Set<Job>()
                 .Include(j => j.Category)
-                .Where(j => !j.IsDeleted && (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON) && !appliedJobIds.Contains(j.Id))
+                .Where(j => !j.IsDeleted && (j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON) && !appliedJobIds.Contains(j.Id) && (!j.ExpireDate.HasValue || j.ExpireDate.Value > DateTime.UtcNow))
                 .ToListAsync();
 
             // 4. Score jobs based on rules

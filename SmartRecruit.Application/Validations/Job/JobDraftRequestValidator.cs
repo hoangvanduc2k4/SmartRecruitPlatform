@@ -24,6 +24,11 @@ namespace SmartRecruit.Application.Validations.Job
 
             RuleFor(x => x.Location)
                 .MaximumLength(500).WithMessage("Địa điểm không được quá 500 ký tự");
+
+            RuleFor(x => x.SkillsRequired)
+                .MaximumLength(2000).WithMessage("Kỹ năng yêu cầu không được vượt quá 2000 ký tự")
+                .When(x => !string.IsNullOrEmpty(x.SkillsRequired));
+
             RuleFor(x => x.ExpireDate)
                 .GreaterThan(DateTime.UtcNow)
                 .WithMessage("Ngày hết hạn phải ở trong tương lai")

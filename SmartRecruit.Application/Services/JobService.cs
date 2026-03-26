@@ -1,22 +1,16 @@
 
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using SmartRecruit.Application.DTO.Job;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Admin;
+using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
+using SmartRecruit.Domain.Constants;
 using SmartRecruit.Domain.Entities;
 using SmartRecruit.Domain.Enums;
-using Hangfire;
-using SmartRecruit.Domain.Constants;
 using SmartRecruit.Domain.Exceptions;
-using Microsoft.Extensions.Logging;
-
-using FluentValidation;
 
 namespace SmartRecruit.Application.Services
 {
@@ -171,7 +165,8 @@ namespace SmartRecruit.Application.Services
             catch (Exception ex)
             {
                 // Check for transient errors to allow Hangfire to retry
-                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("The model is overloaded"))
+                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("500") || 
+                    ex.Message.Contains("502") || ex.Message.Contains("504") || ex.Message.Contains("The model is overloaded"))
                 {
                     _logger.LogWarning(ex, "ModerateJob use-case transient error for JobId {JobId}, retrying...", jobId);
                     throw; // Re-throw to let Hangfire retry with exponential backoff
@@ -237,7 +232,7 @@ namespace SmartRecruit.Application.Services
         public async Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId)
         {
             await _draftValidator.ValidateAndThrowAsync(request);
-            
+
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
             if (job.RecruiterId != userId) throw new UnauthorizedException(Messages.JobMsg.NOT_OWNER);
@@ -282,7 +277,7 @@ namespace SmartRecruit.Application.Services
             clonedJob.AppealMessage = null;
             clonedJob.DraftChanges = null;
             clonedJob.BoostExpiryTime = null;
-            
+
             // Clear navigation collections to prevent unwanted side effects
             clonedJob.Applications = new List<Applications>();
             clonedJob.SavedJobs = new List<SavedJob>();
@@ -327,7 +322,7 @@ namespace SmartRecruit.Application.Services
             job.Status = JobStatus.CHECKING;
             _jobRepository.Update(job);
             await _unitOfWork.CompleteAsync();
-            
+
             // Post-commit side effects: Should NOT throw to user if they fail, 
             // as data is already committed.
             try
@@ -425,7 +420,8 @@ namespace SmartRecruit.Application.Services
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("overloaded"))
+                if (ex.Message.Contains("503") || ex.Message.Contains("429") || ex.Message.Contains("500") || 
+                    ex.Message.Contains("502") || ex.Message.Contains("504") || ex.Message.Contains("overloaded"))
                 {
                     _logger.LogWarning(ex, "Transient error in ProcessJobPublishingAsync for JobId {JobId}, retrying...", jobId);
                     throw; // Re-throw for Hangfire retry
@@ -531,7 +527,7 @@ namespace SmartRecruit.Application.Services
             _walletRepository.Update(wallet);
 
             // 4. Update Job Boost Time
-            job.BoostExpiryTime = DateTime.UtcNow.AddMinutes(Fees.JOB_BOOST_DURATION_MINUTES);
+            job.BoostExpiryTime = DateTime.UtcNow.AddDays(Fees.JOB_BOOST_DURATION_DAYS);
             _jobRepository.Update(job);
 
             // 5. Create Transaction
@@ -610,6 +606,12 @@ namespace SmartRecruit.Application.Services
         {
             var job = await _jobRepository.GetByIdAsync(jobId);
             if (job == null) throw new NotFoundException(Messages.JobMsg.JOB_NOT_FOUND);
+
+            // Validate appeal message length
+            if (string.IsNullOrWhiteSpace(message) || message.Length < 10)
+                throw new BadRequestException("Lý do phúc thẩm phải có ít nhất 10 ký tự");
+            if (message.Length > 1000)
+                throw new BadRequestException("Lý do phúc thẩm không được vượt quá 1000 ký tự");
 
             job.IsAppealed = true;
             job.AppealMessage = message;
@@ -722,7 +724,7 @@ namespace SmartRecruit.Application.Services
             _logger.LogInformation("Hangfire Job: Checking for expired or expiring soon job postings...");
 
             var now = DateTime.UtcNow;
-            var threeDaysFromNow = now.AddDays(3);
+            var threeDaysFromNow = now.AddDays(Fees.JOB_EXPIRE_WARNING_DAYS);
 
             // 1. Tìm các Job đã hết hạn (ExpireDate < now)
             var expiredJobs = await _jobRepository.FindAllAsync(j =>
@@ -736,7 +738,7 @@ namespace SmartRecruit.Application.Services
                 job.Status = JobStatus.EXPIRED;
                 job.ModerationNote = $"Tự động đóng do hết hạn vào lúc {now:yyyy-MM-dd HH:mm:ss}";
                 _jobRepository.Update(job);
-                
+
                 // Gửi thông báo hết hạn
                 await _notificationService.SendNotificationAsync(
                     job.RecruiterId,
