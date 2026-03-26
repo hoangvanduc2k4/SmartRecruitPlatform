@@ -447,7 +447,7 @@ namespace SmartRecruit.Application.Services
             try
             {
                 string notifTitle, notifBody;
-                if (job.Status == JobStatus.APPROVED && job.ModerationNote?.StartsWith("Edit blocked") == true)
+                if (job.Status == JobStatus.APPROVED && job.ModerationNote?.StartsWith("Chỉnh sửa bị chặn bởi AI") == true)
                 {
                     // Re-publish blocked, job still live
                     notifTitle = Messages.NotificationMsg.JOB_EDIT_REJECTED_TITLE;
