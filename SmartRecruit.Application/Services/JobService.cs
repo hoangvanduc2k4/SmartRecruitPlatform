@@ -200,21 +200,7 @@ namespace SmartRecruit.Application.Services
 
             // For backward compatibility, this updates the draft if it's a DRAFT/CHECKING job, 
             // or redirects to DraftChanges if it's already APPROVED.
-            var draftReq = new JobDraftRequest
-            {
-                Title = request.Title,
-                Company = request.Company,
-                Benefits = request.Benefits,
-                Description = request.Description,
-                Requirement = request.Requirement,
-                SkillsRequired = request.SkillsRequired,
-                SalaryMin = request.SalaryMin,
-                SalaryMax = request.SalaryMax,
-                JobType = request.JobType,
-                Location = request.Location,
-                CategoryId = request.CategoryId,
-                ExpireDate = request.ExpireDate
-            };
+            var draftReq = _mapper.Map<JobDraftRequest>(request);
 
             return await SaveDraftAsync(id, draftReq, currentUserId);
         }
@@ -232,23 +218,10 @@ namespace SmartRecruit.Application.Services
                     var draft = System.Text.Json.JsonSerializer.Deserialize<JobDraftRequest>(job.DraftChanges);
                     if (draft != null)
                     {
-                        var response = _mapper.Map<JobResponse>(job);
-                        // Merge draft values into response for the UI to show current changes
-                        return response with
-                        {
-                            Title = draft.Title,
-                            Company = draft.Company,
-                            Benefits = draft.Benefits,
-                            Description = draft.Description,
-                            Requirement = draft.Requirement,
-                            SkillsRequired = draft.SkillsRequired,
-                            SalaryMin = draft.SalaryMin,
-                            SalaryMax = draft.SalaryMax,
-                            JobType = draft.JobType.ToString(),
-                            Location = draft.Location,
-                            CategoryId = draft.CategoryId,
-                            ExpireDate = draft.ExpireDate
-                        };
+                        // Create a copy to avoid modifying the tracked entity
+                        var jobForPreview = _mapper.Map<Job>(job);
+                        _mapper.Map(draft, jobForPreview);
+                        return _mapper.Map<JobResponse>(jobForPreview);
                     }
                 }
                 catch (Exception ex)
@@ -270,19 +243,8 @@ namespace SmartRecruit.Application.Services
 
             if (job.Status == JobStatus.DRAFT || job.Status == JobStatus.CHECKING || job.Status == JobStatus.BLOCKED)
             {
-                // Update main fields directly if not yet live or blocked
-                job.Title = request.Title;
-                job.Company = request.Company;
-                job.Benefits = request.Benefits;
-                job.Description = request.Description;
-                job.Requirement = request.Requirement;
-                job.SkillsRequired = request.SkillsRequired;
-                job.SalaryMin = request.SalaryMin;
-                job.SalaryMax = request.SalaryMax;
-                job.JobType = request.JobType;
-                job.Location = request.Location;
-                job.CategoryId = request.CategoryId ?? job.CategoryId;
-                job.ExpireDate = request.ExpireDate;
+                // Update main fields directly if not yet live or blocked using AutoMapper
+                _mapper.Map(request, job);
                 job.DraftChanges = null; // Clear any existing draft since we're updating main
             }
             else if (job.Status == JobStatus.APPROVED)

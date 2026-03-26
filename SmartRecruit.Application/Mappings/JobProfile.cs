@@ -9,6 +9,7 @@ namespace SmartRecruit.Application.Mappings
     {
         public JobProfile()
         {
+            CreateMap<Job, Job>();
             CreateMap<Job, JobResponse>()
                 .ConstructUsing(src => new JobResponse(
                     src.Id,
@@ -53,6 +54,8 @@ namespace SmartRecruit.Application.Mappings
             CreateMap<JobDraftRequest, Job>()
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId ?? 0))
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<JobUpdateRequest, JobDraftRequest>();
         }
     }
 }
