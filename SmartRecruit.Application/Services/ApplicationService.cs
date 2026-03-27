@@ -1,6 +1,7 @@
 using AutoMapper;
 using Hangfire;
 using SmartRecruit.Application.DTO.Application;
+using SmartRecruit.Application.Extensions;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
@@ -206,13 +207,44 @@ namespace SmartRecruit.Application.Services
                     AISummary = application.AI_Summary
                 };
                 
-                // Notify Candidate
+                // Notify Candidate (SignalR)
                 await _notificationHubService.SendApplicationScoreUpdateAsync(application.CandidateId, updateDto);
                 
-                // Notify Recruiter
+                // Notify Recruiter (SignalR)
                 if (application.Job != null)
                 {
                     await _notificationHubService.SendApplicationScoreUpdateAsync(application.Job.RecruiterId, updateDto);
+                }
+
+                // Send persistent notification to Candidate
+                try
+                {
+                    var appWithDetails = await _applicationRepository.GetApplicationWithDetailsAsync(applicationId);
+                    if (appWithDetails?.Job != null)
+                    {
+                        string jobTitle = appWithDetails.Job.Title ?? "vị trí ứng tuyển";
+                        string scorePercentage = application.MatchScore > 0 ? $"{application.MatchScore:F0}" : "Chưa xác định";
+                        
+                        await _notificationService.SendNotificationAsync(
+                            application.CandidateId,
+                            Messages.NotificationMsg.APPLICATION_SCORED_TITLE,
+                            string.Format(Messages.NotificationMsg.APPLICATION_SCORED_CONTENT, jobTitle, scorePercentage),
+                            NotificationType.APPLICATION,
+                            $"/CandidatePreview/{applicationId}");
+
+                        // Also notify Recruiter about scoring
+                        string candidateName = appWithDetails.Candidate?.FullName ?? "Ứng viên";
+                        await _notificationService.SendNotificationAsync(
+                            appWithDetails.Job.RecruiterId,
+                            "Hoàn thành đánh giá CV",
+                            $"Hồ sơ của {candidateName} cho vị trí '{jobTitle}' đã được AI đánh giá. Điểm phù hợp: {scorePercentage}%",
+                            NotificationType.APPLICATION,
+                            $"/CandidatePreview/{applicationId}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to send persistent scoring notification for ApplicationId {ApplicationId}", applicationId);
                 }
             }
             catch (Exception ex)
@@ -253,7 +285,7 @@ namespace SmartRecruit.Application.Services
                 }
                 if (!string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("Rejection reason should not be provided when moving to Interviewing status.");
+                    throw new InvalidOperationException("Lý do từ chối không nên được cung cấp khi chuyển sang trạng thái phỏng vấn.");
                 }
                 
             }
@@ -265,7 +297,7 @@ namespace SmartRecruit.Application.Services
                 }
                 if (request.InterviewDate.HasValue)
                 {
-                    throw new InvalidOperationException("Interview date should not be provided when rejecting an application.");
+                    throw new InvalidOperationException("Ngày phỏng vấn không nên được cung cấp khi từ chối đơn ứng tuyển.");
                 }
                 
             }
@@ -274,7 +306,7 @@ namespace SmartRecruit.Application.Services
                 // Đối với các trạng thái khác (Reviewing, Offered), nếu người dùng cố tình truyền data thì báo lỗi để họ xóa đi cho sạch
                 if (request.InterviewDate.HasValue || !string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
-                    throw new InvalidOperationException("InterviewDate or RejectionReason are not required for this status. Please clear them.");
+                    throw new InvalidOperationException("Ngày phỏng vấn hoặc lý do từ chối không cần thiết cho trạng thái này. Vui lòng xóa chúng.");
                 }
             }
 
@@ -283,15 +315,15 @@ namespace SmartRecruit.Application.Services
             string newNote = "";
             if (newStatus == ApplicationStatus.INTERVIEWING)
             {
-                newNote = $"Interview: {request.InterviewDate!.Value.ToString("yyyy-MM-dd HH:mm")}";
+                newNote = $"Phỏng vấn: {request.InterviewDate!.Value.ToString("yyyy-MM-dd HH:mm")}";
             }
             else if (newStatus == ApplicationStatus.OFFERED)
             {
-                newNote = $"Offered: {DateTime.Now:yyyy-MM-dd HH:mm}";
+                newNote = $"Đề nghị nhận việc: {DateTime.Now:yyyy-MM-dd HH:mm}";
             }
             else if (newStatus == ApplicationStatus.REJECTED)
             {
-                newNote = $"Rejected: {request.RejectionReason}";
+                newNote = $"Từ chối: {request.RejectionReason}";
             }
 
             // ONLY append if something actually changed (new status or new interview date)
@@ -335,6 +367,11 @@ namespace SmartRecruit.Application.Services
                             title = Messages.NotificationMsg.APPLICATION_OFFER_TITLE;
                             message = string.Format(Messages.NotificationMsg.APPLICATION_OFFER_CONTENT, jobTitle);
                         }
+                        else if (newStatus == ApplicationStatus.REJECTED)
+                        {
+                            title = Messages.NotificationMsg.APPLICATION_REJECTED_TITLE;
+                            message = string.Format(Messages.NotificationMsg.APPLICATION_REJECTED_CONTENT, jobTitle);
+                        }
 
                         string localizedTitle = title;
                         if (title == Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_TITLE || 
@@ -370,12 +407,12 @@ namespace SmartRecruit.Application.Services
                         // Send Email Notification
                         if (appWithDetails.Candidate != null && !string.IsNullOrEmpty(appWithDetails.Candidate.Email))
                         {
-                            string emailSubject = $"Update regarding your application for {jobTitle}";
+                            string emailSubject = $"Cập nhật về đơn ứng tuyển cho {jobTitle}";
                             string emailBody = "";
 
                             if (newStatus == ApplicationStatus.INTERVIEWING)
                             {
-                                emailSubject = $"Interview Invitation: {jobTitle}";
+                                emailSubject = $"Lời mời phỏng vấn: {jobTitle}";
                                 emailBody = $@"
                                     <h2>Chúc mừng!</h2>
                                     <p>Chào {appWithDetails.Candidate.FullName},</p>
@@ -386,7 +423,7 @@ namespace SmartRecruit.Application.Services
                             }
                             else if (newStatus == ApplicationStatus.OFFERED)
                             {
-                                emailSubject = $"Job Offer: {jobTitle}";
+                                emailSubject = $"Lời mời làm việc: {jobTitle}";
                                 emailBody = $@"
                                     <h2>Chúc mừng!</h2>
                                     <p>Chào {appWithDetails.Candidate.FullName},</p>
@@ -397,7 +434,7 @@ namespace SmartRecruit.Application.Services
                             }
                             else if (newStatus == ApplicationStatus.REJECTED)
                             {
-                                emailSubject = $"Application Update: {jobTitle}";
+                                emailSubject = $"Cập nhật về đơn ứng tuyển: {jobTitle}";
                                 emailBody = $@"
                                     <p>Chào {appWithDetails.Candidate.FullName},</p>
                                     <p>Cảm ơn bạn đã quan tâm và dành thời gian ứng tuyển vào vị trí <strong>{jobTitle}</strong>.</p>
@@ -486,14 +523,14 @@ namespace SmartRecruit.Application.Services
                 for (int i = notesHistory.Length - 1; i >= 0; i--)
                 {
                     var note = notesHistory[i].Trim();
-                    if (note.StartsWith("Offered:"))
+                    if (note.StartsWith("Đề nghị nhận việc:") || note.StartsWith("Offered:"))
                     {
                         restoredStatus = ApplicationStatus.OFFERED;
                         specificReason = "Ứng viên từ chối lương, nhưng sau đó 2 bên thương lượng lại thành công.";
                         apologyMessage = "Sau khi thương lượng lại, chúng tôi rất vui mừng được khôi phục đề nghị nhận việc cho bạn.";
                         break;
                     }
-                    if (note.StartsWith("Interview:"))
+                    if (note.StartsWith("Phỏng vấn:") || note.StartsWith("Interview:"))
                     {
                         restoredStatus = ApplicationStatus.INTERVIEWING;
                         specificReason = "Có thể ứng viên chưa đạt ở vòng 1 nhưng công ty muốn cho họ cơ hội phỏng vấn ở một Team khác/vòng khác.";
@@ -503,7 +540,7 @@ namespace SmartRecruit.Application.Services
                 }
 
                 application.Status = restoredStatus;
-                string restoreNote = $"Restored to {restoredStatus} (Reason: {specificReason})".Replace(",", ";");
+                string restoreNote = $"Khôi phục thành {restoredStatus.ToVietnamese()} (Lý do: {specificReason})".Replace(",", ";");
                 application.Notes = string.IsNullOrEmpty(application.Notes) ? restoreNote : $"{application.Notes}, {restoreNote}";
                 
                 _applicationRepository.Update(application);
@@ -564,12 +601,13 @@ namespace SmartRecruit.Application.Services
                                 try
                                 {
                                     string candidateName = appWithDetails.Candidate.FullName ?? "Ứng viên";
+                                    string statusText = restoredStatus.ToVietnamese();
                                     string emailSubject = $"[SmartRecruit] Thông báo khôi phục hồ sơ: {jobTitle}";
                                     string emailBody = $@"
                                         <div style='font-family: Arial, sans-serif;'>
                                             <h2>Lời xin lỗi từ Bộ phận Nhân sự & Công ty</h2>
                                             <p>Chào {candidateName},</p>
-                                            <p>Chúng tôi gửi email này để thông báo rằng hồ sơ của bạn cho vị trí <strong>{jobTitle}</strong> đã được khôi phục về trạng thái <strong>{restoredStatus}</strong>.</p>
+                                            <p>Chúng tôi gửi email này để thông báo rằng hồ sơ của bạn cho vị trí <strong>{jobTitle}</strong> đã được khôi phục về trạng thái <strong>{statusText}</strong>.</p>
                                             <p style='background-color: #f8f9fa; padding: 15px; border-left: 5px solid #28a745;'>
                                                 <strong>Lý do khôi phục:</strong> {specificReason}
                                             </p>
