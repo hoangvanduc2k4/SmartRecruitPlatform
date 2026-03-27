@@ -20,6 +20,7 @@ namespace WebPortal.Services.Api
         Task<AdminUserStatsResponse?> GetAdminUserStatsAsync();
         Task<AdminJobStatsResponse?> GetAdminJobStatsAsync();
         Task<WeeklyRevenueResponse?> GetWeeklyRevenueAsync();
+        Task<HttpResponseMessage> ExportUsersAsync(UserSearchRequest request);
     }
 
 
@@ -141,6 +142,17 @@ namespace WebPortal.Services.Api
                 return await response.Content.ReadFromJsonAsync<List<Notification>>() ?? new List<Notification>();
             }
             return new List<Notification>();
+        }
+
+        public async Task<HttpResponseMessage> ExportUsersAsync(UserSearchRequest request)
+        {
+            var query = new List<string>();
+            if (!string.IsNullOrEmpty(request.SearchHeader)) query.Add($"SearchHeader={Uri.EscapeDataString(request.SearchHeader)}");
+            if (!string.IsNullOrEmpty(request.Role)) query.Add($"Role={Uri.EscapeDataString(request.Role)}");
+            if (request.IsActive.HasValue) query.Add($"IsActive={request.IsActive.Value.ToString().ToLower()}");
+            
+            var queryString = string.Join("&", query);
+            return await _httpClient.GetAsync($"admin/users/export?{queryString}");
         }
     }
 }

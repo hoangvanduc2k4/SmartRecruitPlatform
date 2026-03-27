@@ -72,6 +72,14 @@ namespace SmartRecruit.API.Controllers
             return Ok(stats.Wrap("Tải thống kê người dùng thành công"));
         }
 
+        [HttpGet("users/export")]
+        public async Task<IActionResult> ExportUsers([FromQuery] UserSearchRequest request)
+        {
+            _logger.LogInformation("API ExportUsers called with Filter: {@Request}", request);
+            var fileContent = await _userService.ExportUsersToExcelAsync(request);
+            return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"SmartRecruit_Users_{DateTime.Now:yyyyMMdd}.xlsx");
+        }
+
         [HttpGet("jobs/stats")]
         public async Task<IActionResult> GetJobStats()
         {
