@@ -259,21 +259,21 @@ else
                                 <!-- Boost Button -->
                                 <form method="post" asp-page-handler="Boost" class="w-full sm:w-auto">
                                     <input type="hidden" name="Id" value="@Model.Job.Id" />
-                                    <button type="submit" class="w-full sm:w-auto h-14 px-8 gap-3 group bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl flex justify-center items-center shadow-sm disabled:opacity-50 hover:bg-slate-50 transition-all" @(Model.Job.IsBoosted || Model.Job.Status != JobStatus.APPROVED ? "disabled" : "")>
+                                    <button type="submit" class="w-full sm:w-auto min-h-[3.5rem] h-auto px-8 py-2 gap-3 group bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl flex justify-center items-center text-center shadow-sm disabled:opacity-50 hover:bg-slate-50 transition-all" @(Model.Job.IsBoosted || Model.Job.Status != JobStatus.APPROVED ? "disabled" : "")>
                                         <i class="fas fa-fire-flame-curved @(Model.Job.IsBoosted ? "text-slate-300" : "text-amber-300 group-hover:scale-125 transition-transform")"></i>
-                                        @(Model.Job.Status != JobStatus.APPROVED ? "Đăng bài trước khi lên Top" : (Model.Job.IsBoosted ? "Đã Đẩy Top" : "Đẩy Lên Top (20k VNĐ)"))
+                                        @(Model.Job.Status != JobStatus.APPROVED ? "Đăng bài trước khi lên Top" : (Model.Job.IsBoosted ? "Đã Đẩy Top" : "Đẩy Lên Top (50k VNĐ)"))
                                     </button>
                                 </form>
 
                                 <!-- Save Draft Button -->
-                                <button type="submit" form="jobEditForm" class="w-full sm:w-auto h-14 px-8 bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl flex justify-center items-center hover:bg-slate-50 shadow-sm transition-all">
+                                <button type="submit" form="jobEditForm" class="w-full sm:w-auto min-h-[3.5rem] h-auto px-8 py-2 bg-white border border-slate-200 text-slate-700 font-bold rounded-2xl flex justify-center items-center text-center hover:bg-slate-50 shadow-sm transition-all">
                                     <i class="fas fa-save mr-2"></i> Lưu Bản Nháp
                                 </button>
 
                                 <!-- Clone Button -->
                                 <form method="post" asp-page-handler="Clone" class="w-full sm:w-auto" onsubmit="return confirm('Bạn có muốn sao chép công việc này thành bản nháp mới không?')">
                                     <input type="hidden" name="Id" value="@Model.Job.Id" />
-                                    <button type="submit" class="w-full sm:w-auto h-14 px-8 bg-white border border-amber-200 text-amber-600 font-bold rounded-2xl flex justify-center items-center hover:bg-amber-50 shadow-sm transition-all">
+                                    <button type="submit" class="w-full sm:w-auto min-h-[3.5rem] h-auto px-8 py-2 bg-white border border-amber-200 text-amber-600 font-bold rounded-2xl flex justify-center items-center text-center hover:bg-amber-50 shadow-sm transition-all">
                                         <i class="fas fa-copy mr-2"></i> Sao Chép
                                     </button>
                                 </form>
@@ -281,8 +281,8 @@ else
                                 <!-- Publish Button -->
                                 <form method="post" asp-page-handler="Publish" class="w-full sm:w-auto">
                                     <input type="hidden" name="Id" value="@Model.Job.Id" />
-                                    <button type="submit" class="w-full sm:w-auto h-14 px-10 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:shadow-indigo-300 transition-all flex justify-center items-center">
-                                        <i class="fas fa-paper-plane mr-2"></i> Đăng Bài (@(Model.Job.Status == JobStatus.APPROVED ? "25k" : "50k") VNĐ)
+                                    <button type="submit" class="w-full sm:w-auto min-h-[3.5rem] h-auto px-10 py-2 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:shadow-indigo-300 transition-all flex justify-center items-center text-center">
+                                        <i class="fas fa-paper-plane mr-2"></i> Đăng Bài (@(Model.Job.Status == JobStatus.APPROVED ? "10k" : "20k") VNĐ)
                                     </button>
                                 </form>
                             </div>
