@@ -32,8 +32,8 @@
         </div>
     </div>
 
-    <!-- SYSTEM STATUS GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- DASHBOARD STATS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="p-8 bg-white rounded-[2rem] border border-slate-200 shadow-xl group hover:scale-[1.02] transition-all duration-300">
             <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:rotate-6 transition-transform">
                 <i class="fas fa-vault text-xl"></i>
@@ -41,7 +41,6 @@
             <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Doanh Thu (VND)</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.FinanceStats.TotalRecognizedRevenue.ToString("N0")</h3>
-                <!-- <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-green-50 text-green-600">+12.4%</span> -->
             </div>
         </div>
 
@@ -67,15 +66,6 @@
             </div>
         </div>
 
-        <div class="p-8 bg-white rounded-[2rem] border border-slate-200 shadow-xl group hover:scale-[1.02] transition-all duration-300">
-            <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:rotate-6 transition-transform">
-                <i class="fas fa-microchip text-xl"></i>
-            </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Trạng Thái Hệ Thống</p>
-            <div class="flex items-baseline justify-between">
-                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">99.98%</h3>
-                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-slate-50 text-slate-500">Hoạt Động Tốt</span>
-            </div>
         </div>
     </div>
 
