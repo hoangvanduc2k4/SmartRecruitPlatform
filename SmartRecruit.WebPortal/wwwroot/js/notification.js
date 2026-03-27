@@ -85,7 +85,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         div.onclick = () => {
             if (!notification.isRead) markAsRead(notification.id, div, notification);
-            if (notification.redirectUrl) window.location.href = notification.redirectUrl;
+            
+            let targetUrl = notification.redirectUrl;
+            
+            // Fallback Logic for Application Notifications
+            if (!targetUrl || targetUrl.includes('JobDetail')) {
+                const appMatch = (notification.title + " " + notification.message).match(/#APP-(\d+)/i);
+                if (appMatch && appMatch[1]) {
+                    targetUrl = `/CandidatePreview/${appMatch[1]}`;
+                }
+            }
+            
+            if (targetUrl) window.location.href = targetUrl;
         };
 
         if (isPrepend && notifList.firstChild) {
