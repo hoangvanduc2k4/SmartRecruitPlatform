@@ -123,11 +123,17 @@ namespace SmartRecruit.Domain.Constants
             public const string APPLICATION_STATUS_UPDATE_TITLE = "Cập nhật hồ sơ";
             public const string APPLICATION_STATUS_UPDATE_CONTENT = "Hồ sơ của bạn cho vị trí '{0}' đã được cập nhật thành: {1}.";
             
+            public const string APPLICATION_SCORED_TITLE = "CV của bạn đã được đánh giá";
+            public const string APPLICATION_SCORED_CONTENT = "Hệ thống AI đã hoàn thành đánh giá CV của bạn cho vị trí '{0}'. Kết quả phù hợp: {1}%";
+            
             public const string APPLICATION_INTERVIEW_TITLE = "Mời phỏng vấn";
             public const string APPLICATION_INTERVIEW_CONTENT = "Chúc mừng! Bạn đã được mời phỏng vấn cho vị trí '{0}'. Vui lòng kiểm tra email để biết chi tiết.";
             
             public const string APPLICATION_OFFER_TITLE = "Nhận lời mời làm việc";
             public const string APPLICATION_OFFER_CONTENT = "Tin vui! Bạn đã nhận được lời mời làm việc cho vị trí '{0}'. Chúc mừng!";
+            
+            public const string APPLICATION_REJECTED_TITLE = "Đơn ứng tuyển không được chấp nhận";
+            public const string APPLICATION_REJECTED_CONTENT = "Cảm ơn bạn đã ứng tuyển vào vị trí '{0}'. Rất tiếc, hồ sơ của bạn không phù hợp trong lần này.";
             
             public const string APPLICATION_RESTORE_TITLE = "Khôi phục hồ sơ";
             public const string APPLICATION_RESTORE_CONTENT = "Hồ sơ của bạn cho vị trí '{0}' đã được khôi phục về trạng thái: {1}.";
