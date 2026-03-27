@@ -134,20 +134,22 @@ namespace SmartRecruit.Application.Services
                 if (appWithDetails != null && appWithDetails.Job != null)
                 {
                     string candidateName = appWithDetails.Candidate?.FullName ?? "A candidate";
+                    string recruiterTitle = $"#APP-{application.Id} {Messages.NotificationMsg.APPLICATION_NEW_TITLE}";
                     await _notificationService.SendNotificationAsync(
                         appWithDetails.Job.RecruiterId,
-                        Messages.NotificationMsg.APPLICATION_NEW_TITLE,
+                        recruiterTitle,
                         string.Format(Messages.NotificationMsg.APPLICATION_NEW_CONTENT, candidateName, appWithDetails.Job.Title),
                         NotificationType.APPLICATION,
-                        $"/JobDetail?Id={appWithDetails.Job.Id}");
+                        $"/CandidatePreview/{application.Id}");
  
                     // 4b. Real-time Notification for Candidate (Confirmation)
+                    string candidateTitle = $"#APP-{application.Id} {Messages.NotificationMsg.APPLICATION_SUBMITTED_TITLE}";
                     await _notificationService.SendNotificationAsync(
                         request.CandidateId,
-                        Messages.NotificationMsg.APPLICATION_SUBMITTED_TITLE,
+                        candidateTitle,
                         string.Format(Messages.NotificationMsg.APPLICATION_SUBMITTED_CONTENT, appWithDetails.Job.Title),
                         NotificationType.APPLICATION,
-                        $"/JobDetail?Id={appWithDetails.Job.Id}");
+                        $"/CandidatePreview/{application.Id}");
                 }
             }
             catch (Exception ex)
@@ -318,10 +320,11 @@ namespace SmartRecruit.Application.Services
                     if (appWithDetails != null)
                     {
                         string jobTitle = appWithDetails.Job?.Title ?? "vị trí ứng tuyển";
-                        string statusText = newStatus.ToString().Replace("_", " ").ToLower();
+                        string statusText = GetStatusVietnamese(newStatus);
                         string title = Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_TITLE;
                         string message = string.Format(Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_CONTENT, jobTitle, statusText);
-                        
+                        string redirectionUrl = $"/CandidatePreview/{id}"; // Candidate views their specific app details
+
                         if (newStatus == ApplicationStatus.INTERVIEWING)
                         {
                             title = Messages.NotificationMsg.APPLICATION_INTERVIEW_TITLE;
@@ -333,12 +336,20 @@ namespace SmartRecruit.Application.Services
                             message = string.Format(Messages.NotificationMsg.APPLICATION_OFFER_CONTENT, jobTitle);
                         }
 
+                        string localizedTitle = title;
+                        if (title == Messages.NotificationMsg.APPLICATION_STATUS_UPDATE_TITLE || 
+                            title == Messages.NotificationMsg.APPLICATION_INTERVIEW_TITLE || 
+                            title == Messages.NotificationMsg.APPLICATION_OFFER_TITLE)
+                        {
+                            localizedTitle = $"#APP-{id} {title}";
+                        }
+
                         await _notificationService.SendNotificationAsync(
                             appWithDetails.CandidateId,
-                            title,
+                            localizedTitle,
                             message,
                             NotificationType.APPLICATION,
-                            "/JobApplications"); // Candidate views their apps here
+                            redirectionUrl);
                             
                         // Real-time UI Update (SignalR)
                         try 
@@ -433,6 +444,18 @@ namespace SmartRecruit.Application.Services
             return false;
         }
 
+        private string GetStatusVietnamese(ApplicationStatus status)
+        {
+            return status switch
+            {
+                ApplicationStatus.REVIEWING => "đang được xem xét",
+                ApplicationStatus.INTERVIEWING => "đang được phỏng vấn",
+                ApplicationStatus.OFFERED => "đã được mời làm việc",
+                ApplicationStatus.REJECTED => "đã bị từ chối",
+                _ => status.ToString().ToLower()
+            };
+        }
+    
         public async Task<bool> ClearNotesAsync(long id)
         {
             var application = await _applicationRepository.GetByIdAsync(id);
@@ -516,8 +539,8 @@ namespace SmartRecruit.Application.Services
                             // Persistent Notification
                             try
                             {
-                                string statusText = restoredStatus.ToString().Replace("_", " ").ToLower();
-                                string title = Messages.NotificationMsg.APPLICATION_RESTORE_TITLE;
+                                string statusText = GetStatusVietnamese(restoredStatus);
+                                string title = $"#APP-{id} {Messages.NotificationMsg.APPLICATION_RESTORE_TITLE}";
                                 string message = string.Format(Messages.NotificationMsg.APPLICATION_RESTORE_CONTENT, jobTitle, statusText);
                                 
                                 if (restoredStatus == ApplicationStatus.OFFERED)
@@ -528,7 +551,7 @@ namespace SmartRecruit.Application.Services
                                     title,
                                     message,
                                     NotificationType.APPLICATION,
-                                    "/JobApplications");
+                                    $"/CandidatePreview/{id}");
                             }
                             catch (Exception ex)
                             {
@@ -626,6 +649,11 @@ namespace SmartRecruit.Application.Services
         {
             var application = await _applicationRepository.GetApplicationWithDetailsAsync(applicationId);
             if (application == null) throw new NotFoundException(Messages.ApplicationMsg.NOT_FOUND);
+
+            if (application.Status == ApplicationStatus.REJECTED)
+            {
+                throw new BadRequestException(Messages.ApplicationMsg.REANALYZE_REJECTED);
+            }
 
             _logger.LogInformation("Re-analyzing application {ApplicationId} for Job {JobId}", applicationId, application.JobId);
 
