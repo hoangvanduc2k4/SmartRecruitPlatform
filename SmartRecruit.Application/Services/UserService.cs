@@ -46,5 +46,10 @@ namespace SmartRecruit.Application.Services
             if (result) _logger.LogInformation("UpdateUserStatus success: User {UserId} status updated", userId);
             return result;
         }
+
+        public async Task<AdminUserStatsResponse> GetAdminUserStatsAsync()
+        {
+            return await _unitOfWork.Users.GetAdminUserStatsAsync();
+        }
     }
 }

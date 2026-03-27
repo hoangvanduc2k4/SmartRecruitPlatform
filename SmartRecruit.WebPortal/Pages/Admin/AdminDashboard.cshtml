@@ -2,7 +2,20 @@
 @model WebPortal.Pages.AdminDashboardModel
 @{
     ViewData["Title"] = "Trung Tâm Quản Trị";
-    var days = new[] { "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy", "CN" };
+    var days = new List<string>();
+    var startDay = DateTime.UtcNow.AddDays(-6);
+    var dayMap = new Dictionary<DayOfWeek, string> {
+        { DayOfWeek.Monday, "Hai" },
+        { DayOfWeek.Tuesday, "Ba" },
+        { DayOfWeek.Wednesday, "Tư" },
+        { DayOfWeek.Thursday, "Năm" },
+        { DayOfWeek.Friday, "Sáu" },
+        { DayOfWeek.Saturday, "Bảy" },
+        { DayOfWeek.Sunday, "CN" }
+    };
+    for(int i=0; i<7; i++) {
+        days.Add(dayMap[startDay.AddDays(i).DayOfWeek]);
+    }
 }
 
 <div class="space-y-12 animate-in fade-in duration-700 pb-20">
@@ -25,10 +38,10 @@
             <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:rotate-6 transition-transform">
                 <i class="fas fa-vault text-xl"></i>
             </div>
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Doanh Thu</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Tổng Doanh Thu (VND)</p>
             <div class="flex items-baseline justify-between">
-                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">45,280,000</h3>
-                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-green-50 text-green-600">+12.4%</span>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.FinanceStats.TotalRecognizedRevenue.ToString("N0")</h3>
+                <!-- <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-green-50 text-green-600">+12.4%</span> -->
             </div>
         </div>
 
@@ -38,8 +51,8 @@
             </div>
             <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Người Dùng</p>
             <div class="flex items-baseline justify-between">
-                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.TotalUsers.ToString("N0")</h3>
-                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-green-50 text-green-600">+85 hôm nay</span>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.UserStats.TotalUsers.ToString("N0")</h3>
+                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-green-50 text-green-600">+@Model.UserStats.UsersRegisteredToday hôm nay</span>
             </div>
         </div>
 
@@ -49,8 +62,8 @@
             </div>
             <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Bài Đăng Tuyển Dụng</p>
             <div class="flex items-baseline justify-between">
-                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.TotalJobs</h3>
-                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-slate-50 text-slate-500">12 đang duyệt</span>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tighter">@Model.JobStats.TotalJobs</h3>
+                <span class="text-[9px] font-black px-2 py-1 rounded-lg bg-indigo-50 text-indigo-500">@Model.JobStats.ActiveJobs Đang hiển thị</span>
             </div>
         </div>
 
@@ -83,10 +96,10 @@
         </div>
 
         <div class="h-64 flex items-end justify-between gap-4 md:gap-8 px-4">
-            @for (int i = 0; i < Model.WeeklyRevenue.Count; i++)
+            @for (int i = 0; i < Model.WeeklyRevenue.Revenue.Count; i++)
             {
-                var val = Model.WeeklyRevenue[i];
-                var height = (double)val / Model.MaxRevenue * 100;
+                var val = Model.WeeklyRevenue.Revenue[i];
+                var height = (double)val / (double)Model.MaxRevenue * 100;
                 <div class="flex-1 flex flex-col items-center gap-4 h-full group">
                     <div class="flex-1 w-full bg-slate-50 rounded-t-2xl relative overflow-hidden">
                         <div class="absolute bottom-0 left-0 w-full bg-indigo-600 rounded-t-2xl transition-all duration-700 group-hover:bg-indigo-400 group-hover:shadow-[0_0_20px_rgba(79,70,229,0.3)]"

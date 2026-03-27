@@ -769,5 +769,10 @@ Skills Required: {skills}";
         {
             return GetFullJobInfo(draft.Title, draft.Company, draft.Location, draft.JobType.ToString(), draft.SalaryMin, draft.SalaryMax, draft.Benefits, draft.Description, draft.Requirement, draft.SkillsRequired);
         }
+
+        public async Task<AdminJobStatsResponse> GetAdminJobStatsAsync()
+        {
+            return await _jobRepository.GetAdminJobStatsAsync();
+        }
     }
 }

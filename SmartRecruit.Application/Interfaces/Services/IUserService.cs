@@ -7,5 +7,6 @@ namespace SmartRecruit.Application.Interfaces.Services
     {
         Task<PagedList<AdminUserResponse>> GetUsersAsync(UserSearchRequest request);
         Task<bool> UpdateUserStatusAsync(long userId, UpdateUserStatusRequest request);
+        Task<AdminUserStatsResponse> GetAdminUserStatsAsync();
     }
 }

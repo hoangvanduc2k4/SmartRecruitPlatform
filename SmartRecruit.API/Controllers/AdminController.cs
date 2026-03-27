@@ -64,6 +64,30 @@ namespace SmartRecruit.API.Controllers
             return Ok(stats.Wrap("Tải thống kê tài chính thành công"));
         }
 
+        [HttpGet("users/stats")]
+        public async Task<IActionResult> GetUserStats()
+        {
+            _logger.LogInformation("API GetUserStats called");
+            var stats = await _userService.GetAdminUserStatsAsync();
+            return Ok(stats.Wrap("Tải thống kê người dùng thành công"));
+        }
+
+        [HttpGet("jobs/stats")]
+        public async Task<IActionResult> GetJobStats()
+        {
+            _logger.LogInformation("API GetJobStats called");
+            var stats = await _jobService.GetAdminJobStatsAsync();
+            return Ok(stats.Wrap("Tải thống kê công việc thành công"));
+        }
+
+        [HttpGet("finance/weekly-revenue")]
+        public async Task<IActionResult> GetWeeklyRevenue()
+        {
+            _logger.LogInformation("API GetWeeklyRevenue called");
+            var revenue = await _walletService.GetWeeklyRevenueAsync();
+            return Ok(revenue.Wrap("Tải doanh thu tuần thành công"));
+        }
+
         [HttpGet("finance/logs")]
         public async Task<IActionResult> GetFinanceLogs([FromQuery] TransactionSearchRequest request)
         {

@@ -47,5 +47,20 @@ namespace SmartRecruit.Infrastructure.Repositories
 
             return await PagedList<User>.CreateAsync(query, request.Page, request.PageSize);
         }
+
+        public async Task<AdminUserStatsResponse> GetAdminUserStatsAsync()
+        {
+            var now = DateTime.UtcNow.Date;
+            var totalUsers = await _context.Users.CountAsync();
+            var activeUsers = await _context.Users.CountAsync(u => u.IsActive);
+            var usersToday = await _context.Users.CountAsync(u => u.CreatedAt >= now);
+
+            return new AdminUserStatsResponse
+            {
+                TotalUsers = totalUsers,
+                ActiveUsers = activeUsers,
+                UsersRegisteredToday = usersToday
+            };
+        }
     }
 }

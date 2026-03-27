@@ -7,5 +7,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
     public interface IUserRepository : IGenericRepository<User>
     {
         Task<PagedList<User>> GetUsersAsync(UserSearchRequest request);
+        Task<AdminUserStatsResponse> GetAdminUserStatsAsync();
     }
 }

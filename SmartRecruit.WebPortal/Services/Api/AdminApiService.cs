@@ -17,6 +17,9 @@ namespace WebPortal.Services.Api
         Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10);
         Task<PagedResponse<AILogResponse>> GetAiLogsAsync(int page = 1, int pageSize = 10);
         Task<List<Notification>> GetNotificationsAsync();
+        Task<AdminUserStatsResponse?> GetAdminUserStatsAsync();
+        Task<AdminJobStatsResponse?> GetAdminJobStatsAsync();
+        Task<WeeklyRevenueResponse?> GetWeeklyRevenueAsync();
     }
 
 
@@ -104,6 +107,24 @@ namespace WebPortal.Services.Api
         {
             var response = await _httpClient.GetAsync("admin/finance/stats");
             return await HandleResponseAsync<FinanceStatsResponse>(response);
+        }
+
+        public async Task<AdminUserStatsResponse?> GetAdminUserStatsAsync()
+        {
+            var response = await _httpClient.GetAsync("admin/users/stats");
+            return await HandleResponseAsync<AdminUserStatsResponse>(response);
+        }
+
+        public async Task<AdminJobStatsResponse?> GetAdminJobStatsAsync()
+        {
+            var response = await _httpClient.GetAsync("admin/jobs/stats");
+            return await HandleResponseAsync<AdminJobStatsResponse>(response);
+        }
+
+        public async Task<WeeklyRevenueResponse?> GetWeeklyRevenueAsync()
+        {
+            var response = await _httpClient.GetAsync("admin/finance/weekly-revenue");
+            return await HandleResponseAsync<WeeklyRevenueResponse>(response);
         }
 
         public async Task<PagedResponse<TransactionResponse>> GetGlobalTransactionsAsync(int page = 1, int pageSize = 10)

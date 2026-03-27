@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Application.DTO.Job;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Domain.Entities;
@@ -326,6 +327,24 @@ namespace SmartRecruit.Infrastructure.Repositories
             .ToList();
 
             return scoredJobs;
+        }
+
+        public async Task<AdminJobStatsResponse> GetAdminJobStatsAsync()
+        {
+            var jobs = _context.Set<Job>().Where(j => !j.IsDeleted);
+            
+            var totalJobs = await jobs.CountAsync();
+            var activeJobs = await jobs.CountAsync(j => j.Status == JobStatus.APPROVED || j.Status == JobStatus.EXPIRING_SOON);
+            var pendingJobs = await jobs.CountAsync(j => j.Status == JobStatus.CHECKING);
+            var blockedJobs = await jobs.CountAsync(j => j.Status == JobStatus.BLOCKED);
+
+            return new AdminJobStatsResponse
+            {
+                TotalJobs = totalJobs,
+                ActiveJobs = activeJobs,
+                PendingJobs = pendingJobs,
+                BlockedJobs = blockedJobs
+            };
         }
     }
 }
