@@ -29,6 +29,10 @@ namespace SmartRecruit.Application.Validations.Job
                 .NotEmpty().WithMessage("Yêu cầu công việc là bắt buộc")
                 .MaximumLength(4000);
 
+            RuleFor(x => x.SkillsRequired)
+                .NotEmpty().WithMessage("Kỹ năng yêu cầu là bắt buộc")
+                .MaximumLength(2000).WithMessage("Kỹ năng yêu cầu không được vượt quá 2000 ký tự");
+
             RuleFor(x => x.SalaryMin)
                 .GreaterThanOrEqualTo(0).WithMessage("Lương tối thiểu không được âm");
 

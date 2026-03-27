@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SmartRecruit.Application.DTO.Job;
-using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Application.Interfaces.Services;
 using SmartRecruit.Infrastructure.Configurations;
 using System.Text;
@@ -15,16 +14,14 @@ namespace SmartRecruit.Infrastructure.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<GeminiService> _logger;
-        private readonly IAILogRepository _ailogRepository;
         private readonly string _apiUrl;
 
-        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config, ILogger<GeminiService> logger, IAILogRepository ailogRepository)
+        public GeminiService(HttpClient httpClient, IOptions<GeminiSettings> config, ILogger<GeminiService> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
             var apiKey = config.Value.ApiKey;
             var baseUrl = config.Value.Url;
-            _ailogRepository = ailogRepository;
 
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(baseUrl))
             {
@@ -97,12 +94,10 @@ namespace SmartRecruit.Infrastructure.Services
             var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(_apiUrl, jsonContent);
             var responseString = await response.Content.ReadAsStringAsync();
-
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
-            }
-
+            }         
             var jsonResponse = JObject.Parse(responseString);
             var candidates = jsonResponse["candidates"] as JArray;
             if (candidates == null || candidates.Count == 0)

@@ -29,6 +29,15 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .FirstOrDefaultAsync(w => w.UserId == userId);
         }
 
+        public async Task<Wallet?> GetWalletForUpdateAsync(long userId)
+        {
+            _logger.LogTrace("Executing PESSIMISTIC LOCK SQL query to fetch Wallet by UserId: {UserId}", userId);
+            // ROWLOCK, UPDLOCK ensures other concurrent transactions wait until this one completes
+            return await _context.Set<Wallet>()
+                .FromSqlInterpolated($"SELECT * FROM Wallets WITH (UPDLOCK, ROWLOCK) WHERE UserId = {userId}")
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<PagedList<Transaction>> GetTransactionsAsync(TransactionSearchRequest request)
         {
             _logger.LogTrace("Executing SQL query to fetch transactions with parameters: {@Request}", request);

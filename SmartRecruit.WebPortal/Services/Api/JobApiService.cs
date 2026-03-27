@@ -7,7 +7,7 @@ namespace WebPortal.Services.Api
     public interface IJobApiService
     {
         Task<PagedResponse<Job>> GetJobsAsync(string? search, string? location, long? categoryId, JobType? type, decimal? minSalary, decimal? maxSalary, int page = 1, int pageSize = 10, string? sortBy = null, string? sortOrder = null);
-        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null);
+        Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null, string? keyword = null);
         Task<Job?> GetJobForEditAsync(string id);
         Task<ApiResponse<Job>> SaveDraftAsync(string id, Job job);
         Task<ApiResponse<Job>> PublishJobAsync(string id);
@@ -24,6 +24,7 @@ namespace WebPortal.Services.Api
         Task<bool> ToggleSaveJobAsync(long jobId, long userId);
         Task<PagedResponse<Job>> GetSavedJobsAsync(long userId, int page = 1, int pageSize = 10);
         Task<bool> AppealJobAsync(long jobId, string message);
+        Task<ApiResponse<Job>> CloneJobAsync(long id);
         Task<RecruiterStatsResponse?> GetRecruiterStatsAsync();
         Task<IEnumerable<Job>> GetRecommendedJobsAsync();
     }
@@ -71,10 +72,11 @@ namespace WebPortal.Services.Api
             return new PagedResponse<Job> { Success = false, Message = "Failed to fetch jobs" };
         }
 
-        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null)
+        public async Task<PagedResponse<Job>> GetJobsByRecruiterAsync(long recruiterId, int page = 1, int pageSize = 10, int? status = null, string? keyword = null)
         {
             var query = $"?page={page}&pageSize={pageSize}";
             if (status.HasValue) query += $"&status={status.Value}";
+            if (!string.IsNullOrEmpty(keyword)) query += $"&keyword={Uri.EscapeDataString(keyword)}";
 
             var response = await _httpClient.GetAsync($"jobs/recruiter/{recruiterId}{query}");
             if (response.IsSuccessStatusCode)
@@ -347,6 +349,23 @@ namespace WebPortal.Services.Api
                 System.Console.WriteLine($"[JobApiService] Error appealing job {jobId}: {ex.Message}");
             }
             return false;
+        }
+
+        public async Task<ApiResponse<Job>> CloneJobAsync(long id)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"jobs/{id}/clone", null);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<Job>>(options);
+                return result ?? new ApiResponse<Job> { Success = false, Message = "Kết nối máy chủ thất bại." };
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"[JobApiService] Error cloning job {id}: {ex.Message}");
+                return new ApiResponse<Job> { Success = false, Message = "Lỗi hệ thống khi sao chép." };
+            }
         }
 
         public async Task<RecruiterStatsResponse?> GetRecruiterStatsAsync()

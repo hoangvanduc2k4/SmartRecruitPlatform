@@ -16,9 +16,9 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<bool> BoostJobAsync(long jobId, long userId);
         Task<JobResponse> GetJobForEditAsync(long id, long userId);
         Task<JobResponse> SaveDraftAsync(long id, JobDraftRequest request, long userId);
+        Task<JobResponse> CloneJobAsync(long jobId, long userId);
         Task<JobResponse> PublishJobAsync(long id, long userId);
         Task ProcessJobPublishingAsync(long jobId, long userId);
-        Task ModerateJobAsync(long jobId);
         Task<IEnumerable<string>> GetLocationsAsync();
         Task<IEnumerable<string>> GetTopLocationsAsync(int count);
         Task<bool> AppealJobAsync(long jobId, string message);

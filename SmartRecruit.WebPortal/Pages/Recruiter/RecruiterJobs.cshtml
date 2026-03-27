@@ -8,24 +8,24 @@
 
 <div class="space-y-12 animate-in fade-in duration-700">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div>
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-50 border border-indigo-100 text-indigo-700 shadow-sm">Trình Quản Lý Tuyển Dụng</span>
-            <h2 class="text-5xl font-black text-slate-800 tracking-tighter uppercase mt-2">Trung Tâm Tuyển Dụng</h2>
-            <p class="text-slate-500 text-sm font-medium mt-1">Quản lý bài đăng và theo dõi hiệu suất tuyển dụng theo thời gian thực.</p>
-        </div>
-        <div class="flex items-center gap-4">
-            <form method="get" class="flex items-center gap-3">
-                <label for="Status" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Lọc theo:</label>
-                <select name="Status" id="Status" onchange="this.form.submit()" class="h-14 pl-6 pr-10 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50 transition-all outline-none appearance-none cursor-pointer shadow-sm min-w-[200px]">
-                    <option value="">Tất cả trạng thái</option>
-                    <option value="0" selected="@(Model.Status == 0)">Đang chờ duyệt</option>
+        <div class="flex-1 flex items-center gap-4">
+            <form method="get" class="flex items-center gap-3 flex-1">
+                <div class="relative flex-[3]">
+                    <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                    <input type="text" name="SearchTerm" placeholder="Tìm tiêu đề, công ty..." class="h-14 pl-12 pr-6 bg-white border border-slate-200 rounded-2xl w-full focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none font-medium transition-all shadow-sm" value="@Model.SearchTerm" />
+                </div>
+                <label for="Status" class="text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">Lọc:</label>
+                <select name="Status" id="Status" onchange="this.form.submit()" class="h-14 pl-6 pr-10 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50 transition-all outline-none appearance-none cursor-pointer shadow-sm min-w-[160px]">
+                    <option value="">Tất cả</option>
+                    <option value="0" selected="@(Model.Status == 0)">Chờ duyệt</option>
                     <option value="1" selected="@(Model.Status == 1)">Đã duyệt</option>
-                    <option value="6" selected="@(Model.Status == 6)">Sắp hết hạn</option>
-                    <option value="5" selected="@(Model.Status == 5)">Đã hết hạn</option>
-                    <option value="2" selected="@(Model.Status == 2)">Đã chặn</option>
-                    <option value="4" selected="@(Model.Status == 4)">Bản nháp</option>
-                    <option value="3" selected="@(Model.Status == 3)">Đã ẩn</option>
+                    <option value="6" selected="@(Model.Status == 6)">Sắp hết</option>
+                    <option value="5" selected="@(Model.Status == 5)">Hết hạn</option>
+                    <option value="2" selected="@(Model.Status == 2)">Chặn</option>
+                    <option value="4" selected="@(Model.Status == 4)">Nháp</option>
+                    <option value="3" selected="@(Model.Status == 3)">Ẩn</option>
                 </select>
+                <button type="submit" class="h-14 px-6 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition shadow-lg active:scale-95">Tìm</button>
             </form>
             <a href="/PostJob" class="px-10 h-14 bg-indigo-600 text-white shadow-xl shadow-indigo-100 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-indigo-700 transition inline-flex items-center justify-center">
                 <i class="fas fa-plus-circle mr-2"></i> Tạo Bài Đăng Mới
@@ -153,10 +153,16 @@
                                             <a asp-page="/Jobs/JobApplications" asp-route-Id="@job.Id" title="Xem Ứng Viên" class="w-10 h-10 bg-white text-green-600 hover:bg-green-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
                                                 <i class="fas fa-users text-sm"></i>
                                             </a>
-                                            <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="Quản Lý Quy Trình" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
-                                                <i class="fas fa-layer-group text-xs"></i>
-                                            </a>
-                                        </div>
+                                             <a asp-page="/Recruiter/JobPipeline" asp-route-id="@job.Id" title="Quản Lý Quy Trình" class="w-10 h-10 bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center border border-slate-800 shadow-sm">
+                                                 <i class="fas fa-layer-group text-xs"></i>
+                                             </a>
+                                             <form method="post" asp-page-handler="Clone" class="inline-flex m-0" onsubmit="return confirm('Bạn có muốn sao chép công việc này thành bản nháp mới không?')">
+                                                 <input type="hidden" name="jobId" value="@job.Id" />
+                                                 <button type="submit" title="Sao Chép (Clone)" class="w-10 h-10 bg-white text-amber-600 hover:bg-amber-50 rounded-xl transition-all flex items-center justify-center border border-slate-100 shadow-sm">
+                                                     <i class="fas fa-copy text-sm"></i>
+                                                 </button>
+                                             </form>
+                                         </div>
                                         @if (job.Status != JobStatus.BLOCKED)
                                         {
                                             <form method="post" asp-page-handler="ToggleStatus" class="inline-flex m-0">

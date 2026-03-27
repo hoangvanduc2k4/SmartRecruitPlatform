@@ -117,14 +117,8 @@ namespace SmartRecruit.Application.Services
                 throw new BadRequestException(Messages.ApplicationMsg.CV_REQUIRED);
             }
 
-            // 3. Tạo bản ghi đơn giản
-            var application = new Applications
-            {
-                JobId = request.JobId,
-                CandidateId = request.CandidateId,
-                Status = ApplicationStatus.REVIEWING,
-                CreatedAt = DateTime.UtcNow
-            };
+            // 3. Tạo bản ghi đơn giản using AutoMapper
+            var application = _mapper.Map<Applications>(request);
 
             await _applicationRepository.AddAsync(application);
             await _unitOfWork.CompleteAsync();
@@ -172,7 +166,8 @@ namespace SmartRecruit.Application.Services
             try
             {
                 var cvContent = application.Candidate?.CandidateProfile?.CVText ?? string.Empty;
-                var jobDescription = $"{application.Job?.Description}\nRequirements: {application.Job?.Requirement}\nSkills: {application.Job?.SkillsRequired}";
+                
+                var jobDescription = application.Job != null ? GetFullJobInfo(application.Job) : string.Empty;
 
                 var result = await _geminiService.ScoreCvAsync(cvContent, jobDescription);
 
@@ -672,6 +667,24 @@ namespace SmartRecruit.Application.Services
             _backgroundJobClient.Enqueue<IApplicationService>(x => x.ScoreApplicationAsync(applicationId));
 
             return true;
+        }
+
+        private string GetFullJobInfo(string title, string company, string location, string jobType, decimal salaryMin, decimal salaryMax, string benefits, string description, string requirements, string skills)
+        {
+            return $@"Job Title: {title}
+Company: {company}
+Location: {location}
+Job Type: {jobType}
+Salary Range: {salaryMin:N0} - {salaryMax:N0} VNĐ
+Benefits: {benefits}
+Description: {description}
+Requirements: {requirements}
+Skills Required: {skills}";
+        }
+
+        private string GetFullJobInfo(Job job)
+        {
+            return GetFullJobInfo(job.Title, job.Company, job.Location, job.JobType.ToString(), job.SalaryMin, job.SalaryMax, job.Benefits, job.Description, job.Requirement, job.SkillsRequired);
         }
     }
 }

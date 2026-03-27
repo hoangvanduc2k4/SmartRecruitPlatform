@@ -1,6 +1,7 @@
 using AutoMapper;
 using SmartRecruit.Application.DTO.Job;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Enums;
 
 namespace SmartRecruit.Application.Mappings
 {
@@ -8,6 +9,7 @@ namespace SmartRecruit.Application.Mappings
     {
         public JobProfile()
         {
+            CreateMap<Job, Job>();
             CreateMap<Job, JobResponse>()
                 .ConstructUsing(src => new JobResponse(
                     src.Id,
@@ -41,6 +43,19 @@ namespace SmartRecruit.Application.Mappings
                     src.Recruiter != null && src.Recruiter.CompanyProfile != null ? src.Recruiter.CompanyProfile.LogoUrl : null
                 ))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unknown"));
+
+            CreateMap<JobCreateRequest, Job>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(_ => JobStatus.DRAFT))
+                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(_ => false))
+                .ForMember(dest => dest.ViewCount, opt => opt.MapFrom(_ => 0))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId ?? 0));
+
+            CreateMap<JobDraftRequest, Job>()
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId ?? 0))
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<JobUpdateRequest, JobDraftRequest>();
         }
     }
 }

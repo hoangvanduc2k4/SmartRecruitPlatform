@@ -8,6 +8,7 @@ namespace SmartRecruit.Application.Interfaces.Repositories
     public interface IWalletRepository : IGenericRepository<Wallet>
     {
         Task<Wallet?> GetWalletByUserIdAsync(long userId);
+        Task<Wallet?> GetWalletForUpdateAsync(long userId);
         Task<PagedList<Transaction>> GetTransactionsAsync(TransactionSearchRequest request);
         Task<Transaction?> GetTransactionByOrderCodeAsync(long orderCode);
         Task AddTransactionAsync(Transaction transaction);

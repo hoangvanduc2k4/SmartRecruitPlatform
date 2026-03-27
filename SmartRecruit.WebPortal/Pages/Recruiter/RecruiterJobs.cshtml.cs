@@ -22,6 +22,9 @@ namespace WebPortal.Pages
         public RecruiterStatsResponse Stats { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = string.Empty;
+
+        [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
 
         [BindProperty(SupportsGet = true)]
@@ -37,7 +40,7 @@ namespace WebPortal.Pages
             if (recruiterId.HasValue)
             {
                 Stats = await _jobApiService.GetRecruiterStatsAsync() ?? new();
-                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize, Status);
+                var response = await _jobApiService.GetJobsByRecruiterAsync(recruiterId.Value, CurrentPage, PageSize, Status, SearchTerm);
                 if (response.Success && response.Data != null)
                 {
                     Jobs = response.Data.ToList();
@@ -73,6 +76,18 @@ namespace WebPortal.Pages
         public async Task<IActionResult> OnPostAppealBlockAsync(long jobId, string message)
         {
             await _jobApiService.AppealJobAsync(jobId, message);
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostCloneAsync(long jobId)
+        {
+            var result = await _jobApiService.CloneJobAsync(jobId);
+            if (result.Success && result.Data != null)
+            {
+                TempData["Message"] = "Sao chép công việc thành công. Bạn đang ở bản nháp mới.";
+                return RedirectToPage("/Jobs/JobDetail", new { Id = result.Data.Id });
+            }
+            TempData["Error"] = result.Message ?? "Không thể sao chép công việc.";
             return RedirectToPage();
         }
     }
