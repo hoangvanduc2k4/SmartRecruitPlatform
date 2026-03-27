@@ -185,8 +185,23 @@ namespace SmartRecruit.Infrastructure.Repositories
             {
                 if (isVisible && job.Status == JobStatus.HIDDEN)
                 {
-                    job.Status = JobStatus.APPROVED;
-                    _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to APPROVED (Visible)", id);
+                    // Determine correct status based on expiration date
+                    var now = DateTime.UtcNow;
+                    if (job.ExpireDate.HasValue && job.ExpireDate <= now)
+                    {
+                        job.Status = JobStatus.EXPIRED;
+                        _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to EXPIRED (past expiration)", id);
+                    }
+                    else if (job.ExpireDate.HasValue && job.ExpireDate <= now.AddDays(7))
+                    {
+                        job.Status = JobStatus.EXPIRING_SOON;
+                        _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to EXPIRING_SOON", id);
+                    }
+                    else
+                    {
+                        job.Status = JobStatus.APPROVED;
+                        _logger.LogTrace("Executing SQL update to set Job {JobId} visibility to APPROVED (Visible)", id);
+                    }
                 }
                 else if (!isVisible)
                 {
