@@ -47,6 +47,12 @@ namespace SmartRecruit.Application.Services
             return await _walletRepository.GetFinanceStatsAsync();
         }
 
+        public async Task<WeeklyRevenueResponse> GetWeeklyRevenueAsync()
+        {
+            var revenue = await _walletRepository.GetWeeklyRevenueAsync();
+            return new WeeklyRevenueResponse { Revenue = revenue };
+        }
+
         public async Task<byte[]> ExportTransactionsToExcelAsync(TransactionSearchRequest request)
         {
             // Fetch all matching transactions (large PageSize to simulate "All")

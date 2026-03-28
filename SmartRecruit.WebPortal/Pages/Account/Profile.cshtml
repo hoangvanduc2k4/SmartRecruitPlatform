@@ -251,9 +251,9 @@
                                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-500 transition-colors">
                                             <i class="fas fa-hand-holding-dollar text-xs"></i>
                                         </div>
-                                        <input asp-for="UpdateInput.ExpectedSalary" type="number" min="0" step="500000" readonly="@(!Model.IsOwnProfile)"
-                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-black text-emerald-600 focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-50/50 transition-all outline-none @(!Model.IsOwnProfile ? "cursor-not-allowed opacity-80" : "")"
-                                               placeholder="e.g. 20000000" />
+                                        <input asp-for="UpdateInput.ExpectedSalary" type="text" readonly="@(!Model.IsOwnProfile)"
+                                               class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl pl-11 pr-4 text-sm font-black text-emerald-600 focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-50/50 transition-all outline-none currency-input @(!Model.IsOwnProfile ? "cursor-not-allowed opacity-80" : "")"
+                                               placeholder="vd: 15.000.000" />
                                     </div>
                                 </div>
                             </div>
