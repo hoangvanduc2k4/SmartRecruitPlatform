@@ -85,7 +85,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         div.onclick = () => {
             if (!notification.isRead) markAsRead(notification.id, div, notification);
-            if (notification.redirectUrl) window.location.href = notification.redirectUrl;
+            
+            let targetUrl = notification.redirectUrl;
+            
+            // Fallback Logic for Application Notifications
+            if (!targetUrl || targetUrl.includes('JobDetail')) {
+                const appMatch = (notification.title + " " + notification.message).match(/#APP-(\d+)/i);
+                if (appMatch && appMatch[1]) {
+                    targetUrl = `/CandidatePreview/${appMatch[1]}`;
+                }
+            }
+            
+            if (targetUrl) window.location.href = targetUrl;
         };
 
         if (isPrepend && notifList.firstChild) {
@@ -140,25 +151,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Utility
     function timeAgo(dateString) {
-        if (!dateString) return 'Just now';
+        if (!dateString) return 'Vừa xong';
         
         // Ensure the date string is parsed as UTC
-        // The API returns DateTime.UtcNow, which might be "2023-10-27T10:00:00" (no Z).
-        // Let's force it to UTC if it doesn't end with Z
         const isUtcStr = dateString.endsWith('Z') || dateString.includes('+') ? dateString : dateString + 'Z';
         const date = new Date(isUtcStr);
         const seconds = Math.floor((new Date() - date) / 1000);
         
         let interval = seconds / 31536000;
-        if (interval > 1) return Math.floor(interval) + "y ago";
+        if (interval > 1) return Math.floor(interval) + " năm trước";
         interval = seconds / 2592000;
-        if (interval > 1) return Math.floor(interval) + "mo ago";
+        if (interval > 1) return Math.floor(interval) + " tháng trước";
         interval = seconds / 86400;
-        if (interval > 1) return Math.floor(interval) + "d ago";
+        if (interval > 1) return Math.floor(interval) + " ngày trước";
         interval = seconds / 3600;
-        if (interval > 1) return Math.floor(interval) + "h ago";
+        if (interval > 1) return Math.floor(interval) + " giờ trước";
         interval = seconds / 60;
-        if (interval > 1) return Math.floor(interval) + "m ago";
-        return "Just now";
+        if (interval > 1) return Math.floor(interval) + " phút trước";
+        return "Vừa xong";
     }
 });
