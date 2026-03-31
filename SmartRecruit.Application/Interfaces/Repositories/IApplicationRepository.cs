@@ -11,5 +11,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task<Applications?> GetApplicationWithDetailsAsync(long id);
         Task<Applications?> GetApplicationByJobAndCandidateAsync(long jobId, long candidateId);
         Task<List<Applications>> GetApplicationsByJobWithDetailsAsync(long jobId);
+        Task<bool> HasConflictingInterviewAsync(long recruiterId, DateTime interviewDate, long? excludeApplicationId);
     }
 }

@@ -56,6 +56,22 @@
 </style>
 
 <div class="max-w-7xl mx-auto space-y-8 pb-12">
+    <!-- Messages -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="p-4 bg-green-50 border border-green-100 text-green-700 rounded-2xl text-xs font-bold uppercase tracking-tight flex items-center gap-3 animate-in fade-in slide-in-from-top duration-500">
+            <i class="fas fa-check-circle"></i>
+            @TempData["Message"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-bold uppercase tracking-tight flex items-center gap-3 animate-in fade-in slide-in-from-top duration-500">
+            <i class="fas fa-exclamation-circle"></i>
+            @TempData["Error"]
+        </div>
+    }
+
     <!-- Header -->
     <div class="flex items-center justify-between gap-6 animate-slide-in">
         <div class="flex items-center gap-6">

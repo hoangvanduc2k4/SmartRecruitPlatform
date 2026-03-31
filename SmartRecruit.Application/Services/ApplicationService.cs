@@ -12,6 +12,7 @@ using SmartRecruit.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Linq;
+using System.Globalization;
 
 namespace SmartRecruit.Application.Services
 {
@@ -255,7 +256,7 @@ namespace SmartRecruit.Application.Services
 
         public async Task<bool> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)
         {
-            var application = await _applicationRepository.GetByIdAsync(id);
+            var application = await _applicationRepository.GetApplicationWithDetailsAsync(id);
             if (application == null) throw new KeyNotFoundException("Application not found.");
 
             var currentStatus = application.Status;
@@ -283,6 +284,33 @@ namespace SmartRecruit.Application.Services
                 {
                     throw new BadRequestException(Messages.ApplicationMsg.INTERVIEW_DATE_REQUIRED);
                 }
+
+                // Kiểm tra trùng lịch phỏng vấn của HR
+                var recruiterId = application.Job?.RecruiterId;
+                
+                // Fallback nếu vì lý do nào đó Job chưa được load qua Include
+                if (recruiterId == null)
+                {
+                    var job = await _jobRepository.GetByIdAsync(application.JobId);
+                    recruiterId = job?.RecruiterId;
+                }
+
+                if (recruiterId.HasValue)
+                {
+                    _logger.LogInformation("Checking for conflicting interview on {Date} for recruiter {RecruiterId}", request.InterviewDate.Value, recruiterId.Value);
+                    var isDuplicate = await _applicationRepository.HasConflictingInterviewAsync(
+                        recruiterId.Value, 
+                        request.InterviewDate.Value, 
+                        id);
+                    
+                    if (isDuplicate)
+                    {
+                        _logger.LogWarning("Duplicate interview found! Throwing BadRequestException.");
+                        throw new BadRequestException(Messages.ApplicationMsg.DUPLICATE_INTERVIEW_DATE);
+                    }
+                }
+
+
                 if (!string.IsNullOrWhiteSpace(request.RejectionReason))
                 {
                     throw new InvalidOperationException("Lý do từ chối không nên được cung cấp khi chuyển sang trạng thái phỏng vấn.");
@@ -315,7 +343,7 @@ namespace SmartRecruit.Application.Services
             string newNote = "";
             if (newStatus == ApplicationStatus.INTERVIEWING)
             {
-                newNote = $"Phỏng vấn: {request.InterviewDate!.Value.ToString("yyyy-MM-dd HH:mm")}";
+                newNote = $"Phỏng vấn: {request.InterviewDate!.Value.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)}";
             }
             else if (newStatus == ApplicationStatus.OFFERED)
             {

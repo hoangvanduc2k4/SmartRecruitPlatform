@@ -153,6 +153,7 @@ namespace SmartRecruit.Domain.Constants
             public const string REJECTION_REASON_REQUIRED = "Vui lòng cung cấp lý do từ chối.";
             public const string ONLY_REJECT_RESTORE = "Chỉ có thể khôi phục các đơn đã bị từ chối.";
             public const string REANALYZE_REJECTED = "Không thể phân tích lại hồ sơ đã bị từ chối.";
+            public const string DUPLICATE_INTERVIEW_DATE = "Bạn đã có một buổi phỏng vấn khác vào thời gian này.";
         }
 
         // ================================

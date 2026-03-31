@@ -5,6 +5,8 @@ using SmartRecruit.Application.Interfaces.Repositories;
 using SmartRecruit.Infrastructure.Data;
 using Microsoft.Extensions.Logging;
 using SmartRecruit.Domain.Entities;
+using SmartRecruit.Domain.Enums;
+using System.Globalization;
 
 namespace SmartRecruit.Infrastructure.Repositories
 {
@@ -97,5 +99,31 @@ namespace SmartRecruit.Infrastructure.Repositories
                 .OrderByDescending(a => a.MatchScore)
                 .ToListAsync();
         }
+
+        public async Task<bool> HasConflictingInterviewAsync(long recruiterId, DateTime interviewDate, long? excludeApplicationId)
+        {
+            var dateString = interviewDate.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+            
+            // Log for debugging
+            _logger.LogInformation("Checking interview conflict for Recruiter: {RecruiterId}, Date: {DateString}, Excluding App: {ExcludeId}", 
+                recruiterId, dateString, excludeApplicationId);
+
+            // Tìm tất cả các đơn của HR này có ghi ngày phỏng vấn trùng, không quan tâm status 
+            // để đảm bảo không bỏ sót trường hợp nào. 
+            // Sử dụng Like bọc hậu/tiền để chắc chắn khớp đúng định dạng trong chuỗi Notes phức tạp.
+            var conflict = await _context.Set<Applications>()
+                .AnyAsync(a => a.Job.RecruiterId == recruiterId &&
+                               a.Id != excludeApplicationId &&
+                               a.Notes != null &&
+                               EF.Functions.Like(a.Notes, $"%Phỏng vấn: {dateString}%"));
+
+            if (conflict)
+            {
+                _logger.LogWarning("Conflict found for recruiter {RecruiterId} at {DateString}", recruiterId, dateString);
+            }
+
+            return conflict;
+        }
+
     }
 }

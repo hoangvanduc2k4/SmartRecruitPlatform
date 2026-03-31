@@ -58,8 +58,16 @@ namespace WebPortal.Pages
                     InterviewDate = interviewDate,
                     RejectionReason = rejectionReason
                 };
-                
-                await _applicationApiService.UpdateStatusAsync(id, request);
+
+                var (success, message) = await _applicationApiService.UpdateStatusAsync(id, request);
+                if (!success && !string.IsNullOrEmpty(message))
+                {
+                    TempData["Error"] = message;
+                }
+                else if (success)
+                {
+                    TempData["Message"] = "Cập nhật trạng thái ứng tuyển thành công";
+                }
             }
             return RedirectToPage(new { id, ReturnUrl });
         }
