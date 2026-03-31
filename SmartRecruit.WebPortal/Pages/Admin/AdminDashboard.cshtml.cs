@@ -1,27 +1,49 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebPortal.Services;
+using WebPortal.Models.Api.Admin;
+using WebPortal.Services.Api;
 
 namespace WebPortal.Pages
 {
     public class AdminDashboardModel : PageModel
     {
-        private readonly IMockDataService _mockDataService;
+        private readonly IAdminApiService _adminApiService;
+        private readonly ILogger<AdminDashboardModel> _logger;
 
-        public AdminDashboardModel(IMockDataService mockDataService)
+        public AdminDashboardModel(IAdminApiService adminApiService, ILogger<AdminDashboardModel> logger)
         {
-            _mockDataService = mockDataService;
+            _adminApiService = adminApiService;
+            _logger = logger;
         }
 
-        public int TotalJobs { get; set; }
-        public int TotalUsers { get; set; }
-        public List<int> WeeklyRevenue { get; set; } = new List<int> { 1200000, 2100000, 1800000, 2900000, 3200000, 1500000, 900000 };
-        public int MaxRevenue { get; set; }
+        public FinanceStatsResponse FinanceStats { get; set; } = new();
+        public AdminUserStatsResponse UserStats { get; set; } = new();
+        public AdminJobStatsResponse JobStats { get; set; } = new();
+        public WeeklyRevenueResponse WeeklyRevenue { get; set; } = new();
+        public decimal MaxRevenue { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            TotalJobs = _mockDataService.Jobs.Count;
-            TotalUsers = _mockDataService.Users.Count;
-            MaxRevenue = 3200000;
+            try
+            {
+                var financeTask = _adminApiService.GetFinanceStatsAsync();
+                var userTask = _adminApiService.GetAdminUserStatsAsync();
+                var jobTask = _adminApiService.GetAdminJobStatsAsync();
+                var weeklyTask = _adminApiService.GetWeeklyRevenueAsync();
+
+                await Task.WhenAll(financeTask, userTask, jobTask, weeklyTask);
+
+                FinanceStats = await financeTask ?? new();
+                UserStats = await userTask ?? new();
+                JobStats = await jobTask ?? new();
+                WeeklyRevenue = await weeklyTask ?? new();
+
+                MaxRevenue = WeeklyRevenue.Revenue.Any() ? WeeklyRevenue.Revenue.Max() : 1;
+                if (MaxRevenue == 0) MaxRevenue = 1;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading admin dashboard stats");
+            }
         }
     }
 }

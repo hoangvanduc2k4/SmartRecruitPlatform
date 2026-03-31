@@ -45,6 +45,25 @@ namespace WebPortal.Pages
             }
         }
 
+        public async Task<IActionResult> OnGetExportAsync()
+        {
+            var request = new UserSearchRequest
+            {
+                SearchHeader = SearchTerm,
+                Page = 1,
+                PageSize = 1000000
+            };
+
+            var response = await _adminApiService.ExportUsersAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsByteArrayAsync();
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Users_Export_{DateTime.Now:yyyyMMdd}.xlsx");
+            }
+
+            return RedirectToPage();
+        }
+
         public async Task<IActionResult> OnPostToggleStatusAsync(long userId, bool isActive, string? lockReason)
         {
             var request = new UpdateUserStatusRequest

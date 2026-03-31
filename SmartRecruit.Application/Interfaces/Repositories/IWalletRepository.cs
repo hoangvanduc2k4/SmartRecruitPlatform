@@ -14,5 +14,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task AddTransactionAsync(Transaction transaction);
         void UpdateTransaction(Transaction transaction);
         Task<FinanceStatsResponse> GetFinanceStatsAsync();
+        Task<List<decimal>> GetWeeklyRevenueAsync();
     }
 }

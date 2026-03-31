@@ -1,4 +1,5 @@
 using SmartRecruit.Application.DTO.Job;
+using SmartRecruit.Application.DTO.Admin;
 using SmartRecruit.Application.Helpers;
 using SmartRecruit.Domain.Entities;
 
@@ -13,5 +14,6 @@ namespace SmartRecruit.Application.Interfaces.Repositories
         Task<PagedList<Job>> GetAppealedJobsAsync(int page, int pageSize);
         Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
         Task<IEnumerable<Job>> GetRecommendedJobsAsync(long userId, int limit = 10);
+        Task<AdminJobStatsResponse> GetAdminJobStatsAsync();
     }
 }

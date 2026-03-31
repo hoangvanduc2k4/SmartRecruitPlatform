@@ -28,5 +28,6 @@ namespace SmartRecruit.Application.Interfaces.Services
         Task<RecruiterStatsResponse> GetRecruiterStatsAsync(long recruiterId);
         Task<IEnumerable<JobResponse>> GetRecommendedJobsAsync(long userId);
         Task UpdateExpiredJobsAsync();
+        Task<AdminJobStatsResponse> GetAdminJobStatsAsync();
     }
 }

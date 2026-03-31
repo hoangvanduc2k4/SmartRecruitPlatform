@@ -144,5 +144,31 @@ namespace SmartRecruit.Infrastructure.Repositories
                 FailedTransactions = failedCount
             };
         }
+
+        public async Task<List<decimal>> GetWeeklyRevenueAsync()
+        {
+            var now = DateTime.UtcNow;
+            var sevenDaysAgo = now.AddDays(-6).Date;
+
+            var successfulTransactions = await _context.Set<Transaction>()
+                .Where(t => t.Status == TransactionStatus.SUCCESS &&
+                            t.Type != TransactionType.TOPUP &&
+                            t.CreatedAt >= sevenDaysAgo)
+                .ToListAsync();
+
+            var weeklyData = successfulTransactions
+                .GroupBy(t => t.CreatedAt.Date)
+                .Select(g => new { Date = g.Key, Amount = g.Sum(t => Math.Abs(t.Amount)) })
+                .ToDictionary(x => x.Date, x => x.Amount);
+
+            var result = new List<decimal>();
+            for (int i = 0; i < 7; i++)
+            {
+                var date = sevenDaysAgo.AddDays(i);
+                result.Add(weeklyData.TryGetValue(date, out var amount) ? amount : 0);
+            }
+
+            return result;
+        }
     }
 }
