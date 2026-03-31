@@ -240,5 +240,36 @@
             });
         </script>
     }
+
+    @* Show TempData messages (success/error) as SweetAlert toasts *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'Thành công',
+                text: '@TempData["SuccessMessage"]',
+                icon: 'success',
+                confirmButtonText: 'Đóng',
+                confirmButtonColor: '#10b981',
+                background: '#ffffff',
+                customClass: { popup: 'rounded-3xl' }
+            });
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'Lỗi',
+                text: '@TempData["ErrorMessage"]',
+                icon: 'error',
+                confirmButtonText: 'Đóng',
+                confirmButtonColor: '#ef4444',
+                background: '#ffffff',
+                customClass: { popup: 'rounded-3xl' }
+            });
+        </script>
+    }
 </body>
 </html>

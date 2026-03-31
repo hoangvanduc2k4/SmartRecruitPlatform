@@ -21,6 +21,7 @@ namespace WebPortal.Pages.Recruiter
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
+            Console.WriteLine($"[JobPipeline] OnGet for JobId: {id}. SuccessMessage: {SuccessMessage}, ErrorMessage: {ErrorMessage}");
             if (!IsRecruiter) return RedirectToPage("/Index");
 
             Job = await _jobApiService.GetJobByIdAsync(id.ToString());
@@ -68,18 +69,23 @@ namespace WebPortal.Pages.Recruiter
                 };
                 
                 var result = await _applicationApiService.UpdateStatusAsync(applicationId, request);
+                Console.WriteLine($"[JobPipeline] API Result: Success={result.Success}, Message={result.Message}");
+
                 if (result.Success)
                 {
-                    SuccessMessage = "Status updated successfully.";
+                    SuccessMessage = "Cập nhật trạng thái thành công.";
                 }
                 else
                 {
-                    ErrorMessage = $"Failed: {result.Message}";
+                    ErrorMessage = result.Message ?? "Có lỗi xảy ra khi cập nhật trạng thái.";
+                    Console.WriteLine($"[JobPipeline] ErrorMessage set to: {ErrorMessage}");
                 }
             }
             
+            Console.WriteLine($"[JobPipeline] Redirecting back to JobPipeline for JobId: {jobId}");
             return RedirectToPage("/Recruiter/JobPipeline", new { id = jobId });
         }
+
 
         public async Task<IActionResult> OnPostRestoreAsync(long applicationId, long jobId)
         {

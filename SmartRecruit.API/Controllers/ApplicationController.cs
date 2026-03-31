@@ -91,7 +91,7 @@ namespace SmartRecruit.Controllers
             var success = await _applicationService.ApplyJobAsync(request);
             return Ok(success.Wrap("Nộp hồ sơ ứng tuyển thành công"));
         }
-
+       
         /// <summary>
         /// Cập nhật trạng thái ứng viên (Kanban)
         /// </summary>

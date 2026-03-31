@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 using SmartRecruit.Application.Wrappers;
+using SmartRecruit.Domain.Exceptions;
 
 namespace SmartRecruit.Middlewares
 {
@@ -28,20 +29,24 @@ namespace SmartRecruit.Middlewares
                 response.ContentType = "application/json";
                 var responseModel = ApiResponse.Fail(error.Message);
 
+                _logger.LogWarning("ErrorHandlerMiddleware caught exception: {Type} - {Message}", error.GetType().Name, error.Message);
+
                 switch (error)
                 {
                     case FluentValidation.ValidationException e:
                         // validation error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        responseModel.Message = ""; // Let the Errors collection speak
+                        responseModel.Message = "Dữ liệu không hợp lệ."; 
                         responseModel.Errors = e.Errors.Select(x => x.ErrorMessage).ToList();
                         break;
-                    case KeyNotFoundException e:
+                    case KeyNotFoundException:
+                    case NotFoundException:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     case ArgumentException:
                     case InvalidOperationException:
+                    case BadRequestException:
                         // bad request error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
@@ -59,6 +64,9 @@ namespace SmartRecruit.Middlewares
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
+
+                _logger.LogInformation("Returning error response: {StatusCode} - {Message}", response.StatusCode, responseModel.Message);
+
 
                 var result = JsonSerializer.Serialize(responseModel);
 

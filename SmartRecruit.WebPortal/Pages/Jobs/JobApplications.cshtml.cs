@@ -65,7 +65,18 @@ namespace WebPortal.Pages
                 request.RejectionReason = rejectionReason ?? "Not matching requirements.";
             }
 
-            await _applicationApiService.UpdateStatusAsync(applicationId, request);
+            var (success, message) = await _applicationApiService.UpdateStatusAsync(applicationId, request);
+
+            if (!success)
+            {
+                // Surface API error to user via TempData so layout can show a toast
+                TempData["ErrorMessage"] = string.IsNullOrEmpty(message) ? "Có lỗi xảy ra khi cập nhật trạng thái." : message;
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Cập nhật trạng thái ứng tuyển thành công.";
+            }
+
             return RedirectToPage(new { Id, CurrentPage });
         }
 

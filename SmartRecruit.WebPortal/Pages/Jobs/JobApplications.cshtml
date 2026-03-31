@@ -6,6 +6,22 @@
 }
 
 <div class="space-y-10 animate-in fade-in duration-700 pb-32">
+    <!-- Messages -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="p-4 bg-green-50 border border-green-100 text-green-700 rounded-2xl text-xs font-bold uppercase tracking-tight flex items-center gap-3 animate-in fade-in slide-in-from-top duration-500">
+            <i class="fas fa-check-circle"></i>
+            @TempData["Message"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-bold uppercase tracking-tight flex items-center gap-3 animate-in fade-in slide-in-from-top duration-500">
+            <i class="fas fa-exclamation-circle"></i>
+            @TempData["Error"]
+        </div>
+    }
+
     <div class="flex flex-col gap-4 mb-6">
         <div class="flex items-center gap-3">
             <a href="/RecruiterJobs" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-100 transition-all shadow-sm">

@@ -113,24 +113,45 @@ namespace WebPortal.Services.Api
 
         public async Task<(bool Success, string? Message)> UpdateStatusAsync(long id, UpdateApplicationStatusRequest request)
         {
-            var response = await _httpClient.PutAsJsonAsync($"applications/{id}/status", request, _jsonOptions);
-            if (response.IsSuccessStatusCode)
-            {
-                return (true, null);
-            }
-            
-            var errorContent = await response.Content.ReadAsStringAsync();
             try
             {
-                // Try to parse the wrapped error response
-                var errorObj = JsonSerializer.Deserialize<ApiResponse<object>>(errorContent, _jsonOptions);
-                return (false, errorObj?.Message ?? "API Error");
+                var response = await _httpClient.PutAsJsonAsync($"applications/{id}/status", request, _jsonOptions);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, null);
+                }
+                
+                var errorContent = await response.Content.ReadAsStringAsync();
+                
+                // Try to parse the wrapped error response (ApiResponse structure)
+                try
+                {
+                    var errorObj = JsonSerializer.Deserialize<ApiResponse<object>>(errorContent, _jsonOptions);
+                    if (errorObj != null && !string.IsNullOrEmpty(errorObj.Message))
+                    {
+                        return (false, errorObj.Message);
+                    }
+                    
+                    // If Message is empty but Errors exist, join them
+                    if (errorObj?.Errors != null && errorObj.Errors.Any())
+                    {
+                        return (false, string.Join(" ", errorObj.Errors));
+                    }
+                }
+                catch
+                {
+                    // If not a standard ApiResponse, fallback to status code or content
+                }
+
+                return (false, $"Error {((int)response.StatusCode)}: {errorContent}");
             }
-            catch
+            catch (Exception ex)
             {
-                return (false, $"HTTP {response.StatusCode}: {errorContent}");
+                return (false, $"Connection Error: {ex.Message}");
             }
         }
+
 
         public async Task<bool> AddNoteAsync(long id, string note)
         {
