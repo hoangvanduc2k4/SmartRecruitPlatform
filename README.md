@@ -325,7 +325,7 @@ dotnet restore
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=SmartRecruit_DB;Trusted_Connection=true;TrustServerCertificate=true;"
+    "MyCnn": "Server=YOUR_SERVER;Database=SmartRecruit_DB;Trusted_Connection=true;TrustServerCertificate=true;"
   }
 }
 ```
@@ -377,6 +377,74 @@ dotnet ef database update -p SmartRecruit.Infrastructure -s SmartRecruit.API
 }
 ```
 
+### 4️⃣.1 User Secrets Configuration (Recommended for Development)
+
+**Thay vì lưu API keys trực tiếp trong appsettings.json, sử dụng User Secrets:**
+
+```bash
+# Khởi tạo User Secrets cho project API
+cd SmartRecruit.API
+dotnet user-secrets init
+
+# Sau đó set các giá trị
+dotnet user-secrets set "Jwt:Key" "SecretKeyForJWTTokenGenerationSmartRecuitPlatform!@#$%^&*"
+dotnet user-secrets set "Cloudinary:CloudName" "your-cloud-name"
+dotnet user-secrets set "Cloudinary:ApiKey" "your-api-key"
+dotnet user-secrets set "Cloudinary:ApiSecret" "your-api-secret"
+dotnet user-secrets set "Gemini:ApiKey" "your-gemini-key"
+dotnet user-secrets set "Gemini:Url" "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+dotnet user-secrets set "PayOS:ClientId" "your-payos-client-id"
+dotnet user-secrets set "PayOS:ApiKey" "your-payos-api-key"
+dotnet user-secrets set "PayOS:ChecksumKey" "your-payos-checksum-key"
+dotnet user-secrets set "PayOS:ReturnUrl" "https://localhost:7001/api/payment/success"
+dotnet user-secrets set "PayOS:CancelUrl" "https://localhost:7001/api/payment/cancel"
+dotnet user-secrets set "EmailSettings:Password" "your-email-app-password"
+```
+
+**Hoặc copy template dưới và dán vào `secrets.json`:**
+
+```bash
+# Mở file User Secrets (Visual Studio hoặc text editor)
+cd SmartRecruit.API
+dotnet user-secrets edit
+```
+
+**Template User Secrets JSON:**
+
+```json
+{
+  "Jwt": {
+    "Key": "SecretKeyForJWTTokenGenerationSmartRecuitPlatform!@#$%^&*"
+  },
+  "Cloudinary": {
+    "CloudName": "",
+    "ApiKey": "",
+    "ApiSecret": ""
+  },
+  "Gemini": {
+    "ApiKey": "",
+    "Url": ""
+  },
+  "PayOS": {
+    "ClientId": "",
+    "ApiKey": "",
+    "ChecksumKey": "",
+    "ReturnUrl": "https://localhost:xxxx/api/payment/success",
+    "CancelUrl": "https://localhost:xxxx/api/payment/cancel"
+  },
+  "EmailSettings": {
+    "Password": ""
+  }
+}
+```
+
+**Lợi ích của User Secrets:**
+
+- ✅ Không lưu API keys trong source code
+- ✅ Chỉ áp dụng cho development environment
+- ✅ Tự động override appsettings.json values
+- ✅ An toàn hơn khi push code lên GitHub
+
 ### 5️⃣ Chạy ứng dụng
 
 **Option 1: Visual Studio**
@@ -412,11 +480,30 @@ run.bat
 
 ## Test Accounts
 
-| Email                         | Password      | Role      |
-| ----------------------------- | ------------- | --------- |
-| admin@smartrecruit.local      | Admin@123     | Admin     |
-| recruiter1@smartrecruit.local | Recruiter@123 | Recruiter |
-| candidate1@smartrecruit.local | Candidate@123 | Candidate |
+**⚠️ Lưu ý:** Database seed data được tạo **ngẫu nhiên** bằng **Bogus** mỗi lần chạy `Update-Database`. Do đó, email và password thay đổi sau mỗi lần seed.
+
+### Cách tìm test accounts:
+
+**Option 1: Kiểm tra Database**
+
+```sql
+SELECT Id, Email, Role FROM Users;
+```
+
+**Option 2: Kiểm tra Log khi chạy Migration**
+
+- Email và password sẽ được in ra trong console khi database được seed
+
+**Option 3: Đăng ký tài khoản mới**
+
+- Tạo một tài khoản test riêng bằng cách đăng ký từ UI
+
+### Seed Data Composition:
+
+- ✅ **1 Admin** (Role = Admin)
+- ✅ **5 Recruiters** (Role = Recruiter)
+- ✅ **30 Candidates** (Role = Candidate)
+- ✅ **20 Job Postings** (từ các recruiter)
 
 ---
 

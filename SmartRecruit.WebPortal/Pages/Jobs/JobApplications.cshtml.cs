@@ -30,6 +30,7 @@ namespace WebPortal.Pages
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 10;
         public int TotalApplicationCount { get; set; }
+        public int ApplicationsAbove50Count { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -48,6 +49,7 @@ namespace WebPortal.Pages
             Applications = pagedApps.Data != null ? pagedApps.Data.ToList() : new List<Application>();
             TotalApplicationCount = pagedApps.TotalCount;
             TotalPages = pagedApps.TotalPages;
+            ApplicationsAbove50Count = Applications.Count(app => app.MatchScore > 50);
 
             return Page();
         }
