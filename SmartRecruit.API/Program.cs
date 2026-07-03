@@ -5,6 +5,9 @@ using SmartRecruit.Logging;
 using SmartRecruit.Middlewares;
 using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Metrics;
 
 namespace SmartRecruit.API
 {
@@ -19,6 +22,20 @@ namespace SmartRecruit.API
                 configuration
                     .Enrich.With(new SensitiveDataEnricher())
                     .ReadFrom.Configuration(context.Configuration));
+
+            // 1.5. OpenTelemetry (Tracing & Metrics)
+            builder.Services.AddOpenTelemetry()
+                .ConfigureResource(resource => resource.AddService("SmartRecruit.API"))
+                .WithTracing(tracing => tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddOtlpExporter(opt => opt.Endpoint = new Uri("http://localhost:4317")))
+                .WithMetrics(metrics => metrics
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddProcessInstrumentation()
+                    .AddOtlpExporter(opt => opt.Endpoint = new Uri("http://localhost:4317")));
 
             // 2. Data & Infrastructure
             builder.Services.AddDbContextConfiguration(builder.Configuration);

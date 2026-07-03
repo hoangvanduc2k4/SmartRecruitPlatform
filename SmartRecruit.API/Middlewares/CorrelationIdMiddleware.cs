@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Serilog.Context;
 
 namespace SmartRecruit.Middlewares
@@ -26,7 +27,15 @@ namespace SmartRecruit.Middlewares
                 context.Response.Headers.Append(CorrelationIdHeaderKey, correlationId);
             }
 
-            // 3. Push to Serilog LogContext
+            // 3. Add TraceId and SpanId to response headers if tracing is active
+            var activity = Activity.Current;
+            if (activity != null)
+            {
+                context.Response.Headers["X-Trace-ID"] = activity.TraceId.ToHexString();
+                context.Response.Headers["X-Span-ID"] = activity.SpanId.ToHexString();
+            }
+
+            // 4. Push to Serilog LogContext
             using (LogContext.PushProperty("CorrelationId", correlationId.ToString()))
             {
                 await _next(context);
