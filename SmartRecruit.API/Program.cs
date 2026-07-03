@@ -2,6 +2,7 @@ using Serilog;
 using Hangfire;
 using SmartRecruit.Extensions;
 using SmartRecruit.Logging;
+using SmartRecruit.Middlewares;
 using SmartRecruit.Application;
 using SmartRecruit.Infrastructure;
 
@@ -46,6 +47,8 @@ namespace SmartRecruit.API
             var app = builder.Build();
 
             // 6. HTTP Pipeline (Middleware)
+            app.UseMiddleware<CorrelationIdMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -53,6 +56,7 @@ namespace SmartRecruit.API
             }
 
             app.UseErrorHandling();
+            app.UseSerilogRequestLogging();
             app.UseRateLimiter();
             app.UseCors("AllowAll");
             app.UseAuthentication();
